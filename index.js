@@ -7,7 +7,7 @@ import cfonts from 'cfonts';
 import { createInterface } from 'readline';
 import yargs from 'yargs';
 import chalk from 'chalk';
-console.log('\n✰ Iniciando Vegeta-Bot ✰');
+console.log('\n✰ Iniciando Vegeta Bot ✰');
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const require = createRequire(__dirname);
 const { name, description, author, version } = require(join(__dirname, './package.json'));
@@ -73,7 +73,7 @@ p.emit('message', line.trim());
 }
 process.on('warning', (warning) => {
 if (warning.name === 'MaxListenersExceededWarning') {
-console.warn('🍭 Se excedió el límite de Listeners en:');
+console.warn('🔥 Se excedió el límite de Listeners en:');
 console.warn(warning.stack);
 }
 });
