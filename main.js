@@ -9,7 +9,7 @@ import fs, {readdirSync, statSync, unlinkSync, existsSync, mkdirSync, readFileSy
 import yargs from 'yargs';
 import {spawn} from 'child_process'
 import lodash from 'lodash'
-import { vegetaJadiBot } from './plugins/jadibot-serbot.js';
+import { vegetajadibot } from './plugins/jadibot-serbot.js';
 import chalk from 'chalk'
 import syntaxerror from 'syntax-error'
 import {tmpdir} from 'os'
@@ -23,8 +23,8 @@ import {makeWASocket, protoType, serialize} from './lib/simple.js'
 import {Low, JSONFile} from 'lowdb'
 import {mongoDB, mongoDBV2} from './lib/mongoDB.js'
 import store from './lib/store.js'
-const {proto} = (await import('npm:@fizzxydev/baileys')).default
-const {DisconnectReason, useMultiFileAuthState, MessageRetryMap, fetchLatestBaileysVersion, makeCacheableSignalKeyStore, jidNormalizedUser, PHONENUMBER_MCC} = await import('npm:@fizzxydev/baileys')
+const {proto} = (await import('@fizzxydev/baileys').default
+const {DisconnectReason, useMultiFileAuthState, MessageRetryMap, fetchLatestBaileysVersion, makeCacheableSignalKeyStore, jidNormalizedUser, PHONENUMBER_MCC} = await import('@fizzxydev/baileys')
 import readline from 'readline'
 import NodeCache from 'node-cache'
 const {CONNECTING} = ws
