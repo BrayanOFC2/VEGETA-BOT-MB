@@ -11,14 +11,11 @@ let handler = async (m, { conn, args }) => {
 
 🪐 *Creador:*
 
-☁️ †|Brayan★
+☁️ †|BrayanOFC★
 🔖 *Rol:* Creador
 👾 *GitHub:* https://github.com/BrayanOFC
 
 🍃 *Colaboradores:*
-
-👑 Barboza
-⭐Rol:*Developer*
 
 🫧 𝓔𝓶𝓶𝓪 𝓥𝓲𝓸𝓵𝓮𝓽𝓼 𝓥𝓮𝓻𝓼𝓲ó𝓷 
 🔖 *Rol:* Developer
