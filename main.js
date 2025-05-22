@@ -174,6 +174,9 @@ opcion = '2'
 if (!conn.authState.creds.registered) {  
 if (MethodMobile) throw new Error('No se puede usar un código de emparejamiento con la API móvil')
 
+const PHONENUMBER_MCC = {
+  "52": "MX" 
+}
 let numeroTelefono
 if (!!phoneNumber) {
 numeroTelefono = phoneNumber.replace(/[^0-9]/g, '')
