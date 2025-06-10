@@ -17,23 +17,23 @@ let crm3 = "SBpbmZvLWRvbmFyLmpz"
 let crm4 = "IF9hdXRvcmVzcG9uZGVyLmpzIGluZm8tYm90Lmpz"
 let drm1 = ""
 let drm2 = ""
-let rtx = `╭───────────────♥︎  
-│  ツ 𝐕𝐄𝐆𝐄𝐓𝐀 - 𝐁𝐎𝐓 𝐌𝐁 ➳  
-╰───────────────♥︎  
-> ★ 𝗖𝗼𝗻𝗲𝘅𝗶ó𝗻 𝐒𝐔𝐁-𝐁𝐎𝐓 (𝑴𝑶𝑫𝑶 𝗤𝗥) ✈  
+let rtx = `╭───────────────✎  
+│  ツ VEGETA - BOT MB ➳  
+╰───────────────✎  
+> ★ 𝗖𝗼𝗻𝗲𝘅𝗶ó𝗻 𝗦𝘂𝗯-𝗕𝗼𝘁 (𝗠𝗼𝗱𝗼 𝗤𝗥) ✈  
 
 ⟿ 𝐄𝐬𝐜𝐚𝐧𝐞𝐚 𝐞𝐬𝐭𝐞 𝐂𝐨́𝐝𝐢𝐠𝐨 𝐐𝐑 𝐜𝐨𝐧 𝐨𝐭𝐫𝐨 𝐜𝐞𝐥𝐮𝐥𝐚𝐫  
 𝐨 𝐝𝐞𝐬𝐝𝐞 𝐥𝐚 𝐏𝐂 𝐩𝐚𝐫𝐚 𝐜𝐨𝐧𝐯𝐞𝐫𝐭𝐢𝐫𝐭𝐞 𝐞𝐧 𝐮𝐧 *𝗦𝘂𝗯-𝗕𝗼𝘁 𝗧𝗲𝗺𝗽𝗼𝗿𝗮𝗹*.  
 
-➥ ❶ 𓂃 ᴛᴏᴄᴀ ʟᴏs ᴛʀᴇs ᴘᴜɴᴛᴏs ᴇɴ ʟᴀ ᴇsǫᴜɪɴᴀ sᴜᴘᴇʀɪᴏʀ ᴅᴇʀᴇᴄʜᴀ.  
-➥ ❷ 𓂃 Ve a *"ᴅɪsᴘᴏsɪᴛɪᴠᴏs ᴠɪɴᴄᴜʟᴀᴅᴏs"*.  
-➥ ❸ 𓂃 ᴇsᴄᴀɴᴇᴀ ᴇsᴛᴇ QR ʏ ᴄᴏɴᴇᴄᴛᴀᴛᴇ ᴀʟ ʙᴏᴛ.  
+➥ ❶ 𓂃 Toca los tres puntos en la esquina superior derecha.  
+➥ ❷ 𓂃 Ve a *"Dispositivos vinculados"*.  
+➥ ❸ 𓂃 Escanea este QR y conéctate al bot.  
 
-⚠ 𝔼𝕊𝕋𝔼 ℂ𝕆𝔻𝕀𝔾𝕆 𝐐𝐑 𝔼𝕏ℙ𝕀ℝ𝔸 𝔼ℕ ❺❹ 𝕊𝔼𝔾𝕌ℕ𝔻𝕆𝕊. ℕ𝕆 ℙ𝕀𝔼ℝ𝔻𝔸𝕊 𝕋𝕀𝔼𝕄ℙ𝕆.  
+⚠ 𝐄𝐬𝐭𝐞 𝐜𝐨́𝐝𝐢𝐠𝐨 𝐐𝐑 𝐞𝐱𝐩𝐢𝐫𝐚 𝐞𝐧 ❺❹ 𝐬𝐞𝐠𝐮𝐧𝐝𝐨𝐬. 𝐍𝐨 𝐩𝐢𝐞𝐫𝐝𝐚𝐬 𝐭𝐢𝐞𝐦𝐩𝐨.  
 `;
 
 let rtx2 = `╭───────────────⍰  
-│  ✭ 𝐕𝐄𝐆𝐄𝐓𝐀 - 𝐁𝐎𝐓 𝐌𝐁 ✰  
+│  ✭ VEGETA - BOT MB✰  
 ╰───────────────⍰ 
 > ✰ 𝗖𝗼𝗻𝗲𝘅𝗶ó𝗻 𝗦𝘂𝗯-𝗕𝗼𝘁 (𝗠𝗼𝗱𝗼 𝗖𝗼́𝗱𝗶𝗴𝗼) ✪  
 
@@ -124,7 +124,7 @@ if (store) {
 //const msg = store.loadMessage(key.remoteJid, key.id)
 //return msg.message && undefined
 } return {
-conversation: 'vegeta-Bot MB',
+conversation: 'vegeta-Bot MB2.0',
 }}} 
 
 let sock = makeWASocket(connectionOptions)
@@ -136,7 +136,7 @@ const { connection, lastDisconnect, isNewLogin, qr } = update
 if (isNewLogin) sock.isInit = false
 if (qr && !mcode) {
 if (m?.chat) {
-txtQR = await conn.sendMessage(m.chat, { image: await qrcode.toBuffer(qr, { scale: 8 }), caption: rtx.trim()}, { quoted: m})
+txtQR = await conn.sendMessage(m.chat, { image: await qrcode.toBuffer(qr, { scale: 8 }), caption: rtx.trim()}, { quoted: fkontak})
 } else {
 return 
 }
@@ -149,8 +149,8 @@ if (qr && mcode) {
 let secret = await sock.requestPairingCode((m.sender.split`@`[0]))
 secret = secret.match(/.{1,4}/g)?.join("-")
 //if (m.isWABusiness) {
-txtCode = await conn.sendMessage(m.chat, {text : rtx2}, { quoted: m })
-codeBot = await m.reply(secret)
+txtCode = await conn.reply(m.chat, rtx2, m, fake);
+codeBot = await conn.reply(m.chat, `${secret}`, m, rcanal);
 //} else {
 //txtCode = await conn.sendButton(m.chat, rtx2.trim(), wm, null, [], secret, null, m) 
 //}
@@ -199,7 +199,7 @@ await conn.sendMessage(`${path.basename(pathvegetaJadiBot)}@s.whatsapp.net`, {te
 } catch (error) {
 console.error(chalk.bold.yellow(`Error 405 no se pudo enviar mensaje a: +${path.basename(pathvegetaJadiBot)}`))
 }
-fs.rmdirSync(pathvegetaJadiBot, { recursive: true })
+fs.rmdirSync(pathvegataJadiBot, { recursive: true })
 }
 if (reason === 500) {
 console.log(chalk.bold.magentaBright(`\n╭┄┄┄┄┄┄┄┄┄┄┄┄┄┄ • • • ┄┄┄┄┄┄┄┄┄┄┄┄┄┄⟡\n┆ Conexión perdida en la sesión (+${path.basename(pathvegetaJadiBot)}). Borrando datos...\n╰┄┄┄┄┄┄┄┄┄┄┄┄┄┄ • • • ┄┄┄┄┄┄┄┄┄┄┄┄┄┄⟡`))
@@ -213,7 +213,7 @@ await creloadHandler(true).catch(console.error)
 }
 if (reason === 403) {
 console.log(chalk.bold.magentaBright(`\n╭┄┄┄┄┄┄┄┄┄┄┄┄┄┄ • • • ┄┄┄┄┄┄┄┄┄┄┄┄┄┄⟡\n┆ Sesión cerrada o cuenta en soporte para la sesión (+${path.basename(pathvegetaJadiBot)}).\n╰┄┄┄┄┄┄┄┄┄┄┄┄┄┄ • • • ┄┄┄┄┄┄┄┄┄┄┄┄┄┄⟡`))
-fs.rmdirSync(pathvegegaJadiBot, { recursive: true })
+fs.rmdirSync(pathvegetaJadiBot, { recursive: true })
 }}
 if (global.db.data == null) loadDatabase()
 if (connection == `open`) {
@@ -226,7 +226,7 @@ sock.isInit = true
 global.conns.push(sock)
 await joinChannels(sock)
 
-m?.chat ? await conn.sendMessage(m.chat, {text: args[0] ? `@${m.sender.split('@')[0]}, ya estás conectado, leyendo mensajes entrantes...` : `genial @${m.sender.split('@')[0]}, bienvenido a la familia de VEGETA-BOT MB estás listo para la aventura.`, mentions: [m.sender]}, { quoted: m }) : ''
+m?.chat ? await conn.sendMessage(m.chat, {text: args[0] ? `@${m.sender.split('@')[0]}, ya estás conectado, leyendo mensajes entrantes...` : `genial @${m.sender.split('@')[0]}, bienvenido a la familia de Vegeta-Bot MB2.0 estás listo para la aventura.`, mentions: [m.sender]}, { quoted: m }) : ''
 
 }}
 setInterval(async () => {
