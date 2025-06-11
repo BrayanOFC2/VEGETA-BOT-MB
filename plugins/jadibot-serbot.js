@@ -109,7 +109,17 @@ const msgRetryCache = new NodeCache()
 const { state, saveState, saveCreds } = await useMultiFileAuthState(pathvegetaJadiBot)
 
 const connectionOptions = {
+logger: pino({ level: "fatal" }),
 printQRInTerminal: false,
+auth: { creds: state.creds, keys: makeCacheableSignalKeyStore(state.keys, pino({level: 'silent'})) },
+msgRetry,
+msgRetryCache,
+browser: mcode ? ['Ubuntu', 'Chrome', '110.0.5585.95'] : ['kirito-Bot (Sub Bot)', 'Chrome','2.0.0'],
+version: version,
+generateHighQualityLinkPreview: true
+};
+
+/*printQRInTerminal: false,
 logger: pino({ level: 'silent' }),
 auth: { creds: state.creds, keys: makeCacheableSignalKeyStore(state.keys, pino({level: 'silent'})) },
 msgRetry,
@@ -124,7 +134,7 @@ if (store) {
 //return msg.message && undefined
 } return {
 conversation: 'vegeta-Bot MB2.0',
-}}} 
+}}} */
 
 let sock = makeWASocket(connectionOptions)
 sock.isInit = false
