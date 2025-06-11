@@ -40,7 +40,7 @@ case isCommand2:
 if (global.conn.user.jid == conn.user.jid) {
   conn.reply(m.chat, `Solo los sub-bots pueden usar este comando.`, m)
 } else {
-  await conn.reply(m.chat, `Vegeta-Bot desactivado.`, m)
+  await conn.reply(m.chat, `vegeta-Bot desactivado.`, m)
   conn.ws.close()
 }  
 break
@@ -67,11 +67,11 @@ function convertirMsADiasHorasMinutosSegundos(ms) {
 const message = users.map((v, i) => 
 `> ╭───[ Sub-Bot #${i + 1} ]────
 > │ Nombre : ${v.user.name || 'Sub-Bot'}
-> │ Enlace : wa.me/${v.user.jid.replace(/[^0-9]/g, '')}?text=${usedPrefix}serbot+code
+> │ Enlace : wa.me/${v.user.jid.replace(/[^0-9]/g, '')}?text=${usedPrefix}estado
 > │ Online : ${v.uptime ? convertirMsADiasHorasMinutosSegundos(Date.now() - v.uptime) : 'Desconocido'}
 > ╰────────────────────`).join('\n\n');
 
-const responseMessage = `*VEGETA*\n*Sub-Bots activos*: ${users.length}\n\n${message || 'No hay sub-bots conectados.'}`.trim();
+const responseMessage = `*VEGETA-BOT*\n*Sub-Bots activos*: ${users.length}\n\n${message || 'No hay sub-bots conectados.'}`.trim();
 
 await _envio.sendMessage(m.chat, {text: responseMessage, mentions: _envio.parseMention(responseMessage)}, {quoted: fkontak})
 break   
