@@ -76,11 +76,10 @@ vegetaJBOptions.command = command
 vegetaJadiBot(vegetaJBOptions)
 global.db.data.users[m.sender].Subs = new Date * 1
 } 
-handler.help = ['serbot', 'serbot code']
+handler.help = ['qr', 'code']
 handler.tags = ['serbot']
-handler.command = ['jadibot', 'serbot']
+handler.command = ['qr', 'code', 'serbot']
 export default handler 
-
 export async function vegetaJadiBot(options) {
 let { pathvegetaJadiBot, m, conn, args, usedPrefix, command } = options
 const mcode = args[0] && /(--code|code)/.test(args[0].trim()) ? true : args[1] && /(--code|code)/.test(args[1].trim()) ? true : false
