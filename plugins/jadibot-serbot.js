@@ -102,7 +102,7 @@ if (args[1]) args[1] = args[1].replace(/^--code$|^code$/, "").trim()
 if (args[0] == "") args[0] = undefined
 }
 const pathCreds = path.join(pathvegetaJadiBot, "creds.json")
-if (!fs.existsSync(pathvegetsJadiBot)){
+if (!fs.existsSync(pathvegetaJadiBot)){
 fs.mkdirSync(pathvegetaJadiBot, { recursive: true })}
 try {
 args[0] && args[0] != undefined ? fs.writeFileSync(pathCreds, JSON.stringify(JSON.parse(Buffer.from(args[0], "base64").toString("utf-8")), null, '\t')) : ""
