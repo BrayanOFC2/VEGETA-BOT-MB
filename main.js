@@ -478,7 +478,8 @@ console.log(chalk.bold.cyanBright(`\n╭» 🔵 ${global.sessions} 🔵\n│→ 
 
 setInterval(async () => {
 if (stopped === 'close' || !conn || !conn.user) return
-await purgeSessionSB()}, 1000 * 60 * 10) 
+await purgeSessionSB()
+}, 1000 * 60 * 10)
 
 setInterval(async () => {
 if (stopped === 'close' || !conn || !conn.user) return
