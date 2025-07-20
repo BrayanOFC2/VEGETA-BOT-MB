@@ -1,46 +1,30 @@
- const { proto } = require('@adiwajshing/baileys');
+// Tagall Mejorado por Brayan
+import fetch from 'node-fetch';
+import PhoneNumber from 'awesome-phonenumber';
 
-// ... (tu código existente de Baileys) ...
+const handler = async (m, { participants, args }) => {
+  const pesan = args.join` `;
+  const oi = `*» INFO :* ${pesan}`;
+  let mensajes = `*!  MENCION GENERAL  !*\n  *PARA ${participants.length} MIEMBROS* 🗣️\n\n ${oi}\n\n╭  ┄ 𝅄  ۪꒰ \`⡞᪲=͟͟͞🄲ꭈׁׅo͓̽ᨰׁׅʙo͓̽tׁׅ ≼᳞ׄ\` ꒱  ۟  𝅄 ┄\n`;
 
-async function mentionAll(groupId) {
-  // ... (función mentionAll como en el ejemplo anterior) ...
-}
+  for (const mem of participants) {
+    let numero = PhoneNumber('+' + mem.id.replace('@s.whatsapp.net', '')).getNumber('international');
+    let api = `https://delirius-apiofc.vercel.app/tools/country?text=${numero}`;
+    let response = await fetch(api);
+    let json = await response.json();
 
-async function handleCommand(message, command) {
-  const { from, type, body } = message;  // Assuming your message object has these properties
-
-  if (type === 'chat' || type === 'group') { // Only handle commands from chats or groups.
-    if (command === 'tag') {
-      if (type === 'group') {
-        await mentionAll(from);
-      } else { //Si se usa en un chat privado.
-        await this.sendMessage(from, { text: 'Este comando solo funciona en grupos.' });
-      }
-    }
-    // ... (Otras funciones para manejar otros comandos) ...
+    let paisdata = json.result ? json.result.emoji : '🍫';
+    mensajes += `${paisdata} @${mem.id.split('@')[0]}\n`;
   }
-}
 
-// ... (resto de tu código de Baileys, incluyendo la parte donde recibes y procesas los mensajes) ...
+    mensajes += ` *${vs}* `;
 
-// Ejemplo de cómo usar handleCommand (adaptar a tu implementación):
-
-this.ev.on('messages.upsert', async m => {
-    try {
-        const message = m.messages[0];
-        const command = message.body.toLowerCase().split(' ')[0].substring(1); // Ejemplo: !tag
-
-        if (message.body.startsWith('!') ) {
-            await handleCommand(message, command);
-        }
-    } catch (error) {
-        console.error("Error handling message:", error);
-    }
-});
+  conn.sendMessage(m.chat, { text: mensajes, mentions: participants.map((a) => a.id) });
+};
 
 handler.help = ['todos *<mensaje opcional>*'];
-handler.tags = ['group'];
-handler.command = ['todos', 'invocar', 'tagall']
+handler.tags = ['grupo'];
+handler.command = /^(tagall|invocar|marcar|todos|invocación)$/i;
 handler.admin = true;
 handler.group = true;
 
