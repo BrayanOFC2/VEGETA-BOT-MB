@@ -5,7 +5,7 @@ import PhoneNumber from 'awesome-phonenumber';
 const handler = async (m, { participants, args }) => {
   const pesan = args.join` `;
   const oi = `*» INFO :* ${pesan}`;
-  let mensajes = `*!  MENCION GENERAL  !*\n  *PARA ${participants.length} MIEMBROS* 🗣️\n\n ${oi}\n\n╭  `VEGETA`;
+  let mensajes = `*!  MENCION GENERAL  !*\n  *PARA ${participants.length} MIEMBROS* 🗣️\n\n ${oi}\n\n \`VEGETA\`\`;
 
   for (const mem of participants) {
     let numero = PhoneNumber('+' + mem.id.replace('@s.whatsapp.net', '')).getNumber('international');
@@ -17,14 +17,14 @@ const handler = async (m, { participants, args }) => {
     mensajes += `${paisdata} @${mem.id.split('@')[0]}\n`;
   }
 
-    mensajes += ` *${vs}* `;
+    mensajes += `╰⸼ ┄ ┄ ┄ ─  ꒰  ׅ୭ *${vs}* ୧ ׅ ꒱  ┄  ─ ┄ ⸼`;
 
   conn.sendMessage(m.chat, { text: mensajes, mentions: participants.map((a) => a.id) });
 };
 
 handler.help = ['todos *<mensaje opcional>*'];
-handler.tags = ['group'];
-handler.command = ['todos', 'invocar', 'tagall']
+handler.tags = ['grupo'];
+handler.command = /^(tagall|invocar|marcar|todos|invocación)$/i;
 handler.admin = true;
 handler.group = true;
 
