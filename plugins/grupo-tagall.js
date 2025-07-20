@@ -1,11 +1,11 @@
-// Tagall Mejorado por Brayan
+// Tagall Mejorado por willzek
 import fetch from 'node-fetch';
 import PhoneNumber from 'awesome-phonenumber';
 
 const handler = async (m, { participants, args }) => {
   const pesan = args.join` `;
   const oi = `*» INFO :* ${pesan}`;
-  let mensajes = `*!  MENCION GENERAL  !*\n  *PARA ${participants.length} MIEMBROS* 🗣️\n\n ${oi}\n\n╭  ┄ 𝅄  ۪`ᴠᴇɢᴇᴛᴀᴏғᴄ`;
+  let mensajes = `*!  MENCION GENERAL  !*\n  *PARA ${participants.length} MIEMBROS* 🗣️\n\n ${oi}\n\n \`𝚅𝙴𝙶𝙴𝚃𝙰\\n`;
 
   for (const mem of participants) {
     let numero = PhoneNumber('+' + mem.id.replace('@s.whatsapp.net', '')).getNumber('international');
