@@ -5,8 +5,7 @@ import PhoneNumber from 'awesome-phonenumber';
 const handler = async (m, { participants, args }) => {
   const pesan = args.join` `;
   const oi = `*» INFO :* ${pesan}`;
-  let mensajes = `*!  MENCION GENERAL  !*\n  *PARA ${participants.length} MIEMBROS* 🗣️\n\n ${oi}\n\n
-
+  let mensajes = `*!  MENCION GENERAL  !*\n  *PARA ${participants.length} MIEMBROS* 🗣️\n\n ${oi}\n\n╭ ;
 
   for (const mem of participants) {
     let numero = PhoneNumber('+' + mem.id.replace('@s.whatsapp.net', '')).getNumber('international');
@@ -14,11 +13,11 @@ const handler = async (m, { participants, args }) => {
     let response = await fetch(api);
     let json = await response.json();
 
-    let paisdata = json.result ? json.result.emoji : '🍫';
+    let paisdata = json.result ? json.result.emoji : '✨️';
     mensajes += `${paisdata} @${mem.id.split('@')[0]}\n`;
   }
 
-    mensajes += ` *${vs}* `;
+    mensajes += `*${vs}*`;
 
   conn.sendMessage(m.chat, { text: mensajes, mentions: participants.map((a) => a.id) });
 };
