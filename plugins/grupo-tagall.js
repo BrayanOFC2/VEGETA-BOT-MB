@@ -1,29 +1,42 @@
-/* 
-- tagall By Angel-OFC  
-- etiqueta en un grupo a todos
-- https://whatsapp.com/channel/0029VaJxgcB0bIdvuOwKTM2Y
-*/
-const handler = async (m, { isOwner, isAdmin, conn, text, participants, args, command, usedPrefix }) => {
-  if (usedPrefix == 'a' || usedPrefix == 'A') return;
+ const { proto } = require('@adiwajshing/baileys');
 
-  const customEmoji = global.db.data.chats[m.chat]?.customEmoji || '👄';
-  m.react(customEmoji);
+// ... (tu código existente de Baileys) ...
 
-  if (!(isAdmin || isOwner)) {
-    global.dfail('admin', m, conn);
-    throw false;
+async function mentionAll(groupId) {
+  // ... (función mentionAll como en el ejemplo anterior) ...
+}
+
+async function handleCommand(message, command) {
+  const { from, type, body } = message;  // Assuming your message object has these properties
+
+  if (type === 'chat' || type === 'group') { // Only handle commands from chats or groups.
+    if (command === 'tag') {
+      if (type === 'group') {
+        await mentionAll(from);
+      } else { //Si se usa en un chat privado.
+        await this.sendMessage(from, { text: 'Este comando solo funciona en grupos.' });
+      }
+    }
+    // ... (Otras funciones para manejar otros comandos) ...
   }
+}
 
-  const pesan = args.join` `;
-  const oi = `*» INFO :* ${pesan}`;
-  let teks = `*!  MENCION GENERAL  !*\n  *PARA ${participants.length} MIEMBROS* 👁️\n\n ${oi}\n\n╭  ┄ 𝅄 ۪꒰ \`⡞᪲=͟͟͞${botname} ≼᳞ׄ\` ꒱ ۟ 𝅄 ┄\n`;
-  for (const mem of participants) {
-    teks += `┊${customEmoji} @${mem.id.split('@')[0]}\n`;
-  }
-  teks += `╰⸼ ┄ ┄ ┄ ─  ꒰  ׅ୭ *${vs}* ୧ ׅ ꒱  ┄  ─ ┄ ⸼`;
+// ... (resto de tu código de Baileys, incluyendo la parte donde recibes y procesas los mensajes) ...
 
-  conn.sendMessage(m.chat, { text: teks, mentions: participants.map((a) => a.id) });
-};
+// Ejemplo de cómo usar handleCommand (adaptar a tu implementación):
+
+this.ev.on('messages.upsert', async m => {
+    try {
+        const message = m.messages[0];
+        const command = message.body.toLowerCase().split(' ')[0].substring(1); // Ejemplo: !tag
+
+        if (message.body.startsWith('!') ) {
+            await handleCommand(message, command);
+        }
+    } catch (error) {
+        console.error("Error handling message:", error);
+    }
+});
 
 handler.help = ['todos *<mensaje opcional>*'];
 handler.tags = ['group'];
