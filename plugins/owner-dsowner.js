@@ -1,5 +1,3 @@
-/* Codigo hecho por @Fabri115 y mejorado por BrunoSobrino */
-
 import { readdirSync, unlinkSync, existsSync, promises as fs, rmSync } from 'fs'
 import path from 'path'
 
