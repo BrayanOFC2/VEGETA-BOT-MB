@@ -6,7 +6,7 @@ var handler = async (m, { conn, usedPrefix }) => {
 if (global.conn.user.jid !== conn.user.jid) {
 return conn.reply(m.chat, `${emoji} ᴜᴛɪʟɪᴢᴀ ᴇsᴛᴇ ᴄᴏᴍᴀɴᴅᴏ ᴅɪʀᴇᴄᴛᴀᴍᴇɴᴛᴇ ᴄᴏɴ ᴇʟ ʙᴏᴛ ᴘʀɪɴᴄɪᴘᴀʟ✔️.`, m, rcanal);
 }
-await conn.reply(m.chat, ɪɴɪᴄɪᴀɴᴅᴏ ᴘʀᴏᴄᴇsᴏ ᴅᴇ ᴇʟɪᴍɪɴᴀᴄɪᴏɴ ᴅᴇ ᴛᴏᴅᴏs ʟᴏs ᴀʀᴄʜɪᴠᴏs ᴅᴇ sᴇsɪᴏɴ, ᴇxᴄᴇᴘᴛᴏ ᴇʟ ᴀʀᴄʜɪᴠᴏ ᴄʀᴇᴅs.ᴊsᴏɴ...✔️`, m, rcanal);
+await conn.reply(m.chat, ɪɴɪᴄɪᴀɴᴅᴏ ᴘʀᴏᴄᴇsᴏ ᴅᴇ ᴇʟɪᴍɪɴᴀᴄɪᴏɴ ᴅᴇ ᴛᴏᴅᴏs ʟᴏs ᴀʀᴄʜɪᴠᴏs ᴅᴇ sᴇsɪᴏɴ, ᴇxᴄᴇᴘᴛᴏ ᴇʟ ᴀʀᴄʜɪᴠᴏ creds.json...✔️`, m, rcanal);
 m.react(rwait)
 
 let sessionPath = `./${sessions}/`
