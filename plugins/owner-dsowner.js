@@ -28,8 +28,8 @@ if (filesDeleted === 0) {
 await conn.reply(m.chat, `${emoji2} ʟᴀ ᴄᴀʀᴘᴇᴛᴀ ᴇsᴛᴀ ᴠᴀᴄɪᴀ✔️.`, m, rcanal);
 } else {
 m.react(done)
-await conn.reply(m.chat, `${emoji} sᴇ ᴇʟɪᴍɪɴᴀʀᴏɴ ${filesDeleted} ᴀʀᴄʜɪᴠᴏs ᴅᴇ sᴇsɪᴏɴ, ᴇxᴄᴇᴘᴛᴏ ᴇʟ ᴀʀᴄʜɪᴠᴏ creds.json✔️.`, m, rcanal);
-conn.reply(m.chat, `${emoji} *¡Hola! ¿ʟᴏɢʀᴀs ᴠᴇʀᴍᴇ?*`, m, rcanal);
+await conn.reply(m.chat, `${emoji} sᴇ ᴇʟɪᴍɪɴᴀʀᴏɴ ${filesDeleted} ᴀʀᴄʜɪᴠᴏs ᴅᴇ sᴇsɪᴏɴ, ᴇxᴄᴇᴘᴛᴏ ᴇʟ ᴀʀᴄʜɪᴠᴏ creds.json.`, m, rcanal);
+conn.reply(m.chat, `${emoji} *¡hola! ¿ʟᴏɢʀᴀs ᴠᴇʀᴍᴇ?*`, m, rcanal);
 
 }
 } catch (err) {
