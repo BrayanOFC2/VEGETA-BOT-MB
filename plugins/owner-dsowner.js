@@ -4,9 +4,9 @@ import path from 'path'
 var handler = async (m, { conn, usedPrefix }) => {
 
 if (global.conn.user.jid !== conn.user.jid) {
-return conn.reply(m.chat, `${emoji} ᴜᴛɪʟɪᴢᴀ ᴇsᴛᴇ ᴄᴏᴍᴀɴᴅᴏ ᴅɪʀᴇᴄᴛᴀᴍᴇɴᴛᴇ ᴄᴏɴ ᴇʟ ʙᴏᴛ ᴘʀɪɴᴄɪᴘᴀʟ✔️.`, m, rcanal);
+return conn.reply(m.chat, `${emoji} Utiliza este comando directamente en el número principal del Bot.`, m, rcanal);
 }
-await conn.reply(m.chat, ɪɴɪᴄɪᴀɴᴅᴏ ᴘʀᴏᴄᴇsᴏ ᴅᴇ ᴇʟɪᴍɪɴᴀᴄɪᴏɴ ᴅᴇ ᴛᴏᴅᴏs ʟᴏs ᴀʀᴄʜɪᴠᴏs ᴅᴇ sᴇsɪᴏɴ, ᴇxᴄᴇᴘᴛᴏ ᴇʟ ᴀʀᴄʜɪᴠᴏ creds.json...✔️`, m, rcanal);
+await conn.reply(m.chat, `${emoji2} Iniciando proceso de eliminación de  los archivos de sesión, excepto el archivo creds.json...`, m, rcanal);
 m.react(rwait)
 
 let sessionPath = `./${sessions}/`
@@ -25,11 +25,11 @@ filesDeleted++;
 }
 }
 if (filesDeleted === 0) {
-await conn.reply(m.chat, `${emoji2} ʟᴀ ᴄᴀʀᴘᴇᴛᴀ ᴇsᴛᴀ ᴠᴀᴄɪᴀ✔️.`, m, rcanal);
+await conn.reply(m.chat, `${emoji2} La carpeta esta vacía.`, m, rcanal);
 } else {
 m.react(done)
-await conn.reply(m.chat, `${emoji} sᴇ ᴇʟɪᴍɪɴᴀʀᴏɴ ${filesDeleted} ᴀʀᴄʜɪᴠᴏs ᴅᴇ sᴇsɪᴏɴ, ᴇxᴄᴇᴘᴛᴏ ᴇʟ ᴀʀᴄʜɪᴠᴏ creds.json.`, m, rcanal);
-conn.reply(m.chat, `${emoji} *¡hola! ¿ʟᴏɢʀᴀs ᴠᴇʀᴍᴇ?*`, m, rcanal);
+await conn.reply(m.chat, `${emoji} Se eliminaron ${filesDeleted} ᴀʀᴄʜɪᴠᴏs ᴅᴇ sᴇsɪᴏɴ, ᴇxᴄᴇᴘᴛᴏ ᴇʟ ᴀʀᴄʜɪᴠᴏ creds.json.`, m, rcanal);
+conn.reply(m.chat, `${emoji} *¡Hola! ¿logras verme?*`, m, rcanal);
 
 }
 } catch (err) {
