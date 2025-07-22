@@ -12,7 +12,7 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
       return m.reply(`⚠️ No se encontraron resultados para "${text}".`);
     }
 
-    const video = searchData.data[0]; // Tomar el primer resultado
+    const video = searchData.data[0]; // Primer resultado
     const videoDetails = `
 🎵 *Título:* ${video.title}
 📺 *Canal:* ${video.author.name}
@@ -20,27 +20,23 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
 👀 *Vistas:* ${video.views}
 📅 *Publicado:* ${video.publishedAt}
 🌐 *Enlace:* ${video.url}
-`;
+`.trim();
 
-    await conn.sendMessage(m.chat, {
+    const buttons = [
+      { buttonId: `.descargaraudio ${video.url}`, buttonText: { displayText: '🎧 Descargar Audio' }, type: 1 },
+      { buttonId: video.url, buttonText: { displayText: '🌐 Ver en YouTube' }, type: 1 }
+    ];
+
+    const buttonMessage = {
       image: { url: video.image },
-      caption: videoDetails.trim()
-    }, { quoted: m });
+      caption: videoDetails,
+      footer: '¿Qué deseas hacer?',
+      buttons: buttons,
+      headerType: 4
+    };
 
-    const downloadApi = `https://api.vreden.my.id/api/ytmp3?url=${video.url}`;
-    const downloadResponse = await fetch(downloadApi);
-    const downloadData = await downloadResponse.json();
+    await conn.sendMessage(m.chat, buttonMessage, { quoted: m });
 
-    if (!downloadData?.result?.download?.url) {
-      return m.reply("❌ No se pudo obtener el audio del video.");
-    }
-    await conn.sendMessage(m.chat, {
-      audio: { url: downloadData.result.download.url },
-      mimetype: 'audio/mpeg',
-      fileName: `${video.title}.mp3`
-    }, { quoted: m });
-
-    await m.react("✅");
   } catch (error) {
     console.error(error);
     m.reply(`❌ Error al procesar la solicitud:\n${error.message}`);
