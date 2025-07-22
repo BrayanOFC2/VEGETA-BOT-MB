@@ -1,38 +1,38 @@
 import fetch from 'node-fetch';
 
-let handler = async (m, { conn, args, command }) => {
+let handler = async (m, { conn, args }) => {
   if (!args[0]) {
-    return m.reply(`╭─⬣「 *⚠️ USO INCORRECTO* 」\n│✦ Usa: *.imgg <texto>*\n│✦ Ej: *.imgg dragón oscuro*\n╰––––––––––––––✦`);
+    return m.reply(`╭─⬣「 *⚠️ USO INCORRECTO* 」\n│✦ Usa: *.imgg <texto>*\n│✦ Ej: *.imgg perro ninja*\n╰––––––––––––––✦`);
   }
 
   const prompt = args.join(' ');
-  const userTag = '@' + m.sender.split('@')[0]; // Menciona al usuario
+  const userTag = '@' + m.sender.split('@')[0];
 
-  // Mensaje mientras genera
+  // Mensaje de espera
   await conn.sendMessage(m.chat, {
-    text: `╭─⬣「 *🖼️ GENERANDO IMAGEN* 」\n│✦ Solicitado por: ${userTag}\n│✦ Prompt: *"${prompt}"*\n│✦ Espérame un momento...\n╰––––––––––––––✦`,
+    text: `╭─⬣「 *🎨 GENERANDO IMAGEN* 」\n│✦ Prompt: *${prompt}*\n│✦ Solicitado por: ${userTag}\n│✦ Espera un momento...\n╰––––––––––––––✦`,
     mentions: [m.sender],
   }, { quoted: m });
 
   try {
-    // API: Usa una confiable. Aquí DALL·E por lolhuman
-    const res = await fetch(`https://api.lolhuman.xyz/api/dalle2?apikey=Tu_API_KEY&text=${encodeURIComponent(prompt)}`);
+    
+    const res = await fetch(`https://lexica.art/api/v1/search?q=${encodeURIComponent(prompt)}`);
     const json = await res.json();
 
-    // Verificación
-    if (!json || !json.result || !json.result.includes('http')) throw 'Imagen no válida';
+    if (!json || !json.images || json.images.length === 0) throw '❌ No se encontró ninguna imagen';
 
-    // Envío de imagen generada
+    const imageUrl = json.images[0].srcSmall;
+
     await conn.sendMessage(m.chat, {
-      image: { url: json.result },
-      caption: `╭─⬣「 *✅ IMAGEN CREADA* 」\n│✦ Prompt: *${prompt}*\n│✦ Generado para: ${userTag}\n╰––––––––––––––✦`,
+      image: { url: imageUrl },
+      caption: `╭─⬣「 *✅ IMAGEN GENERADA* 」\n│✦ Prompt: *${prompt}*\n│✦ Por: ${userTag}\n╰––––––––––––––✦`,
       mentions: [m.sender],
     }, { quoted: m });
 
   } catch (e) {
-    console.error('[ERROR IMG]', e);
+    console.error(e);
     await conn.sendMessage(m.chat, {
-      text: `╭─⬣「 *❌ ERROR AL GENERAR* 」\n│✦ Ocurrió un problema generando la imagen\n│✦ Intenta con otra palabra o más simple\n╰––––––––––––––✦`,
+      text: `╭─⬣「 *❌ ERROR* 」\n│✦ No pude generar la imagen\n│✦ Intenta con otra palabra o más simple\n╰––––––––––––––✦`,
       mentions: [m.sender],
     }, { quoted: m });
   }
