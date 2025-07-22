@@ -54,5 +54,3 @@ handler.help = ['play <texto>', 'playaudio <texto>'];
 handler.tags = ['media'];
 
 export default handler;
-Ponle a este comando los botones al otro no y no metas nd del otro a este
-
