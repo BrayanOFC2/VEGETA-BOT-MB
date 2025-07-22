@@ -1,5 +1,7 @@
 import PhoneNumber from 'awesome-phonenumber';
 
+let imagenUrl = 'https://qu.ax/gSWtg.jpg';
+
 async function handler(m, { conn }) {
   m.react('👑');
   const numCreador = '5216641784469';
