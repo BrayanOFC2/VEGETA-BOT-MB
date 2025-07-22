@@ -1,14 +1,26 @@
-let handler = async (m, { conn, isROwner, text }) => {
-  if (!process.send) throw '*『✦』Para reiniciar el bot usa:* node start.js\n*o* node index.js'
-  if (!isROwner) throw 'Solo el owner puede usar este comando.'
+import os from 'os';
 
-  await conn.sendMessage(m.chat, { text: '🚀 Reiniciando bot...' }, { quoted: m })
-  process.send('reset')
-}
+let handler = async (m, { conn }) => {
+    try {
+        const start = Date.now();
 
-handler.help = ['restart']
-handler.tags = ['owner']
-handler.command = ['restart', 'reiniciar'] 
-handler.rowner = true
+        const info = `
+*↻ 🚀 Reiniciando bot... ↷*
+        `.trim();
 
-export default handler
+        await conn.reply(m.chat, info, m);
+
+        setTimeout(() => process.exit(0), 3000);
+
+    } catch (error) {
+        console.error('[ERROR][REINICIO]', error);
+        await conn.reply(m.chat, `❌ Error\n${error.message || error}`, m);
+    }
+};
+
+handler.help = ['restart'];
+handler.tags = ['owner'];
+handler.command = ['restart', 'reiniciar'];
+handler.rowner = true;
+
+export default handler;
