@@ -1,39 +1,32 @@
 import fetch from 'node-fetch';
 
-const handler = async (m, { conn, text }) => {
-  if (!text) {
-    await conn.sendMessage(m.chat, { 
-      text: '*🚀 falta el texto para generar la imagen*' 
-    }, { quoted: m });
-    return;
+let handler = async (m, { conn, args, command }) => {
+  if (!args[0]) {
+    return m.reply(`╭─⬣「 *⚠️ USO INCORRECTO* 」\n│✦ Usa: *.imgg <texto>*\n│✦ Ej: *.imgg dragón azul*\n╰––––––––––––––✦`);
   }
 
-  m.react('✨');
-  await conn.sendMessage(m.chat, { 
-    text: `*🚀Estoy generando tu imagen en la galaxia*` 
-  }, { quoted: m });
+  let prompt = args.join(' ');
+  await m.reply(`╭─⬣「 *🎨 GENERANDO IMAGEN* 」\n│✦ Texto: *"${prompt}"*\n│✦ Espérame un momento...\n╰––––––––––––––✦`);
 
   try {
-    const res = await fetch(`https://api.agungny.my.id/api/text2img?prompt=${encodeURIComponent(text)}`);
-    if (!res.ok) throw new Error();
+    const res = await fetch(`https://api.lolhuman.xyz/api/dalle2?apikey=Tu_API_KEY&text=${encodeURIComponent(prompt)}`);
+    const json = await res.json();
 
-    const buffer = await res.buffer();
-    m.react('🪄');
+    if (!json || !json.result) throw '❌ No se pudo generar la imagen';
 
-    await conn.sendMessage(m.chat, { 
-      image: buffer, 
-      caption: '*🚀 se generó tu imagen galáctica ✅*'
+    await conn.sendMessage(m.chat, {
+      image: { url: json.result },
+      caption: `╭─⬣「 *✅ IMAGEN GENERADA* 」\n│✦ Prompt: *${prompt}*\n│✦ Solicitud completada con éxito\n╰––––––––––––––✦`
     }, { quoted: m });
 
   } catch (e) {
-    await conn.sendMessage(m.chat, { 
-      text: '*🚨 𝑯𝒂 𝒐𝒄𝒖𝒓𝒓𝒊𝒅𝒐 𝒖𝒏 𝒆𝒓𝒓𝒐𝒓 😔*' 
-    }, { quoted: m });
+    console.error(e);
+    m.reply(`╭─⬣「 *❌ ERROR* 」\n│✦ No pude generar la imagen.\n│✦ Intenta de nuevo más tarde.\n╰––––––––––––––✦`);
   }
 };
 
-handler.tags = ['tools'];
-handler.help = ['genearimg'];
-handler.command = ['imgIA', 'imgg', 'Imgia'];
+handler.command = ['imgg', 'img'];
+handler.help = ['imgg <texto>'];
+handler.tags = ['ai', 'media'];
 
 export default handler;
