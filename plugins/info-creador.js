@@ -30,11 +30,22 @@ X-WA-BIZ-DESCRIPTION:${about}
 END:VCARD
   `.trim();
 
+  // 1. Envía la imagen primero
+  await conn.sendMessage(m.chat, {
+    image: { url: 'https://qu.ax/gSWtg.jpg' },
+    caption: `👑 *${name}* - CEO & Fundador de ${empresa}`
+  }, { quoted: m });
 
+  // 2. Luego envía el contacto vCard
   await conn.sendMessage(
     m.chat,
-    { contacts: { displayName: name, contacts: [{ vcard }] } },
-    { quoted: fkontak }
+    {
+      contacts: {
+        displayName: name,
+        contacts: [{ vcard }]
+      }
+    },
+    { quoted: m }
   );
 }
 
