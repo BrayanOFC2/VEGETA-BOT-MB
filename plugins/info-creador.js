@@ -1,7 +1,5 @@
 import PhoneNumber from 'awesome-phonenumber';
 
-let imagenUrl = 'https://qu.ax/gSWtg.jpg';
-
 async function handler(m, { conn }) {
   m.react('👑');
   const numCreador = '5216641784469';
@@ -11,6 +9,7 @@ async function handler(m, { conn }) {
   const about = (await conn.fetchStatus(ownerJid).catch(() => {}))?.status || 'estoy disponible para responder a tus preguntas';
   const empresa = 'BrayanOFC - Servicios Tecnológicos';
 
+let imagenUrl = 'https://qu.ax/gSWtg.jpg';
 
   const vcard = `
 BEGIN:VCARD
