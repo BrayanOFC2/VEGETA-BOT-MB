@@ -1,4 +1,4 @@
-/créditos github.com/BrayanOFC no quitar creditos/
+//créditos github.com/BrayanOFC no quitar creditos
 async function handler(m, { conn }) {
   m.react('👑');
 
