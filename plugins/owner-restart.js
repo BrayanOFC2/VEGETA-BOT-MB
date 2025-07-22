@@ -1,14 +1,9 @@
-import { spawn } from 'child_process'
 let handler = async (m, { conn, isROwner, text }) => {
+  if (!process.send) throw '*『✦』Para reiniciar el bot usa:* node start.js\n*o* node index.js'
+  if (!isROwner) throw 'Solo el owner puede usar este comando.'
 
-if (!process.send) throw '*『✦』Reiniciar: node start.js*\n*『✦』Reiniciar: node index.js*'
-
-if (conn.user.jid == conn.user.jid) {
-
-const { key } = await conn.sendMessage(m.chat, {text: `🚀 ᴄᴀʀɢᴀɴᴅᴏ...`}, {quoted: m})
-
-process.send('reset')
-} else throw 'eh'
+  await conn.sendMessage(m.chat, { text: '🚀 Reiniciando bot...' }, { quoted: m })
+  process.send('reset')
 }
 
 handler.help = ['restart']
@@ -17,4 +12,3 @@ handler.command = ['restart', 'reiniciar']
 handler.rowner = true
 
 export default handler
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
