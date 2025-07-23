@@ -1,3 +1,4 @@
+//créditos github.com/BrayanOFC
 const handler = async (m, { conn, text, isOwner }) => {
   if (!isOwner) return m.reply('🚫 Solo los owners pueden usar este comando.');
 
