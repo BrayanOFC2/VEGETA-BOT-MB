@@ -27,7 +27,7 @@ const handler = async (m, { conn, text, isOwner }) => {
   }, { quoted: m });
 };
 
-handler.command = /^adddragon$/i;
+handler.command = 'adddragon',;
 handler.owner = true;
 
 export default handler;
