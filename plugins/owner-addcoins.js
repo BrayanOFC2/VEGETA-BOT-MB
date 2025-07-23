@@ -28,7 +28,7 @@ const handler = async (m, { conn, text, isOwner }) => {
   }, { quoted: m });
 };
 
-handler.command = 'adddragon';
+handler.command = 'addcoin';
 handler.owner = true;
 
 export default handler;
