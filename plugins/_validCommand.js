@@ -1,4 +1,4 @@
-//export async function before(m) {
+/*export async function before(m) {
   if (!m.text || !global.prefix.test(m.text)) {
     return;
   }
@@ -39,4 +39,4 @@
     const comando = m.text.trim().split(' ')[0];
     await m.reply(`🔮*ᴇʟ ᴄᴏᴍᴀɴᴅᴏ* 《 *${comando}* 》*ɴᴏ ᴇxɪsᴛᴇ*\n\n*🔮 ᴘᴀʀᴀ ᴠᴇʀ ɪɴғᴏʀᴍᴀᴄɪᴏɴ ᴅᴇʟ ʙᴏᴛ ᴜsᴀ ᴇʟ ᴄᴏᴍᴀɴᴅᴏ* *${usedPrefix}𝗠𝗘𝗡𝗨*`);
   }
-}//
+}*/
