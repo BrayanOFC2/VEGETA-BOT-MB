@@ -24,21 +24,20 @@ let handler = async (m, { conn, usedPrefix, isRowner }) => {
 
     const used = process.memoryUsage();
 
-    let Vegeta = `\\Información - ${botname}\\n`;
-    Vegeta += `👑꙰᠁❥ *◜Creador◞* ⇢ †|Brayan★\n`;
-    Vegeta += `⚜️꙰᠁❥ *◜Prefijo◞* ⇢ [ ${usedPrefix} ]\n`;
-    Vegeta += `📚꙰᠁❥ *◜Versión◞* ⇢ ${vs}\n`;
-    Vegeta += `🔐꙰᠁❥ *◜Chats Privados◞* ⇢ ${chats.length - groupsIn.length}\n`;
-    Vegeta += `💬꙰᠁❥ *◜Total De Chats◞* ⇢ ${chats.length}\n`;
-    Vegeta += `👥꙰᠁❥ *◜Usuarios◞* ⇢ ${totalreg}\n`;
-    Vegeta += `📌꙰᠁❥ *◜Grupos◞* ⇢ ${groupsIn.length}\n`;
-    Vegeta += `⏱️꙰᠁❥ *◜Actividad◞* ⇢ ${muptime}\n`;
+    let Vegeta = `𝑰𝑵𝑭𝑶𝑹𝑴𝑨𝑪𝑰𝑶𝑵 - ${botname}\\n`;
+    Vegeta += `👑*◜ᴄʀᴇᴀᴅᴏʀ◞* ⇢ †|Brayan★\n`;
+    Vegeta += `🎯 *◜ᴘʀᴇғɪᴊᴏ◞* ⇢ [ ${usedPrefix} ]\n`;
+    Vegeta += `🏷 *◜ᴠᴇʀsɪᴏɴ◞* ⇢ ${vs}\n`;
+    Vegeta += `🔐 *◜ᴄʜᴀᴛs ᴘʀɪᴠᴀᴅᴏ◞* ⇢ ${chats.length - groupsIn.length}\n`;
+    Vegeta += `📌 *◜ᴛᴏᴛᴀʟ ᴅᴇ ᴄʜᴀᴛs◞* ⇢ ${chats.length}\n`;
+    Vegeta += `👥️ *◜ᴜsᴜᴀʀɪᴏs◞* ⇢ ${totalreg}\n`;
+    Vegeta += `📍 *◜ɢʀᴜᴘᴏs◞* ⇢ ${groupsIn.length}\n`;
+    Vegeta += `🧭 *◜ᴀᴄᴛɪᴠɪᴅᴀᴅ◞* ⇢ ${muptime}\n`;
 
-    // Calculando velocidad
-    const speed = process.memoryUsage().heapUsed / 1024 / 1024; // Ejemplo de uso de memoria
-    Vegeta += `🚀꙰᠁❥ *◜Velocidad◞* ⇢ ${(speed).toFixed(2)} MB\n`;
+    const speed = process.memoryUsage().heapUsed / 1024 / 1024;
+    Vegeta += `🚀 *◜ᴠᴇʟᴏᴄɪᴅᴀᴅ◞* ⇢ ${(speed).toFixed(2)} MB\n`;
 
-    Vegeta += `🍬꙰᠁❥ *◜Sub-Bots Activos◞* ⇢ ${totalUsers || '0'}`;
+    Vegeta += `🌟 *◜sᴜʙ-ʙᴏᴛs ᴀᴄᴛɪᴠᴏs◞* ⇢ ${totalUsers || '0'}`;
 
     await conn.sendFile(m.chat, pp, 'Vegeta.jpg', Vegeta, fkontak, null, rcanal);
 };
