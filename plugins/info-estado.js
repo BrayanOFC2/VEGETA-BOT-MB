@@ -1,5 +1,3 @@
-//Créditos Vegeta
-
 import ws from 'ws';
 
 let handler = async (m, { conn, usedPrefix, isRowner }) => {
@@ -25,7 +23,7 @@ let handler = async (m, { conn, usedPrefix, isRowner }) => {
     const used = process.memoryUsage();
 
     let Vegeta = `𝑰𝑵𝑭𝑶𝑹𝑴𝑨𝑪𝑰𝑶𝑵 - ${botname}\\n`;
-    Vegeta += `👑*◜ᴄʀᴇᴀᴅᴏʀ◞* ⇢ †|Brayan★\n`;
+    Vegeta += `👑*◜ᴄʀᴇᴀᴅᴏʀ◞* ⇢ BrayanOFC👑\n`;
     Vegeta += `🎯 *◜ᴘʀᴇғɪᴊᴏ◞* ⇢ [ ${usedPrefix} ]\n`;
     Vegeta += `🏷 *◜ᴠᴇʀsɪᴏɴ◞* ⇢ ${vs}\n`;
     Vegeta += `🔐 *◜ᴄʜᴀᴛs ᴘʀɪᴠᴀᴅᴏ◞* ⇢ ${chats.length - groupsIn.length}\n`;
