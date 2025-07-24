@@ -494,6 +494,7 @@ ${rdm}
 ┃🜲 .saveplugin nombre
 ┃🜲 .update
 ┃🜲 .actualizar
+┃🜲 .addcmd [sticker]
 ┃🜲 >
 ┃🜲 =>
 ┗━━━━━━━━━━━━━━━━━⪨
