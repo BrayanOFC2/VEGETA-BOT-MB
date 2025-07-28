@@ -3,37 +3,37 @@ import ws from 'ws'
 
 let tags = {
   'serbot': 'SUB BOTS',
-  'main': 'INFO',
-  'owner': 'OWNER',
-  'nable': 'ON / OFF',
-  'cmd': 'DATABASE',
-  'advanced': 'ADVANCED',
-  'game': 'GAME',
-  'rpg': 'RPG',
-  'group': 'GROUPS',
-  'downloader': 'DOWNLOAD',
-  'sticker': 'STICKER',
-  'audio': 'AUDIOS',
-  'search': 'SEARCH',
-  'tools': 'TOOLS',
-  'fun': 'FUN',
-  'anime': 'ANIME',
-  'nsfw': 'NSFW',
-  'premium': 'PREMIUM',
-  'weather': 'WEATHER',
-  'news': 'NEWS',
-  'finance': 'FINANCE',
-  'education': 'EDUCATION',
-  'health': 'HEALTH',
-  'entertainment': 'ENTERTAINMENT',
-  'sports': 'SPORTS',
-  'travel': 'TRAVEL',
-  'food': 'FOOD',
-  'shopping': 'SHOPPING',
-  'productivity': 'PRODUCTIVITY',
-  'social': 'SOCIAL',
-  'security': 'SECURITY',
-  'custom': 'CUSTOM'
+  'main': 'ZENO INFO',
+  'owner': 'DIOS CREADOR',
+  'nable': 'MODO SAIYAJIN',
+  'cmd': 'ESFERAS',
+  'advanced': 'TÉCNICAS',
+  'game': 'COMBATE',
+  'rpg': 'RPG Z',
+  'group': 'UNIVERSO',
+  'downloader': 'CAPSULE CORP',
+  'sticker': 'FUSIONES',
+  'audio': 'GRITOS',
+  'search': 'RADAR',
+  'tools': 'ARTEFACTOS',
+  'fun': 'HUMOR Z',
+  'anime': 'DB-ANIME',
+  'nsfw': 'MAJIN',
+  'premium': 'GOD KI',
+  'weather': 'CLIMA Z',
+  'news': 'NOTICIAS',
+  'finance': 'ZENI',
+  'education': 'MENTE Z',
+  'health': 'SENZU',
+  'entertainment': 'ARENA',
+  'sports': 'TORNEO',
+  'travel': 'KAIKAI',
+  'food': 'RAMEN Z',
+  'shopping': 'TIENDA DE BULMA',
+  'productivity': 'MAQUINARIA Z',
+  'social': 'REDES Z',
+  'security': 'BARRERA',
+  'custom': 'AURA PERSONAL'
 }
 
 let handler = async (m, { conn, usedPrefix: _p }) => {
@@ -41,7 +41,7 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
     let userId = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.sender
     let user = global.db.data.users[userId]
     let name = conn.getName(userId)
-    let mode = global.opts["self"] ? "Privado" : "Público"
+    let mode = global.opts["self"] ? "Modo Privado 🔒" : "Modo Público 🌀"
     let totalCommands = Object.keys(global.plugins).length
     let totalreg = Object.keys(global.db.data.users).length
     let uptime = clockString(process.uptime() * 1000)
@@ -66,37 +66,39 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
     }))
 
     let menuText = `
-╭━━━『👾 ${botname} 👾』━━━╮
-┃ 🧑‍💻 𝗨𝘀𝘂𝗮𝗿𝗶𝗼 : @${userId.split('@')[0]}
-┃ 🚀 𝗧𝗶𝗽𝗼     : ${(conn.user.jid == global.conn.user.jid ? '𝙋𝙍𝙄𝙉𝘾𝙄𝙋𝘼𝙇 🅥' : '𝙎𝙐𝘽-𝘽𝙊𝙏 🅑')}
-┃ 🌐 𝗠𝗼𝗱𝗼     : ${mode}
-┃ 🌍 𝗨𝘀𝘂𝗮𝗿𝗶𝗼𝘀 : ${totalreg}
-┃ ⏳ 𝗨𝗽𝘁𝗶𝗺𝗲  : ${uptime}
-┃ 💾 𝗖𝗼𝗺𝗮𝗻𝗱𝗼𝘀: ${totalCommands}
-┃ 🤖 𝗦𝘂𝗯𝗕𝗼𝘁𝘀  : ${users.length}
-╰━━━━━━━━━━━━━━━━━━━━━━━━━╯
+╭━━━『🐉 ${botname.toUpperCase()} | DRAGON MENU』━━━╮
+┃ ⚡ Usuario Saiyajin: @${userId.split('@')[0]}
+┃ 👑 Rango          : ${(conn.user.jid == global.conn.user.jid ? 'DIOS PRINCIPAL 🅥' : 'SUB-BOT KAIO 🅑')}
+┃ 🌌 Universo       : ${mode}
+┃ 📊 Registro Z     : ${totalreg}
+┃ ⏱️ Tiempo Activo  : ${uptime}
+┃ 🛠️ Comandos Totales: ${totalCommands}
+┃ 🌀 Sub Bots Activos: ${users.length}
+╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╯
 
-🎮 *C A T E G O R Í A S  -  G A M E R* 🎮
+💥 *⚔️ SECCIONES DEL TORNEO DEL PODER ⚔️* 💥
 ${Object.keys(tags).map(tag => {
   const commandsForTag = help.filter(menu => menu.tags.includes(tag))
   if (commandsForTag.length === 0) return ''
 
   let section = `
-╭───〔 🎯 ${tags[tag]} ${getRandomEmoji()} 〕───╮
+╭───〔 ${tags[tag]} ${getRandomEmoji()} 〕───╮
 ${commandsForTag.map(menu => menu.help.map(help =>
-  `┃ 🕹️ ${_p}${help}${menu.limit ? ' 🟡' : ''}${menu.premium ? ' 🔒' : ''}`
+  `┃ 👊 ${_p}${help}${menu.limit ? ' 🟡' : ''}${menu.premium ? ' 🔒' : ''}`
 ).join('\n')).join('\n')}
 ╰━━━━━━━━━━━━━━━━━━━━╯`
   return section
 }).filter(text => text !== '').join('\n')}
 
-🔥 *𝗣𝗼𝘄𝗲𝗿𝗲𝗱 𝗯𝘆 BrayanOFC - ${botname}* 🔥
+💫 *El poder no es nada sin control... — Vegeta* 💫
+
+🔥 *By BrayanOFC & ${botname.toUpperCase()}* 🔥
 `.trim()
 
-    await m.react('👑')
+    await m.react('🐉')
 
     await conn.sendMessage(m.chat, {
-      video: { url: 'https://qu.ax/BYKaE.mp4' },
+      video: { url: 'https://files.catbox.moe/0d5eiu.mp4' },
       caption: menuText,
       gifPlayback: true,
       contextInfo: {
@@ -105,7 +107,7 @@ ${commandsForTag.map(menu => menu.help.map(help =>
     }, { quoted: m })
 
   } catch (e) {
-    conn.reply(m.chat, `✖️ Lo sentimos, el menú tiene un error.\n\n${e}`, m)
+    conn.reply(m.chat, `✖️ Menú en modo Dragon Ball falló.\n\n${e}`, m)
     throw e
   }
 }
@@ -125,7 +127,7 @@ function clockString(ms) {
 }
 
 function getRandomEmoji() {
-  const emojis = ['👑', '🔥', '🌟', '⚡']
+  const emojis = ['🐉', '⚡', '🔥', '👑', '💥', '🌌']
   return emojis[Math.floor(Math.random() * emojis.length)]
 }
 
