@@ -98,7 +98,7 @@ ${commandsForTag.map(menu => menu.help.map(help =>
     await m.react('🐉')
 
     await conn.sendMessage(m.chat, {
-      video: { url: 'https://files.catbox.moe/0d5eiu.mp4' },
+      video: { url: 'https://qu.ax/BYKaE.mp4' },
       caption: menuText,
       footer: '✨ Usa los botones para acceder a secciones rápidas.',
       buttons: [
