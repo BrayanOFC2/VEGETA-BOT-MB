@@ -98,13 +98,12 @@ ${commandsForTag.map(menu => menu.help.map(help =>
     await m.react('🐉')
 
     await conn.sendMessage(m.chat, {
-      video: { url: 'https://files.catbox.moe/0d5eiu.mp4' },
-      caption: menuText,
-      gifPlayback: true,
-      contextInfo: {
-        mentionedJid: [userId]
-      }
-    }, { quoted: m })
+  video: { url: 'https://files.catbox.moe/0d5eiu.mp4' },
+  caption: menuText,
+  contextInfo: {
+    mentionedJid: [userId]
+  }
+}, { quoted: m })
 
   } catch (e) {
     conn.reply(m.chat, `✖️ Menú en modo Dragon Ball falló.\n\n${e}`, m)
