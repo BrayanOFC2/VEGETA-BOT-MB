@@ -14,9 +14,6 @@ async function handler(m, { conn }) {
 ┃ 🔗 *Contacto:* 
 ┃    ${link}
 ╰━━━━━━━━━━━━━━━━━━⬣
-
-👻 *Fundador y CEO oficial de servicios tecnológicos BrayanOFC.*
-📞 Disponible para: Bots, APIs, Servicios, Automatización y más.
   `.trim();
 
   await conn.sendMessage(m.chat, {
