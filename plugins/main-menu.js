@@ -91,7 +91,7 @@ ${commandsForTag.map(menu => menu.help.map(help =>
 
 💫 *El poder no es nada sin control... — Vegeta* 💫
 
-🔥 *By BrayanOFC & ${botname.toUpperCase()}* 🔥
+🔥 *By BrayanOFC* 🔥
 `.trim()
 
     await m.react('🐉')
