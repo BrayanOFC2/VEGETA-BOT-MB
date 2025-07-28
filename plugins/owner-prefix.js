@@ -39,5 +39,5 @@ const handler = async (msg, { conn, text }) => {
   }, { quoted: msg });
 };
 
-handler.command = ['setprefix'];
+handler.command = ['prefix'];
 module.exports = handler;
