@@ -1,5 +1,6 @@
 let handler = async (m, { conn, usedPrefix }) => {
-  let texto = `
+  try {
+    let texto = `
 🎮 *MENÚ DE JUEGOS Z — VEGETA BOT MB* 🎮
 
 Aquí tienes los comandos para divertirte como un verdadero Saiyajin:
@@ -17,15 +18,17 @@ Aquí tienes los comandos para divertirte como un verdadero Saiyajin:
 ✨ ¡Prepárate para el Torneo del Humor y las Batallas!
 `
 
-  const imageUrl = 'https://i.imgur.com/ZXBtVw7.jpg'
+    const imageUrl = 'https://i.imgur.com/ZXBtVw7.jpg'
 
-  await conn.sendMessage(m.chat, {
-    image: { url: imageUrl },
-    caption: texto,
-    contextInfo: {
-      mentionedJid: [m.sender]
-    }
-  }, { quoted: m })
+    await conn.sendMessage(m.chat, {
+      image: { url: imageUrl },
+      caption: texto,
+      contextInfo: { mentionedJid: [m.sender] }
+    }, { quoted: m })
+  } catch (e) {
+    await conn.sendMessage(m.chat, { text: 'Error al enviar el menú de juegos.' }, { quoted: m })
+    console.error(e)
+  }
 }
 
 handler.command = ['juegosmenu']
