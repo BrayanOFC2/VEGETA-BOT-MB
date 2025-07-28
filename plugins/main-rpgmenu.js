@@ -1,5 +1,8 @@
+import fetch from 'node-fetch'
+
 let handler = async (m, { conn, usedPrefix }) => {
-  let texto = `
+  try {
+    let texto = `
 ⚔️ *MENÚ RPG Z — VEGETA BOT MB* ⚔️
 
 Sumérgete en el mundo Saiyajin y desarrolla tu poder al máximo:
@@ -20,20 +23,25 @@ Sumérgete en el mundo Saiyajin y desarrolla tu poder al máximo:
 👊 ¡Despierta tu *KI* y evoluciona como un verdadero guerrero Z!
 `
 
-  const videoUrl = 'https://qu.ax/BYKaE.mp4'
+    const videoUrl = 'https://qu.ax/BYKaE.mp4'
+    const response = await fetch(videoUrl)
+    const buffer = await response.buffer()
 
-  await conn.sendMessage(m.chat, {
-    video: { url: videoUrl },
-    caption: texto,
-    gifPlayback: false,
-    contextInfo: {
-      mentionedJid: [m.sender]
-    }
-  }, { quoted: m })
+    await conn.sendMessage(m.chat, {
+      video: buffer,
+      caption: texto,
+      gifPlayback: false,
+      contextInfo: { mentionedJid: [m.sender] }
+    }, { quoted: m })
+
+  } catch (e) {
+    await conn.sendMessage(m.chat, { text: 'Error al enviar el menú RPG.' }, { quoted: m })
+    console.error(e)
+  }
 }
 
-handler.command = ['rpgmenu']
-handler.help = ['rpgmenu']
+handler.command = ['menurpg']
+handler.help = ['menurpg']
 handler.tags = ['rpg']
 
 export default handler
