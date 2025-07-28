@@ -19,8 +19,8 @@ Sumérgete en el mundo Saiyajin y desarrolla tu poder al máximo:
 
 👊 ¡Despierta tu *KI* y evoluciona como un verdadero guerrero Z!
 `
-let vid = 'https://qu.ax/gSWtg.jpg';
-
+    await conn.sendMessage(m.chat, {
+      video: { url: 'https://qu.ax/BYKaE.mp4' },
   conn.sendMessage(m.chat, {
     text: texto,
     contextInfo: {
