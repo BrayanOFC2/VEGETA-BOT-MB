@@ -28,8 +28,8 @@ Aquí tienes los comandos para divertirte como un verdadero Saiyajin:
   }, { quoted: m })
 }
 
-handler.command = ['juegosmenu']
-handler.help = ['juegosmenu']
+handler.command = ['menujuegos']
+handler.help = ['menujuegos']
 handler.tags = ['game']
 
 export default handler
