@@ -91,7 +91,7 @@ ${commandsForTag.map(menu => menu.help.map(help =>
 🔥 *𝗣𝗼𝘄𝗲𝗿𝗲𝗱 𝗯𝘆 BrayanOFC - ${botname}* 🔥
 '.trim();
 
-    const vid = ['https://files.catbox.moe/13nqyi.mp4', 'https://files.catbox.moe/13nqyi.mp4']; 
+    const ImageUrls = ['https://files.catbox.moe/13nqyi.mp4', 'https://files.catbox.moe/13nqyi.mp4']; 
 
 let selectedImage = imageUrls[Math.floor(Math.random() * imageUrls.length)];
 
