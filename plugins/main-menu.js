@@ -2,37 +2,48 @@ import { xpRange } from '../lib/levelling.js'
 import ws from 'ws';
 
 let tags = {
-  'anime': 'ANIME',
-  'main': 'INFO',
-  'search': 'SEARCH',
-  'game': 'GAME',
   'serbot': 'SUB BOTS',
-  'rpg': 'RPG',
-  'sticker': 'STICKER',
-  'group': 'GROUPS',
-  'nable': 'ON / OFF',
-  'premium': 'PREMIUM',
-  'downloader': 'DOWNLOAD',
-  'tools': 'TOOLS',
-  'fun': 'FUN',
-  'nsfw': 'NSFW',
-  'cmd': 'DATABASE',
+  'main': 'INFO',
   'owner': 'OWNER',
-  'audio': 'AUDIOS',
+  'nable': 'ON / OFF',
+  'cmd': 'DATABASE',
   'advanced': 'ADVANCED',
+
+  'game': 'GAME',
+  'rpg': 'RPG',
+
+  'group': 'GROUPS',
+
+  'downloader': 'DOWNLOAD',
+  'sticker': 'STICKER',
+  'audio': 'AUDIOS',
+
+  'search': 'SEARCH',
+  'tools': 'TOOLS',
+
+  'fun': 'FUN',
+  'anime': 'ANIME',
+
+  'nsfw': 'NSFW',
+
+  'premium': 'PREMIUM',
+
   'weather': 'WEATHER',
   'news': 'NEWS',
   'finance': 'FINANCE',
   'education': 'EDUCATION',
   'health': 'HEALTH',
+
   'entertainment': 'ENTERTAINMENT',
   'sports': 'SPORTS',
+
   'travel': 'TRAVEL',
   'food': 'FOOD',
   'shopping': 'SHOPPING',
   'productivity': 'PRODUCTIVITY',
   'social': 'SOCIAL',
   'security': 'SECURITY',
+
   'custom': 'CUSTOM'
 };
 let handler = async (m, { conn, usedPrefix: _p }) => {
