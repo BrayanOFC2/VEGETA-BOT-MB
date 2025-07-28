@@ -1,6 +1,4 @@
 let handler = async (m, { conn, usedPrefix }) => {
-    await conn.sendMessage(m.chat, {
-      video: { url: 'https://qu.ax/BYKaE.mp4' },
  let texto = `
 ⚔️ *MENÚ RPG Z — VEGETA BOT MB* ⚔️
 
