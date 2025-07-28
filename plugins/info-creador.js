@@ -2,13 +2,26 @@
 async function handler(m, { conn }) {
   m.react('👑');
 
-  const name = 'BrᴀʏᴀɴOFC👻';
+  const name = 'BrᴀʏᴀɴOFC 👻';
   const empresa = 'BrayanOFC - Servicios Tecnológicos';
   const link = 'https://wa.me/5216641784469';
+  const imagen = 'https://qu.ax/gSWtg.jpg';
+
+  const caption = `
+╭━〔 👑 *OWNER INFO* 👑 〕━⬣
+┃ 👤 *Nombre:* ${name}
+┃ 🏢 *Empresa:* ${empresa}
+┃ 🔗 *Contacto:* 
+┃    ${link}
+╰━━━━━━━━━━━━━━━━━━⬣
+
+👻 *Fundador y CEO oficial de servicios tecnológicos BrayanOFC.*
+📞 Disponible para: Bots, APIs, Servicios, Automatización y más.
+  `.trim();
 
   await conn.sendMessage(m.chat, {
-    image: { url: 'https://qu.ax/gSWtg.jpg' },
-    caption: `👑 *${name}*\n👻 - CEO & Fundador de\n*${empresa}*\n\n📲 ➡️ ${link}`,
+    image: { url: imagen },
+    caption,
   }, { quoted: m });
 }
 
