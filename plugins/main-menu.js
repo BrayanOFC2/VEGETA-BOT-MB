@@ -2,13 +2,13 @@ import { xpRange } from '../lib/levelling.js'
 import ws from 'ws'
 let tags = {
   'serbot': 'SUB BOTS',
-  'rpgmenu': '⚔️ MENÚ RPG',
-  'juegosmenu': '🎮 MENÚ JUEGOS',
   'main': 'ZENO INFO',
   'owner': 'DIOS CREADOR',
   'nable': 'MODO SAIYAJIN',
   'cmd': 'ESFERAS',
   'advanced': 'TÉCNICAS',
+  'game': 'COMBATE',
+  'rpg': 'RPG Z',
   'group': 'UNIVERSO',
   'downloader': 'CAPSULE CORP',
   'sticker': 'FUSIONES',
