@@ -30,12 +30,12 @@
 ### **`💭 Contáctanos`**
 
 <a
-href="https://wa.me/526641804242?text="><img src="https://qu.ax/ugHh.jpg" height="125px"></a>
+href="https://wa.me/526641784469?text="><img src="https://qu.ax/ugHh.jpg" height="125px"></a>
 
 <details>
 <summary><b> 💣 Contáctos</b></summary>
 
-* https://wa.me/526641804242
+* https://wa.me/526641784469
 
 ---
 
@@ -67,7 +67,7 @@ apt update && apt upgrade && pkg install -y git nodejs ffmpeg imagemagick yarn
 ```
 
 ```bash
-git clone https://github.com/brayan127p/VEGETA-BOT-MB && cd VEGETA-BOT-MB
+git clone https://github.com/BrayanOFC/VEGETA-BOT-MB && cd VEGETA-BOT-MB
 ```
 
 ```bash
@@ -96,7 +96,7 @@ Si después de instalar el bot en Termux se detiene (pantalla en blanco, pérdid
 
 ---
 
-#### **🍬 Obtener otro codigo qr en termux**
+#### **🧨 Obtener otro codigo qr en termux**
 
 Si después de instalar el bot en Termux y iniciar la session del bot (el numero se va a soporte, se cierra la conexión o demorastes al conectar), sigue estos pasos:
 
@@ -107,7 +107,7 @@ Si después de instalar el bot en Termux y iniciar la session del bot (el numero
 
 2. Elimina la carpeta MiniSession:
     ```bash
-    rm -rf VegetaSession
+    rm -rf Session
     ```
 
 3. Inicia el bot nuevamente:
