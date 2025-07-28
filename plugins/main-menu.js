@@ -1,5 +1,5 @@
 import { xpRange } from '../lib/levelling.js'
-import ws from 'ws';
+import ws from 'ws'
 
 let tags = {
   'serbot': 'SUB BOTS',
@@ -34,35 +34,36 @@ let tags = {
   'social': 'SOCIAL',
   'security': 'SECURITY',
   'custom': 'CUSTOM'
-};
+}
+
 let handler = async (m, { conn, usedPrefix: _p }) => {
   try {
-        let userId = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.sender
+    let userId = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.sender
     let user = global.db.data.users[userId]
     let name = conn.getName(userId)
-    let mode = global.opts["self"] ? "Privado" : "Público";
-    let totalCommands = Object.keys(global.plugins).length;
-    let totalreg = Object.keys(global.db.data.users).length;
-    let uptime = clockString(process.uptime() * 1000);
-const users = [...new Set([
-  ...(global.conns || []).filter(conn => 
-    conn.user && conn.ws?.socket?.readyState !== ws.CLOSED
-  )
-])];
+    let mode = global.opts["self"] ? "Privado" : "Público"
+    let totalCommands = Object.keys(global.plugins).length
+    let totalreg = Object.keys(global.db.data.users).length
+    let uptime = clockString(process.uptime() * 1000)
+
+    const users = [...new Set(
+      (global.conns || []).filter(conn =>
+        conn.user && conn.ws?.socket?.readyState !== ws.CLOSED
+      )
+    )]
 
     if (!global.db.data.users[userId]) {
-      global.db.data.users[userId] = { exp: 0, level: 1 };
+      global.db.data.users[userId] = { exp: 0, level: 1 }
     }
 
-    //let name = await conn.getName(userId);
-    let { exp, level } = global.db.data.users[userId];
-    let { min, xp, max } = xpRange(level, global.multiplier);
+    let { exp, level } = global.db.data.users[userId]
+    let { min, xp, max } = xpRange(level, global.multiplier)
     let help = Object.values(global.plugins).filter(plugin => !plugin.disabled).map(plugin => ({
       help: Array.isArray(plugin.help) ? plugin.help : (plugin.help ? [plugin.help] : []),
       tags: Array.isArray(plugin.tags) ? plugin.tags : (plugin.tags ? [plugin.tags] : []),
       limit: plugin.limit,
       premium: plugin.premium,
-    }));
+    }))
 
     let menuText = `
 ╭━━━『👾 ${botname} 👾』━━━╮
@@ -77,83 +78,62 @@ const users = [...new Set([
 
 🎮 *C A T E G O R Í A S  -  G A M E R* 🎮
 ${Object.keys(tags).map(tag => {
-  const commandsForTag = help.filter(menu => menu.tags.includes(tag));
-  if (commandsForTag.length === 0) return '';
+  const commandsForTag = help.filter(menu => menu.tags.includes(tag))
+  if (commandsForTag.length === 0) return ''
 
-  return `
+  let section = `
 ╭───〔 🎯 ${tags[tag]} ${getRandomEmoji()} 〕───╮
 ${commandsForTag.map(menu => menu.help.map(help =>
   `┃ 🕹️ ${_p}${help}${menu.limit ? ' 🟡' : ''}${menu.premium ? ' 🔒' : ''}`
 ).join('\n')).join('\n')}
-╰━━━━━━━━━━━━━━━━━━━━╯`;
+╰━━━━━━━━━━━━━━━━━━━━╯`
+  return section
 }).filter(text => text !== '').join('\n')}
 
 🔥 *𝗣𝗼𝘄𝗲𝗿𝗲𝗱 𝗯𝘆 BrayanOFC - ${botname}* 🔥
-'.trim();
+`.trim()
 
-    const ImageUrls = ['https://files.catbox.moe/13nqyi.mp4', 'https://files.catbox.moe/13nqyi.mp4']; 
+    await m.react('👑')
 
-let selectedImage = imageUrls[Math.floor(Math.random() * imageUrls.length)];
-
-    await m.react('👑');
-
-   /* await conn.sendMessage(m.chat, { 
-      text: menuText.trim(),
+    await conn.sendMessage(m.chat, {
+      video: { url: 'https://files.catbox.moe/0d5eiu.mp4' },
+      caption: menuText,
+      gifPlayback: true,
       contextInfo: {
-          mentionedJid: [m.sender],
-          isForwarded: true,
-          forwardingScore: 999,
-          externalAdReply: {
-              title: textbot,
-              body: dev,
-              thumbnailUrl: imageUrls,
-              sourceUrl: redes,
-              mediaType: 1,
-              showAdAttribution: true,
-              renderLargerThumbnail: true,
-          },
-      },
-  }, { quoted: m })*/
+        mentionedJid: [userId]
+      }
+    }, { quoted: m })
 
-        await conn.sendMessage(m.chat, {
-  image: { url: selectedImage },
-  caption: menuText,
-contextInfo: {
-            mentionedJid: [userId] }
-}, { quoted: m });
-      } catch (e) {
-    conn.reply(m.chat, `✖️ Lo sentimos, el menú tiene un error. ${e} `, m);
-    throw e;
+  } catch (e) {
+    conn.reply(m.chat, `✖️ Lo sentimos, el menú tiene un error.\n\n${e}`, m)
+    throw e
   }
-};
+}
 
-handler.help = ['menu', 'allmenu'];
-handler.tags = ['main'];
-handler.command = ['menu', 'allmenu', 'menú'];
-handler.register = true;
+handler.help = ['menu', 'allmenu']
+handler.tags = ['main']
+handler.command = ['menu', 'allmenu', 'menú']
+handler.register = true
 
-export default handler;
-
-const more = String.fromCharCode(8206);
-const readMore = more.repeat(4001);
+export default handler
 
 function clockString(ms) {
-  let h = Math.floor(ms / 3600000);
-  let m = Math.floor(ms / 60000) % 60;
-  let s = Math.floor(ms / 1000) % 60;
-  return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':');
+  let h = Math.floor(ms / 3600000)
+  let m = Math.floor(ms / 60000) % 60
+  let s = Math.floor(ms / 1000) % 60
+  return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
 }
 
 function getRandomEmoji() {
-  const emojis = ['👑', '🔥', '🌟', '⚡'];
-  return emojis[Math.floor(Math.random() * emojis.length)];
+  const emojis = ['👑', '🔥', '🌟', '⚡']
+  return emojis[Math.floor(Math.random() * emojis.length)]
 }
 
 function getLevelProgress(exp, min, max, length = 10) {
-  if (exp < min) exp = min;
-  if (exp > max) exp = max;
-  let progress = Math.floor(((exp - min) / (max - min)) * length);
-  progress = Math.max(0, Math.min(progress, length)); 
-  let bar = '█'.repeat(progress) + '░'.repeat(length - progress);
-  return `[${bar}]`;
+  if (exp < min) exp = min
+  if (exp > max) exp = max
+  let progress = Math.floor(((exp - min) / (max - min)) * length)
+  progress = Math.max(0, Math.min(progress, length))
+  let bar = '█'.repeat(progress) + '░'.repeat(length - progress)
+  return `[${bar}]`
 }
