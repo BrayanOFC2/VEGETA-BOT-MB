@@ -1,3 +1,5 @@
+import fetch from 'node-fetch'
+
 let handler = async (m, { conn, usedPrefix }) => {
   try {
     let texto = `
@@ -18,11 +20,14 @@ Aquí tienes los comandos para divertirte como un verdadero Saiyajin:
 ✨ ¡Prepárate para el Torneo del Humor y las Batallas!
 `
 
-    const imageUrl = 'https://i.imgur.com/ZXBtVw7.jpg'
+    const videoUrl = 'https://qu.ax/BYKaE.mp4'
+    const response = await fetch(videoUrl)
+    const buffer = await response.buffer()
 
     await conn.sendMessage(m.chat, {
-      image: { url: imageUrl },
+      video: buffer,
       caption: texto,
+      gifPlayback: false,
       contextInfo: { mentionedJid: [m.sender] }
     }, { quoted: m })
   } catch (e) {
