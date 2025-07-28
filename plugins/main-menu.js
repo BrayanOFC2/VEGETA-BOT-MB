@@ -65,7 +65,7 @@ const users = [...new Set([
       global.db.data.users[userId] = { exp: 0, level: 1 };
     }
 
-    //let name = await conn.getName(userId);
+    let name = await conn.getName(userId);
     let { exp, level } = global.db.data.users[userId];
     let { min, xp, max } = xpRange(level, global.multiplier);
     let help = Object.values(global.plugins).filter(plugin => !plugin.disabled).map(plugin => ({
