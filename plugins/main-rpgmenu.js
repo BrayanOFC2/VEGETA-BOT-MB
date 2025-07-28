@@ -1,4 +1,6 @@
 let handler = async (m, { conn, usedPrefix }) => {
+    await conn.sendMessage(m.chat, {
+      video: { url: 'https://qu.ax/BYKaE.mp4' },
  let texto = `
 ⚔️ *MENÚ RPG Z — VEGETA BOT MB* ⚔️
 
@@ -19,8 +21,6 @@ Sumérgete en el mundo Saiyajin y desarrolla tu poder al máximo:
 
 👊 ¡Despierta tu *KI* y evoluciona como un verdadero guerrero Z!
 `
-    await conn.sendMessage(m.chat, {
-      video: { url: 'https://qu.ax/BYKaE.mp4' },
   conn.sendMessage(m.chat, {
     text: texto,
     contextInfo: {
