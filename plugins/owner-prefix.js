@@ -1,66 +1,43 @@
 const fs = require("fs");
 const path = require("path");
 
-const handler = async (msg, { conn, args }) => {
-  const sender = msg.key.participant || msg.key.remoteJid;
-  const numero = sender.replace(/[^0-9]/g, "");
+const handler = async (msg, { conn, text }) => {
+  // Reacción inicial
+  await conn.sendMessage(msg.key.remoteJid, {
+    react: { text: "⚙️", key: msg.key }
+  });
+
   const fromMe = msg.key.fromMe;
-
-  // ⏳ Reacción inicial
-  await conn.sendMessage(msg.key.remoteJid, {
-    react: { text: "⏳", key: msg.key }
-  });
-
-  // 🚫 Validación: owner o bot mismo
-  if (!global.isOwner(numero) && !fromMe) {
-    await conn.sendMessage(msg.key.remoteJid, {
-      react: { text: "❌", key: msg.key }
-    });
-    return conn.sendMessage(msg.key.remoteJid, {
-      text: "🚫 Este comando solo puede usarlo un Owner o el mismo bot."
+  if (!fromMe) {
+    return await conn.sendMessage(msg.key.remoteJid, {
+      text: "⛔ Solo el *dueño del subbot* puede usar este comando."
     }, { quoted: msg });
   }
 
-  const ruta = path.resolve("./prefijos.json");
-
-  if (!args[0]) {
-    await conn.sendMessage(msg.key.remoteJid, {
-      react: { text: "❌", key: msg.key }
-    });
-    return conn.sendMessage(msg.key.remoteJid, {
-      text: `✳️ Uso correcto:\n.setprefix [ "." , "🐱", "#" ]\n.setprefix 🤖`
+  if (!text || text.length > 2) {
+    return await conn.sendMessage(msg.key.remoteJid, {
+      text: "⚠️ Usa el comando con el prefijo que desees (máx. 2 caracteres).\n\n✅ Ejemplo:\n.setprefix 🔥"
     }, { quoted: msg });
   }
 
-  let nuevosPrefijos;
+  // Obtener ID limpio del subbot
+  const rawID = conn.user?.id || "";
+  const subbotID = rawID.split(":")[0] + "@s.whatsapp.net";
 
-  try {
-    if (args.join(" ").startsWith("[")) {
-      nuevosPrefijos = JSON.parse(args.join(" ").trim());
-      if (!Array.isArray(nuevosPrefijos) || nuevosPrefijos.some(p => typeof p !== "string" || p.length === 0)) throw new Error();
-    } else {
-      nuevosPrefijos = [args.join(" ")]; // acepta emojis largos o combinaciones
-    }
-  } catch (e) {
-    await conn.sendMessage(msg.key.remoteJid, {
-      react: { text: "❌", key: msg.key }
-    });
-    return conn.sendMessage(msg.key.remoteJid, {
-      text: "⚠️ Prefijo inválido.\nEjemplos válidos:\n.setprefix [ \".\" , \"#\" , \"💀\" ]\n.setprefix 🤖"
-    }, { quoted: msg });
+  // Cargar archivo de prefijos
+  const filePath = path.resolve("prefixes.json");
+  let data = {};
+  if (fs.existsSync(filePath)) {
+    data = JSON.parse(fs.readFileSync(filePath, "utf-8"));
   }
 
-  fs.writeFileSync(ruta, JSON.stringify(nuevosPrefijos, null, 2));
-  global.prefixes = nuevosPrefijos;
+  data[subbotID] = text;
+  fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
 
   await conn.sendMessage(msg.key.remoteJid, {
-    react: { text: "✅", key: msg.key }
-  });
-
-  return conn.sendMessage(msg.key.remoteJid, {
-    text: `✅ Prefijo(s) actualizado(s):\n${nuevosPrefijos.map(p => `➤ ${p}`).join("\n")}`
+    text: `✅ Prefijo actualizado correctamente a: *${text}*`
   }, { quoted: msg });
 };
 
-handler.command = ["setprefix"];
+handler.command = ['setprefix'];
 module.exports = handler;
