@@ -1,3 +1,4 @@
+//creado y editado por BrayanOFC
 import { xpRange } from '../lib/levelling.js'
 import ws from 'ws'
 let tags = {
