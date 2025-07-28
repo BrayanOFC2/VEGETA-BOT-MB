@@ -4,7 +4,7 @@ async function handler(m, { conn }) {
 
   const name = 'BrᴀʏᴀɴOFC 👻';
   const empresa = 'BrayanOFC - Servicios Tecnológicos';
-  const link = 'wa.me/5216641784469';
+  const link = 'wa.me/526641784469';
   const imagen = 'https://qu.ax/gSWtg.jpg';
 
   const caption = `
