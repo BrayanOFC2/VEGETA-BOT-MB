@@ -1,30 +1,66 @@
-const handler = async (m, { conn, text, usedPrefix, command }) => {
-  const emoji = '🛠️';
-  const done = '✅';
+const fs = require("fs");
+const path = require("path");
 
-  if (!text) {
-    throw `${emoji} No se encontró ningún prefijo. Por favor, escribe un nuevo prefijo.\n> *Ejemplo:* ${usedPrefix + command} !`;
+const handler = async (msg, { conn, args }) => {
+  const sender = msg.key.participant || msg.key.remoteJid;
+  const numero = sender.replace(/[^0-9]/g, "");
+  const fromMe = msg.key.fromMe;
+
+  // ⏳ Reacción inicial
+  await conn.sendMessage(msg.key.remoteJid, {
+    react: { text: "⏳", key: msg.key }
+  });
+
+  // 🚫 Validación: owner o bot mismo
+  if (!global.isOwner(numero) && !fromMe) {
+    await conn.sendMessage(msg.key.remoteJid, {
+      react: { text: "❌", key: msg.key }
+    });
+    return conn.sendMessage(msg.key.remoteJid, {
+      text: "🚫 Este comando solo puede usarlo un Owner o el mismo bot."
+    }, { quoted: msg });
   }
 
-  if (text.length > 3) {
-    throw `${emoji} El prefijo no puede tener más de 3 caracteres.`;
+  const ruta = path.resolve("./prefijos.json");
+
+  if (!args[0]) {
+    await conn.sendMessage(msg.key.remoteJid, {
+      react: { text: "❌", key: msg.key }
+    });
+    return conn.sendMessage(msg.key.remoteJid, {
+      text: `✳️ Uso correcto:\n.setprefix [ "." , "🐱", "#" ]\n.setprefix 🤖`
+    }, { quoted: msg });
   }
 
-  const escapedPrefix = text.replace(/[|\\{}()[\]^$+*?.\-]/g, '\\$&');
-  global.prefix = new RegExp('^[' + escapedPrefix + ']');
-  global.opts.prefix = text;
+  let nuevosPrefijos;
 
-  conn.fakeReply(
-    m.chat,
-    `${done} *Prefijo actualizado con éxito.*\n> *Nuevo prefijo:* ${text}`,
-    '0@s.whatsapp.net',
-    '✨ NUEVO PREFIJO ✨'
-  );
+  try {
+    if (args.join(" ").startsWith("[")) {
+      nuevosPrefijos = JSON.parse(args.join(" ").trim());
+      if (!Array.isArray(nuevosPrefijos) || nuevosPrefijos.some(p => typeof p !== "string" || p.length === 0)) throw new Error();
+    } else {
+      nuevosPrefijos = [args.join(" ")]; // acepta emojis largos o combinaciones
+    }
+  } catch (e) {
+    await conn.sendMessage(msg.key.remoteJid, {
+      react: { text: "❌", key: msg.key }
+    });
+    return conn.sendMessage(msg.key.remoteJid, {
+      text: "⚠️ Prefijo inválido.\nEjemplos válidos:\n.setprefix [ \".\" , \"#\" , \"💀\" ]\n.setprefix 🤖"
+    }, { quoted: msg });
+  }
+
+  fs.writeFileSync(ruta, JSON.stringify(nuevosPrefijos, null, 2));
+  global.prefixes = nuevosPrefijos;
+
+  await conn.sendMessage(msg.key.remoteJid, {
+    react: { text: "✅", key: msg.key }
+  });
+
+  return conn.sendMessage(msg.key.remoteJid, {
+    text: `✅ Prefijo(s) actualizado(s):\n${nuevosPrefijos.map(p => `➤ ${p}`).join("\n")}`
+  }, { quoted: msg });
 };
 
-handler.help = ['prefix <nuevo_prefijo>'];
-handler.tags = ['owner'];
-handler.command = ['prefix'];
-handler.rowner = true;
-
-export default handler;
+handler.command = ["setprefix"];
+module.exports = handler;
