@@ -38,7 +38,7 @@ let tags = {
 
 let handler = async (m, { conn, usedPrefix: _p }) => {
   try {
-    let userId = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.sender
+    let userId = m.mentionedJid?.[0] || m.sender
     let user = global.db.data.users[userId]
     let name = conn.getName(userId)
     let mode = global.opts["self"] ? "Modo Privado 🔒" : "Modo Público 🌀"
@@ -52,11 +52,12 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
       )
     )]
 
-    if (!global.db.data.users[userId]) {
+    if (!user) {
       global.db.data.users[userId] = { exp: 0, level: 1 }
+      user = global.db.data.users[userId]
     }
 
-    let { exp, level } = global.db.data.users[userId]
+    let { exp, level } = user
     let { min, xp, max } = xpRange(level, global.multiplier)
     let help = Object.values(global.plugins).filter(plugin => !plugin.disabled).map(plugin => ({
       help: Array.isArray(plugin.help) ? plugin.help : (plugin.help ? [plugin.help] : []),
@@ -80,7 +81,6 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
 ${Object.keys(tags).map(tag => {
   const commandsForTag = help.filter(menu => menu.tags.includes(tag))
   if (commandsForTag.length === 0) return ''
-
   let section = `
 ╭───〔 ${tags[tag]} ${getRandomEmoji()} 〕───╮
 ${commandsForTag.map(menu => menu.help.map(help =>
@@ -98,12 +98,18 @@ ${commandsForTag.map(menu => menu.help.map(help =>
     await m.react('🐉')
 
     await conn.sendMessage(m.chat, {
-  video: { url: 'https://files.catbox.moe/0d5eiu.mp4' },
-  caption: menuText,
-  contextInfo: {
-    mentionedJid: [userId]
-  }
-}, { quoted: m })
+      video: { url: 'https://files.catbox.moe/0d5eiu.mp4' },
+      caption: menuText,
+      footer: '✨ Usa los botones para acceder a secciones rápidas.',
+      buttons: [
+        { buttonId: `${_p}rpgmenu`, buttonText: { displayText: '⚔️ Menú RPG' }, type: 1 },
+        { buttonId: `${_p}juegosmenu`, buttonText: { displayText: '🎮 Menú Juegos' }, type: 1 }
+      ],
+      headerType: 5,
+      contextInfo: {
+        mentionedJid: [userId]
+      }
+    }, { quoted: m })
 
   } catch (e) {
     conn.reply(m.chat, `✖️ Menú en modo Dragon Ball falló.\n\n${e}`, m)
@@ -128,13 +134,4 @@ function clockString(ms) {
 function getRandomEmoji() {
   const emojis = ['🐉', '⚡', '🔥', '👑', '💥', '🌌']
   return emojis[Math.floor(Math.random() * emojis.length)]
-}
-
-function getLevelProgress(exp, min, max, length = 10) {
-  if (exp < min) exp = min
-  if (exp > max) exp = max
-  let progress = Math.floor(((exp - min) / (max - min)) * length)
-  progress = Math.max(0, Math.min(progress, length))
-  let bar = '█'.repeat(progress) + '░'.repeat(length - progress)
-  return `[${bar}]`
 }
