@@ -3,6 +3,7 @@ import ws from 'ws'
 
 let tags = {
   'serbot': 'SUB BOTS',
+  'rpg': 'menu'
   'main': 'ZENO INFO',
   'owner': 'DIOS CREADOR',
   'nable': 'MODO SAIYAJIN',
