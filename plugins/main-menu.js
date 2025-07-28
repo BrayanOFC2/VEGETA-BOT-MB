@@ -89,8 +89,6 @@ ${commandsForTag.map(menu => menu.help.map(help =>
   return section
 }).filter(text => text !== '').join('\n')}
 
-💫 *El poder no es nada sin control... — Vegeta* 💫
-
 🔥 *By BrayanOFC* 🔥
 `.trim()
 
