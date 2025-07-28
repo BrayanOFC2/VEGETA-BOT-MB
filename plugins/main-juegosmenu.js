@@ -16,8 +16,12 @@ Aquí tienes los comandos para divertirte como un verdadero Saiyajin:
 
 ✨ ¡Prepárate para el Torneo del Humor y las Batallas!
 `
-  conn.sendMessage(m.chat, {
-    text: texto,
+
+  const imageUrl = 'https://i.imgur.com/ZXBtVw7.jpg'
+
+  await conn.sendMessage(m.chat, {
+    image: { url: imageUrl },
+    caption: texto,
     contextInfo: {
       mentionedJid: [m.sender]
     }
