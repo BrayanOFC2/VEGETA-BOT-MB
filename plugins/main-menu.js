@@ -86,7 +86,7 @@ ${commandsForTag.map(menu => menu.help.map(help =>
   `┃ 🕹️ ${_p}${help}${menu.limit ? ' 🟡' : ''}${menu.premium ? ' 🔒' : ''}`
 ).join('\n')).join('\n')}
 ╰━━━━━━━━━━━━━━━━━━━━╯`;
-}).filter(text => text !== '').join('\n')}
+{).filter(text => text !== '').join('\n')}
 
 🔥 *𝗣𝗼𝘄𝗲𝗿𝗲𝗱 𝗯𝘆 BrayanOFC - ${botname}* 🔥
 '.trim();
