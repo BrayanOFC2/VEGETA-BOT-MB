@@ -44,7 +44,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
   }
 }
 
-handler.help = ['suscripción <enlace> <días>']
+handler.help = ['comprado <enlace> <días>']
 handler.tags = ['bot']
 handler.command = ['suscripción', 'joinfor']
 
