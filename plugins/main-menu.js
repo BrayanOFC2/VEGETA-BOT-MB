@@ -97,9 +97,9 @@ ${commandsForTag.map(menu => menu.help.map(help =>
     await m.react('🐉')
 
     await conn.sendMessage(m.chat, {
-      video: { url: 'https://qu.ax/BYKaE.mp4', gifPlayback: true },
+      image: { url: 'https://i.imgur.com/7XrP4sR.jpg' },
       caption: menuText,
-      footer: '✨ Usa los botones de acceso rápido abajo.',
+      footer: '✨ Usa los botones para acceder a secciones rápidas.',
       buttons: [
         { buttonId: `${_p}rpgmenu`, buttonText: { displayText: '⚔️ Menú RPG' }, type: 1 },
         { buttonId: `${_p}juegosmenu`, buttonText: { displayText: '🎮 Juegos Z' }, type: 1 },
@@ -107,7 +107,7 @@ ${commandsForTag.map(menu => menu.help.map(help =>
         { buttonId: `${_p}estado`, buttonText: { displayText: '💠 Estado Z' }, type: 1 },
         { buttonId: `${_p}infobot`, buttonText: { displayText: '💡 Info Bot' }, type: 1 }
       ],
-      headerType: 5,
+      headerType: 4,
       contextInfo: {
         mentionedJid: [userId]
       }
