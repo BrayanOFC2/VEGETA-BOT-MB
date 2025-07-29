@@ -97,7 +97,7 @@ ${commandsForTag.map(menu => menu.help.map(help =>
     await m.react('🐉')
 
     await conn.sendMessage(m.chat, {
-      image: { url: 'https://i.imgur.com/7XrP4sR.jpg' },
+      image: { url: 'https://qu.ax/zutCo.jpg' },
       caption: menuText,
       footer: '✨ Usa los botones para acceder a secciones rápidas.',
       buttons: [
