@@ -46,6 +46,6 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
 
 handler.help = ['comprado <enlace> <días>']
 handler.tags = ['bot']
-handler.command = ['suscripción', 'joinfor']
+handler.command = ['comprado', 'joinfor']
 
 export default handler
