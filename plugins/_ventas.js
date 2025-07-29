@@ -14,8 +14,8 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     return m.reply('✘ Enlace no válido.')
   }
 
-  if (isNaN(dias) || dias < 1 || dias > 7) {
-    return m.reply('✘ Ingresa un número de días entre 1 y 7.')
+  if (isNaN(dias) || dias < 1 || dias > 30) {
+    return m.reply('✘ Ingresa un número de días entre 1 y 30.')
   }
 
   try {
