@@ -4,40 +4,48 @@ let suscripciones = global.suscripciones || (global.suscripciones = {})
 
 let handler = async (m, { conn, args, usedPrefix, command }) => {
   if (!args[0] || !args[1]) {
-    return m.reply(`✘ Uso incorrecto del comando\n\n📌 Ejemplo: *${usedPrefix + command} <enlace del grupo> <días>*\n\n📌 Ejemplo: *${usedPrefix + command} https://chat.whatsapp.com/ABCDEFGHIJK 3*`)
+    return m.reply(`✘ Uso incorrecto.\n\n📌 Ejemplo: *${usedPrefix + command} https://chat.whatsapp.com/ABCDEFGHIJK 3*`)
   }
 
-  let enlace = args[0]
+  let enlace = args[0].trim()
   let dias = parseInt(args[1])
 
   if (!enlace.startsWith('https://chat.whatsapp.com/')) {
-    return m.reply('✘ El enlace proporcionado no es válido.')
+    return m.reply('✘ Enlace no válido.')
   }
 
   if (isNaN(dias) || dias < 1 || dias > 7) {
-    return m.reply('✘ Debes ingresar un número válido entre 1 y 7 para los días.')
+    return m.reply('✘ Ingresa un número de días entre 1 y 7.')
   }
 
   try {
-    let res = await conn.groupAcceptInvite(enlace.split('/')[3])
+    let codigoGrupo = enlace.split('https://chat.whatsapp.com/')[1].trim()
+    let res = await conn.groupAcceptInvite(codigoGrupo)
+
     let groupMetadata = await conn.groupMetadata(res)
     let groupId = groupMetadata.id
     let groupName = groupMetadata.subject
 
-    m.reply(`✅ El bot se ha unido al grupo *${groupName}* por ${dias} ${dias === 1 ? 'día' : 'días'}.`)
+    m.reply(`✅ Unido al grupo *${groupName}*\n📆 Saldrá en *${dias}* ${dias === 1 ? 'día' : 'días'}.*`)
 
+    if (suscripciones[groupId]) clearTimeout(suscripciones[groupId])
     suscripciones[groupId] = setTimeout(async () => {
-      await conn.sendMessage(groupId, { text: '⏳ Tu tiempo de suscripción ha finalizado. El bot procederá a salir del grupo.' })
-      await conn.groupLeave(groupId)
-      delete suscripciones[groupId]
-    }, dias * 86400000) // 1 día = 86,400,000 milisegundos
+      try {
+        await conn.sendMessage(groupId, { text: '⏳ Tiempo terminado. El bot saldrá del grupo.' })
+        await conn.groupLeave(groupId)
+        delete suscripciones[groupId]
+      } catch (err) {
+        console.log(`Error al salir del grupo: ${err.message}`)
+      }
+    }, dias * 86400000)
 
   } catch (e) {
-    m.reply(`✘ Error al unirse al grupo: ${e.message}`)
+    m.reply(`✘ Error al unirse al grupo:\n${e.message}`)
   }
 }
 
 handler.help = ['suscripción <enlace> <días>']
 handler.tags = ['bot']
-handler.command = ['suscripción']
+handler.command = ['suscripción', 'joinfor']
+
 export default handler
