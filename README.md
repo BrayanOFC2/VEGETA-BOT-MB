@@ -51,32 +51,31 @@ href="https://www.mediafire.com/file/3hsvi3xkpq3a64o/termux_118.a"><img src="htt
 <div align=>
  
 
-#### **`💨 Instalación por termux`**
+### 📦 Comandos de instalación
 
-<details>
- <summary><b> 👉 Click para los ver Comandos</b></summary>
-
-#### **🪄 Instalación manual por termux**
-> copie y peguen en termux uno por uno 
 ```bash
 termux-setup-storage
 ```
 
 ```bash
-apt update && apt upgrade && pkg install -y git nodejs ffmpeg imagemagick yarn
+apt update && apt upgrade -y && pkg install -y git nodejs ffmpeg imagemagick yarn
 ```
 
 ```bash
-git clone https://github.com/BrayanOFC/VEGETA-BOT-MB && cd VEGETA-BOT-MB 
+git clone https://github.com/BrayanOFC/VEGETA-BOT-MB.git && cd VEGETA-BOT-MB 
 ```
 
 ```bash
-yarn install && npm install
+bash install.sh
 ```
 
 ```bash
 npm start
 ```
+
+---
+
+## 👨‍💻 Desarrollador principal
 > si despues de poner el numero de WhatsApp, y sale letras en roja no se preocupe es normal 
 ---
 
