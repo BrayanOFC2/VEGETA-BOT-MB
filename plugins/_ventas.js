@@ -18,12 +18,14 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     return m.reply('✘ Ingresa un número de días entre 1 y 30.')
   }
 
-  try {
-    let codigoGrupo = enlace.split('https://chat.whatsapp.com/')[1].trim()
-    let res = await conn.groupAcceptInvite(codigoGrupo)
+  let codigoGrupo = enlace.split('https://chat.whatsapp.com/')[1]?.trim()
+  if (!codigoGrupo) {
+    return m.reply('✘ Código de grupo no válido.')
+  }
 
-    let groupMetadata = await conn.groupMetadata(res)
-    let groupId = groupMetadata.id
+  try {
+    let groupId = await conn.groupAcceptInvite(codigoGrupo)
+    let groupMetadata = await conn.groupMetadata(groupId)
     let groupName = groupMetadata.subject
 
     m.reply(`✅ Unido al grupo *${groupName}*\n📆 Saldrá en *${dias}* ${dias === 1 ? 'día' : 'días'}.*`)
@@ -40,11 +42,12 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     }, dias * 86400000)
 
   } catch (e) {
-    m.reply(`✘ Error al unirse al grupo:\n${e.message}`)
+    console.error(e)
+    m.reply(`✘ Error al unirse al grupo:\n${e?.message || 'No se pudo unir. Verifica el enlace.'}`)
   }
 }
 
-handler.help = ['comprado <enlace> <días>']
+handler.help = ['suscripción <enlace> <días>']
 handler.tags = ['bot']
 handler.command = ['comprado', 'joinfor']
 
