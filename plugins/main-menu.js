@@ -1,7 +1,6 @@
-// creado y editado por BrayanOFC
+//creado y editado por BrayanOFC
 import { xpRange } from '../lib/levelling.js'
 import ws from 'ws'
-
 let tags = {
   'serbot': 'SUB BOTS',
   'main': 'ZENO INFO',
@@ -97,17 +96,14 @@ ${commandsForTag.map(menu => menu.help.map(help =>
     await m.react('🐉')
 
     await conn.sendMessage(m.chat, {
-      image: { url: 'https://qu.ax/zutCo.jpg' },
+      video: { url: 'https://qu.ax/BYKaE.mp4' },
       caption: menuText,
       footer: '✨ Usa los botones para acceder a secciones rápidas.',
       buttons: [
         { buttonId: `${_p}rpgmenu`, buttonText: { displayText: '⚔️ Menú RPG' }, type: 1 },
-        { buttonId: `${_p}juegosmenu`, buttonText: { displayText: '🎮 Juegos Z' }, type: 1 },
-        { buttonId: `${_p}inventario`, buttonText: { displayText: '🎒 Inventario' }, type: 1 },
-        { buttonId: `${_p}estado`, buttonText: { displayText: '💠 Estado Z' }, type: 1 },
-        { buttonId: `${_p}infobot`, buttonText: { displayText: '💡 Info Bot' }, type: 1 }
+        { buttonId: `${_p}juegosmenu`, buttonText: { displayText: '🎮 Menú Juegos' }, type: 1 }
       ],
-      headerType: 4,
+      headerType: 5,
       contextInfo: {
         mentionedJid: [userId]
       }
