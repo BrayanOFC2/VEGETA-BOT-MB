@@ -1,4 +1,4 @@
-//creado y editado por BrayanOFC
+// creado y editado por BrayanOFC
 import { xpRange } from '../lib/levelling.js'
 import ws from 'ws'
 
@@ -99,13 +99,13 @@ ${commandsForTag.map(menu => menu.help.map(help =>
     await conn.sendMessage(m.chat, {
       video: { url: 'https://qu.ax/BYKaE.mp4', gifPlayback: true },
       caption: menuText,
-      footer: '✨ Toca un botón para ir a una sección rápida.',
+      footer: '✨ Usa los botones de acceso rápido abajo.',
       buttons: [
         { buttonId: `${_p}rpgmenu`, buttonText: { displayText: '⚔️ Menú RPG' }, type: 1 },
         { buttonId: `${_p}juegosmenu`, buttonText: { displayText: '🎮 Juegos Z' }, type: 1 },
         { buttonId: `${_p}inventario`, buttonText: { displayText: '🎒 Inventario' }, type: 1 },
         { buttonId: `${_p}estado`, buttonText: { displayText: '💠 Estado Z' }, type: 1 },
-        { buttonId: `${_p}infobot`, buttonText: { displayText: '💡 Info del Bot' }, type: 1 }
+        { buttonId: `${_p}infobot`, buttonText: { displayText: '💡 Info Bot' }, type: 1 }
       ],
       headerType: 5,
       contextInfo: {
