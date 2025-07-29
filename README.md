@@ -53,31 +53,34 @@ href="https://www.mediafire.com/file/3hsvi3xkpq3a64o/termux_118.a"><img src="htt
 
 ### 📦 Comandos de instalación
 
+> Nota: Copie y pegue los comandos en termux uno por uno.
 ```bash
 termux-setup-storage
 ```
 
 ```bash
-apt update && apt upgrade -y && pkg install -y git nodejs ffmpeg imagemagick yarn
+apt update && apt upgrade && pkg install -y git nodejs ffmpeg imagemagick yarn
 ```
 
 ```bash
-git clone https://github.com/BrayanOFC/VEGETA-BOT-MB.git && cd VEGETA-BOT-MB 
+git clone https://github.com/BrayanOFC/VEGETA-BOT-MB && cd VEGETA-BOT-MB 
 ```
 
 ```bash
-bash install.sh
+yarn install
+```
+
+```bash
+npm install
+```
+
+```bash
+npm update
 ```
 
 ```bash
 npm start
 ```
-
----
-
-## 👨‍💻 Desarrollador principal
-> si despues de poner el numero de WhatsApp, y sale letras en roja no se preocupe es normal 
----
 
 #### **🟢 Activar en caso de detenerse en termux**
 
