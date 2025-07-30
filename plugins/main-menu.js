@@ -1,4 +1,4 @@
-//creado y editado por BrayanOFC
+// creado y editado por BrayanOFC
 import { xpRange } from '../lib/levelling.js'
 import ws from 'ws'
 
@@ -34,14 +34,15 @@ let tags = {
   'productivity': 'MAQUINARIA Z',
   'social': 'REDES Z',
   'security': 'BARRERA',
-  'custom': 'AURA PERSONAL'
+  'custom': 'AURA PERSONAL',
+  'canal': 'ENLACES Z' // <- sección para rcanal
 }
 
 let handler = async (m, { conn, usedPrefix: _p }) => {
   try {
     let userId = m.mentionedJid?.[0] || m.sender
     let user = global.db.data.users[userId]
-    let name = conn.getName(userId)
+    let name = await conn.getName(userId)
     let mode = global.opts["self"] ? "Modo Privado 🔒" : "Modo Público 🌀"
     let totalCommands = Object.keys(global.plugins).length
     let totalreg = Object.keys(global.db.data.users).length
@@ -67,10 +68,18 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
       premium: plugin.premium,
     }))
 
+    // Agrega manualmente rcanal
+    help.push({
+      help: ['rcanal'],
+      tags: ['canal'],
+      limit: false,
+      premium: false
+    })
+
     let menuText = `
-╭━━━『🐉 ${botname.toUpperCase()} | DRAGON MENU』━━━╮
+╭━━━『🐉 ${botname?.toUpperCase() || 'BOT'} | DRAGON MENU』━━━╮
 ┃ ⚡ Usuario Saiyajin: @${userId.split('@')[0]}
-┃ 👑 Rango          : ${(conn.user.jid == global.conn.user.jid ? 'DIOS BrayanOFC 🅥' : 'SUB-BOT KAIO 🅑')}
+┃ 👑 Rango          : ${(conn.user.jid === global.conn.user.jid ? 'DIOS BrayanOFC 🅥' : 'SUB-BOT KAIO 🅑')}
 ┃ 🌌 Universo       : ${mode}
 ┃ 📊 Registro Z     : ${totalreg}
 ┃ ⏱️ Tiempo Activo  : ${uptime}
@@ -92,7 +101,6 @@ ${commandsForTag.map(menu => menu.help.map(help =>
 }).filter(text => text !== '').join('\n')}
 
 🔥 *By BrayanOFC* 🔥
-📺 Canal Oficial: https://t.me/BrayanOFC_Channel
 `.trim()
 
     await m.react('🐉')
@@ -101,10 +109,18 @@ ${commandsForTag.map(menu => menu.help.map(help =>
       video: { url: 'https://qu.ax/BYKaE.mp4' },
       caption: menuText,
       mimetype: 'video/mp4',
-      gifPlayback: true,
       fileName: 'dragonmenu.mp4',
       contextInfo: {
-        mentionedJid: [userId]
+        mentionedJid: [userId],
+        externalAdReply: {
+          title: 'Canal Oficial de BrayanOFC',
+          body: 'Únete para novedades del bot',
+          thumbnailUrl: 'https://i.imgur.com/2mK6dXh.jpeg',
+          mediaType: 2,
+          mediaUrl: 'https://t.me/BrayanOFC_Channel',
+          sourceUrl: 'https://t.me/BrayanOFC_Channel',
+          renderLargerThumbnail: true
+        }
       }
     }, { quoted: m })
 
@@ -131,8 +147,4 @@ function clockString(ms) {
 function getRandomEmoji() {
   const emojis = ['🐉', '⚡', '🔥', '👑', '💥', '🌌']
   return emojis[Math.floor(Math.random() * emojis.length)]
-
-await conn.sendMessage(m.chat, { video: { url: vid.getRandom() }, caption: menu, contextInfo: { mentionedJid: [m.sender], isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: channelRD.id, newsletterName: channelRD.name, serverMessageId: -1, }, forwardingScore: 999, externalAdReply: { title: '〽️ ꙰,𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃', body: dev, thumbnailUrl: perfil, sourceUrl: redes, mediaType: 1, renderLargerThumbnail: false,
-}, }, gifPlayback: true, gifAttribution: 0 }, { quoted: null })
-await m.react(emojis)    
 }
