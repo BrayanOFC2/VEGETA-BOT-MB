@@ -41,7 +41,7 @@ let { say } = cfonts
 
 console.log(chalk.bold.redBright(`\n≪━─━─━─━─◈─━─━─━─━≫\n ✈ Iniciando VEGETA BOT MB ʕ•ᴥ•ʔ\n ≪━─━─━─━─◈─━─━─━─━≫\n`))
 
-say('kirito-bot-MD ⚡', {  
+say('Vegeta-bot-MB ⚡', {  
   font: 'block',  
   align: 'center',  
   colors: ['cyanBright', 'magenta']  
