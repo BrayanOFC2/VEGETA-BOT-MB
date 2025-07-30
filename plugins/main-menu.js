@@ -101,7 +101,6 @@ ${commandsForTag.map(menu => menu.help.map(help =>
       video: { url: 'https://qu.ax/BYKaE.mp4' },
       caption: menuText,
       mimetype: 'video/mp4',
-      gifPlayback: true,
       fileName: 'dragonmenu.mp4',
       contextInfo: {
         mentionedJid: [userId]
