@@ -34,7 +34,8 @@ let tags = {
   'productivity': 'MAQUINARIA Z',
   'social': 'REDES Z',
   'security': 'BARRERA',
-  'custom': 'AURA PERSONAL'
+  'custom': 'AURA PERSONAL',
+  'links': 'ENLACES Z' // 👉 sección nueva para rcanal
 }
 
 let handler = async (m, { conn, usedPrefix: _p }) => {
@@ -66,6 +67,14 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
       limit: plugin.limit,
       premium: plugin.premium,
     }))
+
+    // 👉 manualmente añadimos el comando rcanal a una sección personalizada
+    help.push({
+      help: ['rcanal'],
+      tags: ['links'],
+      limit: false,
+      premium: false
+    })
 
     let menuText = `
 ╭━━━『🐉 ${botname?.toUpperCase() || 'BOT'} | DRAGON MENU』━━━╮
@@ -108,4 +117,26 @@ ${commandsForTag.map(menu => menu.help.map(help =>
     }, { quoted: m })
 
   } catch (e) {
-    conn.reply(m.chat, `✖️ Menú en modo Dragon Ball falló.\n\n
+    conn.reply(m.chat, `✖️ Menú en modo Dragon Ball falló.\n\n${e}`, m)
+    throw e
+  }
+}
+
+handler.help = ['menu', 'allmenu']
+handler.tags = ['main']
+handler.command = ['menu', 'allmenu', 'menú']
+handler.register = true
+
+export default handler
+
+function clockString(ms) {
+  let h = Math.floor(ms / 3600000)
+  let m = Math.floor(ms / 60000) % 60
+  let s = Math.floor(ms / 1000) % 60
+  return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
+}
+
+function getRandomEmoji() {
+  const emojis = ['🐉', '⚡', '🔥', '👑', '💥', '🌌']
+  return emojis[Math.floor(Math.random() * emojis.length)]
+}
