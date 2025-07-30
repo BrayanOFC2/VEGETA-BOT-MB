@@ -41,7 +41,8 @@ let { say } = cfonts
 
 console.log(chalk.bold.redBright(\n≪━─━─━─━─◈─━─━─━─━≫\n ✈ Iniciando VEGETA BOT MB ʕ•ᴥ•ʔ\n ≪━─━─━─━─◈─━─━─━─━≫\n))
 
-say('VEGETA BOT MB 🔥', { font: 'block', align: 'center', colors: ['magentaBright'] })
+say('VEGETA BOT MB 🔥', { font: 'block', align: 'center', colors: ['magentaBright'] 
+})
 
 say(`Developed By BrayanOFC👑`, {
 font: 'console',
