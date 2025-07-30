@@ -68,9 +68,9 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
     }))
 
     let menuText = `
-╭━━━『🐉 ${botname.toUpperCase()} | DRAGON MENU』━━━╮
+╭━━━『🐉 ${botname?.toUpperCase() || 'BOT'} | DRAGON MENU』━━━╮
 ┃ ⚡ Usuario Saiyajin: @${userId.split('@')[0]}
-┃ 👑 Rango          : ${(conn.user.jid == global.conn.user.jid ? 'DIOS BrayanOFC 🅥' : 'SUB-BOT KAIO 🅑')}
+┃ 👑 Rango          : ${(conn.user.jid === global.conn.user.jid ? 'DIOS BrayanOFC 🅥' : 'SUB-BOT KAIO 🅑')}
 ┃ 🌌 Universo       : ${mode}
 ┃ 📊 Registro Z     : ${totalreg}
 ┃ ⏱️ Tiempo Activo  : ${uptime}
@@ -108,26 +108,4 @@ ${commandsForTag.map(menu => menu.help.map(help =>
     }, { quoted: m })
 
   } catch (e) {
-    conn.reply(m.chat, `✖️ Menú en modo Dragon Ball falló.\n\n${e}`, m)
-    throw e
-  }
-}
-
-handler.help = ['menu', 'allmenu']
-handler.tags = ['main']
-handler.command = ['menu', 'allmenu', 'menú']
-handler.register = true
-
-export default handler
-
-function clockString(ms) {
-  let h = Math.floor(ms / 3600000)
-  let m = Math.floor(ms / 60000) % 60
-  let s = Math.floor(ms / 1000) % 60
-  return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
-}
-
-function getRandomEmoji() {
-  const emojis = ['🐉', '⚡', '🔥', '👑', '💥', '🌌']
-  return emojis[Math.floor(Math.random() * emojis.length)]
-}
+    conn.reply(m.chat, `✖️ Menú en modo Dragon Ball falló.\n\n
