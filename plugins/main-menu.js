@@ -94,12 +94,13 @@ ${commandsForTag.map(menu => menu.help.map(help =>
 🔥 *By BrayanOFC* 🔥
 `.trim()
 
+    await m.react('🐉')
+
     await conn.sendMessage(m.chat, {
       video: { url: 'https://qu.ax/BYKaE.mp4' },
-      Playback: true,
       caption: menuText,
       mimetype: 'video/mp4',
-      fileName: 'dragonmenu.mp4',
+      fileName: 'dragon-menu.mp4',
       contextInfo: {
         mentionedJid: [userId]
       }
@@ -113,7 +114,7 @@ ${commandsForTag.map(menu => menu.help.map(help =>
 
 handler.help = ['menu', 'allmenu']
 handler.tags = ['main']
-handler.command u= ['menu', 'allmenu', 'menú']
+handler.command = ['menu', 'allmenu', 'menú']
 handler.register = true
 
 export default handler
