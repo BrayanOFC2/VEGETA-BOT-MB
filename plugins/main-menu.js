@@ -1,3 +1,4 @@
+//creado y editado por BrayanOFC
 import { xpRange } from '../lib/levelling.js'
 import ws from 'ws'
 
@@ -39,18 +40,31 @@ let tags = {
 let handler = async (m, { conn, usedPrefix: _p }) => {
   try {
     let userId = m.mentionedJid?.[0] || m.sender
-    let user = global.db.data.users[userId] || {}
-    let name = await conn.getName(userId)
+    let user = global.db.data.users[userId]
+    let name = conn.getName(userId)
     let mode = global.opts["self"] ? "Modo Privado 🔒" : "Modo Público 🌀"
     let totalCommands = Object.keys(global.plugins).length
     let totalreg = Object.keys(global.db.data.users).length
     let uptime = clockString(process.uptime() * 1000)
 
-    let help = Object.values(global.plugins).filter(p => !p.disabled).map(p => ({
-      help: Array.isArray(p.help) ? p.help : (p.help ? [p.help] : []),
-      tags: Array.isArray(p.tags) ? p.tags : (p.tags ? [p.tags] : []),
-      limit: p.limit,
-      premium: p.premium,
+    const users = [...new Set(
+      (global.conns || []).filter(conn =>
+        conn.user && conn.ws?.socket?.readyState !== ws.CLOSED
+      )
+    )]
+
+    if (!user) {
+      global.db.data.users[userId] = { exp: 0, level: 1 }
+      user = global.db.data.users[userId]
+    }
+
+    let { exp, level } = user
+    let { min, xp, max } = xpRange(level, global.multiplier)
+    let help = Object.values(global.plugins).filter(plugin => !plugin.disabled).map(plugin => ({
+      help: Array.isArray(plugin.help) ? plugin.help : (plugin.help ? [plugin.help] : []),
+      tags: Array.isArray(plugin.tags) ? plugin.tags : (plugin.tags ? [plugin.tags] : []),
+      limit: plugin.limit,
+      premium: plugin.premium,
     }))
 
     let menuText = `
@@ -61,60 +75,50 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
 ┃ 📊 Registro Z     : ${totalreg}
 ┃ ⏱️ Tiempo Activo  : ${uptime}
 ┃ 🛠️ Comandos Totales: ${totalCommands}
+┃ 🌀 Sub Bots Activos: ${users.length}
 ╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╯
 
 💥 *⚔️ SECCIONES DEL TORNEO DEL PODER ⚔️* 💥
 ${Object.keys(tags).map(tag => {
-  const cmds = help.filter(menu => menu.tags.includes(tag))
-  if (cmds.length === 0) return ''
-  return `
-╭─〔 ${tags[tag]} ${getRandomEmoji()} 〕
-${cmds.map(menu => menu.help.map(cmd =>
-  `┃ ☁️ ${_p}${cmd}${menu.limit ? ' 🟡' : ''}${menu.premium ? ' 🔒' : ''}`
+  const commandsForTag = help.filter(menu => menu.tags.includes(tag))
+  if (commandsForTag.length === 0) return ''
+  let section = `
+╭───〔 ${tags[tag]} ${getRandomEmoji()} 〕───╮
+${commandsForTag.map(menu => menu.help.map(help =>
+  `┃ ☁️ ${_p}${help}${menu.limit ? ' 🟡' : ''}${menu.premium ? ' 🔒' : ''}`
 ).join('\n')).join('\n')}
-╰───────────────╯`
-}).filter(Boolean).join('\n')}
+╰━━━━━━━━━━━━━━━━━━━━╯`
+  return section
+}).filter(text => text !== '').join('\n')}
 
 🔥 *By BrayanOFC* 🔥
+📺 Canal Oficial: https://t.me/BrayanOFC_Channel
 `.trim()
 
     await m.react('🐉')
 
-    // Enviar video con canal
     await conn.sendMessage(m.chat, {
       video: { url: 'https://qu.ax/BYKaE.mp4' },
+      caption: menuText,
+      mimetype: 'video/mp4',
       gifPlayback: true,
-      caption: '📺 Canal Oficial del Bot:\nhttps://whatsapp.com/channel/0029Vb9P9ZU0gcfNusD1jG3d',
+      fileName: 'dragonmenu.mp4',
       contextInfo: {
-        externalAdReply: {
-          title: 'Canal Oficial del Bot',
-          body: 'Unete al canal oficial para actualizaciones',
-          mediaUrl: 'https://whatsapp.com/channel/0029Vb9P9ZU0gcfNusD1jG3d',
-          sourceUrl: 'https://whatsapp.com/channel/0029Vb9P9ZU0gcfNusD1jG3d',
-          thumbnailUrl: 'https://i.imgur.com/2mK6dXh.jpeg',
-          showAdAttribution: true
-        },
         mentionedJid: [userId]
       }
     }, { quoted: m })
 
-    // Enviar texto del menú
-    await new Promise(res => setTimeout(res, 1000))
-    await conn.sendMessage(m.chat, {
-      text: menuText,
-      mentions: [userId]
-    }, { quoted: m })
-
   } catch (e) {
-    conn.reply(m.chat, `✖️ Falló el menú.\n${e}`, m)
+    conn.reply(m.chat, `✖️ Menú en modo Dragon Ball falló.\n\n${e}`, m)
     throw e
   }
 }
 
-handler.help = ['menu']
+handler.help = ['menu', 'allmenu']
 handler.tags = ['main']
 handler.command = ['menu', 'allmenu', 'menú']
 handler.register = true
+
 export default handler
 
 function clockString(ms) {
@@ -125,6 +129,6 @@ function clockString(ms) {
 }
 
 function getRandomEmoji() {
-  let emojis = ['🐉', '⚡', '🔥', '👑', '💥', '🌌']
+  const emojis = ['🐉', '⚡', '🔥', '👑', '💥', '🌌']
   return emojis[Math.floor(Math.random() * emojis.length)]
 }
