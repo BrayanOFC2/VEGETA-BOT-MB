@@ -35,7 +35,9 @@ import readline, { createInterface } from 'readline'
 import NodeCache from 'node-cache'
 const {CONNECTING} = ws
 const {chain} = lodash
-const PORT = process.env.PORT || process.env.SERVER_PORT || 3000 
+const PORT = process.env.PORT || process.env.SERVER_PORT || 3000
+
+let { say } = cfonts 
 
 console.log(chalk.bold.redBright(\n≪━─━─━─━─◈─━─━─━─━≫\n ✈ Iniciando VEGETA BOT MB ʕ•ᴥ•ʔ\n ≪━─━─━─━─◈─━─━─━─━≫\n))
 
