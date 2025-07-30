@@ -1,7 +1,6 @@
 //creado y editado por BrayanOFC
 import { xpRange } from '../lib/levelling.js'
 import ws from 'ws'
-
 let tags = {
   'serbot': 'SUB BOTS',
   'main': 'ZENO INFO',
@@ -34,8 +33,7 @@ let tags = {
   'productivity': 'MAQUINARIA Z',
   'social': 'REDES Z',
   'security': 'BARRERA',
-  'custom': 'AURA PERSONAL',
-  'links': 'ENLACES Z' // 👉 sección nueva para rcanal
+  'custom': 'AURA PERSONAL'
 }
 
 let handler = async (m, { conn, usedPrefix: _p }) => {
@@ -68,18 +66,10 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
       premium: plugin.premium,
     }))
 
-    // 👉 manualmente añadimos el comando rcanal a una sección personalizada
-    help.push({
-      help: ['rcanal'],
-      tags: ['links'],
-      limit: false,
-      premium: false
-    })
-
     let menuText = `
-╭━━━『🐉 ${botname?.toUpperCase() || 'BOT'} | DRAGON MENU』━━━╮
+╭━━━『🐉 ${botname.toUpperCase()} | DRAGON MENU』━━━╮
 ┃ ⚡ Usuario Saiyajin: @${userId.split('@')[0]}
-┃ 👑 Rango          : ${(conn.user.jid === global.conn.user.jid ? 'DIOS BrayanOFC 🅥' : 'SUB-BOT KAIO 🅑')}
+┃ 👑 Rango          : ${(conn.user.jid == global.conn.user.jid ? 'DIOS BrayanOFC 🅥' : 'SUB-BOT KAIO 🅑')}
 ┃ 🌌 Universo       : ${mode}
 ┃ 📊 Registro Z     : ${totalreg}
 ┃ ⏱️ Tiempo Activo  : ${uptime}
@@ -101,7 +91,6 @@ ${commandsForTag.map(menu => menu.help.map(help =>
 }).filter(text => text !== '').join('\n')}
 
 🔥 *By BrayanOFC* 🔥
-📺 Canal Oficial: https://t.me/BrayanOFC_Channel
 `.trim()
 
     await m.react('🐉')
@@ -109,8 +98,12 @@ ${commandsForTag.map(menu => menu.help.map(help =>
     await conn.sendMessage(m.chat, {
       video: { url: 'https://qu.ax/BYKaE.mp4' },
       caption: menuText,
-      mimetype: 'video/mp4',
-      fileName: 'dragonmenu.mp4',
+      footer: '✨ Usa los botones para acceder a secciones rápidas.',
+      buttons: [
+        { buttonId: `${_p}rpgmenu`, buttonText: { displayText: '⚔️ Menú RPG' }, type: 1 },
+        { buttonId: `${_p}juegosmenu`, buttonText: { displayText: '🎮 Menú Juegos' }, type: 1 }
+      ],
+      headerType: 5,
       contextInfo: {
         mentionedJid: [userId]
       }
