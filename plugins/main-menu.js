@@ -1,4 +1,3 @@
-// creado y editado por BrayanOFC
 import { xpRange } from '../lib/levelling.js'
 import ws from 'ws'
 
@@ -34,15 +33,14 @@ let tags = {
   'productivity': 'MAQUINARIA Z',
   'social': 'REDES Z',
   'security': 'BARRERA',
-  'custom': 'AURA PERSONAL',
-  'canal': 'ENLACES Z' // <- sección para rcanal
+  'custom': 'AURA PERSONAL'
 }
 
 let handler = async (m, { conn, usedPrefix: _p }) => {
   try {
     let userId = m.mentionedJid?.[0] || m.sender
     let user = global.db.data.users[userId]
-    let name = await conn.getName(userId)
+    let name = conn.getName(userId)
     let mode = global.opts["self"] ? "Modo Privado 🔒" : "Modo Público 🌀"
     let totalCommands = Object.keys(global.plugins).length
     let totalreg = Object.keys(global.db.data.users).length
@@ -68,18 +66,10 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
       premium: plugin.premium,
     }))
 
-    // Agrega manualmente rcanal
-    help.push({
-      help: ['rcanal'],
-      tags: ['canal'],
-      limit: false,
-      premium: false
-    })
-
     let menuText = `
-╭━━━『🐉 ${botname?.toUpperCase() || 'BOT'} | DRAGON MENU』━━━╮
+╭━━━『🐉 ${botname.toUpperCase()} | DRAGON MENU』━━━╮
 ┃ ⚡ Usuario Saiyajin: @${userId.split('@')[0]}
-┃ 👑 Rango          : ${(conn.user.jid === global.conn.user.jid ? 'DIOS BrayanOFC 🅥' : 'SUB-BOT KAIO 🅑')}
+┃ 👑 Rango          : ${(conn.user.jid == global.conn.user.jid ? 'DIOS BrayanOFC 🅥' : 'SUB-BOT KAIO 🅑')}
 ┃ 🌌 Universo       : ${mode}
 ┃ 📊 Registro Z     : ${totalreg}
 ┃ ⏱️ Tiempo Activo  : ${uptime}
@@ -100,6 +90,9 @@ ${commandsForTag.map(menu => menu.help.map(help =>
   return section
 }).filter(text => text !== '').join('\n')}
 
+📺 *CANAL OFICIAL*  
+https://whatsapp.com/channel/0029Vb9P9ZU0gcfNusD1jG3d
+
 🔥 *By BrayanOFC* 🔥
 `.trim()
 
@@ -110,17 +103,9 @@ ${commandsForTag.map(menu => menu.help.map(help =>
       caption: menuText,
       mimetype: 'video/mp4',
       fileName: 'dragonmenu.mp4',
+      gifPlayback: true,
       contextInfo: {
-        mentionedJid: [userId],
-        externalAdReply: {
-          title: 'Canal Oficial de BrayanOFC',
-          body: 'Únete para novedades del bot',
-          thumbnailUrl: 'https://i.imgur.com/2mK6dXh.jpeg',
-          mediaType: 2,
-          mediaUrl: 'https://t.me/BrayanOFC_Channel',
-          sourceUrl: 'https://t.me/BrayanOFC_Channel',
-          renderLargerThumbnail: true
-        }
+        mentionedJid: [userId]
       }
     }, { quoted: m })
 
