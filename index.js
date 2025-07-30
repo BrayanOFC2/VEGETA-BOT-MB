@@ -38,7 +38,6 @@ const PORT = process.env.PORT || process.env.SERVER_PORT || 3000
 
 //const yuw = dirname(fileURLToPath(import.meta.url))
 //let require = createRequire(megu)
-let { say } = cfonts
 
 console.log(chalk.bold.redBright(`\n≪━─━─━─━─◈─━─━─━─━≫\n ✈ Iniciando Vegeta-bot-MB ʕ•ᴥ•ʔ\n ≪━─━─━─━─◈─━─━─━─━≫\n`))
 
