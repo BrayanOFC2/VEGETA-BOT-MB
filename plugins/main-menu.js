@@ -92,13 +92,11 @@ ${commandsForTag.map(menu => menu.help.map(help =>
 }).filter(text => text !== '').join('\n')}
 
 🔥 *By BrayanOFC* 🔥
-📺 Canal Oficial: https://t.me/BrayanOFC_Channel
 `.trim()
-
-    await m.react('🐉')
 
     await conn.sendMessage(m.chat, {
       video: { url: 'https://qu.ax/BYKaE.mp4' },
+      gifPlayback: true,
       caption: menuText,
       mimetype: 'video/mp4',
       fileName: 'dragonmenu.mp4',
@@ -115,7 +113,7 @@ ${commandsForTag.map(menu => menu.help.map(help =>
 
 handler.help = ['menu', 'allmenu']
 handler.tags = ['main']
-handler.command = ['menu', 'allmenu', 'menú']
+handler.command u= ['menu', 'allmenu', 'menú']
 handler.register = true
 
 export default handler
