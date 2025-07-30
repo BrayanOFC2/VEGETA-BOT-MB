@@ -36,13 +36,15 @@ import NodeCache from 'node-cache'
 const {CONNECTING} = ws
 const {chain} = lodash
 const PORT = process.env.PORT || process.env.SERVER_PORT || 3000
+let { say } = cfonts
 
-let { say } = cfonts 
+console.log(chalk.bold.redBright(`\n≪━─━─━─━─◈─━─━─━─━≫\n ✈ Iniciando VEGETA BOT MB ʕ•ᴥ•ʔ\n ≪━─━─━─━─◈─━─━─━─━≫\n`))
 
-console.log(chalk.bold.redBright(\n≪━─━─━─━─◈─━─━─━─━≫\n ✈ Iniciando VEGETA BOT MB ʕ•ᴥ•ʔ\n ≪━─━─━─━─◈─━─━─━─━≫\n))
-
-say('VEGETA BOT MB 🔥', { font: 'block', align: 'center', colors: ['magentaBright'] 
-})
+say('kirito-bot-MD ⚡', {  
+  font: 'block',  
+  align: 'center',  
+  colors: ['cyanBright', 'magenta']  
+})  
 
 say(`Developed By BrayanOFC👑`, {
 font: 'console',
