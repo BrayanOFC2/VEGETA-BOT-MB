@@ -1,6 +1,7 @@
 //creado y editado por BrayanOFC
 import { xpRange } from '../lib/levelling.js'
 import ws from 'ws'
+
 let tags = {
   'serbot': 'SUB BOTS',
   'main': 'ZENO INFO',
@@ -91,6 +92,7 @@ ${commandsForTag.map(menu => menu.help.map(help =>
 }).filter(text => text !== '').join('\n')}
 
 🔥 *By BrayanOFC* 🔥
+📺 Canal Oficial: https://t.me/BrayanOFC_Channel
 `.trim()
 
     await m.react('🐉')
@@ -98,12 +100,9 @@ ${commandsForTag.map(menu => menu.help.map(help =>
     await conn.sendMessage(m.chat, {
       video: { url: 'https://qu.ax/BYKaE.mp4' },
       caption: menuText,
-      footer: '✨ Usa los botones para acceder a secciones rápidas.',
-      buttons: [
-        { buttonId: `${_p}rpgmenu`, buttonText: { displayText: '⚔️ Menú RPG' }, type: 1 },
-        { buttonId: `${_p}juegosmenu`, buttonText: { displayText: '🎮 Menú Juegos' }, type: 1 }
-      ],
-      headerType: 5,
+      mimetype: 'video/mp4',
+      gifPlayback: true,
+      fileName: 'dragonmenu.mp4',
       contextInfo: {
         mentionedJid: [userId]
       }
