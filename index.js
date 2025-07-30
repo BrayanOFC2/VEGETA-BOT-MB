@@ -2,56 +2,69 @@ process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '1'
 import './config.js'
 import { setupMaster, fork } from 'cluster'
 import { watchFile, unwatchFile } from 'fs'
-import {createRequire} from 'module'
-import {fileURLToPath, pathToFileURL} from 'url'
-import {platform} from 'process'
+import { createRequire } from 'module'
+import { fileURLToPath, pathToFileURL } from 'url'
+import { platform } from 'process'
 import * as ws from 'ws'
-import fs, {readdirSync, statSync, unlinkSync, existsSync, mkdirSync, readFileSync, rmSync, watch} from 'fs'
-import yargs from 'yargs';
-import {spawn} from 'child_process'
+import fs, {
+  readdirSync,
+  statSync,
+  unlinkSync,
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  rmSync,
+  watch
+} from 'fs'
+import yargs from 'yargs'
+import { spawn } from 'child_process'
 import lodash from 'lodash'
-import { vegetaJadiBot } from './plugins/jadibot-serbot.js';
+import { vegetaJadiBot } from './plugins/jadibot-serbot.js'
 import chalk from 'chalk'
 import syntaxerror from 'syntax-error'
-import {tmpdir} from 'os'
-import {format} from 'util'
+import { tmpdir } from 'os'
+import { format } from 'util'
 import boxen from 'boxen'
 import P from 'pino'
 import pino from 'pino'
 import Pino from 'pino'
 import path, { join, dirname } from 'path'
-import {Boom} from '@hapi/boom'
-import {makeWASocket, protoType, serialize} from './lib/simple.js'
-import {Low, JSONFile} from 'lowdb'
-import {mongoDB, mongoDBV2} from './lib/mongoDB.js'
+import { Boom } from '@hapi/boom'
+import { makeWASocket, protoType, serialize } from './lib/simple.js'
+import { Low, JSONFile } from 'lowdb'
+import { mongoDB, mongoDBV2 } from './lib/mongoDB.js'
 import store from './lib/store.js'
-const {proto} = (await import('@whiskeysockets/baileys')).default
+
+const { proto } = (await import('@whiskeysockets/baileys')).default
 import pkg from 'google-libphonenumber'
 const { PhoneNumberUtil } = pkg
 const phoneUtil = PhoneNumberUtil.getInstance()
-const {DisconnectReason, useMultiFileAuthState, MessageRetryMap, fetchLatestBaileysVersion, makeCacheableSignalKeyStore, jidNormalizedUser} = await import('@whiskeysockets/baileys')
+const {
+  DisconnectReason,
+  useMultiFileAuthState,
+  MessageRetryMap,
+  fetchLatestBaileysVersion,
+  makeCacheableSignalKeyStore,
+  jidNormalizedUser
+} = await import('@whiskeysockets/baileys')
+
 import readline, { createInterface } from 'readline'
 import NodeCache from 'node-cache'
-const {CONNECTING} = ws
-const {chain} = lodash
+
+const { CONNECTING } = ws
+const { chain } = lodash
 const PORT = process.env.PORT || process.env.SERVER_PORT || 3000
 
-//const yuw = dirname(fileURLToPath(import.meta.url))
-//let require = createRequire(megu)
+// Mensajes de inicio reemplazando cfonts con console.log y chalk
+console.log(chalk.bold.redBright(`\n≪━─━─━─━─◈─━─━─━─━≫`))
+console.log(chalk.bold.cyanBright(`✈ Iniciando Vegeta-bot-MB ʕ•ᴥ•ʔ`))
+console.log(chalk.bold.redBright(`≪━─━─━─━─◈─━─━─━─━≫\n`))
 
-console.log(chalk.bold.redBright(`\n≪━─━─━─━─◈─━─━─━─━≫\n ✈ Iniciando Vegeta-bot-MB ʕ•ᴥ•ʔ\n ≪━─━─━─━─◈─━─━─━─━≫\n`))
+console.log(chalk.bold.magentaBright('╔═══════════════════════════════════════╗'))
+console.log(chalk.bold.cyanBright('║         Vegeta-bot-MB ⚡              ║'))
+console.log(chalk.bold.magentaBright('╚═══════════════════════════════════════╝'))
 
-say('Vegeta-bot-MB ⚡', {  
-  font: 'block',  
-  align: 'center',  
-  colors: ['cyanBright', 'magenta']  
-})  
-
-say(`Developed By BrayanOFC 👑`, {  
-  font: 'console',  
-  align: 'center',  
-  colors: ['whiteBright', 'blueBright']  
-})
+console.log(chalk.bold.whiteBright('\nDeveloped By BrayanOFC 👑'))
 
 protoType()
 serialize()
