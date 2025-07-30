@@ -43,8 +43,6 @@ let { say } = cfonts
 
 console.log(chalk.bold.redBright(`\n≪━─━─━─━─◈─━─━─━─━≫\n ✈ Iniciando Vegeta-bot-MB ʕ•ᴥ•ʔ\n ≪━─━─━─━─◈─━─━─━─━≫\n`))
 
-import { say } from 'cfonts'
-
 say('Vegeta-bot-MB ⚡', {  
   font: 'block',  
   align: 'center',  
