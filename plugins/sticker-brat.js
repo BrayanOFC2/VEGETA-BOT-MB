@@ -2,17 +2,14 @@ import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
 import sharp from 'sharp';
-import {
-    tmpdir
-} from 'os';
+import { tmpdir } from 'os';
+
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 const fetchSticker = async (text, attempt = 1) => {
     try {
         const response = await axios.get(`https://kepolu-brat.hf.space/brat`, {
-            params: {
-                q: text
-            },
+            params: { q: text },
             responseType: 'arraybuffer',
         });
         return response.data;
@@ -26,52 +23,45 @@ const fetchSticker = async (text, attempt = 1) => {
     }
 };
 
-const handler = async (m, {
-    text,
-    conn
-}) => {
+const handler = async (m, { text, conn }) => {
     if (!text) {
         return conn.sendMessage(m.chat, {
-            text: '🍬 Por favor ingresa el texto para hacer un sticker.',
-        }, {
-            quoted: m
-        });
+            text: '✍️ Escribe un texto para crear tu sticker animado. Ejemplo:\n*.brat Hola mundo*',
+        }, { quoted: m });
     }
 
     try {
         const buffer = await fetchSticker(text);
         const outputFilePath = path.join(tmpdir(), `sticker-${Date.now()}.webp`);
-        await sharp(buffer)
-            .resize(512, 512, {
-                fit: 'contain',
-                background: {
-                    r: 255,
-                    g: 255,
-                    b: 255,
-                    alpha: 0
-                }
-            })
-            .webp({
-                quality: 80
-            })
-            .toFile(outputFilePath);
+        
+        try {
+            await sharp(buffer)
+                .resize(512, 512, {
+                    fit: 'contain',
+                    background: { r: 255, g: 255, b: 255, alpha: 0 }
+                })
+                .webp({ quality: 80 })
+                .toFile(outputFilePath);
+        } catch (sharpError) {
+            return conn.sendMessage(m.chat, {
+                text: '⚙️ Ocurrió un error al procesar la imagen con *sharp*. Verifica que esté instalado correctamente.',
+            }, { quoted: m });
+        }
 
         await conn.sendMessage(m.chat, {
-            sticker: {
-                url: outputFilePath
-            },
-        }, {
-            quoted: fkontak
-        });
+            sticker: { url: outputFilePath },
+        }, { quoted: m });
+
         fs.unlinkSync(outputFilePath);
+
     } catch (error) {
+        console.error('Error en /brat:', error);
         return conn.sendMessage(m.chat, {
-            text: `⚠️ Ocurrio un erro.`,
-        }, {
-            quoted: m
-        });
+            text: `❌ No se pudo generar el sticker. Intenta nuevamente en unos segundos.`,
+        }, { quoted: m });
     }
 };
+
 handler.command = ['brat'];
 handler.tags = ['sticker'];
 handler.help = ['brat *<texto>*'];
