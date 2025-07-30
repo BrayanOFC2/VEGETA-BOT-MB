@@ -96,7 +96,7 @@ ${commandsForTag.map(menu => menu.help.map(help =>
 
     await conn.sendMessage(m.chat, {
       video: { url: 'https://qu.ax/BYKaE.mp4' },
-      vidPlayback: true,
+      Playback: true,
       caption: menuText,
       mimetype: 'video/mp4',
       fileName: 'dragonmenu.mp4',
