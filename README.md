@@ -71,10 +71,6 @@ yarn install
 ```
 
 ```bash
-npm install cfonts
-```
-
-```bash
 npm start
 ```
 
