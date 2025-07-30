@@ -1,3 +1,4 @@
+//creado y editado por BrayanOFC 
 import { xpRange } from '../lib/levelling.js'
 import ws from 'ws'
 
@@ -40,7 +41,7 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
   try {
     let userId = m.mentionedJid?.[0] || m.sender
     let user = global.db.data.users[userId]
-    let name = conn.getName(userId)
+    let name = await conn.getName(userId)
     let mode = global.opts["self"] ? "Modo Privado 🔒" : "Modo Público 🌀"
     let totalCommands = Object.keys(global.plugins).length
     let totalreg = Object.keys(global.db.data.users).length
@@ -58,7 +59,6 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
     }
 
     let { exp, level } = user
-    let { min, xp, max } = xpRange(level, global.multiplier)
     let help = Object.values(global.plugins).filter(plugin => !plugin.disabled).map(plugin => ({
       help: Array.isArray(plugin.help) ? plugin.help : (plugin.help ? [plugin.help] : []),
       tags: Array.isArray(plugin.tags) ? plugin.tags : (plugin.tags ? [plugin.tags] : []),
@@ -90,9 +90,6 @@ ${commandsForTag.map(menu => menu.help.map(help =>
   return section
 }).filter(text => text !== '').join('\n')}
 
-📺 *CANAL OFICIAL*  
-https://whatsapp.com/channel/0029Vb9P9ZU0gcfNusD1jG3d
-
 🔥 *By BrayanOFC* 🔥
 `.trim()
 
@@ -101,11 +98,17 @@ https://whatsapp.com/channel/0029Vb9P9ZU0gcfNusD1jG3d
     await conn.sendMessage(m.chat, {
       video: { url: 'https://qu.ax/BYKaE.mp4' },
       caption: menuText,
-      mimetype: 'video/mp4',
-      fileName: 'dragonmenu.mp4',
       gifPlayback: true,
       contextInfo: {
-        mentionedJid: [userId]
+        mentionedJid: [userId],
+        externalAdReply: {
+          showAdAttribution: true,
+          title: 'Canal Oficial BrayanOFC',
+          body: 'Únete para novedades y más',
+          mediaUrl: 'https://t.me/BrayanOFC_Channel',
+          thumbnailUrl: 'https://telegra.ph/file/3b22c24c5e7ef18bc6e68.jpg', // miniatura del canal (puedes cambiarla)
+          sourceUrl: 'https://t.me/BrayanOFC_Channel'
+        }
       }
     }, { quoted: m })
 
