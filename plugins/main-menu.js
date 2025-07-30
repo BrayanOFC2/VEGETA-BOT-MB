@@ -1,4 +1,5 @@
 import { xpRange } from '../lib/levelling.js'
+import ws from 'ws'
 
 let tags = {
   'serbot': 'SUB BOTS',
@@ -40,48 +41,46 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
     let userId = m.mentionedJid?.[0] || m.sender
     let user = global.db.data.users[userId] || {}
     let name = await conn.getName(userId)
-    let uptime = clockString(process.uptime() * 1000)
+    let mode = global.opts["self"] ? "Modo Privado 🔒" : "Modo Público 🌀"
     let totalCommands = Object.keys(global.plugins).length
     let totalreg = Object.keys(global.db.data.users).length
+    let uptime = clockString(process.uptime() * 1000)
 
-    let help = Object.values(global.plugins)
-      .filter(p => !p.disabled)
-      .map(p => ({
-        help: Array.isArray(p.help) ? p.help : [p.help],
-        tags: Array.isArray(p.tags) ? p.tags : [p.tags],
-        limit: p.limit,
-        premium: p.premium
-      }))
+    let help = Object.values(global.plugins).filter(p => !p.disabled).map(p => ({
+      help: Array.isArray(p.help) ? p.help : (p.help ? [p.help] : []),
+      tags: Array.isArray(p.tags) ? p.tags : (p.tags ? [p.tags] : []),
+      limit: p.limit,
+      premium: p.premium,
+    }))
 
     let menuText = `
-╭━━━『🐉 ${botname?.toUpperCase() || 'ZENO BOT'} | DRAGON MENU』━━━╮
+╭━━━『🐉 ${botname.toUpperCase()} | DRAGON MENU』━━━╮
 ┃ ⚡ Usuario Saiyajin: @${userId.split('@')[0]}
-┃ 👑 Rango: ${(conn.user.jid == global.conn.user.jid ? 'DIOS BrayanOFC 🅥' : 'SUB-BOT KAIO 🅑')}
-┃ 🌌 Universo: ${global.opts["self"] ? "Modo Privado 🔒" : "Modo Público 🌀"}
-┃ 📊 Registro Z: ${totalreg}
+┃ 👑 Rango          : ${(conn.user.jid == global.conn.user.jid ? 'DIOS BrayanOFC 🅥' : 'SUB-BOT KAIO 🅑')}
+┃ 🌌 Universo       : ${mode}
+┃ 📊 Registro Z     : ${totalreg}
+┃ ⏱️ Tiempo Activo  : ${uptime}
 ┃ 🛠️ Comandos Totales: ${totalCommands}
-┃ ⏱️ Tiempo Activo: ${uptime}
 ╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╯
 
 💥 *⚔️ SECCIONES DEL TORNEO DEL PODER ⚔️* 💥
 ${Object.keys(tags).map(tag => {
-  const commands = help.filter(cmd => cmd.tags.includes(tag))
-  if (commands.length === 0) return ''
+  const cmds = help.filter(menu => menu.tags.includes(tag))
+  if (cmds.length === 0) return ''
   return `
-╭───〔 ${tags[tag]} ${getRandomEmoji()} 〕───╮
-${commands.map(cmd => cmd.help.map(h => `┃ ☁️ ${_p}${h}${cmd.limit ? ' 🟡' : ''}${cmd.premium ? ' 🔒' : ''}`).join('\n')).join('\n')}
-╰━━━━━━━━━━━━━━━━━━━━╯`.trim()
-}).join('\n\n')}
+╭─〔 ${tags[tag]} ${getRandomEmoji()} 〕
+${cmds.map(menu => menu.help.map(cmd =>
+  `┃ ☁️ ${_p}${cmd}${menu.limit ? ' 🟡' : ''}${menu.premium ? ' 🔒' : ''}`
+).join('\n')).join('\n')}
+╰───────────────╯`
+}).filter(Boolean).join('\n')}
 
-🔥 *Canal Oficial:*  
-https://whatsapp.com/channel/0029Vb9P9ZU0gcfNusD1jG3d  
-🔥 *By BrayanOFC*
+🔥 *By BrayanOFC* 🔥
 `.trim()
 
-    // Reacción
     await m.react('🐉')
 
-    // Enviar el video con canal oficial arriba
+    // Enviar video con canal
     await conn.sendMessage(m.chat, {
       video: { url: 'https://qu.ax/BYKaE.mp4' },
       gifPlayback: true,
@@ -89,7 +88,7 @@ https://whatsapp.com/channel/0029Vb9P9ZU0gcfNusD1jG3d
       contextInfo: {
         externalAdReply: {
           title: 'Canal Oficial del Bot',
-          body: 'Toca para unirte al canal',
+          body: 'Unete al canal oficial para actualizaciones',
           mediaUrl: 'https://whatsapp.com/channel/0029Vb9P9ZU0gcfNusD1jG3d',
           sourceUrl: 'https://whatsapp.com/channel/0029Vb9P9ZU0gcfNusD1jG3d',
           thumbnailUrl: 'https://i.imgur.com/2mK6dXh.jpeg',
@@ -99,21 +98,23 @@ https://whatsapp.com/channel/0029Vb9P9ZU0gcfNusD1jG3d
       }
     }, { quoted: m })
 
-    // Espera y envía el menú completo por separado
-    await new Promise(resolve => setTimeout(resolve, 600))
-    await conn.sendMessage(m.chat, { text: menuText, mentions: [userId] }, { quoted: m })
+    // Enviar texto del menú
+    await new Promise(res => setTimeout(res, 1000))
+    await conn.sendMessage(m.chat, {
+      text: menuText,
+      mentions: [userId]
+    }, { quoted: m })
 
   } catch (e) {
-    conn.reply(m.chat, '✖️ Error en el menú Dragon Ball\n\n' + e, m)
+    conn.reply(m.chat, `✖️ Falló el menú.\n${e}`, m)
     throw e
   }
 }
 
-handler.help = ['menu', 'menú', 'allmenu']
+handler.help = ['menu']
 handler.tags = ['main']
-handler.command = ['menu', 'menú', 'allmenu']
+handler.command = ['menu', 'allmenu', 'menú']
 handler.register = true
-
 export default handler
 
 function clockString(ms) {
@@ -124,6 +125,6 @@ function clockString(ms) {
 }
 
 function getRandomEmoji() {
-  const emojis = ['🐉', '⚡', '🔥', '👑', '💥', '🌌']
+  let emojis = ['🐉', '⚡', '🔥', '👑', '💥', '🌌']
   return emojis[Math.floor(Math.random() * emojis.length)]
 }
