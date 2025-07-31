@@ -68,7 +68,7 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
 
     let menuText = `
 ╭━━━『🐉 ${botname.toUpperCase()} | DRAGON MENU』━━━╮
-┃ ⚡ Usuario Saiyajin: ${await conn.getname(userId)}
+┃ ⚡ Usuario Saiyajin: ${await conn.getName(userId)}
 ┃ 👑 Rango          : ${(conn.user.jid == global.conn.user.jid ? 'DIOS BrayanOFC 🅥' : 'SUB-BOT KAIO 🅑')}
 ┃ 🌌 Universo       : ${mode}
 ┃ 📊 Registro Z     : ${totalreg}
