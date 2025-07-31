@@ -99,7 +99,7 @@ ${commandsForTag.map(menu => menu.help.map(help =>
     await conn.sendMessage(m.chat, {
       video: { url: 'https://qu.ax/BYKaE.mp4' },
       caption: menuText,
-      gifPlayback: true, // Esto hace que el video se reproduzca solo (como si fuera un gif animado)
+      gifPlayback: true,
       mimetype: 'video/mp4',
       fileName: 'dragon-menu.mp4',
       contextInfo: {
