@@ -41,7 +41,6 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
   try {
     let userId = m.mentionedJid?.[0] || m.sender
     let user = global.db.data.users[userId]
-    let name = conn.getName(userId)
     let mode = global.opts["self"] ? "Modo Privado 🔒" : "Modo Público 🌀"
     let totalCommands = Object.keys(global.plugins).length
     let totalreg = Object.keys(global.db.data.users).length
@@ -67,11 +66,8 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
       premium: plugin.premium,
     }))
 
-    let saludo = global.saludo || '💫 Bienvenido'
-    let canalNombre = global.namechannel || 'VEGETA-BOT'
     let menuText = `
 ╭━━━『🐉 ${botname.toUpperCase()} | DRAGON MENU』━━━╮
-┃ ✨ ${saludo}
 ┃ ⚡ Usuario Saiyajin: @${userId.split('@')[0]}
 ┃ 👑 Rango          : ${(conn.user.jid == global.conn.user.jid ? 'DIOS BrayanOFC 🅥' : 'SUB-BOT KAIO 🅑')}
 ┃ 🌌 Universo       : ${mode}
@@ -102,13 +98,10 @@ ${commandsForTag.map(menu => menu.help.map(help =>
     await conn.sendMessage(m.chat, {
       video: { url: 'https://qu.ax/BYKaE.mp4' },
       caption: menuText,
-      gifPlayback: true, // autoplay sin convertir a gif
+      gifPlayback: true,
       mimetype: 'video/mp4',
       fileName: 'dragon-menu.mp4',
-      contextInfo: {
-        ...global.rcanal,
-        mentionedJid: [userId]
-      }
+      contextInfo: global.rcanal
     }, { quoted: m })
 
   } catch (e) {
@@ -132,6 +125,6 @@ function clockString(ms) {
 }
 
 function getRandomEmoji() {
-  const emojis = ['🐉', '⚡', '🔥', '👑', '💥', '🌌', global.emoji || '🍧']
+  const emojis = ['🐉', '⚡', '🔥', '👑', '💥', '🌌']
   return emojis[Math.floor(Math.random() * emojis.length)]
 }
