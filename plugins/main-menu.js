@@ -67,8 +67,11 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
       premium: plugin.premium,
     }))
 
+    let saludo = global.saludo || '💫 Bienvenido'
+    let canalNombre = global.namechannel || 'VEGETA-BOT'
     let menuText = `
 ╭━━━『🐉 ${botname.toUpperCase()} | DRAGON MENU』━━━╮
+┃ ✨ ${saludo}
 ┃ ⚡ Usuario Saiyajin: @${userId.split('@')[0]}
 ┃ 👑 Rango          : ${(conn.user.jid == global.conn.user.jid ? 'DIOS BrayanOFC 🅥' : 'SUB-BOT KAIO 🅑')}
 ┃ 🌌 Universo       : ${mode}
@@ -94,15 +97,16 @@ ${commandsForTag.map(menu => menu.help.map(help =>
 🔥 *By BrayanOFC* 🔥
 `.trim()
 
-    await m.react('🐉', '🌌')
+    await m.react('🐉')
 
     await conn.sendMessage(m.chat, {
       video: { url: 'https://qu.ax/BYKaE.mp4' },
       caption: menuText,
-      gifPlayback: true,
+      gifPlayback: true, // autoplay sin convertir a gif
       mimetype: 'video/mp4',
       fileName: 'dragon-menu.mp4',
       contextInfo: {
+        ...global.rcanal,
         mentionedJid: [userId]
       }
     }, { quoted: m })
@@ -128,6 +132,6 @@ function clockString(ms) {
 }
 
 function getRandomEmoji() {
-  const emojis = ['🐉', '⚡', '🔥', '👑', '💥', '🌌']
+  const emojis = ['🐉', '⚡', '🔥', '👑', '💥', '🌌', global.emoji || '🍧']
   return emojis[Math.floor(Math.random() * emojis.length)]
 }
