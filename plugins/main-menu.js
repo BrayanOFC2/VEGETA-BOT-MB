@@ -93,10 +93,10 @@ ${commandsForTag.map(menu => menu.help.map(help =>
 🔥 *By BrayanOFC* 🔥
 `.trim()
 
-    await m.react('🐉')
+    await m.react('🐉', '🌌 ')
 
     await conn.sendMessage(m.chat, {
-      video: { url: 'https://qu.ax/BYKaE.mp4' },
+      video: { url: 'https://qu.ax/ZEyVK.mp4' },
       caption: menuText,
       gifPlayback: true,
       mimetype: 'video/mp4',
