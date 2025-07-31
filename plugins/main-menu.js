@@ -94,11 +94,12 @@ ${commandsForTag.map(menu => menu.help.map(help =>
 🔥 *By BrayanOFC* 🔥
 `.trim()
 
-    await m.react('🐉')
+    await m.react('🐉', '🌌')
 
     await conn.sendMessage(m.chat, {
       video: { url: 'https://qu.ax/BYKaE.mp4' },
       caption: menuText,
+      gifPlayback: true, // Esto hace que el video se reproduzca solo (como si fuera un gif animado)
       mimetype: 'video/mp4',
       fileName: 'dragon-menu.mp4',
       contextInfo: {
