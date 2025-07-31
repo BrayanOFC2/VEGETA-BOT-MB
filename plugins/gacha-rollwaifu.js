@@ -45,9 +45,9 @@ let handler = async (m, { conn }) => {
 
     if (cooldowns[userId] && now < cooldowns[userId]) {
         const remainingTime = Math.ceil((cooldowns[userId] - now) / 1000);
-        const minutes = Math.floor(remainingTime / 1000);
-        const seconds = remainingTime % 10;
-        return await conn.reply(m.chat, `《✧》Debes esperar ${minutes} minutos y ${seconds} segundos* para usar *#rw* de nuevo.`, m);
+        const minutes = Math.floor(remainingTime / 60);
+        const seconds = remainingTime % 60;
+        return await conn.reply(m.chat, `《✧》Debes esperar ${minutes} minutos y ${seconds} segundos para usar *#rw* de nuevo.`, m);
     }
 
     try {
@@ -84,7 +84,7 @@ ID: *${randomCharacter.id}*`;
         }
 
         await saveCharacters(characters);
-        cooldowns[userId] = now + 15 * 60 * 1000;
+        cooldowns[userId] = now + 15 * 1000; // ← Cooldown de 15 segundos
 
     } catch (error) {
         await conn.reply(m.chat, `✘ Error al cargar el personaje: ${error.message}`, m);
