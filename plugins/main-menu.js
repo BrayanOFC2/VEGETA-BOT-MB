@@ -41,6 +41,7 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
   try {
     let userId = m.mentionedJid?.[0] || m.sender
     let user = global.db.data.users[userId]
+    let name = await conn.getName(userId)
     let mode = global.opts["self"] ? "Modo Privado 🔒" : "Modo Público 🌀"
     let totalCommands = Object.keys(global.plugins).length
     let totalreg = Object.keys(global.db.data.users).length
@@ -68,7 +69,7 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
 
     let menuText = `
 ╭━━━『🐉 ${botname.toUpperCase()} | DRAGON MENU』━━━╮
-┃ ⚡ Usuario Saiyajin: ${await conn.getName(userId)}
+┃ ⚡ Usuario Saiyajin: ${name}
 ┃ 👑 Rango          : ${(conn.user.jid == global.conn.user.jid ? 'DIOS BrayanOFC 🅥' : 'SUB-BOT KAIO 🅑')}
 ┃ 🌌 Universo       : ${mode}
 ┃ 📊 Registro Z     : ${totalreg}
@@ -93,7 +94,7 @@ ${commandsForTag.map(menu => menu.help.map(help =>
 🔥 *By BrayanOFC* 🔥
 `.trim()
 
-    await m.react('🐉', '🌌 ')
+    await m.react('🐉', '🌌')
 
     await conn.sendMessage(m.chat, {
       video: { url: 'https://qu.ax/YcKnl.mp4' },
@@ -101,7 +102,14 @@ ${commandsForTag.map(menu => menu.help.map(help =>
       gifPlayback: true,
       mimetype: 'video/mp4',
       fileName: 'dragon-menu.mp4',
-      contextInfo: global.rcanal
+      contextInfo: {
+        isForwarded: true,
+        forwardedNewsletterMessageInfo: {
+          newsletterJid: '120363394965381607@newsletter',
+          newsletterName: '𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱*:·',
+          serverMessageId: 100
+        }
+      }
     }, { quoted: m })
 
   } catch (e) {
