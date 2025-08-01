@@ -44,7 +44,7 @@ npm start
 
 ---
 
-##🧪 ¿Problemas comunes?
+🧪 ¿Problemas comunes?
 
 🔁 ¿El bot se cerró?
 
