@@ -88,9 +88,11 @@ pm2 logs
 
 ---
 
+---
+
 ### 🔥 Créditos
 
-- 👾 Proyecto original: [BrayanOFC](https://github.com/brayan127p)
+- 👾 Proyecto original: [BrayanOFC](https://github.com/BrayanOFC)
 - ⚡ Team Starcore - soporte y colaboración
 
 <p align="center">
@@ -98,5 +100,3 @@ pm2 logs
 </p>
 
 ---
-
-> “¡No necesito ayuda, yo soy el príncipe de todos los Saiyajin!” — Vegeta
