@@ -90,6 +90,8 @@ pm2 logs
 
 ---
 
+---
+
 ### 🔥 Créditos
 
 - 👾 Proyecto original: [BrayanOFC](https://github.com/BrayanOFC)
@@ -100,3 +102,5 @@ pm2 logs
 </p>
 
 ---
+
+> “¡No necesito ayuda, yo soy el príncipe de todos los Saiyajin!” — *Vegeta*
