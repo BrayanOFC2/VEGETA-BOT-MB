@@ -29,7 +29,7 @@ Combina lo mejor de Dragon Ball con herramientas útiles para grupos, admins y u
 
 ---
 
-### 📥 Instalación en Termux (Android)
+## 📥 Instalación en Termux (Android)
 
 > Asegúrate de tener **Termux actualizado**
 
@@ -42,8 +42,9 @@ cd VEGETA-BOT-MB
 yarn install
 npm start
 
+---
 
-### 🧪 ¿Problemas comunes?
+ 🧪 ¿Problemas comunes?
 
 🔁 ¿El bot se cerró?
 
@@ -63,18 +64,15 @@ pm2 start index.js
 pm2 save
 pm2 logs
 
+---
 
-
-### ☁️ Deploy en la nube
+ ☁️ Deploy en la nube
 
 Despliega el bot sin usar Termux:
 
+---
 
-
-
-
-
-### 🛰 Servidores Luminary's
+ 🛰 Servidores Luminary's
 
 🌐 Servicio	📎 Enlace
 
@@ -82,7 +80,7 @@ Dashboard	Panel
 Estado	Status
 Comunidad	WhatsApp
 
-
+---
 
 ### 🧑‍💻 Comunidad y Soporte
 
@@ -92,9 +90,9 @@ Comunidad	WhatsApp
 
 👥 Grupo soporte: Unirse al grupo
 
+---
 
-
-###✨ Créditos
+✨ Créditos
 
 👾 Proyecto desarrollado por BrayanOFC
 
