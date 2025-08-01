@@ -1,5 +1,3 @@
-Gracias por aclararlo. Aquí tienes el README.md actualizado con tu GitHub correcto:
-
 <h1 align="center">💥 VEGETA BOT MB 💥</h1>
 <p align="center">⚔️ ¡El poder Saiyajin ahora vive en tu WhatsApp!</p>
 
@@ -11,40 +9,38 @@ Gracias por aclararlo. Aquí tienes el README.md actualizado con tu GitHub corre
 
 ## 🧠 ¿Qué es VegetaBot MB?
 
-VegetaBot MB es un bot para WhatsApp basado en MD, diseñado para grupos y usuarios exigentes. Inspirado en el universo Dragon Ball, ofrece comandos potentes, economía tipo RPG, protecciones de grupo, funciones multimedia y más.
+VegetaBot MB es un bot de WhatsApp basado en MB, creado para ofrecer funciones avanzadas, protección grupal, comandos de descarga, economía estilo RPG, y más, todo inspirado en el universo de Dragon Ball.
 
 > 💬 Creador: [BrayanOFC](https://github.com/BrayanOFC)  
 > 🧪 Versión: 2.13.2  
-> 🧰 Base: Multi-device
+> ⚙️ Base: Multi-Device (MD)
 
 ---
 
 ## ⚙️ Funciones destacadas
 
-- 🎮 Economía RPG con cofres, monedas, niveles y tokens  
-- 📌 Comandos grupales: welcome, antilink, antifake, detect  
-- 🎥 Descargas de YouTube, TikTok, audio, etc.  
-- 💬 Respuestas automáticas, modoadmin, modo nsfw  
-- 🔐 Control premium por chat  
-- 🧠 IA integrada opcional  
+- 🎮 Sistema de cofres, monedas, niveles y tokens
+- 🛡️ Protección grupal (antilink, antifake, anti-traba)
+- 🎬 Descarga multimedia (YT, TikTok, IG, audio, etc.)
+- 🤖 Comandos personalizados, respuestas automáticas
+- 🔐 Control premium por chat o por ID
+- 💡 Opcional: integración con IA
 
 ---
 
 ## 🌐 Comunidad y Soporte
 
-| Tipo        | Enlace |
-|-------------|--------|
-| 🌀 Canal Oficial | [WhatsApp VegetaBot](https://whatsapp.com/channel/0029VagYdbFEwEk5htUejk0t) |
+| Tipo         | Enlace |
+|--------------|--------|
+| 📢 Canal Oficial | [WhatsApp VegetaBot](https://whatsapp.com/channel/0029VagYdbFEwEk5htUejk0t) |
 | 👥 Grupo Oficial | [Grupo WhatsApp](https://chat.whatsapp.com/Jjs2l4X3LdP7RHr06WsasW) |
-| 💬 Contacto Dev  | [BrayanOFC](https://wa.me/526641784469) |
+| 🧑‍💻 Contacto Dev  | [BrayanOFC](https://wa.me/526641784469) |
 
 ---
 
-## 🧪 Instalación en Termux (Android)
+## 🧪 Instalación en Termux
 
-> ⚠️ Solo para usuarios que saben usar Termux  
-> 🟢 Testeado en Android 8+  
-> 🔧 Evita cerrar la app mientras corre
+> ⚠️ Requiere conocimientos básicos en Termux
 
 ```bash
 termux-setup-storage
@@ -58,7 +54,7 @@ npm start
 
 ---
 
-🔁 ¿El bot se detuvo?
+🔁 Si el bot se detuvo
 
 cd VEGETA-BOT-MB
 npm start
@@ -66,7 +62,7 @@ npm start
 
 ---
 
-🧨 ¿QR caducado o se desconectó?
+🔃 Si el QR caducó o se cerró la sesión
 
 cd VEGETA-BOT-MB
 rm -rf Session
@@ -96,11 +92,11 @@ pm2 logs
 
 🛰 Servidores Luminary's
 
-Servicio	Enlace
+🌐 Servicio	📎 Enlace
 
-🌐 Dashboard	Luminary's Panel
-📡 Estado	Status Server
-💬 Comunidad	Chat WhatsApp
+Dashboard	Luminary's Panel
+Estado	Status Server
+Comunidad	Chat WhatsApp
 
 
 
@@ -110,17 +106,19 @@ Servicio	Enlace
 
 👾 Proyecto desarrollado por BrayanOFC
 
-⚡ Team STARCORE - Soporte y comunidad
+⚡ Team STARCORE – Soporte y comunidad
 
 
 <p align="center">
-  <img src="https://qu.ax/aDqOk.jpg" width="140" alt="BrayanOFC" />
-</p>
+  <img src="https://qu.ax/aDqOk.jpg" width="140" alt="BrayanOFC">
+</p>> 🗯 “¡Superaré a Kakarotto cueste lo que cueste!” — Vegeta
+
+
+
+
 ---
 
-> 🗯 “¡Superaré a Kakarotto cueste lo que cueste!” — Vegeta
+---
 
-
-
-¿Te lo armo también como archivo `.md` descargable? Solo dime.
+¿Quieres que te lo empaquete en un archivo `README.md` listo para subir a tu repositorio? Solo dime y te lo envío como archivo.
 
