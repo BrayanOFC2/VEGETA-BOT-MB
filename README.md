@@ -79,7 +79,7 @@ Despliega el bot sin usar Termux:
 
 ---
 
-🛰 Servidores Luminary's
+## 🛰 Servidores Luminary's
 
 🌐 Servicio	📎 Enlace
 
@@ -91,7 +91,7 @@ Comunidad	WhatsApp
 
 ---
 
-🧑‍💻 Comunidad y Soporte
+## 🧑‍💻 Comunidad y Soporte
 
 📞 Contacto directo: BrayanOFC en WhatsApp
 
@@ -103,17 +103,12 @@ Comunidad	WhatsApp
 
 ---
 
-✨ Créditos
+##✨ Créditos
 
 👾 Proyecto desarrollado por BrayanOFC
 
 ⚡ Gracias a Team BRAYANOFC el soporte y las pruebas
 
-
-<p align="center">
-  <img src="https://qu.ax/aDqOk.jpg" width="130" alt="BrayanOFC">
-</p>
----
 
 ⭐ ¡Apóyanos con una estrella!
 
