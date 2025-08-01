@@ -23,39 +23,36 @@ const handler = async (m, { conn }) => {
 ◈ Antitraba: ${antiTraba ? 'Activado' : 'Desactivado'}
 ◈ Antifake: ${antifake ? 'Activado' : 'Desactivado'}
 
-> Nota: Puedes activar una de estas opciones con el comando: *#antilink*`.trim();
+> Puedes activar cualquiera con *#comando*`.trim();
 
-  const imagen = 'https://qu.ax/gfLKQ.jpg';
-  const emoji = '🧃';
-  const packname = 'BOT DE GRUPO';
-  const dev = 'BrayanOFC';
-  const redes = 'https://t.me/BrayanOFC';
-  const icono = 'https://qu.ax/UOvit.jpg';
+  const imagen = 'https://files.catbox.moe/2v7j6r.jpg'; // URL válida
+  const thumb = 'https://files.catbox.moe/2v7j6r.jpg'; // puede ser igual
+  const packname = 'BrayanOFC';
+  const autor = 'Configuración';
+  const url = 'https://t.me/BrayanOFC';
 
   await conn.sendMessage(m.chat, {
     image: { url: imagen },
     caption: texto,
     contextInfo: {
-      forwardingScore: 200,
-      isForwarded: false,
       externalAdReply: {
-        showAdAttribution: true,
         title: packname,
-        body: dev,
+        body: autor,
+        thumbnailUrl: thumb,
+        sourceUrl: url,
         mediaType: 1,
-        sourceUrl: redes,
-        thumbnailUrl: icono,
-        renderLargerThumbnail: false
+        showAdAttribution: true,
+        renderLargerThumbnail: true
       }
     }
   }, { quoted: m });
 
-  await m.react(emoji);
+  await m.react('⚙️');
 };
 
-handler.help = ['configuraciongrupo'];
+handler.help = ['config'];
 handler.tags = ['grupo'];
-handler.command = ['on', 'off', 'config'];
+handler.command = ['config'];
 handler.register = true;
 handler.group = true;
 
