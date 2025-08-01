@@ -5,40 +5,41 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
 
   try {
     const searchApi = `https://delirius-apiofc.vercel.app/search/ytsearch?q=${encodeURIComponent(text)}`;
-    const searchResponse = await fetch(searchApi);
-    const searchData = await searchResponse.json();
+    const res = await fetch(searchApi);
+    const json = await res.json();
 
-    if (!searchData?.data || searchData.data.length === 0) {
+    if (!json?.data || !json.data.length) {
       return m.reply(`⚠️ No se encontraron resultados para *"${text}"*.`);
     }
 
-    const video = searchData.data[0];
-    const videoInfo = `
+    const video = json.data[0];
+
+    const texto = `
 🎵 *Título:* ${video.title}
 📺 *Canal:* ${video.author.name}
 ⏱️ *Duración:* ${video.duration}
 👀 *Vistas:* ${video.views}
 📅 *Publicado:* ${video.publishedAt}
-🌐 *Enlace:* ${video.url}
 `.trim();
 
-    const template = {
+    const buttons = [
+      { buttonId: `${usedPrefix}ytmp3 ${video.url}`, buttonText: { displayText: '🎧 AUDIO' }, type: 1 },
+      { buttonId: `${usedPrefix}ytmp4 ${video.url}`, buttonText: { displayText: '🎬 VIDEO' }, type: 1 },
+    ];
+
+    const buttonMessage = {
       image: { url: video.image },
-      caption: videoInfo,
-      footer: 'Selecciona una opción:',
-      templateButtons: [
-        { index: 1, urlButton: { displayText: '🌐 Ver en YouTube', url: video.url } },
-        { index: 2, callButton: { displayText: '📞 Contactar Creador', phoneNumber: '5210000000000' } },
-        { index: 3, quickReplyButton: { displayText: '🎵 Descargar Audio', id: `${usedPrefix}ytmp3 ${video.url}` } },
-        { index: 4, quickReplyButton: { displayText: '🎬 Descargar Video', id: `${usedPrefix}ytmp4 ${video.url}` } },
-      ]
+      caption: texto,
+      footer: 'Selecciona una opción para descargar:',
+      buttons: buttons,
+      headerType: 4
     };
 
-    await conn.sendMessage(m.chat, template, { quoted: m });
-    await m.react("✅");
-  } catch (error) {
-    console.error(error);
-    m.reply(`❌ Error al procesar la solicitud:\n${error.message}`);
+    await conn.sendMessage(m.chat, buttonMessage, { quoted: m });
+    await m.react('✅');
+  } catch (e) {
+    console.error(e);
+    m.reply('❌ Ocurrió un error al buscar el video.');
   }
 };
 
