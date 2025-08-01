@@ -24,18 +24,17 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
 
     const buttons = [
       { buttonId: `${usedPrefix}ytmp3 ${video.url}`, buttonText: { displayText: '🎧 AUDIO' }, type: 1 },
-      { buttonId: `${usedPrefix}ytmp4 ${video.url}`, buttonText: { displayText: '🎬 VIDEO' }, type: 1 },
+      { buttonId: `${usedPrefix}ytmp4 ${video.url}`, buttonText: { displayText: '🎬 VIDEO' }, type: 1 }
     ];
 
-    const buttonMessage = {
+    await conn.sendMessage(m.chat, {
       image: { url: video.image },
       caption: texto,
-      footer: 'Selecciona una opción para descargar:',
-      buttons: buttons,
+      footer: 'Selecciona una opción:',
+      buttons,
       headerType: 4
-    };
+    }, { quoted: m });
 
-    await conn.sendMessage(m.chat, buttonMessage, { quoted: m });
     await m.react('✅');
   } catch (e) {
     console.error(e);
