@@ -1,3 +1,5 @@
+import { readFile } from 'fs/promises';
+
 const handler = async (m, { conn }) => {
   const {
     welcome, autolevelup, antiBot, antiBot2, autoAceptar, autoRechazar,
@@ -5,8 +7,8 @@ const handler = async (m, { conn }) => {
     antitoxic, antiTraba, antifake
   } = global.db.data.chats[m.chat];
 
-  const texto = `👑 *ℂ𝕆ℕ𝔽𝕀𝔾𝕌ℝ𝔸ℂ𝕀𝕆ℕ 𝔻𝔼 𝔾ℝ𝕌ℙ𝕆* 
-  
+  const texto = `👑 *CONFIGURACIÓN DE GRUPO* 
+
 ◈ Welcome: ${welcome ? 'Activado' : 'Desactivado'}
 ◈ Autolevelup: ${autolevelup ? 'Activado' : 'Desactivado'} 
 ◈ Antibot: ${antiBot ? 'Activado' : 'Desactivado'} 
@@ -23,37 +25,28 @@ const handler = async (m, { conn }) => {
 ◈ Antitraba: ${antiTraba ? 'Activado' : 'Desactivado'}
 ◈ Antifake: ${antifake ? 'Activado' : 'Desactivado'}
 
-> Puedes activar cualquiera con *#comando*`.trim();
+Activa con *#comando*`.trim();
 
-  const imagen = 'https://files.catbox.moe/2v7j6r.jpg'; // URL válida
-  const thumb = 'https://files.catbox.moe/2v7j6r.jpg'; // puede ser igual
-  const packname = 'BrayanOFC';
-  const autor = 'Configuración';
-  const url = 'https://t.me/BrayanOFC';
+  // Cargar y leer el archivo db.json
+  const data = JSON.parse(await readFile('./src/database/db.json', 'utf-8'));
+  const imagenes = data.vegeta?.imagenes;
+
+  if (!imagenes || imagenes.length === 0) {
+    return conn.reply(m.chat, '❌ No hay imágenes en db.json → vegeta.imagenes[]', m);
+  }
+
+  const imagen = imagenes[Math.floor(Math.random() * imagenes.length)];
 
   await conn.sendMessage(m.chat, {
     image: { url: imagen },
-    caption: texto,
-    contextInfo: {
-      externalAdReply: {
-        title: packname,
-        body: autor,
-        thumbnailUrl: thumb,
-        sourceUrl: url,
-        mediaType: 1,
-        showAdAttribution: true,
-        renderLargerThumbnail: true
-      }
-    }
+    caption: texto
   }, { quoted: m });
 
   await m.react('⚙️');
 };
 
-handler.help = ['config'];
-handler.tags = ['grupo'];
 handler.command = ['config'];
-handler.register = true;
 handler.group = true;
+handler.register = true;
 
 export default handler;
