@@ -55,3 +55,87 @@
 
 ```bash
 termux-setup-storage
+
+apt update && apt upgrade -y && pkg install -y git nodejs ffmpeg imagemagick yarn
+
+git clone https://github.com/BrayanOFC/VEGETA-BOT-MB && cd VEGETA-BOT-MB
+
+yarn install
+
+npm start
+
+
+---
+
+🟢 Para activar el bot 24/7 en Termux
+
+npm i -g pm2 && pm2 start index.js && pm2 save && pm2 logs
+
+
+---
+
+🧨 ¿Se detuvo el bot? Reinícialo así:
+
+cd VEGETA-BOT-MB
+npm start
+
+Si el QR no funciona o se cierra la sesión, elimina la carpeta Session:
+
+rm -rf Session
+npm start
+
+
+---
+
+🌌 Comunidad Luminary's - Poder Saiyajin
+
+<a href="https://dash.luminarys.shop.home"><img src="https://qu.ax/VAgKd.jpg" height="125px" alt="Luminary's"/></a>
+
+<details>
+ <summary><b> 🔥 Recursos Luminary's</b></summary>Estado Luminary's: Status
+
+Dashboard: Panel
+
+Canal de WhatsApp: Únete aquí
+
+Comunidad: Chat Luminary's
+
+
+</details>
+---
+
+⚡️ Despliega VegetaBot MB en la nube
+
+
+
+
+
+---
+
+🔗 Enlaces útiles
+
+APP	TIPO	ENLACE
+
+WhatsApp	Canal	¡Únete aquí!
+WhatsApp	Team STARCORE	¡Únete aquí!
+WhatsApp	Grupo Oficial	¡Únete aquí!
+
+
+
+---
+
+🚀 Propietario
+
+<a href="https://github.com/brayan127p"><img src="https://qu.ax/aDqOk.jpg" width="130" height="130" alt="Brayan"/></a>
+
+
+---
+
+💵 Créditos
+
+<a href="https://github.com/brayan127p"><img src="https://github.com/brayan127p.png" width="140" height="140" alt="Brayan"/></a>
+
+© Powered By Team STARCORE ⚡︎
+
+
+
