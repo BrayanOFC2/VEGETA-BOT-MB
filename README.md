@@ -186,6 +186,6 @@ href="https://github.com/BrayanOFC"><img src="https://github.com/BrayanOFC.png" 
 
 ### **`💵 𝑪𝑹𝑬𝑫𝑰𝑻𝑶𝑺`**
 <a
-href="https://github.com/deylin-eliac"><img src="https://github.com/deylin-eliac.png" width="140" height="140" alt="deylin-eliac"/></a>
+href="https://github.com/BrayanOFC"><img src="https://github.com/BrayanOFC.png" width="140" height="140" alt="BrayanOFC"/></a>
 
 [© Powered By Team BrayanOFC ⚡︎](https://whatsapp.com/channel/0029Vb7CL7dGk1FtzTLjNt3S)
