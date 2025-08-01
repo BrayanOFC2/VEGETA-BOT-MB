@@ -29,7 +29,7 @@ Combina lo mejor de Dragon Ball con herramientas útiles para grupos, admins y u
 
 ---
 
-## 📥 Instalación en Termux (Android)
+### 📥 Instalación en Termux (Android)
 
 > Asegúrate de tener **Termux actualizado**
 
@@ -43,7 +43,7 @@ yarn install
 npm start
 
 
-🧪 ¿Problemas comunes?
+### 🧪 ¿Problemas comunes?
 
 🔁 ¿El bot se cerró?
 
@@ -64,9 +64,8 @@ pm2 save
 pm2 logs
 
 
----
 
-# ☁️ Deploy en la nube
+### ☁️ Deploy en la nube
 
 Despliega el bot sin usar Termux:
 
@@ -75,7 +74,7 @@ Despliega el bot sin usar Termux:
 
 
 
-# 🛰 Servidores Luminary's
+### 🛰 Servidores Luminary's
 
 🌐 Servicio	📎 Enlace
 
@@ -85,7 +84,7 @@ Comunidad	WhatsApp
 
 
 
-# 🧑‍💻 Comunidad y Soporte
+### 🧑‍💻 Comunidad y Soporte
 
 📞 Contacto directo: BrayanOFC en WhatsApp
 
@@ -95,7 +94,7 @@ Comunidad	WhatsApp
 
 
 
-#✨ Créditos
+###✨ Créditos
 
 👾 Proyecto desarrollado por BrayanOFC
 
