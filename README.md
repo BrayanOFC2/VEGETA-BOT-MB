@@ -9,7 +9,7 @@
 
 ### 👑 ¿Qué es VegetaBot MB?
 
-VegetaBot MB es un bot para WhatsApp basado en MD, creado para ofrecer comandos poderosos, herramientas de administración de grupo, economía RPG, integración multimedia y mucho más.
+VegetaBot MB es un bot para WhatsApp basado en MB, creado para ofrecer comandos poderosos, herramientas de administración de grupo, economía RPG, integración multimedia y mucho más.
 
 > ⚠️ Proyecto desarrollado por [BrayanOFC](https://github.com/brayan127p)
 
