@@ -1,7 +1,11 @@
-const handler = async (m, { conn, participants, groupMetadata }) => {
-  const { welcome, autolevelup, antiBot, antiBot2, autoAceptar, autoRechazar, autoresponder, modoadmin, reaction, nsfw, detect, antiLink, antitoxic, antiTraba, antifake } = global.db.data.chats[m.chat];
+const handler = async (m, { conn }) => {
+  const {
+    welcome, autolevelup, antiBot, antiBot2, autoAceptar, autoRechazar,
+    autoresponder, modoadmin, reaction, nsfw, detect, antiLink,
+    antitoxic, antiTraba, antifake
+  } = global.db.data.chats[m.chat];
 
-  const text = `👑 *ℂ𝕆ℕ𝔽𝕀𝔾𝕌ℝ𝔸ℂ𝕀𝕆ℕ 𝔻𝔼 𝔾ℝ𝕌ℙ𝕆* 
+  const texto = `👑 *ℂ𝕆ℕ𝔽𝕀𝔾𝕌ℝ𝔸ℂ𝕀𝕆ℕ 𝔻𝔼 𝔾ℝ𝕌ℙ𝕆* 
   
 ◈ Welcome: ${welcome ? 'Activado' : 'Desactivado'}
 ◈ Autolevelup: ${autolevelup ? 'Activado' : 'Desactivado'} 
@@ -17,27 +21,36 @@ const handler = async (m, { conn, participants, groupMetadata }) => {
 ◈ Antilink: ${antiLink ? 'Activado' : 'Desactivado'} 
 ◈ Antitoxic: ${antitoxic ? 'Activado' : 'Desactivado'} 
 ◈ Antitraba: ${antiTraba ? 'Activado' : 'Desactivado'}
-◈ antifake: ${antifake ? 'Activado' : 'Desactivado'}
+◈ Antifake: ${antifake ? 'Activado' : 'Desactivado'}
 
-> Nota: ᴘᴜᴇᴅᴇs ᴀᴄᴛɪᴠᴀʀ ᴜɴᴀ ᴅᴇ ᴇsᴛᴀs ᴏᴘᴄɪᴏɴᴇs ᴅᴇ ᴇsᴛᴀ ᴍᴀɴᴇʀᴀ 𝗘𝗷𝗲𝗺𝗽𝗹𝗼: #antilink`.trim();
+> Nota: Puedes activar una de estas opciones con el comando: *#antilink*`.trim();
 
-  await conn.sendFile(m.chat, icons, 'Vegeta.jpg', text, m, true, {
+  const imagen = 'https://qu.ax/gfLKQ.jpg';
+  const emoji = '🧃';
+  const packname = 'BOT DE GRUPO';
+  const dev = 'BrayanOFC';
+  const redes = 'https://t.me/BrayanOFC';
+  const icono = 'https://qu.ax/UOvit.jpg';
+
+  await conn.sendMessage(m.chat, {
+    image: { url: imagen },
+    caption: texto,
     contextInfo: {
       forwardingScore: 200,
       isForwarded: false,
       externalAdReply: {
         showAdAttribution: true,
-        renderLargerThumbnail: false,
         title: packname,
         body: dev,
         mediaType: 1,
         sourceUrl: redes,
-        thumbnailUrl: icono
+        thumbnailUrl: icono,
+        renderLargerThumbnail: false
       }
     }
-  }, { mentions: [m.sender] });
+  }, { quoted: m });
 
-  m.react(emoji);
+  await m.react(emoji);
 };
 
 handler.help = ['configuraciongrupo'];
