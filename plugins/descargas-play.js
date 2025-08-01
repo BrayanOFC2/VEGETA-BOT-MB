@@ -22,16 +22,19 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
 🌐 *Enlace:* ${video.url}
 `.trim();
 
-    await conn.sendMessage(m.chat, {
+    const template = {
       image: { url: video.image },
       caption: videoInfo,
       footer: 'Selecciona una opción:',
-      buttons: [
-        { buttonId: `${usedPrefix}ytmp3 ${video.url}`, buttonText: { displayText: '🎵 Audio (MP3)' }, type: 1 },
-        { buttonId: `${usedPrefix}ytmp4 ${video.url}`, buttonText: { displayText: '🎬 Video (MP4)' }, type: 1 },
+      templateButtons: [
+        { index: 1, urlButton: { displayText: '🌐 Ver en YouTube', url: video.url } },
+        { index: 2, callButton: { displayText: '📞 Contactar Creador', phoneNumber: '5210000000000' } },
+        { index: 3, quickReplyButton: { displayText: '🎵 Descargar Audio', id: `${usedPrefix}ytmp3 ${video.url}` } },
+        { index: 4, quickReplyButton: { displayText: '🎬 Descargar Video', id: `${usedPrefix}ytmp4 ${video.url}` } },
       ]
-    }, { quoted: m });
+    };
 
+    await conn.sendMessage(m.chat, template, { quoted: m });
     await m.react("✅");
   } catch (error) {
     console.error(error);
