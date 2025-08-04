@@ -44,20 +44,17 @@ href="https://wa.me/526641804242?text="><img src="https://qu.ax/ugHh.jpg" height
 
 ---
 
-### **`⬇️ Click en la imagen para obtener termux⬇️`**
+### **`✧ Click en la imagen para descargar termux ✧`**
 <a
-href="https://www.mediafire.com/file/3hsvi3xkpq3a64o/termux_118.a"><img src="https://qu.ax/finc.jpg" height="125px"></a>
+href="https://www.mediafire.com/file/llugt4zgj7g3n3u/com.termux_1020.apk/file"><img src="https://qu.ax/finc.jpg" height="125px"></a> 
 
-<div align=>
- 
-
-#### **`💨 Instalación por termux`**
+### **`➮ Instalación por termux`**
 
 <details>
- <summary><b> 👉 Click para los ver Comandos</b></summary>
+ <summary><b> ✎ Click para ver los Comandos </b></summary>
 
-#### **🪄 Instalación manual por termux**
-> copie y peguen en termux uno por uno 
+### **❀ Instalación manual por termux**
+> Nota: Copie y pegue los comandos en termux uno por uno.
 ```bash
 termux-setup-storage
 ```
@@ -67,57 +64,55 @@ apt update && apt upgrade && pkg install -y git nodejs ffmpeg imagemagick yarn
 ```
 
 ```bash
-git clone https://github.com/BrayanOFC/VEGETA-BOT-MB2.0 && cd VEGETA-BOT-MB
+git clone https://github.com/BrayanOFC/VEGETA-BOT-MB && cd VEGETA-BOT-MB 
 ```
 
 ```bash
-yarn install && npm install
+yarn install
+```
+
+```bash
+npm install
+```
+
+```bash
+npm update
 ```
 
 ```bash
 npm start
 ```
-> si despues de poner el numero de WhatsApp, y sale letras en roja no se preocupe es normal 
----
 
-#### **🟢 Activar en caso de detenerse en termux**
+> Si aparece (Y/I/N/O/D/Z) [default=N] ? use la letra "y" + "ENTER" para continuar con la instalación
 
-Si después de instalar el bot en Termux se detiene (pantalla en blanco, pérdida de conexión a Internet, reinicio del dispositivo), sigue estos pasos:
+### **🜸 Activar en caso de detenerse en termux**
 
-1. Abre Termux y navega al directorio del bot:
-    ```bash
-    cd VEGETA-BOT-MB
-    ```
+> Si después de instalar el bot en Termux se detiene (pantalla en blanco, pérdida de conexión a Internet, reinicio del dispositivo), sigue estos pasos:
 
-2. Inicia el bot nuevamente:
-    ```bash
+❒ Abre Termux y navega al directorio del bot:
+
+   ```bash
+    cd VEGETA-BOT-MB 
+   ```
+
+❒ Inicia el bot nuevamente:
+
+   ```bash
     npm start
-    ```
+   ```
 
+### **✰ Volverte owner del Bot**
+
+> Si después de instalar el bot en Termux y iniciar la session del bot (deseas poner tu número es la lista de owner pon este comando:
+
+   ```bash
+    cd VEGETA-BOT-MB && nano config.js
+   ```
+
+</details>
 ---
 
-#### **🍬 Obtener otro codigo qr en termux**
-
-Si después de instalar el bot en Termux y iniciar la session del bot (el numero se va a soporte, se cierra la conexión o demorastes al conectar), sigue estos pasos:
-
-1. Abre Termux y navega al directorio del bot:
-    ```bash
-    cd VEGETA-BOT-MB
-    ```
-
-2. Elimina la carpeta MiniSession:
-    ```bash
-    rm -rf Session
-    ```
-
-3. Inicia el bot nuevamente:
-    ```bash
-    npm start
-    ```
-
----
-
-### **😼 Para activar 24/7 (termux)**
+### **👻 Para activar 24/7 (termux)**
 
 > comando para obtener la bot 24/7 en termux
 
@@ -129,7 +124,6 @@ npm i -g pm2 && pm2 start index.js && pm2 save && pm2 logs
 
 </details>
 
----
 
 ##### **`🌟Luminary's`**
 
