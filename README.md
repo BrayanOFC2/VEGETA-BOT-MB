@@ -110,7 +110,6 @@ npm start
    ```
 
 </details>
----
 
 ### **👻 Para activar 24/7 (termux)**
 
