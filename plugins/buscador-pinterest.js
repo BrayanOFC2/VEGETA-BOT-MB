@@ -1,56 +1,33 @@
 import axios from 'axios';
-const {
-  generateWAMessageContent,
-  generateWAMessageFromContent,
-  proto
-} = (await import("@whiskeysockets/baileys"))["default"];
 
-let handler = async (m, { conn, text, usedPrefix, command }) => {
-  if (!text) return conn.reply(m.chat, "🍬 Por favor, ingresa lo que deseas buscar en Pinterest.", m);
+let handler = async (m, { conn, text }) => {
+  if (!text) return conn.reply(m.chat, "📎 *Ingresa el nombre o término que deseas buscar en Pinterest.*", m);
+
   let query = text + " hd";
-  await m.react("⏳");
-  conn.reply(m.chat, '🍭 Descargando imágenes, espere un momento...', m);
+  await m.react("🔄");
+  conn.reply(m.chat, `🧷 *.pin Fotos De ${text.toUpperCase()}*`, m);
+
   try {
     let { data } = await axios.get(`https://api.dorratz.com/v2/pinterest?q=${encodeURIComponent(query)}`);
-    let images = data.slice(0, 6).map(item => item.image_large_url);
-    let cards = [];
-    let counter = 1;
-    for (let url of images) {
-      const { imageMessage } = await generateWAMessageContent({ image: { url } }, { upload: conn.waUploadToServer });
-      cards.push({
-        body: proto.Message.InteractiveMessage.Body.fromObject({ text: `Imagen - ${counter++}` }),
-        footer: proto.Message.InteractiveMessage.Footer.fromObject({ text: "Pinterest HD" }),
-        header: proto.Message.InteractiveMessage.Header.fromObject({ title: '', hasMediaAttachment: true, imageMessage }),
-        nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.fromObject({
-          buttons: [{
-            name: "cta_url",
-            buttonParamsJson: JSON.stringify({
-              display_text: "Ver en Pinterest",
-              Url: `https://www.pinterest.com/search/pins/?q=${encodeURIComponent(query)}`,
-              merchant_url: `https://www.pinterest.com/search/pins/?q=${encodeURIComponent(query)}`
-            })
-          }]
-        })
-      });
+    let images = data.slice(0, 15).map(item => item.image_large_url);
+
+    let media = images.map(url => ({
+      image: { url },
+      caption: `📸 Foto relacionada con: *${text.toUpperCase()}*`,
+    }));
+
+    for (let i = 0; i < media.length; i += 4) {
+      let batch = media.slice(i, i + 4);
+      await conn.sendMedia(m.chat, batch, { quoted: m });
     }
-    const messageContent = generateWAMessageFromContent(m.chat, {
-      viewOnceMessage: {
-        message: {
-          messageContextInfo: { deviceListMetadata: {}, deviceListMetadataVersion: 2 },
-          interactiveMessage: proto.Message.InteractiveMessage.fromObject({
-            body: proto.Message.InteractiveMessage.Body.create({ text: `🍭 Resultado de: ${query}` }),
-            footer: proto.Message.InteractiveMessage.Footer.create({ text: "⪛✰ Pinterest HD - Búsquedas ✰⪜" }),
-            header: proto.Message.InteractiveMessage.Header.create({ hasMediaAttachment: false }),
-            carouselMessage: proto.Message.InteractiveMessage.CarouselMessage.fromObject({ cards })
-          })
-        }
-      }
-    }, { quoted: m });
+
+    let finalMessage = `📁 *Resultados de:* Fotos De *${text.toUpperCase()}*\n🧮 *Cantidad de resultados:* ${images.length}\n👤 *Creador:* © powered by *Deylin*`;
+
+    await conn.sendMessage(m.chat, { text: finalMessage }, { quoted: m });
     await m.react("✅");
-    await conn.relayMessage(m.chat, messageContent.message, { messageId: messageContent.key.id });
   } catch (error) {
     console.error(error);
-    return conn.reply(m.chat, "Ocurrió un error al buscar las imágenes.", m);
+    return conn.reply(m.chat, "⚠️ *Error al buscar imágenes. Intenta de nuevo más tarde.*", m);
   }
 };
 
