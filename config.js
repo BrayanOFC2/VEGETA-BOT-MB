@@ -22,7 +22,7 @@ global.owner = [
   ['5491166401905', 'legend', true],
   ['5216641784469', 'ʙʀᴀʏᴀɴ ᴏғᴄ', true],
   ['5216671548329', 'Legna', true], 
-  ['50433191934', 'deylin', true], 
+  ['50432955554', 'Papi Deylin', true], 
   ['5212431268546', 'Tesis', true],  
   ['50557865603', 'Niño piña', true], 
   ['5218211111111', 'Papi chulo', true],
