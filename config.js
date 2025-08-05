@@ -110,60 +110,6 @@ global.fetch = fetch
 global.axios = axios
 global.moment = moment   
 
-global.rpg = {
-  emoticon(string) {
-    string = string.toLowerCase();
-    const emot = {
-      level: '🌟 Nivel',
-      coin: '💸 Coin',
-      exp: '✨ Experiencia',
-      bank: '🏦 Banco',
-      diamond: '💎 Diamante',
-      health: '❤️ Salud',
-      kyubi: '🌀 Magia',
-      joincount: '💰 Token',
-      emerald: '♦️ Esmeralda',
-      stamina: '⚡ Energía',
-      role: '⚜️ Rango',
-      premium: '🎟️ Premium',
-      pointxp: '📧 Puntos Exp',
-      gold: '👑 Mot',
-      iron: '⛓️ Hierro',
-      coal: '🌑 Carbón',
-      stone: '🪨 Piedra',
-      potion: '🥤 Poción',
-    };
-    const results = Object.keys(emot).map((v) => [v, new RegExp(v, 'gi')]).filter((v) => v[1].test(string));
-    if (!results.length) return '';
-    else return emot[results[0][0]];
-  }};
-global.rpgg = { 
-  emoticon(string) {
-    string = string.toLowerCase();
-    const emott = {
-      level: '🌟',
-      coin: '💸',
-      exp: '✨',
-      bank: '🏦',
-      diamond: '💎',
-      health: '❤️',
-      kyubi: '🌀',
-      joincount: '💰',
-      emerald: '♦️',
-      stamina: '⚡',
-      role: '⚜️',
-      premium: '🎟️',
-      pointxp: '📧',
-      gold: '👑',
-      iron: '⛓️',
-      coal: '🌑',
-      stone: '🪨',
-      potion: '🥤',
-    };
-    const results = Object.keys(emott).map((v) => [v, new RegExp(v, 'gi')]).filter((v) => v[1].test(string));
-    if (!results.length) return '';
-    else return emott[results[0][0]];
-  }};  
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
