@@ -1,17 +1,21 @@
 //adaptado por BrayanOFC para VEGETA-BOT-MB 
-console.log('Iniciando 🚀🚀🚀')
+import readlineSync from 'readline-sync'
 import cfonts from 'cfonts'
 import chalk from 'chalk'
 import * as baileys from "@whiskeysockets/baileys"
 import fs from "fs"
 import path from "path"
-import readlineSync from "readline-sync"
 import pino from "pino"
 import NodeCache from 'node-cache'
 import { startSubBot } from "./lib/subbot.js"
 import "./config.js"
 import { handler, callUpdate, participantsUpdate, groupsUpdate } from "./handler.js"
 import { loadPlugins } from './lib/plugins.js'
+
+console.log('Iniciando 🚀🚀🚀')
+
+const nombre = readlineSync.question('¿Cuál es tu nombre?: ')
+console.log('Hola, ' + nombre + '!')
 
 cfonts.say('VEGETA-BOT-MB', {
   font: 'chrome',
