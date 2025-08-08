@@ -40,9 +40,9 @@ const { chain } = lodash
 const PORT = process.env.PORT || process.env.SERVER_PORT || 3000
 
 cfonts.say('VEGETA - DRAGON MODE', { font: 'block', align: 'center', colors: ['yellow', 'cyan'], background: 'transparent', letterSpacing: 1, lineHeight: 1, space: true, maxLength: '0' })
-cfonts.say('Sistema iniciado', { font: 'console', align: 'center', colors: ['magenta'] })
-cfonts.say('⚡ Vegeta-bot-MB ⚡ — Poder Saiyan: ACTIVADO', { font: 'console', align: 'center', colors: ['cyan'] })
-cfonts.say('By BrayanOFC — 「王」', { font: 'console', align: 'center', colors: ['white'] })
+console.log(chalk.magentaBright('• Sistema iniciado •'))
+console.log(chalk.cyanBright('⚡ Vegeta-bot-MB ⚡ — Poder Saiyan: ACTIVADO'))
+console.log(chalk.whiteBright('By BrayanOFC — 「王」'))
 
 protoType()
 serialize()
@@ -104,7 +104,7 @@ if (methodCodeQR) opcion = '1'
 if (!methodCodeQR && !methodCode && !fs.existsSync(`./${sessions}/creds.json`)) {
   do {
     opcion = await question(colores('✦ Elige tu destino Saiyan:\n') + opcionQR('1. Escanear QR\n') + opcionTexto('2. Ingresar código de 8 dígitos\n--> '))
-    if (!/^[1-2]$/.test(opcion)) cfonts.say('¡Elección inválida, guerrero!', { font: 'console', align: 'center', colors: ['red'] })
+    if (!/^[1-2]$/.test(opcion)) console.log(chalk.redBright('¡Elección inválida, guerrero!'))
   } while (opcion !== '1' && opcion !== '2' || fs.existsSync(`./${sessions}/creds.json`))
 }
 
@@ -146,7 +146,7 @@ if (!fs.existsSync(`./${sessions}/creds.json`)) {
         setTimeout(async () => {
           let codeBot = await conn.requestPairingCode(addNumber)
           codeBot = codeBot?.match(/.{1,4}/g)?.join("-") || codeBot
-          cfonts.say(`✧ CÓDIGO DE VINCULACIÓN ✧\n${codeBot}`, { font: 'console', align: 'center', colors: ['magenta', 'white'] })
+          console.log(chalk.magentaBright(`✧ CÓDIGO DE VINCULACIÓN ✧`), codeBot)
         }, 3000)
       }
     }
@@ -174,19 +174,19 @@ async function connectionUpdate(update) {
   }
   if (global.db.data == null) loadDatabase()
   if (update.qr != 0 && update.qr != undefined || methodCodeQR) {
-    if (opcion == '1' || methodCodeQR) cfonts.say('❐ ESCANEA EL CÓDIGO QR — Expira en 45s', { font: 'console', align: 'center', colors: ['yellow'] })
+    if (opcion == '1' || methodCodeQR) console.log(chalk.yellow('❐ ESCANEA EL CÓDIGO QR — Expira en 45s'))
   }
-  if (connection == 'open') cfonts.say('⌬ VEGETA BOT MB — Conexión establecida', { font: 'console', align: 'center', colors: ['green'] })
+  if (connection == 'open') console.log(chalk.green('\n⌬ VEGETA BOT MB — Conexión establecida'))
   let reason = new Boom(lastDisconnect?.error)?.output?.statusCode
   if (connection === 'close') {
-    if (reason === DisconnectReason.badSession) cfonts.say(`⚠︎ Sesión inválida. Borra la carpeta ${global.sessions} y vuelve a vincular.`, { font: 'console', align: 'center', colors: ['cyan'] })
-    else if (reason === DisconnectReason.connectionClosed) { cfonts.say(`⚠︎ Conexión cerrada. Reconectando...`, { font: 'console', align: 'center', colors: ['magenta'] }); await global.reloadHandler(true).catch(console.error) }
-    else if (reason === DisconnectReason.connectionLost) { cfonts.say(`⚠︎ Conexión perdida. Intentando reconectar...`, { font: 'console', align: 'center', colors: ['blue'] }); await global.reloadHandler(true).catch(console.error) }
-    else if (reason === DisconnectReason.connectionReplaced) cfonts.say(`⚠︎ Conexión reemplazada. Cierra la otra sesión primero.`, { font: 'console', align: 'center', colors: ['yellow'] })
-    else if (reason === DisconnectReason.loggedOut) { cfonts.say(`⚠︎ Sesión cerrada. Borra ${global.sessions} y vincula de nuevo.`, { font: 'console', align: 'center', colors: ['red'] }); await global.reloadHandler(true).catch(console.error) }
-    else if (reason === DisconnectReason.restartRequired) { cfonts.say(`✓ Reinicio requerido. Reconectando...`, { font: 'console', align: 'center', colors: ['cyan'] }); await global.reloadHandler(true).catch(console.error) }
-    else if (reason === DisconnectReason.timedOut) { cfonts.say(`⧖ Tiempo agotado. Reconectando...`, { font: 'console', align: 'center', colors: ['yellow'] }); await global.reloadHandler(true).catch(console.error) }
-    else cfonts.say(`⚠︎ Razon de desconexión desconocida: ${reason || 'No encontrado'} >> ${connection || 'No encontrado'}`, { font: 'console', align: 'center', colors: ['red'] })
+    if (reason === DisconnectReason.badSession) console.log(chalk.cyanBright(`⚠︎ Sesión inválida. Borra la carpeta ${global.sessions} y vuelve a vincular.`))
+    else if (reason === DisconnectReason.connectionClosed) { console.log(chalk.magentaBright(`⚠︎ Conexión cerrada. Reconectando...`)); await global.reloadHandler(true).catch(console.error) }
+    else if (reason === DisconnectReason.connectionLost) { console.log(chalk.blueBright(`⚠︎ Conexión perdida. Intentando reconectar...`)); await global.reloadHandler(true).catch(console.error) }
+    else if (reason === DisconnectReason.connectionReplaced) console.log(chalk.yellowBright(`⚠︎ Conexión reemplazada. Cierra la otra sesión primero.`))
+    else if (reason === DisconnectReason.loggedOut) { console.log(chalk.redBright(`⚠︎ Sesión cerrada. Borra ${global.sessions} y vincula de nuevo.`)); await global.reloadHandler(true).catch(console.error) }
+    else if (reason === DisconnectReason.restartRequired) { console.log(chalk.cyanBright(`✓ Reinicio requerido. Reconectando...`)); await global.reloadHandler(true).catch(console.error) }
+    else if (reason === DisconnectReason.timedOut) { console.log(chalk.yellowBright(`⧖ Tiempo agotado. Reconectando...`)); await global.reloadHandler(true).catch(console.error) }
+    else console.log(chalk.redBright(`⚠︎ Razon de desconexión desconocida: ${reason || 'No encontrado'} >> ${connection || 'No encontrado'}`))
   }
 }
 process.on('uncaughtException', console.error)
