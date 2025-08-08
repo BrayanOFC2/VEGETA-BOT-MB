@@ -7,7 +7,7 @@ import fs from "fs"
 import path from "path"
 import pino from "pino"
 import NodeCache from 'node-cache'
-import { startSubBot } from "./lib/jadibot-serbot.js"
+import { startSubBot } from "./plugins.js/jadibot-serbot.js"
 import "./config.js"
 import { handler, callUpdate, participantsUpdate, groupsUpdate } from "./handler.js"
 import { loadPlugins } from './lib/plugins.js'
