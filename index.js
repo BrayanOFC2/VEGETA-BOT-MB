@@ -1,5 +1,5 @@
 //adaptado por BrayanOFC para VEGETA-BOT-MB 
-import readlineSync from 'readline-sync'
+import readline from 'readline'
 import cfonts from 'cfonts'
 import chalk from 'chalk'
 import * as baileys from "@whiskeysockets/baileys"
@@ -12,9 +12,20 @@ import "./config.js"
 import { handler, callUpdate, participantsUpdate, groupsUpdate } from "./handler.js"
 import { loadPlugins } from './lib/plugins.js'
 
+const ask = (question) => new Promise(resolve => {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  })
+  rl.question(question, answer => {
+    rl.close()
+    resolve(answer)
+  })
+})
+
 console.log('Iniciando 🚀🚀🚀')
 
-const nombre = readlineSync.question('¿Cuál es tu nombre?: ')
+const nombre = await ask('¿Cuál es tu nombre?: ')
 console.log('Hola, ' + nombre + '!')
 
 cfonts.say('VEGETA-BOT-MB', {
@@ -49,11 +60,11 @@ async function main() {
   const haySubbotsActivos = fs.existsSync(subbotsFolder) && fs.readdirSync(subbotsFolder).some(folder => fs.existsSync(path.join(subbotsFolder, folder, "creds.json")))
 
   if (!hayCredencialesPrincipal && !haySubbotsActivos) {
-    const opcion = readlineSync.question(`${chalk.yellowBright('¿Cómo deseas conectarte?\n')}1. Código QR\n2. Código de 8 dígitos\n${chalk.magentaBright('---> ')}`)
+    const opcion = await ask(`${chalk.yellowBright('¿Cómo deseas conectarte?\n')}1. Código QR\n2. Código de 8 dígitos\n${chalk.magentaBright('---> ')}`)
     usarCodigo = opcion === "2"
     if (usarCodigo) {
-      console.log(chalk.yellow("Ingresa tu número (ej: +521234567890): "))
-      numero = readlineSync.question("").replace(/[^0-9]/g, '')
+      numero = await ask(chalk.yellow("Ingresa tu número (ej: +521234567890): "))
+      numero = numero.replace(/[^0-9]/g, '')
       if (numero.startsWith('52') && !numero.startsWith('521')) numero = '521' + numero.slice(2)
     }
   }
