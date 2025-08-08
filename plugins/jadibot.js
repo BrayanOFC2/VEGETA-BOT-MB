@@ -1,4 +1,4 @@
-import { startSubBot } from '../lib/subbot.js';
+*/import { startSubBot } from '../lib/subbot.js';
 let commandFlags = {}; 
 
 const handler = async (m, { conn, command }) => {
@@ -17,4 +17,4 @@ handler.tags = ['jadibot'];
 handler.command = /^(serbot|code|jadibot|qr)$/i;
 handler.register = false;
 
-export default handler;
+export default handler;*/
