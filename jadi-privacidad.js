@@ -1,4 +1,4 @@
-import { db } from '../lib/postgres.js'
+import { db } from '../lib/database.js'
 
 let handler = async (m, { conn, command, args, usedPrefix }) => {
 const val = args[0];
