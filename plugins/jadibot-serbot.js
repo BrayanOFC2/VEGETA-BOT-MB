@@ -1,5 +1,5 @@
 import ws from 'ws'
-import { getSubbotConfig } from '../lib/postgres.js'
+import { getSubbotConfig } from '../lib/database.js'
 
 const handler = async (m, { conn }) => {
 const mainId = globalThis.conn?.user?.id?.split('@')[0].split(':')[0]
