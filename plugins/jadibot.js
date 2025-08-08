@@ -1,4 +1,4 @@
-*/import { startSubBot } from '../lib/subbot.js';
+/*import { startSubBot } from '../lib/subbot.js';
 let commandFlags = {}; 
 
 const handler = async (m, { conn, command }) => {
