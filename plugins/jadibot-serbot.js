@@ -1,59 +1,20 @@
-import ws from 'ws'
-import { getSubbotConfig } from '../lib/database.js'
+import { startSubBot } from '../lib/subbot.js';
+let commandFlags = {}; 
 
-const handler = async (m, { conn }) => {
-const mainId = globalThis.conn?.user?.id?.split('@')[0].split(':')[0]
-const activos = (globalThis.conns || []).filter(sock => {
-const id = sock?.userId || sock?.user?.id?.split('@')[0];
-const isAlive = sock?.userId && typeof sock?.uptime === 'number';
-return isAlive && id !== mainId;
-});
+const handler = async (m, { conn, command }) => {
+commandFlags[m.sender] = true;
 
-if (!activos.length) return m.reply("❌ No hay subbots conectados en este momento.")
-let mensaje = `🤖 *SubBots activos: ${activos.length}*\n\n`
-const participantes = m.isGroup ? (await conn.groupMetadata(m.chat).catch(() => ({ participants: [] }))).participants || [] : []
+const rtx = `*☁️ VEGETA-BOT-MB ☁️*\nㅤㅤㅤㅤSer sub bot\n\n*Con otro telefono que tengas o en la PC escanea este QR para convertirte en un sub bot*\n\n*1. Haga clic en los tres puntos en la esquina superior derecha*\n*2. Toca WhatsApp Web*\n*3. Escanee este código QR*\n*Este código QR expira en 45 segundos!*\n\n> *⭕️ No nos hacemos responsable del mal uso que se le pueda dar.*`;
+const rtx2 = `*☁️ VEGETA-BOT-MB ☁️*\nㅤㅤㅤㅤSer sub bot\n\n*1️⃣ Dirígete a los tres puntos en la esquina superior derecha*\n*2️⃣ Opción: Dispositivos vinculados*\n*3️⃣ Vincular con código de teléfono*\n*4️⃣ Pega el código a continuación*\n> Codigo de 8 digitos vencen en 60 segundos`;
 
-for (const sock of activos) {
-const userId = sock.user?.id
-if (!userId) continue
-const cleanId = userId.replace(/:\d+/, '').split('@')[0]
-const configId = userId.replace(/:\d+/, '')
-const nombre = sock.user.name || "-"
-let config = {}
-try {
-config = await getSubbotConfig(configId)
-} catch {
-config = { prefix: ["/", ".", "#"], mode: "public" }
-}
+const phone = m.sender?.split('@')[0];
+const isCode = /^(serbot|code)$/.test(command);
+const caption = isCode ? rtx2 : rtx;
+await startSubBot(m, conn, caption, isCode, phone, m.chat, commandFlags);
+};
+handler.help = ['jadibot', 'serbot', 'code'];
+handler.tags = ['jadibot'];
+handler.command = /^(serbot|code|jadibot|qr)$/i;
+handler.register = false;
 
-const modo = config.mode === "private" ? "Private" : "Public"
-const prefijos = Array.isArray(config.prefix) ? config.prefix : [config.prefix]
-const prefText = prefijos.map(p => `\`${p}\``).join(", ")
-const mainPrefix = (prefijos[0] === "") ? "" : prefijos[0]
-const textoMenu = mainPrefix ? `${mainPrefix}menu` : "menu"
-const uptime = sock.uptime ? formatearMs(Date.now() - sock.uptime) : "Desconocido"
-const estaEnGrupo = participantes.some(p => p.id === userId)
-const mostrarNumero = !config.privacy
-const mostrarPrestar = config.prestar && !config.privacy
-let lineaBot = `• ${mostrarNumero ? `wa.me/${cleanId}?text=${encodeURIComponent(textoMenu)} (${nombre})` : `(${nombre})`}\n`
-mensaje += lineaBot
-mensaje += `   ⏱️ Tiempo activo: *${uptime}*\n`
-mensaje += `   ⚙️ Modo: *${modo}*\n`
-mensaje += `   🛠️ Prefix: ${prefText}\n`
-if (mostrarPrestar) mensaje += `   🟢 *Prestar bot*: #join <enlace>\n`
-mensaje += `\n`
-}
-return m.reply(mensaje.trim())
-}
-handler.help = ['bots']
-handler.tags = ['jadibot']
-handler.command = /^bots$/i
-export default handler
-
-function formatearMs(ms) {
-  const segundos = Math.floor(ms / 1000)
-  const minutos = Math.floor(segundos / 60)
-  const horas = Math.floor(minutos / 60)
-  const dias = Math.floor(horas / 24)
-  return `${dias}d ${horas % 24}h ${minutos % 60}m ${segundos % 60}s`
-}
+export default handler;
