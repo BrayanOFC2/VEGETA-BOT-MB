@@ -313,4 +313,4 @@ if (global.vegetaJadibts) {
     mkdirSync(global.rutaJadiBot, { recursive: true })
     console.log(chalk.bold.cyan(`La carpeta: ${jadi} se creó correctamente.`))
   } else {
-    console.log(chalk.bold.cyan(`La carpeta: ${jadi} ya
+    console.log(chalk.bold.cyan(`La carpeta: ${jadi}
