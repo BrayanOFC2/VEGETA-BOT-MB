@@ -60,13 +60,13 @@ const PORT = process.env.PORT || process.env.SERVER_PORT || 3000
 
 console.log(chalk.bold.redBright(`
 ╔═══════════════════════════════════════╗
-║  ⚡ VEGETA-BOT-MB ACTIVADO ⚡          ║
-║  ʕ•ᴥ•ʔ ¡Prepárate para el combate!   ║
+║   ⚡ VEGETA-BOT-MB ACTIVADO ⚡         ║
+║  ʕ•ᴥ•ʔ ¡Prepárate para la batalla!    ║
 ╚═══════════════════════════════════════╝
 `))
 
 console.log(chalk.bold.magentaBright('╔═══════════════════════════════════════╗'))
-console.log(chalk.bold.cyanBright('║       Desarrollado por BrayanOFC 👑    ║'))
+console.log(chalk.bold.cyanBright('║       Desarrollado por BrayanOFC 👑   ║'))
 console.log(chalk.bold.magentaBright('╚═══════════════════════════════════════╝\n'))
 
 protoType()
@@ -172,14 +172,14 @@ if (methodCodeQR) opcion = '1'
 if (!methodCodeQR && !methodCode && !fs.existsSync(`./${sessions}/creds.json`)) {
   do {
     opcion = await question(
-      colores('✎﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏\n Selecciona tu camino Saiyajin:\n') +
-        opcionQR('1. Escanear código QR\n') +
-        opcionTexto('2. Usar código de texto de 8 dígitos\n--> '),
+      colores('✎﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏\n Escoge tu camino, guerrero Saiyajin:\n') +
+        opcionQR('1. Escanear código QR para conectar\n') +
+        opcionTexto('2. Ingresar código de texto de 8 dígitos\n--> '),
     )
     if (!/^[1-2]$/.test(opcion)) {
       console.log(
         chalk.bold.redBright(
-          `✰ཽ Solo puedes elegir 1 o 2, no hay espacio para errores.`,
+          `✰ཽ Solo puedes elegir la opción 1 o 2, ¡no te rindas!`,
         ),
       )
     }
@@ -234,7 +234,7 @@ if (!fs.existsSync(`./${sessions}/creds.json`)) {
           phoneNumber = await question(
             chalk.bgBlack(
               chalk.bold.greenBright(
-                `✦ Ingresa tu número de WhatsApp Saiyajin.\n${chalk.bold
+                `✦ Ingresa tu número de WhatsApp Saiyajin para comenzar la pelea.\n${chalk.bold
                   .yellowBright(`✏  Ejemplo: 57321×××××××`)}\n${chalk.bold.magentaBright(
                   '---> ',
                 )}`,
@@ -289,14 +289,14 @@ async function connectionUpdate(update) {
     if (opcion == '1' || methodCodeQR) {
       console.log(
         chalk.bold.yellow(
-          `\n❐ ESCANEA EL CÓDIGO QR - ¡Expira en 45 segundos, rápido!`,
+          `\n❐ ¡Escanea el código QR rápido, guerrero! Expira en 45 segundos.`,
         ),
       )
     }
   }
   if (connection == 'open') {
     console.log(
-      chalk.bold.green('\n⌬ VEGETA-BOT-MB ⚡ ¡Conectado y listo para pelear! ↻'),
+      chalk.bold.green('\n⌬ VEGETA-BOT-MB ⚡ ¡Conectado y listo para la batalla! ↻'),
     )
   }
   let reason = new Boom(lastDisconnect?.error)?.output?.statusCode
@@ -305,14 +305,14 @@ async function connectionUpdate(update) {
       case DisconnectReason.badSession:
         console.log(
           chalk.bold.cyanBright(
-            `\n⚠︎ Sesión inválida, borra la carpeta ${global.sessions} y vuelve a escanear el QR.`,
+            `\n⚠︎ Sesión inválida, elimina la carpeta ${global.sessions} y vuelve a escanear el QR.`,
           ),
         )
         break
       case DisconnectReason.connectionClosed:
         console.log(
           chalk.bold.magentaBright(
-            `\n⚠︎ Conexión cerrada, reconectando...`,
+            `\n⚠︎ Conexión cerrada, reintentando conectar...`,
           ),
         )
         await global.reloadHandler(true).catch(console.error)
@@ -320,7 +320,7 @@ async function connectionUpdate(update) {
       case DisconnectReason.connectionLost:
         console.log(
           chalk.bold.blueBright(
-            `\n⚠︎ Conexión perdida, intentando reconectar...`,
+            `\n⚠︎ Conexión perdida, intentado reconectar... ¡No te rindas!`,
           ),
         )
         await global.reloadHandler(true).catch(console.error)
@@ -335,20 +335,20 @@ async function connectionUpdate(update) {
       case DisconnectReason.loggedOut:
         console.log(
           chalk.bold.redBright(
-            `\n⚠︎ Sesión cerrada, borra la carpeta ${global.sessions} y escanea el QR.`,
+            `\n⚠︎ Sesión cerrada, elimina la carpeta ${global.sessions} y escanea el QR para volver.`,
           ),
         )
         await global.reloadHandler(true).catch(console.error)
         break
       case DisconnectReason.restartRequired:
         console.log(
-          chalk.bold.cyanBright(`\nConectando al servidor...`),
+          chalk.bold.cyanBright(`\nReconectando al campo de batalla...`),
         )
         await global.reloadHandler(true).catch(console.error)
         break
       case DisconnectReason.timedOut:
         console.log(
-          chalk.bold.yellowBright(`\nTiempo de conexión agotado, reconectando...`),
+          chalk.bold.yellowBright(`\nTiempo agotado, reconectando...`),
         )
         await global.reloadHandler(true).catch(console.error)
         break
