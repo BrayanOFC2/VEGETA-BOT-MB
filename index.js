@@ -1,40 +1,22 @@
-//adaptado por BrayanOFC para VEGETA-BOT-MB 
-process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '1'
+// adaptado por BrayanOFC para VEGETA-BOT-MB con sesión caducidad y conexión estable
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0'
 
 import './config.js'
-import { setupMaster, fork } from 'cluster'
 import { watchFile, unwatchFile } from 'fs'
 import { createRequire } from 'module'
 import { fileURLToPath, pathToFileURL } from 'url'
 import { platform } from 'process'
 import * as ws from 'ws'
-import fs, {
-  readdirSync,
-  statSync,
-  unlinkSync,
-  existsSync,
-  mkdirSync,
-  readFileSync,
-  rmSync,
-  watch
-} from 'fs'
+import fs, { existsSync, mkdirSync } from 'fs'
 import yargs from 'yargs'
-import { spawn } from 'child_process'
 import lodash from 'lodash'
-import { vegetaJadiBot } from './plugins/jadibot-serbot.js'
 import chalk from 'chalk'
-import syntaxerror from 'syntax-error'
-import { tmpdir } from 'os'
 import { format } from 'util'
-import boxen from 'boxen'
-import P from 'pino'
-import pino from 'pino'
 import Pino from 'pino'
-import path, { join, dirname } from 'path'
+import path, { dirname } from 'path'
 import { Boom } from '@hapi/boom'
 import { makeWASocket, protoType, serialize } from './lib/simple.js'
 import { Low, JSONFile } from 'lowdb'
-import { mongoDB, mongoDBV2 } from './lib/mongoDB.js'
 import store from './lib/store.js'
 
 const { proto } = (await import('@whiskeysockets/baileys')).default
@@ -44,19 +26,21 @@ const phoneUtil = PhoneNumberUtil.getInstance()
 const {
   DisconnectReason,
   useMultiFileAuthState,
-  MessageRetryMap,
   fetchLatestBaileysVersion,
   makeCacheableSignalKeyStore,
   jidNormalizedUser
 } = await import('@whiskeysockets/baileys')
 
-import readline, { createInterface } from 'readline'
+import readline from 'readline'
 import NodeCache from 'node-cache'
 
-const { CONNECTING } = ws
 const { chain } = lodash
 
 const PORT = process.env.PORT || process.env.SERVER_PORT || 3000
+
+// Definir carpeta de sesiones
+global.sessions = 'sessions'
+if (!existsSync(global.sessions)) mkdirSync(global.sessions, { recursive: true })
 
 global.customPrefix = ['🔥', '⚡', '✨', '\\.']
 
@@ -114,8 +98,6 @@ global.API = (name, path = '/', query = {}, apikeyqueryname) =>
 
 global.timestamp = { start: new Date() }
 
-const __dirname = global.__dirname(import.meta.url)
-
 global.opts = new Object(
   yargs(process.argv.slice(2))
     .exitProcess(false)
@@ -123,8 +105,8 @@ global.opts = new Object(
 )
 
 global.db = new Low(
-  /https?:\/\//.test(opts['db'] || '')
-    ? new cloudDBAdapter(opts['db'])
+  /https?:\/\//.test(global.opts['db'] || '')
+    ? new cloudDBAdapter(global.opts['db'])
     : new JSONFile('./src/database/database.json'),
 )
 global.DATABASE = global.db
@@ -137,7 +119,7 @@ global.loadDatabase = async function loadDatabase() {
           clearInterval(this)
           resolve(global.db.data == null ? global.loadDatabase() : global.db.data)
         }
-      }, 1 * 1000),
+      }, 1000),
     )
   }
   if (global.db.data !== null) return
@@ -155,30 +137,29 @@ global.loadDatabase = async function loadDatabase() {
   }
   global.db.chain = chain(global.db.data)
 }
-loadDatabase()
+await loadDatabase()
 
-const { state, saveState, saveCreds } = await useMultiFileAuthState(global.sessions)
+const { state, saveCreds } = await useMultiFileAuthState(global.sessions)
 
-const msgRetryCounterMap = (MessageRetryMap) => {}
 const msgRetryCounterCache = new NodeCache()
 
 const { version } = await fetchLatestBaileysVersion()
-let phoneNumber = global.botNumber
 
+const rl = readline.createInterface({ input: process.stdin, output: process.stdout })
+const question = (texto) => new Promise((resolve) => rl.question(texto, resolve))
+
+let opcion
 const methodCodeQR = process.argv.includes('qr')
-const methodCode = !!phoneNumber || process.argv.includes('code')
+const methodCode = process.argv.includes('code')
 const MethodMobile = process.argv.includes('mobile')
 
 const colores = chalk.bgMagenta.white
 const opcionQR = chalk.bold.green
 const opcionTexto = chalk.bold.cyan
 
-const rl = readline.createInterface({ input: process.stdin, output: process.stdout })
-const question = (texto) => new Promise((resolver) => rl.question(texto, resolver))
-
-let opcion
 if (methodCodeQR) opcion = '1'
-if (!methodCodeQR && !methodCode && !fs.existsSync(`./${sessions}/creds.json`)) {
+
+if (!methodCodeQR && !methodCode && !fs.existsSync(`./${global.sessions}/creds.json`)) {
   do {
     opcion = await question(
       colores('✎﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏\n⚔️ Escoge tu camino, guerrero Saiyajin:\n') +
@@ -192,29 +173,26 @@ if (!methodCodeQR && !methodCode && !fs.existsSync(`./${sessions}/creds.json`)) 
         ),
       )
     }
-  } while ((opcion !== '1' && opcion !== '2') || fs.existsSync(`./${sessions}/creds.json`))
+  } while ((opcion !== '1' && opcion !== '2') || fs.existsSync(`./${global.sessions}/creds.json`))
 }
 
 console.info = () => {}
 console.debug = () => {}
 
 const connectionOptions = {
-  logger: pino({ level: 'silent' }),
+  logger: Pino({ level: 'silent' }),
   printQRInTerminal:
     opcion == '1' ? true : methodCodeQR ? true : false,
   mobile: MethodMobile,
   browser:
     opcion == '1'
-      ? [`${nameqr}`, 'Edge', '20.0.04']
+      ? ['Vegeta-Bot-MB', 'Edge', '20.0.04']
       : methodCodeQR
-      ? [`${nameqr}`, 'Edge', '20.0.04']
+      ? ['Vegeta-Bot-MB', 'Edge', '20.0.04']
       : ['Ubuntu', 'Edge', '110.0.1587.56'],
   auth: {
     creds: state.creds,
-    keys: makeCacheableSignalKeyStore(
-      state.keys,
-      Pino({ level: 'fatal' }).child({ level: 'fatal' }),
-    ),
+    keys: makeCacheableSignalKeyStore(state.keys, Pino({ level: 'fatal' }).child({ level: 'fatal' })),
   },
   markOnlineOnConnect: true,
   generateHighQualityLinkPreview: true,
@@ -224,187 +202,108 @@ const connectionOptions = {
     return msg?.message || ''
   },
   msgRetryCounterCache,
-  msgRetryCounterMap,
   defaultQueryTimeoutMs: undefined,
-  version: [2, 3000, 1023223821],
+  version: version,
 }
 
 global.conn = makeWASocket(connectionOptions)
 
-if (!fs.existsSync(`./${sessions}/creds.json`)) {
-  if (opcion === '2' || methodCode) {
-    opcion = '2'
-    if (!conn.authState.creds.registered) {
-      let addNumber
-      if (!!phoneNumber) {
-        addNumber = phoneNumber.replace(/[^0-9]/g, '')
-      } else {
-        do {
-          phoneNumber = await question(
-            chalk.bgBlack(
-              chalk.bold.greenBright(
-                `✦ Ingresa tu número de WhatsApp Saiyajin para comenzar la pelea.\n${chalk.bold
-                  .yellowBright(`✏  Ejemplo: 57321×××××××`)}\n${chalk.bold.magentaBright(
-                  '---> ',
-                )}`,
-              ),
-            ),
-          )
-          phoneNumber = phoneNumber.replace(/\D/g, '')
-          if (!phoneNumber.startsWith('+')) {
-            phoneNumber = `+${phoneNumber}`
-          }
-        } while (!(await isValidPhoneNumber(phoneNumber)))
-        rl.close()
-        addNumber = phoneNumber.replace(/\D/g, '')
-        setTimeout(async () => {
-          let codeBot = await conn.requestPairingCode(addNumber)
-          codeBot = codeBot?.match(/.{1,4}/g)?.join('-') || codeBot
-          console.log(
-            chalk.bold.white(
-              chalk.bgMagenta(`✧ CÓDIGO DE VINCULACIÓN SAIYAJIN ✧`),
-            ),
-            chalk.bold.white(chalk.white(codeBot)),
-          )
-        }, 3000)
-      }
+// Caducidad de sesión: 30 días
+const SESSION_EXPIRY = 30 * 24 * 60 * 60 * 1000
+function checkSessionExpiry() {
+  try {
+    const stats = fs.statSync(global.sessions)
+    const lastModified = new Date(stats.mtime).getTime()
+    const now = Date.now()
+    if (now - lastModified > SESSION_EXPIRY) {
+      console.log(chalk.bold.redBright('⚠️ Sesión caducada. Eliminando credenciales...'))
+      fs.rmSync(global.sessions, { recursive: true, force: true })
+      process.exit(0)
     }
+  } catch {
+    // No pasa nada si no existe la carpeta
   }
 }
 
-conn.isInit = false
-conn.well = false
-
-if (!opts['test']) {
-  if (global.db)
-    setInterval(async () => {
-      if (global.db.data) await global.db.write()
-    }, 30 * 1000)
-}
-
-async function connectionUpdate(update) {
-  const { connection, lastDisconnect, isNewLogin } = update
+conn.ev.on('connection.update', async (update) => {
+  const { connection, lastDisconnect, qr, isNewLogin } = update
   global.stopped = connection
+
   if (isNewLogin) conn.isInit = true
-  const code =
-    lastDisconnect?.error?.output?.statusCode ||
-    lastDisconnect?.error?.output?.payload?.statusCode
-  if (code && code !== DisconnectReason.loggedOut && conn?.ws.socket == null) {
-    await global.reloadHandler(true).catch(console.error)
-    global.timestamp.connect = new Date()
+
+  if (qr) {
+    console.log(chalk.bold.magenta(`\n❐ 📸 ¡Escanea el código QR rápido! Expira en 45 segundos.\n`))
   }
-  if (global.db.data == null) loadDatabase()
-  if (update.qr != 0 && update.qr != undefined) {
-    if (opcion == '1' || methodCodeQR) {
-      console.log(
-        chalk.bold.magenta(
-          `\n❐ 📸 ¡Escanea el código QR rápido, guerrero! Expira en 45 segundos.`,
-        ),
-      )
-    }
+  if (connection === 'open') {
+    console.log(chalk.bold.greenBright('\n⌬ ⚡ VEGETA-BOT-MB ⚡ ¡Conectado y listo para la batalla! ↻'))
+    checkSessionExpiry()
   }
-  if (connection == 'open') {
-    console.log(
-      chalk.bold.greenBright('\n⌬ ⚡ VEGETA-BOT-MB ⚡ ¡Conectado y listo para la batalla! ↻'),
-    )
-  }
-  let reason = new Boom(lastDisconnect?.error)?.output?.statusCode
   if (connection === 'close') {
+    const reason = new Boom(lastDisconnect?.error)?.output?.statusCode
     switch (reason) {
       case DisconnectReason.badSession:
-        console.log(
-          chalk.bold.redBright(
-            `\n⚠️ Sesión inválida, elimina la carpeta ${global.sessions} y vuelve a escanear el QR.`,
-          ),
-        )
+        console.log(chalk.bold.redBright(`\n⚠️ Sesión inválida, elimina la carpeta ${global.sessions} y vuelve a escanear el QR.`))
         break
       case DisconnectReason.connectionClosed:
-        console.log(
-          chalk.bold.cyan(
-            `\n⚠️ Conexión cerrada, reintentando conectar...`,
-          ),
-        )
-        await global.reloadHandler(true).catch(console.error)
-        break
       case DisconnectReason.connectionLost:
-        console.log(
-          chalk.bold.blue(
-            `\n⚠️ Conexión perdida, intentado reconectar... ¡No te rindas! 💪`,
-          ),
-        )
+        console.log(chalk.bold.yellowBright(`\n⚠️ Conexión perdida, reconectando...`))
         await global.reloadHandler(true).catch(console.error)
         break
       case DisconnectReason.connectionReplaced:
-        console.log(
-          chalk.bold.magentaBright(
-            `\n⚠️ Sesión reemplazada, cierra la sesión actual primero.`,
-          ),
-        )
+        console.log(chalk.bold.magentaBright(`\n⚠️ Sesión reemplazada, cierra la sesión actual primero.`))
         break
       case DisconnectReason.loggedOut:
-        console.log(
-          chalk.bold.red(
-            `\n⚠️ Sesión cerrada, elimina la carpeta ${global.sessions} y escanea el QR para volver.`,
-          ),
-        )
-        await global.reloadHandler(true).catch(console.error)
+        console.log(chalk.bold.red(`\n⚠️ Sesión cerrada, elimina la carpeta ${global.sessions} y escanea el QR para volver.`))
+        process.exit(0)
         break
       case DisconnectReason.restartRequired:
-        console.log(
-          chalk.bold.yellow(
-            `\n♻️ Reconectando al campo de batalla...`,
-          ),
-        )
+        console.log(chalk.bold.yellow(`\n♻️ Reconectando al campo de batalla...`))
         await global.reloadHandler(true).catch(console.error)
         break
       case DisconnectReason.timedOut:
-        console.log(
-          chalk.bold.yellowBright(`\n⏳ Tiempo agotado, reconectando...`),
-        )
+        console.log(chalk.bold.yellowBright(`\n⏳ Tiempo agotado, reconectando...`))
         await global.reloadHandler(true).catch(console.error)
         break
       default:
-        console.log(
-          chalk.bold.red(
-            `\n❌ Razón desconocida de desconexión: ${reason || 'No encontrado'}`,
-          ),
-        )
+        console.log(chalk.bold.red(`\n❌ Razón desconocida de desconexión: ${reason || 'No encontrado'}`))
     }
   }
-}
+})
+
 process.on('uncaughtException', console.error)
 
 let isInit = true
 let handler = await import('./handler.js')
-global.reloadHandler = async function (restatConn) {
+
+global.reloadHandler = async function (restartConn = false) {
   try {
     const Handler = await import(`./handler.js?update=${Date.now()}`).catch(console.error)
     if (Object.keys(Handler || {}).length) handler = Handler
   } catch (e) {
     console.error(e)
   }
-  if (restatConn) {
+  if (restartConn) {
     const oldChats = global.conn.chats
     try {
       global.conn.ws.close()
     } catch {}
-    conn.ev.removeAllListeners()
+    global.conn.ev.removeAllListeners()
     global.conn = makeWASocket(connectionOptions, { chats: oldChats })
     isInit = true
   }
   if (!isInit) {
-    conn.ev.off('messages.upsert', conn.handler)
-    conn.ev.off('connection.update', conn.connectionUpdate)
-    conn.ev.off('creds.update', conn.credsUpdate)
+    global.conn.ev.off('messages.upsert', global.conn.handler)
+    global.conn.ev.off('connection.update', global.conn.connectionUpdate)
+    global.conn.ev.off('creds.update', global.conn.credsUpdate)
   }
 
-  conn.handler = handler.handler.bind(global.conn)
-  conn.connectionUpdate = connectionUpdate.bind(global.conn)
-  conn.credsUpdate = saveCreds.bind(global.conn, true)
+  global.conn.handler = handler.handler.bind(global.conn)
+  global.conn.connectionUpdate = connectionUpdate.bind(global.conn)
+  global.conn.credsUpdate = saveCreds.bind(global.conn, true)
 
-  conn.ev.on('messages.upsert', conn.handler)
-  conn.ev.on('connection.update', conn.connectionUpdate)
-  conn.ev.on('creds.update', conn.credsUpdate)
+  global.conn.ev.on('messages.upsert', global.conn.handler)
+  global.conn.ev.on('connection.update', global.conn.connectionUpdate)
+  global.conn.ev.on('creds.update', global.conn.credsUpdate)
   isInit = false
   return true
 }
@@ -419,7 +318,7 @@ async function isValidPhoneNumber(number) {
     }
     const parsedNumber = phoneUtil.parseAndKeepRawInput(number)
     return phoneUtil.isValidNumber(parsedNumber)
-  } catch (error) {
+  } catch {
     return false
   }
 }
