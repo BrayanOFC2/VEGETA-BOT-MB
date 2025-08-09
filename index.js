@@ -13,37 +13,24 @@ import pino from 'pino'
 import { Boom } from '@hapi/boom'
 import { makeWASocket, protoType, serialize } from './lib/simple.js'
 import { Low, JSONFile } from 'lowdb'
-import { mongoDB, mongoDBV2 } from './lib/mongoDB.js'
+import { mongoDB } from './lib/mongoDB.js'
 import store from './lib/store.js'
 import pkg from 'google-libphonenumber'
 import readline from 'readline'
 import NodeCache from 'node-cache'
-import { useMultiFileAuthState, fetchLatestBaileysVersion, makeCacheableSignalKeyStore, jidNormalizedUser, DisconnectReason, MessageRetryMap } from '@whiskeysockets/baileys'
+import {
+  useMultiFileAuthState,
+  fetchLatestBaileysVersion,
+  makeCacheableSignalKeyStore,
+  jidNormalizedUser,
+  DisconnectReason,
+} from '@whiskeysockets/baileys'
 
 const { PhoneNumberUtil } = pkg
 const phoneUtil = PhoneNumberUtil.getInstance()
 
 protoType()
 serialize()
-
-global.customPrefix = ['🔥', '⚡', '✨', '\\.']
-function escapeEmojiForRegex(emoji) {
-  return emoji.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
-}
-const regexPrefix = global.customPrefix.map(escapeEmojiForRegex).join('|')
-global.prefix = new RegExp(`^(${regexPrefix})`)
-
-console.log(chalk.bold.blueBright(`
-╔═══════════════════════════════════════╗
-║   ⚡ VEGETA-BOT-MB ACTIVADO ⚡         ║
-║  ʕ•ᴥ•ʔ ¡Prepárate para la batalla!    ║
-║   🌟 El poder de un Saiyajin despierta 🌟  ║
-╚═══════════════════════════════════════╝
-`))
-
-console.log(chalk.bold.yellowBright('╔═══════════════════════════════════════╗'))
-console.log(chalk.bold.greenBright('║       Desarrollado por BrayanOFC 👑   ║'))
-console.log(chalk.bold.yellowBright('╚═══════════════════════════════════════╝\n'))
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -54,8 +41,8 @@ global.opts = new Object(
 )
 
 global.db = new Low(
-  /https?:\/\//.test(opts['db'] || '')
-    ? new mongoDB(opts['db'])
+  /https?:\/\//.test(global.opts['db'] || '')
+    ? new mongoDB(global.opts['db'])
     : new JSONFile(path.join(__dirname, 'database/database.json')),
 )
 global.DATABASE = global.db
@@ -83,7 +70,7 @@ await loadDatabase()
 const { state, saveCreds } = await useMultiFileAuthState('./sessions')
 
 const msgRetryCounterCache = new NodeCache()
-const msgRetryCounterMap = (MessageRetryMap) => {}
+const msgRetryCounterMap = () => {}
 
 const { version } = await fetchLatestBaileysVersion()
 
@@ -101,10 +88,11 @@ else {
       chalk.green('1. 📸 Escanear código QR para conectar\n') +
       chalk.cyan('2. 🔑 Ingresar código de texto de 8 dígitos\n--> ')
     )
-    if (!['1', '2'].includes(opcion.trim())) {
+    opcion = opcion.trim()
+    if (!['1', '2'].includes(opcion)) {
       console.log(chalk.redBright('✰ཽ Solo puedes elegir la opción 1 o 2, ¡no te rindas! 💪'))
     }
-  } while (!['1', '2'].includes(opcion.trim()))
+  } while (!['1', '2'].includes(opcion))
 }
 
 const connectionOptions = {
@@ -249,7 +237,7 @@ global.reloadHandler = async function (restartConn) {
   return true
 }
 
-if (!opts['test']) {
+if (!global.opts['test']) {
   if (global.db)
     setInterval(async () => {
       if (global.db.data) await global.db.write()
