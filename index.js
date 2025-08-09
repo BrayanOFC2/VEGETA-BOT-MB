@@ -156,7 +156,7 @@ global.loadDatabase = async function loadDatabase() {
 }
 await loadDatabase()
 
-const { state, saveState, saveCreds } = await useMultiFileAuthState(global.sessions)
+const { state, saveState, saveCreds } = await useMultiFileAuthState(global.sessions || './sessions')
 
 const msgRetryCounterMap = (MessageRetryMap) => {}
 const msgRetryCounterCache = new NodeCache()
@@ -177,8 +177,7 @@ const question = (texto) => new Promise((resolver) => rl.question(texto, resolve
 
 let opcion
 if (methodCodeQR) opcion = '1'
-
-if (!methodCodeQR && !methodCode && !fs.existsSync(`./${global.sessions}/creds.json`)) {
+if (!methodCodeQR && !methodCode && !fs.existsSync(`./${global.sessions || 'sessions'}/creds.json`)) {
   do {
     opcion = await question(
       colores('✎﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏\n⚔️ Escoge tu camino, guerrero Saiyajin:\n') +
@@ -186,13 +185,9 @@ if (!methodCodeQR && !methodCode && !fs.existsSync(`./${global.sessions}/creds.j
         opcionTexto('2. 🔑 Ingresar código de texto de 8 dígitos\n--> '),
     )
     if (!/^[1-2]$/.test(opcion)) {
-      console.log(
-        chalk.bold.redBright(
-          `✰ཽ Solo puedes elegir la opción 1 o 2, ¡no te rindas! 💪`,
-        ),
-      )
+      console.log(chalk.bold.redBright(`✰ཽ Solo puedes elegir la opción 1 o 2, ¡no te rindas! 💪`))
     }
-  } while ((opcion !== '1' && opcion !== '2') || fs.existsSync(`./${global.sessions}/creds.json`))
+  } while (!/^[1-2]$/.test(opcion))
 }
 
 console.info = () => {}
@@ -200,13 +195,10 @@ console.debug = () => {}
 
 const connectionOptions = {
   logger: pino({ level: 'silent' }),
-  printQRInTerminal:
-    opcion == '1' ? true : methodCodeQR ? true : false,
+  printQRInTerminal: opcion === '1',
   mobile: MethodMobile,
   browser:
-    opcion == '1'
-      ? ['VEGETA-BOT-MB', 'Edge', '20.0.04']
-      : methodCodeQR
+    opcion === '1'
       ? ['VEGETA-BOT-MB', 'Edge', '20.0.04']
       : ['Ubuntu', 'Edge', '110.0.1587.56'],
   auth: {
@@ -231,41 +223,38 @@ const connectionOptions = {
 
 global.conn = makeWASocket(connectionOptions)
 
-if (!fs.existsSync(`./${global.sessions}/creds.json`)) {
-  if (opcion === '2' || methodCode) {
-    opcion = '2'
-    if (!conn.authState.creds.registered) {
-      let addNumber = ''
-      do {
-        addNumber = await question(
-          chalk.bgBlack(
-            chalk.bold.greenBright(
-              `✦ Ingresa tu número de WhatsApp Saiyajin para comenzar la pelea (sin +):\n${chalk.bold.yellowBright(`✏  Ejemplo: 521321xxxxxxx`)}\n${chalk.bold.magentaBright('---> ')}`,
-            ),
+if (opcion === '2') {
+  if (!conn.authState.creds.registered) {
+    let addNumber = ''
+    do {
+      addNumber = await question(
+        chalk.bgBlack(
+          chalk.bold.greenBright(
+            `✦ Ingresa tu número de WhatsApp Saiyajin para comenzar la pelea (sin +):\n${chalk.bold.yellowBright(`✏  Ejemplo: 521321xxxxxxx`)}\n${chalk.bold.magentaBright('---> ')}`,
           ),
-        )
-        addNumber = addNumber.replace(/\D/g, '')
-      } while (!(await isValidPhoneNumber('+' + addNumber)))
+        ),
+      )
+      addNumber = addNumber.replace(/\D/g, '')
+    } while (!(await isValidPhoneNumber('+' + addNumber)))
 
-      try {
-        await conn.requestPairingCode(addNumber)
-        console.log(chalk.bold.white(chalk.bgMagenta(`✧ Código de emparejamiento enviado ✧`)))
-      } catch (e) {
-        console.log(chalk.bold.redBright('❌ Error enviando código de emparejamiento:', e.message || e))
-        process.exit(1)
-      }
-
-      const code8 = await question(chalk.bold.greenBright('✦ Ingresa el código de texto de 8 dígitos:\n---> '))
-
-      try {
-        await conn.acceptPairing(addNumber, code8.trim())
-        console.log(chalk.bold.greenBright('✔️ Código aceptado, conectado correctamente!'))
-      } catch (error) {
-        console.log(chalk.bold.redBright('❌ Error al aceptar el código de texto, intenta de nuevo.', error.message || error))
-        process.exit(1)
-      }
-      rl.close()
+    try {
+      await conn.requestPairingCode(addNumber)
+      console.log(chalk.bold.white(chalk.bgMagenta(`✧ Código de emparejamiento enviado ✧`)))
+    } catch (e) {
+      console.log(chalk.bold.redBright('❌ Error enviando código de emparejamiento:', e.message || e))
+      process.exit(1)
     }
+
+    const code8 = await question(chalk.bold.greenBright('✦ Ingresa el código de texto de 8 dígitos:\n---> '))
+
+    try {
+      await conn.acceptPairing(addNumber, code8.trim())
+      console.log(chalk.bold.greenBright('✔️ Código aceptado, conectado correctamente!'))
+    } catch (error) {
+      console.log(chalk.bold.redBright('❌ Error al aceptar el código de texto, intenta de nuevo.', error.message || error))
+      process.exit(1)
+    }
+    rl.close()
   }
 }
 
@@ -290,7 +279,7 @@ async function connectionUpdate(update) {
     await global.reloadHandler(true).catch(console.error)
     global.timestamp.connect = new Date()
   }
-  if (global.db.data == null) await loadDatabase()
+  if (global.db.data == null) loadDatabase()
   if (update.qr != 0 && update.qr != undefined) {
     if (opcion == '1' || methodCodeQR) {
       console.log(
@@ -420,3 +409,4 @@ async function isValidPhoneNumber(number) {
     return false
   }
 }
+
