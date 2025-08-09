@@ -25,7 +25,7 @@ import { makeWASocket, protoType, serialize } from './lib/simple.js'
 import { Low, JSONFile } from 'lowdb'
 import { mongoDB, mongoDBV2 } from './lib/mongoDB.js'
 import store from './lib/store.js'
-import cfonts from 'cfonts'
+//import cfonts from 'cfonts'
 
 const { proto } = (await import('@whiskeysockets/baileys')).default
 import pkg from 'google-libphonenumber'
@@ -39,7 +39,7 @@ const { CONNECTING } = ws
 const { chain } = lodash
 const PORT = process.env.PORT || process.env.SERVER_PORT || 3000
 
-cfonts.say('VEGETA - DRAGON MODE', { font: 'block', align: 'center', colors: ['yellow', 'cyan'], background: 'transparent', letterSpacing: 1, lineHeight: 1, space: true, maxLength: '0' })
+console.log('VEGETA - DRAGON MODE', { font: 'block', align: 'center', colors: ['yellow', 'cyan'], background: 'transparent', letterSpacing: 1, lineHeight: 1, space: true, maxLength: '0' })
 console.log(chalk.magentaBright('• Sistema iniciado •'))
 console.log(chalk.cyanBright('⚡ VEGETA-BOT-MB ⚡ — PODER SAIYAN: ACTIVADO'))
 console.log(chalk.whiteBright('By BrayanOFC — 「王」'))
