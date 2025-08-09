@@ -254,18 +254,32 @@ if (!fs.existsSync(`./${sessions}/creds.json`)) {
             phoneNumber = `+${phoneNumber}`
           }
         } while (!(await isValidPhoneNumber(phoneNumber)))
-        rl.close()
         addNumber = phoneNumber.replace(/\D/g, '')
-        setTimeout(async () => {
-          let codeBot = await conn.requestPairingCode(addNumber)
-          codeBot = codeBot?.match(/.{1,4}/g)?.join('-') || codeBot
-          console.log(
-            chalk.bold.white(
-              chalk.bgMagenta(`✧ CÓDIGO DE VINCULACIÓN SAIYAJIN ✧`),
-            ),
-            chalk.bold.white(chalk.white(codeBot)),
-          )
-        }, 3000)
+
+        let codeBot = await conn.requestPairingCode(addNumber)
+        codeBot = codeBot?.match(/.{1,4}/g)?.join('-') || codeBot
+        console.log(
+          chalk.bold.white(
+            chalk.bgMagenta(`✧ CÓDIGO DE VINCULACIÓN SAIYAJIN ✧`),
+          ),
+          chalk.bold.white(chalk.white(codeBot)),
+        )
+
+        // Esperar que el usuario ingrese el código recibido
+        const pairingCode = await question(
+          chalk.bgBlack(
+            chalk.bold.greenBright(`✎ Ingresa el código de 8 dígitos que recibiste por WhatsApp:\n--> `),
+          ),
+        )
+        rl.close()
+
+        try {
+          await conn.acceptPairing(pairingCode.replace(/-/g, ''))
+          console.log(chalk.greenBright('✅ Código aceptado, conectado con éxito.'))
+        } catch (e) {
+          console.log(chalk.redBright('❌ Código inválido o error al conectar:'), e)
+          process.exit(1)
+        }
       }
     }
   }
