@@ -194,6 +194,10 @@ if (!methodCodeQR && !methodCode && !fs.existsSync(`./${sessions}/creds.json`)) 
   } while ((opcion !== '1' && opcion !== '2') || fs.existsSync(`./${sessions}/creds.json`))
 }
 
+// Variables para guardar código de emparejamiento ingresado
+let pairingCodeIngresado = null
+let pairingCodeSolicitado = false
+
 console.info = () => {}
 console.debug = () => {}
 
@@ -230,85 +234,51 @@ const connectionOptions = {
 
 global.conn = makeWASocket(connectionOptions)
 
-if (!fs.existsSync(`./${sessions}/creds.json`)) {
-  if (opcion === '2' || methodCode) {
-    opcion = '2'
-    if (!conn.authState.creds.registered) {
-      let addNumber
-      if (!!phoneNumber) {
-        addNumber = phoneNumber.replace(/[^0-9]/g, '')
-      } else {
-        do {
-          phoneNumber = await question(
-            chalk.bgBlack(
-              chalk.bold.greenBright(
-                `✦ Ingresa tu número de WhatsApp Saiyajin para comenzar la pelea.\n${chalk.bold
-                  .yellowBright(`✏  Ejemplo: 57321×××××××`)}\n${chalk.bold.magentaBright(
-                  '---> ',
-                )}`,
-              ),
-            ),
-          )
-          phoneNumber = phoneNumber.replace(/\D/g, '')
-          if (!phoneNumber.startsWith('+')) {
-            phoneNumber = `+${phoneNumber}`
-          }
-        } while (!(await isValidPhoneNumber(phoneNumber)))
-        addNumber = phoneNumber.replace(/\D/g, '')
-
-        let codeBot = await conn.requestPairingCode(addNumber)
-        codeBot = codeBot?.match(/.{1,4}/g)?.join('-') || codeBot
-        console.log(
-          chalk.bold.white(
-            chalk.bgMagenta(`✧ CÓDIGO DE VINCULACIÓN SAIYAJIN ✧`),
-          ),
-          chalk.bold.white(chalk.white(codeBot)),
-        )
-
-        // Esperar que el usuario ingrese el código recibido
-        const pairingCode = await question(
-          chalk.bgBlack(
-            chalk.bold.greenBright(`✎ Ingresa el código de 8 dígitos que recibiste por WhatsApp:\n--> `),
-          ),
-        )
-        rl.close()
-
-        try {
-          await conn.acceptPairing(pairingCode.replace(/-/g, ''))
-          console.log(chalk.greenBright('✅ Código aceptado, conectado con éxito.'))
-        } catch (e) {
-          console.log(chalk.redBright('❌ Código inválido o error al conectar:'), e)
-          process.exit(1)
-        }
-      }
+async function solicitarNumeroYCodigo() {
+  let addNumber
+  do {
+    phoneNumber = await question(
+      chalk.bgBlack(
+        chalk.bold.greenBright(
+          `✦ Ingresa tu número de WhatsApp Saiyajin para comenzar la pelea.\n${chalk.bold
+            .yellowBright(`✏  Ejemplo: 57321×××××××`)}\n${chalk.bold.magentaBright(
+            '---> ',
+          )}`,
+        ),
+      ),
+    )
+    phoneNumber = phoneNumber.replace(/\D/g, '')
+    if (!phoneNumber.startsWith('+')) {
+      phoneNumber = `+${phoneNumber}`
     }
+  } while (!(await isValidPhoneNumber(phoneNumber)))
+  addNumber = phoneNumber.replace(/\D/g, '')
+
+  // Solicitar el código de emparejamiento (lo envía WhatsApp)
+  let codeBot = await conn.requestPairingCode(addNumber)
+  codeBot = codeBot?.match(/.{1,4}/g)?.join('-') || codeBot
+  console.log(
+    chalk.bold.white(
+      chalk.bgMagenta(`✧ CÓDIGO DE VINCULACIÓN SAIYAJIN ✧`),
+    ),
+    chalk.bold.white(chalk.white(codeBot)),
+  )
+}
+
+// Si eligió modo texto, pedir número y solicitar código
+if (!fs.existsSync(`./${sessions}/creds.json`) && (opcion === '2' || methodCode)) {
+  if (!conn.authState.creds.registered) {
+    await solicitarNumeroYCodigo()
   }
 }
 
-conn.isInit = false
-conn.well = false
+// Manejar actualización de conexión y pedir el código cuando corresponda
+conn.ev.on('connection.update', async (update) => {
+  const { connection, lastDisconnect, qr } = update
 
-if (!opts['test']) {
-  if (global.db)
-    setInterval(async () => {
-      if (global.db.data) await global.db.write()
-    }, 30 * 1000)
-}
-
-async function connectionUpdate(update) {
-  const { connection, lastDisconnect, isNewLogin } = update
-  global.stopped = connection
-  if (isNewLogin) conn.isInit = true
-  const code =
-    lastDisconnect?.error?.output?.statusCode ||
-    lastDisconnect?.error?.output?.payload?.statusCode
-  if (code && code !== DisconnectReason.loggedOut && conn?.ws.socket == null) {
-    await global.reloadHandler(true).catch(console.error)
-    global.timestamp.connect = new Date()
-  }
-  if (global.db.data == null) loadDatabase()
-  if (update.qr != 0 && update.qr != undefined) {
-    if (opcion == '1' || methodCodeQR) {
+  if (qr) {
+    // Mostrar QR para modo QR
+    if (opcion === '1' || methodCodeQR) {
       console.log(
         chalk.bold.magenta(
           `\n❐ 📸 ¡Escanea el código QR rápido, guerrero! Expira en 45 segundos.`,
@@ -316,13 +286,32 @@ async function connectionUpdate(update) {
       )
     }
   }
+
+  if (connection === 'connecting' && opcion === '2' && !pairingCodeSolicitado) {
+    // Pedir código de 8 dígitos que llegó por WhatsApp (modo texto)
+    pairingCodeSolicitado = true
+    pairingCodeIngresado = await question(
+      chalk.bgBlack(
+        chalk.bold.greenBright(`✎ Ingresa el código de 8 dígitos que recibiste por WhatsApp:\n--> `),
+      ),
+    )
+    try {
+      await conn.acceptPairing(pairingCodeIngresado.replace(/-/g, ''))
+      console.log(chalk.greenBright('✅ Código aceptado, conectado con éxito.'))
+    } catch (e) {
+      console.log(chalk.redBright('❌ Código inválido o error al conectar:'), e)
+      process.exit(1)
+    }
+  }
+
   if (connection == 'open') {
     console.log(
       chalk.bold.greenBright('\n⌬ ⚡ VEGETA-BOT-MB ⚡ ¡Conectado y listo para la batalla! ↻'),
     )
   }
-  let reason = new Boom(lastDisconnect?.error)?.output?.statusCode
+
   if (connection === 'close') {
+    const reason = new Boom(lastDisconnect?.error)?.output?.statusCode
     switch (reason) {
       case DisconnectReason.badSession:
         console.log(
@@ -384,7 +373,8 @@ async function connectionUpdate(update) {
         )
     }
   }
-}
+})
+
 process.on('uncaughtException', console.error)
 
 let isInit = true
@@ -420,6 +410,10 @@ global.reloadHandler = async function (restatConn) {
   conn.ev.on('creds.update', conn.credsUpdate)
   isInit = false
   return true
+}
+
+async function connectionUpdate(update) {
+  // Puedes dejar esta función para otras cosas o eliminar si no la usas
 }
 
 async function isValidPhoneNumber(number) {
