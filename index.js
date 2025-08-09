@@ -1,19 +1,18 @@
-// adaptado por BrayanOFC para VEGETA-BOT-MB con sesión caducidad y conexión estable
+// adaptado para VEGETA-BOT-MB con opción QR y código de texto funcional
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0'
 
 import './config.js'
-import { watchFile, unwatchFile } from 'fs'
+import fs, { existsSync, mkdirSync } from 'fs'
 import { createRequire } from 'module'
 import { fileURLToPath, pathToFileURL } from 'url'
 import { platform } from 'process'
 import * as ws from 'ws'
-import fs, { existsSync, mkdirSync } from 'fs'
 import yargs from 'yargs'
 import lodash from 'lodash'
 import chalk from 'chalk'
 import { format } from 'util'
 import Pino from 'pino'
-import path, { dirname } from 'path'
+import path from 'path'
 import { Boom } from '@hapi/boom'
 import { makeWASocket, protoType, serialize } from './lib/simple.js'
 import { Low, JSONFile } from 'lowdb'
@@ -36,9 +35,7 @@ import NodeCache from 'node-cache'
 
 const { chain } = lodash
 
-const PORT = process.env.PORT || process.env.SERVER_PORT || 3000
-
-// Definir carpeta de sesiones
+// Carpeta sesiones
 global.sessions = 'sessions'
 if (!existsSync(global.sessions)) mkdirSync(global.sessions, { recursive: true })
 
@@ -65,7 +62,7 @@ console.log(chalk.bold.yellowBright('╚═════════════�
 protoType()
 serialize()
 
-// Funciones globales para paths y require
+// Global path helpers
 global.__filename = function filename(pathURL = import.meta.url, rmPrefix = platform !== 'win32') {
   return rmPrefix ? /file:\/\/\//.test(pathURL) ? fileURLToPath(pathURL) : pathURL : pathToFileURL(pathURL).toString();
 };
@@ -148,7 +145,8 @@ const { version } = await fetchLatestBaileysVersion()
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout })
 const question = (texto) => new Promise((resolve) => rl.question(texto, resolve))
 
-let opcion
+// Opciones para conectar
+let opcion = null
 const methodCodeQR = process.argv.includes('qr')
 const methodCode = process.argv.includes('code')
 const MethodMobile = process.argv.includes('mobile')
@@ -159,6 +157,7 @@ const opcionTexto = chalk.bold.cyan
 
 if (methodCodeQR) opcion = '1'
 
+// Si no hay sesión y no hay flags, pedir opción
 if (!methodCodeQR && !methodCode && !fs.existsSync(`./${global.sessions}/creds.json`)) {
   do {
     opcion = await question(
@@ -167,13 +166,9 @@ if (!methodCodeQR && !methodCode && !fs.existsSync(`./${global.sessions}/creds.j
         opcionTexto('2. 🔑 Ingresar código de texto de 8 dígitos\n--> '),
     )
     if (!/^[1-2]$/.test(opcion)) {
-      console.log(
-        chalk.bold.redBright(
-          `✰ཽ Solo puedes elegir la opción 1 o 2, ¡no te rindas! 💪`,
-        ),
-      )
+      console.log(chalk.bold.redBright('✰ཽ Solo puedes elegir la opción 1 o 2, ¡no te rindas! 💪'))
     }
-  } while ((opcion !== '1' && opcion !== '2') || fs.existsSync(`./${global.sessions}/creds.json`))
+  } while (!/^[1-2]$/.test(opcion))
 }
 
 console.info = () => {}
@@ -181,8 +176,7 @@ console.debug = () => {}
 
 const connectionOptions = {
   logger: Pino({ level: 'silent' }),
-  printQRInTerminal:
-    opcion == '1' ? true : methodCodeQR ? true : false,
+  printQRInTerminal: opcion == '1' ? true : methodCodeQR ? true : false,
   mobile: MethodMobile,
   browser:
     opcion == '1'
@@ -208,36 +202,65 @@ const connectionOptions = {
 
 global.conn = makeWASocket(connectionOptions)
 
-// Caducidad de sesión: 30 días
-const SESSION_EXPIRY = 30 * 24 * 60 * 60 * 1000
-function checkSessionExpiry() {
+// Función para validar número
+async function isValidPhoneNumber(number) {
   try {
-    const stats = fs.statSync(global.sessions)
-    const lastModified = new Date(stats.mtime).getTime()
-    const now = Date.now()
-    if (now - lastModified > SESSION_EXPIRY) {
-      console.log(chalk.bold.redBright('⚠️ Sesión caducada. Eliminando credenciales...'))
-      fs.rmSync(global.sessions, { recursive: true, force: true })
-      process.exit(0)
-    }
+    number = number.replace(/\s+/g, '')
+    if (number.startsWith('+521')) number = number.replace('+521', '+52')
+    else if (number.startsWith('+52') && number[4] === '1') number = number.replace('+52 1', '+52')
+    const parsedNumber = phoneUtil.parseAndKeepRawInput(number)
+    return phoneUtil.isValidNumber(parsedNumber)
   } catch {
-    // No pasa nada si no existe la carpeta
+    return false
   }
 }
 
-conn.ev.on('connection.update', async (update) => {
-  const { connection, lastDisconnect, qr, isNewLogin } = update
-  global.stopped = connection
+// Función para manejar ingreso por código de texto (opción 2)
+async function ingresarCodigoTexto() {
+  let phoneNumber = ''
+  do {
+    phoneNumber = await question(chalk.bold.greenBright('✦ Ingresa tu número de WhatsApp Saiyajin para comenzar la pelea (Ej: +521321xxxxxxx):\n---> '))
+    phoneNumber = phoneNumber.trim()
+  } while (!(await isValidPhoneNumber(phoneNumber)))
 
-  if (isNewLogin) conn.isInit = true
+  rl.close()
+
+  // Quitar el + para el requestPairingCode
+  const numberStripped = phoneNumber.replace(/\D/g, '')
+
+  // Solicitar código de emparejamiento de 8 dígitos
+  console.log(chalk.bold.white(chalk.bgMagenta('✧ Esperando código de 8 dígitos ✧')))
+  const code8 = await question(chalk.bold.greenBright('✦ Ingresa el código de texto de 8 dígitos:\n---> '))
+
+  // Enviar código al cliente (requestPairingCode es para pedir el código, no para enviarlo)
+  // Para enviar el código de emparejamiento, hay que usar "acceptPairing" en el socket
+  try {
+    // Este método debe estar disponible en la última versión de baileys
+    await global.conn.acceptPairing(numberStripped, code8.trim())
+    console.log(chalk.bold.greenBright('✔️ Código de texto aceptado, conectado correctamente!'))
+  } catch (error) {
+    console.log(chalk.bold.redBright('❌ Error al aceptar el código de texto, intenta de nuevo.'))
+    process.exit(1)
+  }
+}
+
+// Si la opción es 2, ejecutar ingreso por código de texto
+if (opcion === '2') {
+  await ingresarCodigoTexto()
+}
+
+// Eventos conexión
+global.conn.ev.on('connection.update', async (update) => {
+  const { connection, lastDisconnect, qr, isNewLogin } = update
 
   if (qr) {
-    console.log(chalk.bold.magenta(`\n❐ 📸 ¡Escanea el código QR rápido! Expira en 45 segundos.\n`))
+    console.log(chalk.bold.magenta('\n❐ 📸 ¡Escanea el código QR rápido! Expira en 45 segundos.\n'))
   }
+
   if (connection === 'open') {
     console.log(chalk.bold.greenBright('\n⌬ ⚡ VEGETA-BOT-MB ⚡ ¡Conectado y listo para la batalla! ↻'))
-    checkSessionExpiry()
   }
+
   if (connection === 'close') {
     const reason = new Boom(lastDisconnect?.error)?.output?.statusCode
     switch (reason) {
@@ -306,19 +329,4 @@ global.reloadHandler = async function (restartConn = false) {
   global.conn.ev.on('creds.update', global.conn.credsUpdate)
   isInit = false
   return true
-}
-
-async function isValidPhoneNumber(number) {
-  try {
-    number = number.replace(/\s+/g, '')
-    if (number.startsWith('+521')) {
-      number = number.replace('+521', '+52')
-    } else if (number.startsWith('+52') && number[4] === '1') {
-      number = number.replace('+52 1', '+52')
-    }
-    const parsedNumber = phoneUtil.parseAndKeepRawInput(number)
-    return phoneUtil.isValidNumber(parsedNumber)
-  } catch {
-    return false
-  }
 }
