@@ -67,7 +67,10 @@ global.timestamp = { start: new Date }
 const __dirnamePath = global.__dirname(import.meta.url)
 global.opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse())
 global.prefix = new RegExp('^[#/!.🔥]')
+
+// CORRECCIÓN: cerrar el paréntesis en esta línea
 global.db = new Low(/https?:///.test(opts['db'] || '') ? new cloudDBAdapter(opts['db']) : new JSONFile('./src/database/database.json'))
+
 global.DATABASE = global.db
 
 global.loadDatabase = async function loadDatabase() {
