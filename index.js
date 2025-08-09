@@ -55,6 +55,9 @@ import NodeCache from 'node-cache'
 const { CONNECTING } = ws
 const { chain } = lodash
 const PORT = process.env.PORT || process.env.SERVER_PORT || 3000
+const sessions = 'sessions'
+const jadi = 'JadiBots'
+const nameqr = 'VEGETA-BOT-MB'
 
 console.log(chalk.bold.redBright(`
 ╔═══════════════════════════════════════╗
@@ -89,7 +92,7 @@ const __dirname = global.__dirname(import.meta.url)
 global.opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse())
 global.prefix = new RegExp('^[#/!.]')
 
-global.db = new Low(/https?:\/\//.test(opts['db'] || '') ? new cloudDBAdapter(opts['db']) : new JSONFile('./src/database/database.json'))
+global.db = new Low(/https?:\/\//.test(global.opts['db'] || '') ? new cloudDBAdapter(global.opts['db']) : new JSONFile('./src/database/database.json'))
 
 global.DATABASE = global.db
 global.loadDatabase = async function loadDatabase() {
@@ -99,7 +102,7 @@ global.loadDatabase = async function loadDatabase() {
         clearInterval(this)
         resolve(global.db.data == null ? global.loadDatabase() : global.db.data);
       }
-    }, 1 * 1000))
+    }, 1000))
   }
   if (global.db.data !== null) return
   global.db.READ = true
@@ -116,13 +119,12 @@ global.loadDatabase = async function loadDatabase() {
   }
   global.db.chain = chain(global.db.data)
 }
-loadDatabase()
+await loadDatabase()
 
 const { state, saveState, saveCreds } = await useMultiFileAuthState(global.sessions)
-const msgRetryCounterMap = (MessageRetryMap) => { };
 const msgRetryCounterCache = new NodeCache()
 const { version } = await fetchLatestBaileysVersion();
-let phoneNumber = global.botNumber
+let phoneNumber = global.botNumber || ''
 
 const methodCodeQR = process.argv.includes("qr")
 const methodCode = !!phoneNumber || process.argv.includes("code")
@@ -167,9 +169,9 @@ const connectionOptions = {
     return msg?.message || ""
   },
   msgRetryCounterCache,
-  msgRetryCounterMap,
+  msgRetryCounterMap: MessageRetryMap,
   defaultQueryTimeoutMs: undefined,
-  version: [2, 3000, 1023223821],
+  version: version,
 }
 
 global.conn = makeWASocket(connectionOptions);
@@ -191,17 +193,12 @@ if (!fs.existsSync(`./${sessions}/creds.json`)) {
         } while (!await isValidPhoneNumber(phoneNumber))
         rl.close()
         addNumber = phoneNumber.replace(/\D/g, '')
-      }
-      async function printCode() {
-        try {
+        setTimeout(async () => {
           let codeBot = await conn.requestPairingCode(addNumber)
           codeBot = codeBot?.match(/.{1,4}/g)?.join("-") || codeBot
           console.log(chalk.bold.white(chalk.bgMagenta(`✧ CÓDIGO DE VINCULACIÓN ✧`)), chalk.bold.white(chalk.white(codeBot)))
-        } catch (e) {
-          console.error('Error al solicitar código de vinculación:', e)
-        }
+        }, 3000)
       }
-      setTimeout(printCode, 3000)
     }
   }
 }
@@ -209,15 +206,8 @@ if (!fs.existsSync(`./${sessions}/creds.json`)) {
 conn.isInit = false;
 conn.well = false;
 
-if (!opts['test']) {
-  if (global.db) setInterval(async () => {
-    if (global.db.data) await global.db.write()
-    if (opts['autocleartmp'] && (global.support || {}).find) (tmp = [os.tmpdir(), 'tmp', `${jadi}`], tmp.forEach((filename) => cp.spawn('find', [filename, '-amin', '3', '-type', 'f', '-delete'])));
-  }, 30 * 1000);
-}
-
 async function connectionUpdate(update) {
-  const { connection, lastDisconnect, isNewLogin } = update;
+  const { connection, lastDisconnect, isNewLogin, qr } = update;
   global.stopped = connection;
   if (isNewLogin) conn.isInit = true;
   const code = lastDisconnect?.error?.output?.statusCode || lastDisconnect?.error?.output?.payload?.statusCode;
@@ -225,8 +215,8 @@ async function connectionUpdate(update) {
     await global.reloadHandler(true).catch(console.error);
     global.timestamp.connect = new Date;
   }
-  if (global.db.data == null) loadDatabase();
-  if (update.qr != 0 && update.qr != undefined || methodCodeQR) {
+  if (global.db.data == null) await loadDatabase();
+  if (qr != 0 && qr != undefined || methodCodeQR) {
     if (opcion == '1' || methodCodeQR) {
       console.log(chalk.bold.yellow(`\n❐ ESCANEA EL CÓDIGO QR SAIYAJIN EXPIRA EN 45 SEGUNDOS`))
     }
@@ -260,6 +250,7 @@ async function connectionUpdate(update) {
     }
   }
 }
+
 process.on('uncaughtException', console.error)
 
 let isInit = true;
@@ -290,15 +281,6 @@ global.reloadHandler = async function (restatConn) {
   conn.connectionUpdate = connectionUpdate.bind(global.conn)
   conn.credsUpdate = saveCreds.bind(global.conn, true)
 
-  const currentDateTime = new Date()
-  const messageDateTime = new Date(conn.ev)
-  if (currentDateTime >= messageDateTime) {
-    const chats = Object.entries(conn.chats).filter(([jid, chat]) => !jid.endsWith('@g.us') && chat.isChats).map((v) => v[0])
-
-  } else {
-    const chats = Object.entries(conn.chats).filter(([jid, chat]) => !jid.endsWith('@g.us') && chat.isChats).map((v) => v[0])
-  }
-
   conn.ev.on('messages.upsert', conn.handler)
   conn.ev.on('connection.update', conn.connectionUpdate)
   conn.ev.on('creds.update', conn.credsUpdate)
@@ -313,4 +295,31 @@ if (global.vegetaJadibts) {
     mkdirSync(global.rutaJadiBot, { recursive: true })
     console.log(chalk.bold.cyan(`La carpeta: ${jadi} se creó correctamente.`))
   } else {
-    console.log(chalk.bold.cyan(`La carpeta: ${jadi}
+    console.log(chalk.bold.cyan(`La carpeta: ${jadi} ya está creada.`))
+  }
+
+  const readRutaJadiBot = readdirSync(rutaJadiBot)
+  if (readRutaJadiBot.length > 0) {
+    const creds = 'creds.json'
+    for (const gjbts of readRutaJadiBot) {
+      const botPath = join(rutaJadiBot, gjbts)
+      const readBotPath = readdirSync(botPath)
+      if (readBotPath.includes(creds)) {
+        vegetaJadiBot({ pathvegetaJadiBot: botPath, m: null, conn, args: '', usedPrefix: '/', command: 'serbot' })
+      }
+    }
+  }
+}
+
+const pluginFolder = global.__dirname(join(__dirname, './plugins/index'))
+const pluginFilter = (filename) => /\.js$/.test(filename)
+global.plugins = {}
+async function filesInit() {
+  for (const filename of readdirSync(pluginFolder).filter(pluginFilter)) {
+    try {
+      const file = global.__filename(join(pluginFolder, filename))
+      const module = await import(file)
+      global.plugins[filename] = module.default || module
+    } catch (e) {
+      conn.logger.error
+
