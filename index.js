@@ -2,64 +2,31 @@
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '1'
 
 import './config.js'
-import { setupMaster, fork } from 'cluster'
-import { watchFile, unwatchFile } from 'fs'
 import { createRequire } from 'module'
-import { fileURLToPath, pathToFileURL } from 'url'
-import { platform } from 'process'
-import * as ws from 'ws'
-import fs, {
-  readdirSync,
-  statSync,
-  unlinkSync,
-  existsSync,
-  mkdirSync,
-  readFileSync,
-  rmSync,
-  watch
-} from 'fs'
+import { fileURLToPath } from 'url'
+import path from 'path'
+import fs from 'fs'
 import yargs from 'yargs'
-import { spawn } from 'child_process'
 import lodash from 'lodash'
-import { vegetaJadiBot } from './plugins/jadibot-serbot.js'
 import chalk from 'chalk'
-import syntaxerror from 'syntax-error'
-import { tmpdir } from 'os'
-import { format } from 'util'
-import boxen from 'boxen'
-import P from 'pino'
 import pino from 'pino'
-import Pino from 'pino'
-import path, { join, dirname } from 'path'
 import { Boom } from '@hapi/boom'
 import { makeWASocket, protoType, serialize } from './lib/simple.js'
 import { Low, JSONFile } from 'lowdb'
 import { mongoDB, mongoDBV2 } from './lib/mongoDB.js'
 import store from './lib/store.js'
-
-const { proto } = (await import('@whiskeysockets/baileys')).default
 import pkg from 'google-libphonenumber'
-const { PhoneNumberUtil } = pkg
-const phoneUtil = PhoneNumberUtil.getInstance()
-const {
-  DisconnectReason,
-  useMultiFileAuthState,
-  MessageRetryMap,
-  fetchLatestBaileysVersion,
-  makeCacheableSignalKeyStore,
-  jidNormalizedUser
-} = await import('@whiskeysockets/baileys')
-
 import readline from 'readline'
 import NodeCache from 'node-cache'
+import { useMultiFileAuthState, fetchLatestBaileysVersion, makeCacheableSignalKeyStore, jidNormalizedUser, DisconnectReason, MessageRetryMap } from '@whiskeysockets/baileys'
 
-const { CONNECTING } = ws
-const { chain } = lodash
+const { PhoneNumberUtil } = pkg
+const phoneUtil = PhoneNumberUtil.getInstance()
 
-const PORT = process.env.PORT || process.env.SERVER_PORT || 3000
+protoType()
+serialize()
 
 global.customPrefix = ['🔥', '⚡', '✨', '\\.']
-
 function escapeEmojiForRegex(emoji) {
   return emoji.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
 }
@@ -78,42 +45,7 @@ console.log(chalk.bold.yellowBright('╔═════════════�
 console.log(chalk.bold.greenBright('║       Desarrollado por BrayanOFC 👑   ║'))
 console.log(chalk.bold.yellowBright('╚═══════════════════════════════════════╝\n'))
 
-protoType()
-serialize()
-
-global.__filename = function filename(pathURL = import.meta.url, rmPrefix = platform !== 'win32') {
-  return rmPrefix ? /file:\/\/\//.test(pathURL) ? fileURLToPath(pathURL) : pathURL : pathToFileURL(pathURL).toString();
-};
-global.__dirname = function dirname(pathURL) {
-  return path.dirname(global.__filename(pathURL, true))
-};
-global.__require = function require(dir = import.meta.url) {
-  return createRequire(dir)
-}
-
-global.API = (name, path = '/', query = {}, apikeyqueryname) =>
-  (name in global.APIs ? global.APIs[name] : name) +
-  path +
-  (query || apikeyqueryname
-    ? '?' +
-      new URLSearchParams(
-        Object.entries({
-          ...query,
-          ...(apikeyqueryname
-            ? {
-                [apikeyqueryname]:
-                  global.APIKeys[
-                    name in global.APIs ? global.APIs[name] : name
-                  ],
-              }
-            : {}),
-        }),
-      )
-    : '')
-
-global.timestamp = { start: new Date() }
-
-const __dirname = global.__dirname(import.meta.url)
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 global.opts = new Object(
   yargs(process.argv.slice(2))
@@ -123,259 +55,182 @@ global.opts = new Object(
 
 global.db = new Low(
   /https?:\/\//.test(opts['db'] || '')
-    ? new cloudDBAdapter(opts['db'])
-    : new JSONFile('./src/database/database.json'),
+    ? new mongoDB(opts['db'])
+    : new JSONFile(path.join(__dirname, 'database/database.json')),
 )
 global.DATABASE = global.db
 
-global.loadDatabase = async function loadDatabase() {
+async function loadDatabase() {
   if (global.db.READ) {
     return new Promise((resolve) =>
       setInterval(async function () {
         if (!global.db.READ) {
           clearInterval(this)
-          resolve(global.db.data == null ? global.loadDatabase() : global.db.data)
+          resolve(global.db.data == null ? loadDatabase() : global.db.data)
         }
-      }, 1 * 1000),
+      }, 1000),
     )
   }
   if (global.db.data !== null) return
   global.db.READ = true
   await global.db.read().catch(console.error)
   global.db.READ = null
-  global.db.data = {
-    users: {},
-    chats: {},
-    stats: {},
-    msgs: {},
-    sticker: {},
-    settings: {},
-    ...(global.db.data || {}),
-  }
-  global.db.chain = chain(global.db.data)
+  global.db.data = global.db.data || { users: {}, chats: {}, stats: {}, msgs: {}, sticker: {}, settings: {} }
+  global.db.chain = lodash.chain(global.db.data)
 }
 await loadDatabase()
 
-const { state, saveState, saveCreds } = await useMultiFileAuthState(global.sessions || './sessions')
+const { state, saveCreds } = await useMultiFileAuthState('./sessions')
 
-const msgRetryCounterMap = (MessageRetryMap) => {}
 const msgRetryCounterCache = new NodeCache()
+const msgRetryCounterMap = (MessageRetryMap) => {}
 
 const { version } = await fetchLatestBaileysVersion()
-let phoneNumber = global.botNumber
-
-const methodCodeQR = process.argv.includes('qr')
-const methodCode = !!phoneNumber || process.argv.includes('code')
-const MethodMobile = process.argv.includes('mobile')
-
-const colores = chalk.bgMagenta.white
-const opcionQR = chalk.bold.green
-const opcionTexto = chalk.bold.cyan
 
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout })
-const question = (texto) => new Promise((resolver) => rl.question(texto, resolver))
+const question = (text) => new Promise(resolve => rl.question(text, resolve))
 
 let opcion
-if (methodCodeQR) opcion = '1'
-if (!methodCodeQR && !methodCode && !fs.existsSync(`./${global.sessions || 'sessions'}/creds.json`)) {
+
+if (process.argv.includes('qr')) opcion = '1'
+else if (process.argv.includes('code')) opcion = '2'
+else {
   do {
     opcion = await question(
-      colores('✎﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏\n⚔️ Escoge tu camino, guerrero Saiyajin:\n') +
-        opcionQR('1. 📸 Escanear código QR para conectar\n') +
-        opcionTexto('2. 🔑 Ingresar código de texto de 8 dígitos\n--> '),
+      chalk.bgMagenta.white('✎﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏\n⚔️ Escoge tu camino, guerrero Saiyajin:\n') +
+      chalk.green('1. 📸 Escanear código QR para conectar\n') +
+      chalk.cyan('2. 🔑 Ingresar código de texto de 8 dígitos\n--> ')
     )
-    if (!/^[1-2]$/.test(opcion)) {
-      console.log(chalk.bold.redBright(`✰ཽ Solo puedes elegir la opción 1 o 2, ¡no te rindas! 💪`))
+    if (!['1', '2'].includes(opcion.trim())) {
+      console.log(chalk.redBright('✰ཽ Solo puedes elegir la opción 1 o 2, ¡no te rindas! 💪'))
     }
-  } while (!/^[1-2]$/.test(opcion))
+  } while (!['1', '2'].includes(opcion.trim()))
 }
-
-console.info = () => {}
-console.debug = () => {}
 
 const connectionOptions = {
   logger: pino({ level: 'silent' }),
   printQRInTerminal: opcion === '1',
-  mobile: MethodMobile,
-  browser:
-    opcion === '1'
-      ? ['VEGETA-BOT-MB', 'Edge', '20.0.04']
-      : ['Ubuntu', 'Edge', '110.0.1587.56'],
+  browser: opcion === '1' ? ['VEGETA-BOT-MB', 'Edge', '20.0.04'] : ['Ubuntu', 'Edge', '110.0.1587.56'],
   auth: {
     creds: state.creds,
-    keys: makeCacheableSignalKeyStore(
-      state.keys,
-      pino({ level: 'fatal' }).child({ level: 'fatal' }),
-    ),
+    keys: makeCacheableSignalKeyStore(state.keys, pino({ level: 'fatal' }).child({ level: 'fatal' }))
   },
   markOnlineOnConnect: true,
   generateHighQualityLinkPreview: true,
-  getMessage: async (clave) => {
-    let jid = jidNormalizedUser(clave.remoteJid)
-    let msg = await store.loadMessage(jid, clave.id)
+  getMessage: async (key) => {
+    const jid = jidNormalizedUser(key.remoteJid)
+    const msg = await store.loadMessage(jid, key.id)
     return msg?.message || ''
   },
   msgRetryCounterCache,
   msgRetryCounterMap,
-  defaultQueryTimeoutMs: undefined,
   version,
 }
 
 global.conn = makeWASocket(connectionOptions)
 
+async function isValidPhoneNumber(number) {
+  try {
+    number = number.trim()
+    if (!number.startsWith('+')) number = '+' + number
+    if (number.startsWith('+521')) number = number.replace('+521', '+52')
+    else if (number.startsWith('+52') && number[4] === '1') number = number.replace('+52 1', '+52')
+    const parsed = phoneUtil.parseAndKeepRawInput(number)
+    return phoneUtil.isValidNumber(parsed)
+  } catch {
+    return false
+  }
+}
+
 if (opcion === '2') {
-  if (!conn.authState.creds.registered) {
-    let addNumber = ''
-    do {
-      addNumber = await question(
-        chalk.bgBlack(
-          chalk.bold.greenBright(
-            `✦ Ingresa tu número de WhatsApp Saiyajin para comenzar la pelea (sin +):\n${chalk.bold.yellowBright(`✏  Ejemplo: 521321xxxxxxx`)}\n${chalk.bold.magentaBright('---> ')}`,
-          ),
-        ),
-      )
-      addNumber = addNumber.replace(/\D/g, '')
-    } while (!(await isValidPhoneNumber('+' + addNumber)))
-
-    try {
-      await conn.requestPairingCode(addNumber)
-      console.log(chalk.bold.white(chalk.bgMagenta(`✧ Código de emparejamiento enviado ✧`)))
-    } catch (e) {
-      console.log(chalk.bold.redBright('❌ Error enviando código de emparejamiento:', e.message || e))
-      process.exit(1)
-    }
-
-    const code8 = await question(chalk.bold.greenBright('✦ Ingresa el código de texto de 8 dígitos:\n---> '))
-
-    try {
-      await conn.acceptPairing(addNumber, code8.trim())
-      console.log(chalk.bold.greenBright('✔️ Código aceptado, conectado correctamente!'))
-    } catch (error) {
-      console.log(chalk.bold.redBright('❌ Error al aceptar el código de texto, intenta de nuevo.', error.message || error))
-      process.exit(1)
-    }
-    rl.close()
+  let number
+  do {
+    number = await question(chalk.green('✦ Ingresa tu número de WhatsApp Saiyajin para comenzar la pelea (sin +):\n--> '))
+    number = number.replace(/\D/g, '')
+  } while (!(await isValidPhoneNumber(number)))
+  
+  try {
+    await conn.requestPairingCode(number)
+    console.log(chalk.bgMagenta.white('✧ Código de emparejamiento enviado ✧'))
+  } catch (e) {
+    console.error(chalk.redBright('❌ Error enviando código de emparejamiento:', e.message || e))
+    process.exit(1)
   }
+
+  const code8 = await question(chalk.green('✦ Ingresa el código de texto de 8 dígitos:\n--> '))
+
+  try {
+    await conn.acceptPairing(number, code8.trim())
+    console.log(chalk.green('✔️ Código aceptado, conectado correctamente!'))
+  } catch (e) {
+    console.error(chalk.redBright('❌ Error al aceptar el código de texto:', e.message || e))
+    process.exit(1)
+  }
+  rl.close()
 }
 
-conn.isInit = false
-conn.well = false
+conn.ev.on('connection.update', async (update) => {
+  const { connection, lastDisconnect, qr } = update
 
-if (!opts['test']) {
-  if (global.db)
-    setInterval(async () => {
-      if (global.db.data) await global.db.write()
-    }, 30 * 1000)
-}
+  if (qr && opcion === '1') {
+    console.log(chalk.magenta('\n❐ 📸 ¡Escanea el código QR rápido, guerrero! Expira en 45 segundos.\n'))
+  }
 
-async function connectionUpdate(update) {
-  const { connection, lastDisconnect, isNewLogin } = update
-  global.stopped = connection
-  if (isNewLogin) conn.isInit = true
-  const code =
-    lastDisconnect?.error?.output?.statusCode ||
-    lastDisconnect?.error?.output?.payload?.statusCode
-  if (code && code !== DisconnectReason.loggedOut && conn?.ws.socket == null) {
-    await global.reloadHandler(true).catch(console.error)
-    global.timestamp.connect = new Date()
+  if (connection === 'open') {
+    console.log(chalk.green('\n⌬ ⚡ VEGETA-BOT-MB ⚡ ¡Conectado y listo para la batalla! ↻\n'))
   }
-  if (global.db.data == null) loadDatabase()
-  if (update.qr != 0 && update.qr != undefined) {
-    if (opcion == '1' || methodCodeQR) {
-      console.log(
-        chalk.bold.magenta(
-          `\n❐ 📸 ¡Escanea el código QR rápido, guerrero! Expira en 45 segundos.`,
-        ),
-      )
-    }
-  }
-  if (connection == 'open') {
-    console.log(
-      chalk.bold.greenBright('\n⌬ ⚡ VEGETA-BOT-MB ⚡ ¡Conectado y listo para la batalla! ↻'),
-    )
-  }
-  let reason = new Boom(lastDisconnect?.error)?.output?.statusCode
+
   if (connection === 'close') {
+    const reason = new Boom(lastDisconnect?.error)?.output?.statusCode
     switch (reason) {
       case DisconnectReason.badSession:
-        console.log(
-          chalk.bold.redBright(
-            `\n⚠️ Sesión inválida, elimina la carpeta ${global.sessions} y vuelve a escanear el QR.`,
-          ),
-        )
+        console.log(chalk.redBright(`\n⚠️ Sesión inválida, elimina la carpeta sessions y vuelve a escanear el QR.`))
         break
       case DisconnectReason.connectionClosed:
-        console.log(
-          chalk.bold.cyan(
-            `\n⚠️ Conexión cerrada, reintentando conectar...`,
-          ),
-        )
-        await global.reloadHandler(true).catch(console.error)
+        console.log(chalk.cyan(`\n⚠️ Conexión cerrada, reintentando conectar...`))
+        await reloadHandler(true)
         break
       case DisconnectReason.connectionLost:
-        console.log(
-          chalk.bold.blue(
-            `\n⚠️ Conexión perdida, intentado reconectar... ¡No te rindas! 💪`,
-          ),
-        )
-        await global.reloadHandler(true).catch(console.error)
+        console.log(chalk.blue(`\n⚠️ Conexión perdida, intentando reconectar...`))
+        await reloadHandler(true)
         break
       case DisconnectReason.connectionReplaced:
-        console.log(
-          chalk.bold.magentaBright(
-            `\n⚠️ Sesión reemplazada, cierra la sesión actual primero.`,
-          ),
-        )
+        console.log(chalk.magentaBright(`\n⚠️ Sesión reemplazada, cierra la sesión actual primero.`))
         break
       case DisconnectReason.loggedOut:
-        console.log(
-          chalk.bold.red(
-            `\n⚠️ Sesión cerrada, elimina la carpeta ${global.sessions} y escanea el QR para volver.`,
-          ),
-        )
-        await global.reloadHandler(true).catch(console.error)
+        console.log(chalk.red(`\n⚠️ Sesión cerrada, elimina la carpeta sessions y escanea el QR para volver.`))
+        await reloadHandler(true)
         break
       case DisconnectReason.restartRequired:
-        console.log(
-          chalk.bold.yellow(
-            `\n♻️ Reconectando al campo de batalla...`,
-          ),
-        )
-        await global.reloadHandler(true).catch(console.error)
+        console.log(chalk.yellow(`\n♻️ Reconectando al campo de batalla...`))
+        await reloadHandler(true)
         break
       case DisconnectReason.timedOut:
-        console.log(
-          chalk.bold.yellowBright(`\n⏳ Tiempo agotado, reconectando...`),
-        )
-        await global.reloadHandler(true).catch(console.error)
+        console.log(chalk.yellowBright(`\n⏳ Tiempo agotado, reconectando...`))
+        await reloadHandler(true)
         break
       default:
-        console.log(
-          chalk.bold.red(
-            `\n❌ Razón desconocida de desconexión: ${reason || 'No encontrado'}`,
-          ),
-        )
+        console.log(chalk.red(`\n❌ Razón desconocida de desconexión: ${reason || 'No encontrado'}`))
     }
   }
-}
+})
+
 process.on('uncaughtException', console.error)
 
-let isInit = true
 let handler = await import('./handler.js')
-global.reloadHandler = async function (restatConn) {
+let isInit = true
+
+global.reloadHandler = async function (restartConn) {
   try {
     const Handler = await import(`./handler.js?update=${Date.now()}`).catch(console.error)
     if (Object.keys(Handler || {}).length) handler = Handler
   } catch (e) {
     console.error(e)
   }
-  if (restatConn) {
-    const oldChats = global.conn.chats
-    try {
-      global.conn.ws.close()
-    } catch {}
+  if (restartConn) {
+    try { global.conn.ws.close() } catch {}
     conn.ev.removeAllListeners()
-    global.conn = makeWASocket(connectionOptions, { chats: oldChats })
+    global.conn = makeWASocket(connectionOptions)
     isInit = true
   }
   if (!isInit) {
@@ -383,9 +238,8 @@ global.reloadHandler = async function (restatConn) {
     conn.ev.off('connection.update', conn.connectionUpdate)
     conn.ev.off('creds.update', conn.credsUpdate)
   }
-
   conn.handler = handler.handler.bind(global.conn)
-  conn.connectionUpdate = connectionUpdate.bind(global.conn)
+  conn.connectionUpdate = global.conn.ev.on.bind(global.conn.ev, 'connection.update')
   conn.credsUpdate = saveCreds.bind(global.conn, true)
 
   conn.ev.on('messages.upsert', conn.handler)
@@ -395,18 +249,9 @@ global.reloadHandler = async function (restatConn) {
   return true
 }
 
-async function isValidPhoneNumber(number) {
-  try {
-    number = number.replace(/\s+/g, '')
-    if (number.startsWith('+521')) {
-      number = number.replace('+521', '+52')
-    } else if (number.startsWith('+52') && number[4] === '1') {
-      number = number.replace('+52 1', '+52')
-    }
-    const parsedNumber = phoneUtil.parseAndKeepRawInput(number)
-    return phoneUtil.isValidNumber(parsedNumber)
-  } catch (error) {
-    return false
-  }
+if (!opts['test']) {
+  if (global.db)
+    setInterval(async () => {
+      if (global.db.data) await global.db.write()
+    }, 30000)
 }
-
