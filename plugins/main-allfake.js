@@ -73,9 +73,9 @@ global.waitttt = '🕒 *𝗘𝘀𝗽𝗲𝗿𝗮 𝗨𝗻 𝗠𝗼𝗺𝗲𝗻�
 //Enlaces
 var canal = 'https://whatsapp.com/channel/0029VagYdbFEwEk5htUejk0t'  
 let canal2 = 'https://whatsapp.com/channel/0029VagYdbFEwEk5htUejk0t'
-var git = 'https://chat.whatsapp.com/FdBottjrmTvIzD1XTc8vyH'
-var github = 'https://chat.whatsapp.com/DWVnDWaepEQCn7uzOPxmHq' 
-let correo = 'https://chat.whatsapp.com/DWVnDWaepEQCn7uzOPxmHq'
+var git = 'https://github.com/BrayanOFC/VEGETA-BOT-MB.git'
+var github = 'https://github.com/BrayanOFC'
+let correo = 'lourdesagueda93@gmail.com'
 
 global.redes = [canal, canal2, git, github, correo].getRandom()
 
