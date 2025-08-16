@@ -242,6 +242,7 @@ m.text = ''
 
 let _user = global.db.data && global.db.data.users && global.db.data.users[m.sender]
 
+const detectwhat = m.sender.includes('@lid') ? '@lid' : '@s.whatsapp.net';
 const isROwner = [conn.decodeJid(global.conn.user.id), ...global.owner.map(([number]) => number)].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
 const isOwner = isROwner || m.fromMe
 const isMods = isOwner || global.mods.map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
@@ -264,13 +265,22 @@ m.exp += Math.ceil(Math.random() * 10)
 
 let usedPrefix
 
-const groupMetadata = (m.isGroup ? ((conn.chats[m.chat] || {}).metadata || await this.groupMetadata(m.chat).catch(_ => null)) : {}) || {}
-const participants = (m.isGroup ? groupMetadata.participants : []) || []
-const user = (m.isGroup ? participants.find(u => conn.decodeJid(u.id) === m.sender) : {}) || {}
-const bot = (m.isGroup ? participants.find(u => conn.decodeJid(u.id) == this.user.jid) : {}) || {}
-const isRAdmin = user?.admin == 'superadmin' || false
-const isAdmin = isRAdmin || user?.admin == 'admin' || false
-const isBotAdmin = bot?.admin || false
+async function getLidFromJid(id, conn) {
+if (id.endsWith('@lid')) return id
+const res = await conn.onWhatsApp(id).catch(() => [])
+return res[0]?.lid || id
+}
+const senderLid = await getLidFromJid(m.sender, conn)
+const botLid = await getLidFromJid(conn.user.jid, conn)
+const senderJid = m.sender
+const botJid = conn.user.jid
+const groupMetadata = m.isGroup ? ((conn.chats[m.chat] || {}).metadata || await this.groupMetadata(m.chat).catch(_ => null)) : {}
+const participants = m.isGroup ? (groupMetadata.participants || []) : []
+const user = participants.find(p => p.id === senderLid || p.id === senderJid) || {}
+const bot = participants.find(p => p.id === botLid || p.id === botJid) || {}
+const isRAdmin = user?.admin === "superadmin"
+const isAdmin = isRAdmin || user?.admin === "admin"
+const isBotAdmin = !!bot?.admin
 
 const ___dirname = path.join(path.dirname(fileURLToPath(import.meta.url)), './plugins')
 for (let name in global.plugins) {
