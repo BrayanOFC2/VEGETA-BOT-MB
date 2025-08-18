@@ -1,133 +1,79 @@
-import axios from 'axios';
-import baileys from '@whiskeysockets/baileys';
-
-async function sendAlbumMessage(jid, medias, options = {}) {
-  if (typeof jid !== "string") {
-    throw new TypeError(`jid must be string, received: ${jid} (${jid?.constructor?.name})`);
-  }
-
-  for (const media of medias) {
-    if (!media.type || (media.type !== "image" && media.type !== "video")) {
-      throw new TypeError(`media.type must be "image" or "video", received: ${media.type} (${media.type?.constructor?.name})`);
-    }
-    if (!media.data || (!media.data.url && !Buffer.isBuffer(media.data))) {
-      throw new TypeError(`media.data must be object with url or buffer, received: ${media.data} (${media.data?.constructor?.name})`);
-    }
-  }
-
-  if (medias.length < 2) {
-    throw new RangeError("Minimum 2 media");
-  }
-
-  const caption = options.text || options.caption || "";
-  const delay = !isNaN(options.delay) ? options.delay : 500;
-  delete options.text;
-  delete options.caption;
-  delete options.delay;
-
-  const album = baileys.generateWAMessageFromContent(
-    jid,
-    {
-      messageContextInfo: {},
-      albumMessage: {
-        expectedImageCount: medias.filter(media => media.type === "image").length,
-        expectedVideoCount: medias.filter(media => media.type === "video").length,
-      },
-    },
-    {}
-  );
-
-  await conn.relayMessage(album.key.remoteJid, album.message, { messageId: album.key.id });
-
-  for (let i = 0; i < medias.length; i++) {
-    const { type, data } = medias[i];
-    const img = await baileys.generateWAMessage(
-      album.key.remoteJid,
-      { [type]: data, ...(i === 0 ? { caption } : {}) },
-      { upload: conn.waUploadToServer }
-    );
-    img.message[type].caption = i === 0 ? caption : undefined;
-    img.message.contextInfo = {
-      forwardedNewsletterMessageInfo: {
-        newsletterJid: "120363403593951965@newsletter",
-        newsletterName: "ＮＡＲＵＴＯ ＢＯＴ ᴍᴅ 𒆙",
-        serverMessageId: ""
-      }
-    };
-    await conn.relayMessage(img.key.remoteJid, img.message, { messageId: img.key.id });
-    await baileys.delay(delay);
-  }
-
-  return album;
-}
+import axios from 'axios'
 
 const pins = async (judul) => {
   try {
-    const res = await axios.get(`https://anime-xi-wheat.vercel.app/api/pinterest?q=${encodeURIComponent(judul)}`);
+    const res = await axios.get(`https://anime-xi-wheat.vercel.app/api/pinterest?q=${encodeURIComponent(judul)}`)
     if (Array.isArray(res.data.images)) {
       return res.data.images.map(url => ({
         image_large_url: url,
         image_medium_url: url,
         image_small_url: url
-      }));
+      }))
     }
-    return [];
+    return []
   } catch (error) {
-    console.error('Error:', error);
-    return [];
+    console.error('Error:', error)
+    return []
   }
-};
+}
 
 let handler = async (m, { conn, text }) => {
-  if (!text) return conn.reply(m.chat, `${emojis} Ingresa un texto. Ejemplo: .pinterest ${botname}`, m, rcanal);
+  if (!text) return conn.reply(m.chat, `⚠️ Ingresa un texto. Ejemplo: .pinterest Naruto`, m)
 
   try {
-    const res2 = await fetch('https://files.catbox.moe/875ido.png');
-    const thumb2 = Buffer.from(await res2.arrayBuffer());
+    const res2 = await fetch('https://files.catbox.moe/875ido.png')
+    const thumb2 = Buffer.from(await res2.arrayBuffer())
 
     const fkontak = {
-        key: {
-            participants: "0@s.whatsapp.net",
-            remoteJid: "status@broadcast",
-            fromMe: false,
-            id: "Halo"
-        },
-        message: {
-            locationMessage: {
-                name: '𝗕𝗨𝗦𝗤𝗨𝗘𝗗𝗔 𝗗𝗘 ✦ 𝗣𝗶𝗻𝘁𝗲𝗿𝗲𝘀𝘁',
-                jpegThumbnail: thumb2
-            }
-        },
-        participant: "0@s.whatsapp.net"
-    };
-    m.react('🕒');
-    const results = await pins(text);
-    if (!results || results.length === 0) return conn.reply(m.chat, `No se encontraron resultados para "${text}".`, m, rcanal);
-
-    const maxImages = Math.min(results.length, 15);
-    const medias = [];
-
-    for (let i = 0; i < maxImages; i++) {
-      medias.push({
-        type: 'image',
-        data: { url: results[i].image_large_url || results[i].image_medium_url || results[i].image_small_url }
-      });
+      key: {
+        participants: "0@s.whatsapp.net",
+        remoteJid: "status@broadcast",
+        fromMe: false,
+        id: "Halo"
+      },
+      message: {
+        locationMessage: {
+          name: '𝗕𝗨𝗦𝗤𝗨𝗘𝗗𝗔 𝗗𝗘 ✦ 𝗣𝗶𝗻𝘁𝗲𝗿𝗲𝘀𝘁',
+          jpegThumbnail: thumb2
+        }
+      },
+      participant: "0@s.whatsapp.net"
     }
 
-    await sendAlbumMessage(m.chat, medias, {
-      caption: `𝗥𝗲𝘀𝘂𝗹𝘁𝗮𝗱𝗼𝘀 𝗱𝗲: ${text}\n𝗖𝗮𝗻𝘁𝗶𝗱𝗮𝗱 𝗱𝗲 𝗿𝗲𝘀𝘂𝗹𝘁𝗮𝗱𝗼𝘀: 15`,
-      quoted: fkontak
-    });
+    m.react('🕒')
+    const results = await pins(text)
+    if (!results || results.length === 0) return conn.reply(m.chat, `No se encontraron resultados para "${text}".`, m)
 
-    await conn.sendMessage(m.chat, { react: { text: '✅', key: m.key } });
+    const maxImages = Math.min(results.length, 10) // máx 10 para no saturar
+    for (let i = 0; i < maxImages; i++) {
+      let url = results[i].image_large_url || results[i].image_medium_url || results[i].image_small_url
 
+      await conn.sendMessage(m.chat, {
+        image: { url },
+        caption: i === 0 
+          ? `𝗥𝗲𝘀𝘂𝗹𝘁𝗮𝗱𝗼𝘀 𝗱𝗲: ${text}\n𝗖𝗮𝗻𝘁𝗶𝗱𝗮𝗱 𝗱𝗲 𝗿𝗲𝘀𝘂𝗹𝘁𝗮𝗱𝗼𝘀: ${maxImages}` 
+          : null,
+        contextInfo: {
+          forwardedNewsletterMessageInfo: {
+            newsletterJid: "120363403593951965@newsletter",
+            newsletterName: "ＮＡＲＵＴＯ ＢＯＴ ᴍᴅ 𒆙",
+            serverMessageId: ""
+          }
+        }
+      }, { quoted: fkontak })
+
+      await new Promise(resolve => setTimeout(resolve, 800)) // delay entre fotos
+    }
+
+    await conn.sendMessage(m.chat, { react: { text: '✅', key: m.key } })
   } catch (error) {
-    conn.reply(m.chat, 'Error al obtener imágenes de Pinterest.', m, rcanal);
+    console.error(error)
+    conn.reply(m.chat, '❌ Error al obtener imágenes de Pinterest.', m)
   }
-};
+}
 
-handler.help = ['pinterest'];
-handler.command = ['pinterest', 'pin'];
-handler.tags = ['buscador'];
+handler.help = ['pinterest']
+handler.command = ['pinterest', 'pin']
+handler.tags = ['buscador']
 
-export default handler;
+export default handler
