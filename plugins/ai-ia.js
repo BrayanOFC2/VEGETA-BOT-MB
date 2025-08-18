@@ -47,7 +47,6 @@ handler.help = ['ia', 'chatgpt']
 handler.tags = ['ai']
 handler.register = true
 handler.command = ['ia', 'chatgpt']
-handler.group = true
 
 export default handler
 
@@ -71,7 +70,6 @@ async function fetchImageBuffer(content, imageBuffer) {
     }
 }
 
-// Función para interactuar con la IA usando prompts
 async function luminsesi(q, username, logic) {
     try {
         const response = await axios.post("https://Luminai.my.id", {
