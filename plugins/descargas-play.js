@@ -1,20 +1,21 @@
+import yts from 'yt-search';
 import fetch from 'node-fetch';
 import { prepareWAMessageMedia, generateWAMessageFromContent } from '@whiskeysockets/baileys';
 
-const handler = async (m, { conn, args, usedPrefix }) => {
-    if (!args[0]) return conn.reply(m.chat, `*${emojis} Ingresa un título de Youtube.*`, m, rcanal);
+const handler = async (m, { conn, args, usedPrefix, command }) => {
+    if (!args[0]) return conn.reply(m.chat, `*☁️ Ingresa una búsqueda fe YouTube.*`, m);
 
     await m.react('☁️');
     try {
         let searchResults = await searchVideos(args.join(" "));
 
-        if (!searchResults.length) throw new Error('No se encontraron resultados.');
+        if (!searchResults.length) throw new Error('*✖️ No se encontraron resultados.*');
 
         let video = searchResults[0];
         let thumbnail = await (await fetch(video.miniatura)).buffer();
 
-        let messageText = `*Download - Youtube*\n\n`;
-        messageText += `${video.titulo}\n\n`;
+        let messageText = `*Download YouTube*\n\n`;
+        messageText += `*${video.titulo}*\n\n`;
         messageText += `*☁️ Duración:* ${video.duracion || 'No disponible'}\n`;
         messageText += `*🐉 Autor:* ${video.canal || 'Desconocido'}\n`;
         messageText += `*☁️ Url:* ${video.url}\n`;
@@ -22,7 +23,7 @@ const handler = async (m, { conn, args, usedPrefix }) => {
         await conn.sendMessage(m.chat, {
             image: thumbnail,
             caption: messageText,
-            footer: dev,
+            footer: `Requested by Shadow's Club`,
             contextInfo: {
                 mentionedJid: [m.sender],
                 forwardingScore: 999,
@@ -36,7 +37,7 @@ const handler = async (m, { conn, args, usedPrefix }) => {
                 },
                 {
                     buttonId: `${usedPrefix}ytmp4 ${video.url}`,
-                    buttonText: { displayText: 'Vídeo' },
+                    buttonText: { displayText: 'Video' },
                     type: 1,
                 }
             ],
@@ -48,12 +49,12 @@ const handler = async (m, { conn, args, usedPrefix }) => {
     } catch (e) {
         console.error(e);
         await m.react('✖️');
-        conn.reply(m.chat, '*✖️ Error al buscar el video.*', m);
+        conn.reply(m.chat, '*✖️ Video no encontrado en Youtube.*', m);
     }
 };
 
 handler.help = ['play'];
-handler.tags = ['dl'];
+handler.tags = ['download'];
 handler.command = ['play', 'play2'];
 export default handler;
 
@@ -70,7 +71,7 @@ async function searchVideos(query) {
             duracion: video.duration.timestamp || 'No disponible'
         }));
     } catch (error) {
-        console.error('Error en yt-search:', error.message);
+        console.error('*Error en yt-search:*', error.message);
         return [];
     }
 }
