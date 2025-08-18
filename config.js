@@ -25,7 +25,7 @@ global.botNumber = '' //Ejemplo: 573218138672
 
 // <-- Número @lid -->
 //  ['', 'Destroy', true],
-  ['258892692984006', 'BrayanOFC, true], 
+  ['90263687053350', 'BrayanOFC, true], 
   ['58566677377081', 'Legna', true]
 ];
 
