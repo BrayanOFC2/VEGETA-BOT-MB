@@ -20,6 +20,8 @@ let ia = async (m, { conn, usedPrefix, command, text }) => {
             const query = '🔥 Descríbeme la imagen y explica por qué actúan así. Además, dime quién eres como si fueras un personaje de Dragon Ball.'
             const prompt = `${basePrompt}. La imagen que se analiza es: ${imageAnalysis.result}`
             const description = await luminsesi(query, username, prompt)
+
+            // Enviar la respuesta final
             await conn.sendMessage(m.chat, { text: `💥 ${description}` }, { quoted: m })
             await m.react('💫') // Reacción de listo
         } catch (e) {
@@ -31,16 +33,17 @@ let ia = async (m, { conn, usedPrefix, command, text }) => {
         if (!text) { 
             return conn.reply(m.chat, `🌟 Ingresa tu pedido para que ChatGpT lo responda con poder Saiyajin.`, m)
         }
-        await m.react('⏳') // Reacción de espera
         try {
+            // Mostrar mensaje de procesamiento
+            const processing = await conn.sendMessage(m.chat, { text: '⚡ ChatGPT está canalizando energía...' }, { quoted: m })
             const query = text
             const prompt = `${basePrompt}. Responde lo siguiente: ${query}`
             const response = await luminsesi(query, username, prompt)
-            await conn.sendMessage(m.chat, { text: `⚡ ${response}` }, { quoted: m })
-            await m.react('💫') // Reacción de listo
+
+            // Enviar respuesta final
+            await conn.sendMessage(m.chat, { text: `💥 ${response}` }, { quoted: m })
         } catch (e) {
             console.error(e)
-            await m.react('❌')
             await conn.reply(m.chat, '💥 ChatGpT no puede responder a esa pregunta.', m, fake)
         }
     }
