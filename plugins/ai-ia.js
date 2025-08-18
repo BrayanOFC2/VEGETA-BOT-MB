@@ -1,57 +1,88 @@
-let handler = async (m, { conn, text }) => {
-    if (!text) return m.reply('☁️ Ingresa un texto');
-    await m.react('☁️');
+import axios from 'axios'
+import fetch from 'node-fetch'
 
-    const username = conn.getName(m.sender);
+let handler = async (m, { conn, usedPrefix, command, text }) => {
+    const isQuotedImage = m.quoted && (m.quoted.msg || m.quoted).mimetype && (m.quoted.msg || m.quoted).mimetype.startsWith('image/')
+    const username = `${conn.getName(m.sender)}`
+    const basePrompt = `Tu nombre es ${botname}, creado por Brayan, versión 2.1.5. Hablas Español. Llamarás a las personas por su nombre ${username}, eres divertida, curiosa y muy amigable. ¡Eres tan poderosa como un Super Saiyajin! ${username}`
 
-    // Palabras clave simples y plantillas de respuesta
-    const keywords = {
-        "explosión": [
-            `💥 ${username}, las explosiones son poderosas, ¡como mi Final Flash! Siempre analiza la energía antes de usarla.`,
-            `😤 Atención ${username}, si hablas de explosiones, recuerda que la fuerza depende del control del ki.`
-        ],
-        "entrenamiento": [
-            `💪 ${username}, el entrenamiento es clave para volverte más fuerte. Nunca te rindas, incluso si fallas.`,
-            `¡Kakarottooo! ${username}, entrenar duro es lo único que separa a un guerrero de un principiante.`
-        ],
-        "planeta": [
-            `🌍 ${username}, los planetas pueden ser destruidos con suficiente poder, pero hay que ser cuidadoso.`,
-            `Hmph! ${username}, sobre planetas: cada uno tiene su propia gravedad y resistencia. Considera eso al pelear.`
-        ],
-        "teoría": [
-            `📚 ${username}, las teorías siempre necesitan evidencia. Analiza cada detalle antes de aceptarla.`,
-            `😤 ${username}, una teoría sin práctica es inútil. ¡Actúa y observa los resultados!`
-        ]
-    };
-
-    // Buscar palabras clave en el texto
-    let found = [];
-    for (let key in keywords) {
-        if (text.toLowerCase().includes(key)) found.push(key);
-    }
-
-    let replyText;
-
-    if (found.length > 0) {
-        // Elegir una palabra clave aleatoria encontrada
-        const key = found[Math.floor(Math.random() * found.length)];
-        const options = keywords[key];
-        replyText = options[Math.floor(Math.random() * options.length)];
+    if (isQuotedImage) {
+        const q = m.quoted
+        const img = await q.download?.()
+        if (!img) {
+            console.error('⚠️ Error: No image buffer available')
+            return conn.reply(m.chat, '💥 ¡Oh no! ChatGpT no pudo descargar la imagen.', m, fake)
+        }
+        const content = '🌟 Describe la imagen como si fueras un guerrero Saiyajin:'
+        try {
+            const imageAnalysis = await fetchImageBuffer(content, img)
+            const query = '🔥 Descríbeme la imagen y explica por qué actúan así. Además, dime quién eres como si fueras un personaje de Dragon Ball.'
+            const prompt = `${basePrompt}. La imagen que se analiza es: ${imageAnalysis.result}`
+            const description = await luminsesi(query, username, prompt)
+            await conn.reply(m.chat, description, m, fake)
+        } catch {
+            await m.react('⚠️')
+            await conn.reply(m.chat, '💥 ChatGpT no pudo analizar la imagen.', m, fake)
+        }
     } else {
-        // Respuesta genérica si no se encuentra palabra clave
-        const genericas = [
-            `😤 ¡Kakarottooo! ${username}, escuché tu pregunta: "${text}". Analiza bien y nunca subestimes tu poder 💥.`,
-            `Hmph! ${username}, sobre "${text}", necesitas paciencia y determinación para entenderlo.`,
-            `💥 ${username}, eso es complicado, pero con enfoque y entrenamiento lograrás comprenderlo.`,
-            `Ja ja ja, ${username}, dices: "${text}", pero solo un verdadero guerrero puede entenderlo completamente.`
-        ];
-        replyText = genericas[Math.floor(Math.random() * genericas.length)];
+        if (!text) { 
+            return conn.reply(m.chat, `🌟 Ingresa tu pedido para que ChatGpT lo responda con poder Saiyajin.`, m)
+        }
+        await m.react('⏳')
+        try {
+            const { key } = await conn.sendMessage(m.chat, {text: `⚡ ChatGPT está canalizando energía para responder tu petición, espera un momento...`}, {quoted: m})
+            const query = text
+            const prompt = `${basePrompt}. Responde lo siguiente: ${query}`
+            const response = await luminsesi(query, username, prompt)
+            await conn.sendMessage(m.chat, {text: response, edit: key})
+            await m.react('💥')
+        } catch {
+            await m.react('❌')
+            await conn.reply(m.chat, '💥 ChatGpT no puede responder a esa pregunta.', m, fake)
+        }
     }
+}
 
-    await conn.sendMessage(m.chat, { text: replyText }, { quoted: m });
-    await m.react('✅');
-};
+handler.help = ['ia', 'chatgpt']
+handler.tags = ['ai']
+handler.register = true
+handler.command = ['ia', 'chatgpt']
+handler.group = true
 
-handler.command = ['ia', 'chatgpt', 'vegeta', 'ask'];
+export default handler
 
-export default handler;
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
+// Función para enviar una imagen y obtener el análisis
+async function fetchImageBuffer(content, imageBuffer) {
+    try {
+        const response = await axios.post('https://Luminai.my.id', {
+            content: content,
+            imageBuffer: imageBuffer 
+        }, {
+            headers: {
+                'Content-Type': 'application/json' 
+            }
+        })
+        return response.data
+    } catch (error) {
+        console.error('Error:', error)
+        throw error
+    }
+}
+
+// Función para interactuar con la IA usando prompts
+async function luminsesi(q, username, logic) {
+    try {
+        const response = await axios.post("https://Luminai.my.id", {
+            content: q,
+            user: username,
+            prompt: logic,
+            webSearchMode: false
+        })
+        return response.data.result
+    } catch (error) {
+        console.error('⚠️ Error al obtener:', error)
+        throw error
+    }
+}
