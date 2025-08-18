@@ -16,7 +16,7 @@ global.owner = [
 ['522431268546', 'Tesis', true],
 ['584164137403', 'Legend', true].
 ['50557865603', 'WillZek', true],
-['+50432955554', 'Deylin', true], 
+['50432955554', 'Deylin', true], 
 ['5212202410659', 'Destroy', true]
 ];
  
