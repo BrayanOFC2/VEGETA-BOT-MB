@@ -6,7 +6,17 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
     try {
         const username = `${conn.getName(m.sender)}`;
 
-        const respuesta = `¡Kakarottooo! Soy VEGETA-BOT, príncipe de todos los Saiyajin. 😤\n${username}, escuché lo que dijiste: "${text}". Prepárate, porque mi poder está aumentando y las explosiones están por llegar 💥💪!`;
+        // Lista de respuestas estilo Vegeta
+        const respuestas = [
+            `¡Kakarottooo! ${username}, dijiste: "${text}". No subestimes mi poder 💥!`,
+            `¡Hum! ${username}, eso no es nada para un príncipe Saiyajin 😤. "${text}"`,
+            `¡Imposible! ${username}, mi fuerza supera eso: "${text}" 💪`,
+            `Ja ja ja, ${username}, crees que eso me asusta? "${text}" 🔥`,
+            `¡Hmph! Solo un verdadero guerrero entiende esto: "${text}" 💥`
+        ];
+
+        // Elegir respuesta aleatoria
+        const respuesta = respuestas[Math.floor(Math.random() * respuestas.length)];
 
         await conn.sendMessage(m.chat, { text: respuesta }, { quoted: m });
         await m.react('✅');
