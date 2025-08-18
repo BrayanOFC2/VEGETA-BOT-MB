@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 let handler = async (m, { conn, usedPrefix, command, text }) => {
     if (!text) return m.reply('☁️ Ingresa un texto');
 
@@ -6,19 +8,20 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
     try {
         const username = `${conn.getName(m.sender)}`;
 
-        // Lista de respuestas estilo Vegeta
-        const respuestas = [
-            `¡Kakarottooo! ${username}, dijiste: "${text}". No subestimes mi poder 💥!`,
-            `¡Hum! ${username}, eso no es nada para un príncipe Saiyajin 😤. "${text}"`,
-            `¡Imposible! ${username}, mi fuerza supera eso: "${text}" 💪`,
-            `Ja ja ja, ${username}, crees que eso me asusta? "${text}" 🔥`,
-            `¡Hmph! Solo un verdadero guerrero entiende esto: "${text}" 💥`
-        ];
+        // Llamada a la API de Pinterest
+        const res = await axios.get(`https://anime-xi-wheat.vercel.app/api/pinterest?q=${encodeURIComponent(text)}`);
+        const results = res.data.result;
 
-        // Elegir respuesta aleatoria
-        const respuesta = respuestas[Math.floor(Math.random() * respuestas.length)];
+        if (!results || results.length === 0) {
+            return m.reply(`⚠️ ${username}, no encontré nada relacionado con "${text}"`);
+        }
 
-        await conn.sendMessage(m.chat, { text: respuesta }, { quoted: m });
+        // Elegir una imagen aleatoria
+        const imageUrl = results[Math.floor(Math.random() * results.length)];
+
+        const caption = `¡Kakarottooo! ${username}, encontré esto relacionado con tu búsqueda: "${text}" 💥`;
+
+        await conn.sendMessage(m.chat, { image: { url: imageUrl }, caption }, { quoted: m });
         await m.react('✅');
 
     } catch (e) {
@@ -27,6 +30,6 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
     }
 };
 
-handler.command = ['ia', 'chatgpt', 'vegeta'];
+handler.command = ['ia', 'chatgpt', 'vegeta', 'pinterest'];
 
 export default handler;
