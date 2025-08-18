@@ -11,10 +11,10 @@ import moment from 'moment-timezone'
 
 //BETA: Si quiere evitar escribir el número que será bot en la consola, agregué desde aquí entonces:
 //Sólo aplica para opción 2 (ser bot con código de texto de 8 digitos)
-global.botNumberCode = '' //Ejemplo: +573218138672
-global.confirmCode = ''
+global.botNumber = '' //Ejemplo: 573218138672
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
+
   global.owner = [
 // <-- Número @s.whatsapp.net -->
   ['5216641784469', '🜲 Propietario 🜲', true],
@@ -31,10 +31,9 @@ global.confirmCode = ''
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
-global.mods = ['5216641804242', '584120515006', '5216633900512', '573004828388', '573154062343']
-global.suittag = ['584120346669']
+global.mods = []
+global.suittag = ['573196588149'] 
 global.prems = []
-global.numcreador = '+52 664 178 4469'
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
