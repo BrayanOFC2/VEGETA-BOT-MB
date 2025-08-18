@@ -15,19 +15,26 @@ global.botNumberCode = '' //Ejemplo: +573218138672
 global.confirmCode = ''
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
-
 global.owner = [
-  [ number: '5216641784469', name: '⋆𝑪𝒓𝒆𝒂𝒅𝒐𝒓 ღ𝐁𝐫𝐚𝐲𝐚𝐧𝐎𝐅𝐂❦', isCreator: true ],
-  [ number: '584146277368', name: '𝓔𝓶𝓶𝓪 𝓥𝓲𝓸𝓵𝓮𝓽𝓼 𝓥𝓮𝓻𝓼𝓲ó𝓷', isCreator: true ],
-  [ number: '5491166401905', name: 'legend', isCreator: true ],
-  [ number: '5216671548329', name: 'Legna', isCreator: true ],
-  [ number: '50432955554', name: 'Deylin', isCreator: true ],
-  [ number: '5212431268546', name: 'Tesis', isCreator: true ],
-  [ number: '155968113483985', name: 'Unknown', isCreator: true ],
-  [ number: '50557865603', name: 'Niño piña', isCreator: true ],
-  [ number: '5218211111111', name: 'Papi chulo', isCreator: true ],
-  [ number: '5217721103732', name: 'Daniel', isCreator: true ]
+  ['5216641784469', '⋆𝑪𝒓𝒆𝒂𝒅𝒐𝒓 ღ𝐁𝐫𝐚𝐲𝐚𝐍𝐎𝐅𝐂❦', true],
+  ['584146277368', '𝓔𝓶𝓶𝓪 𝓥𝓲𝓸𝓵𝓮𝓽𝓼 𝓥𝓮𝓻𝓼𝓲ó𝓷', true],
+  ['5491166401905', 'legend', true],
+  ['5216641784469', 'ʙʀᴀʏᴀɴ ᴏғᴄ', true],
+  ['5216671548329', 'Legna', true], 
+  ['50433191934', 'deylin', true], 
+  ['5212431268546', 'Tesis', true],  
+  ['50557865603', 'Niño piña', true], 
+  ['5218211111111', 'Papi chulo', true],
+  ['5216632130871', 'antrua', true],
+  ['5217721103732', 'Daniel', true],
 ];
+
+// Normalización para que funcione con @lid
+global.ownerNormalized = global.owner.map(([number, name, isCreator]) => ({
+  number,
+  name,
+  isCreator: Boolean(isCreator) // asegura que sea booleano estricto
+}));
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
 global.mods = ['5216641804242', '584120515006', '5216633900512', '573004828388', '573154062343']
