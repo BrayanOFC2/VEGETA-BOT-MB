@@ -59,14 +59,7 @@ async function sendAlbumMessage(jid, medias, options = {}) {
     );
     img.message.messageContextInfo = {
       messageAssociation: { associationType: 1, parentMessageKey: album.key },
-              forwardedNewsletterMessageInfo: {
-          newsletterJid: '120363394965381607@newsletter',
-          newsletterName: '𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱*:·',
-          serverMessageId: 100
-        }
-      }
-    }, { quoted: m })
-
+    };
     await conn.relayMessage(img.key.remoteJid, img.message, { messageId: img.key.id });
     await baileys.delay(delay);
   }
@@ -92,7 +85,14 @@ const pins = async (judul) => {
 };
 
 let handler = async (m, { conn, text }) => {
-  if (!text) return conn.reply(m.chat, `${emojis} Ingresa un texto. Ejemplo: .pinterest ${botname}`, m, rcanal);
+  if (!text) return conn.sendMessage(m.chat, { text: `Ingresa un texto. Ejemplo: .pinterest vegeta-bot` }, { 
+    quoted: m,
+    forwardedNewsletterMessageInfo: {
+      newsletterJid: '120363394965381607@newsletter',
+      newsletterName: '𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱*:·',
+      serverMessageId: 100
+    }
+  });
 
   try {
     const res2 = await fetch('https://files.catbox.moe/875ido.png');
@@ -115,7 +115,14 @@ let handler = async (m, { conn, text }) => {
     };
     m.react('🕒');
     const results = await pins(text);
-    if (!results || results.length === 0) return conn.reply(m.chat, `No se encontraron resultados para "${text}".`, m, rcanal);
+    if (!results || results.length === 0) return conn.sendMessage(m.chat, { text: `No se encontraron resultados para "${text}".` }, { 
+      quoted: m,
+      forwardedNewsletterMessageInfo: {
+        newsletterJid: '120363394965381607@newsletter',
+        newsletterName: '𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱*:·',
+        serverMessageId: 100
+      }
+    });
 
     const maxImages = Math.min(results.length, 15);
     const medias = [];
@@ -135,7 +142,14 @@ let handler = async (m, { conn, text }) => {
     await conn.sendMessage(m.chat, { react: { text: '✅', key: m.key } });
 
   } catch (error) {
-    conn.reply(m.chat, 'Error al obtener imágenes de Pinterest.', m, rcanal);
+    conn.sendMessage(m.chat, { text: 'Error al obtener imágenes de Pinterest.' }, { 
+      quoted: m,
+      forwardedNewsletterMessageInfo: {
+        newsletterJid: '120363394965381607@newsletter',
+        newsletterName: '𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱*:·',
+        serverMessageId: 100
+      }
+    });
   }
 };
 
