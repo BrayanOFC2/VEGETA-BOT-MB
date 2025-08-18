@@ -8,20 +8,20 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
     try {
         const username = `${conn.getName(m.sender)}`;
 
-        // Llamada a la API de Pinterest
-        const res = await axios.get(`https://anime-xi-wheat.vercel.app/api/pinterest?q=${encodeURIComponent(text)}`);
-        const results = res.data.result;
+        // Genera respuesta de Luminai
+        const response = await axios.post('https://Luminai.my.id', {
+            prompt: `Eres VEGETA-BOT, un asistente que responde cualquier tipo de pregunta de manera explicativa, divertida y directa al estilo Vegeta de Dragon Ball Z. Llama a la persona por su nombre: ${username}.  
+            Explica detalladamente y, si es posible, da ejemplos, pasos o analogías relacionadas con: "${text}"`,
+            temperature: 0.9,
+            max_tokens: 600
+        });
 
-        if (!results || results.length === 0) {
-            return m.reply(`⚠️ ${username}, no encontré nada relacionado con "${text}"`);
-        }
+        let replyText = response.data?.response || '⚠️ No pude generar una respuesta esta vez.';
 
-        // Elegir una imagen aleatoria
-        const imageUrl = results[Math.floor(Math.random() * results.length)];
+        // Formateo dramático al estilo Vegeta
+        replyText = `😤 ¡Kakarottooo! ${username}, presta atención:\n${replyText} 💥`;
 
-        const caption = `¡Kakarottooo! ${username}, encontré esto relacionado con tu búsqueda: "${text}" 💥`;
-
-        await conn.sendMessage(m.chat, { image: { url: imageUrl }, caption }, { quoted: m });
+        await conn.sendMessage(m.chat, { text: replyText }, { quoted: m });
         await m.react('✅');
 
     } catch (e) {
@@ -30,6 +30,6 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
     }
 };
 
-handler.command = ['ia', 'chatgpt', 'vegeta', 'pinterest'];
+handler.command = ['ia', 'chatgpt', 'vegeta', 'ask'];
 
 export default handler;
