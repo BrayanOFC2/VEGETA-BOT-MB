@@ -8,22 +8,7 @@ import axios from 'axios'
 import moment from 'moment-timezone' 
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
-// ╭━━━╮╱╱╱╱╱╭╮╱╱╭━━━╮╱╱╱╭╮
-// ┃╭━╮┃╱╱╱╱╱┃┃╱╱┃╭━╮┃╱╱╱┃┃
-// ┃┃╱┃┣━━┳━━┫╰━╮┃┃╱┃┣━━┳┫┃╭┳━━┳━╮
-// ┃┃╱┃┃┃━┫┃━┫╭╮┃┃┃╱┃┃╭╮┣┫╰╯┫╭╮┃╭╯
-// ┃╰━╯┃┃━┫┃━┫┃┃┃┃╰━╯┃╭╮┃┃╭╮┫╭╮┃┃
-// ╰━━━┻━━┻━━┻╯╰╯╰━━━┻╯╰┻┻╯╰┻╯╰┻╯
-// ╭━╮╭━┳━━┳╮╱╭┳━━━┳━━━┳━╮╭━╮
-// ┃┃╰╯┃┣╮╭┫┃╱┃┃╭━╮┃╭━╮┃┃╰╯┃┃
-// ┃╭╮╭╮┃┃┃┃╰━╯┃╰━╯┃┃╱┃┃╭╮╭╮┃
-// ┃┃┃┃┃┃┃┃┃╭━╮┃╭━━┫╰━╯┃┃┃┃┃┃
-// ┃┃┃┃┃┣╯╰┫┃╱┃┃┃╱╱┃╭━╮┃┃┃┃┃┃
-// ╰╯╰╯╰┻━━┻╯╱╰┻╯╱╱╰╯╱╰┻╯╰╯╰╯
 
-//*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
-
-// ⚙️ PROPIETARIO Y STAFF
 global.owner = [
 ['5216641784469', '☁️ Creador ☁️', true],
 ['5217227584934', 'Angel', true],
@@ -32,34 +17,29 @@ global.owner = [
 ['584164137403', 'Legend', true].
 ['50557865603', 'WillZek', true],
 ['+50432955554', 'Deylin', true], 
-['5212202410659', 'Destroy', true],
-//['numero', 'nombre', true],
+['5212202410659', 'Destroy', true]
 ];
-
-//si no saben no toquen gracias 🫂 
-global.mods = ['50433191934'];
-global.suittag = ['50433191934'];
+ 
+global.mods = ['5216641784469'];
+global.suittag = ['5216641784469'];
 global.prems = [];
 
-// 📚 INFORMACIÓN GENERAL
 global.libreria = 'Baileys';
 global.baileys = '@whiskeysockets/baileys';
-global.nameqr = 'Pikachu-Bot';
-global.namebot = 'Pikachu-Bit';
+global.nameqr = 'VEGETA-BOT-MB;
+global.namebot = 'VEGETA-BOT-MB;
 global.sessions = 'Sessions';
 global.jadi = 'JadiBots';
-global.pikaJadibts = true;
+global.vegetaJadibts = true;
 
-// ✨ DATOS DE ESTILO Y METADATOS
-global.packname = '🧃 Pikachu-Bot MD';
-global.botname = '⚡ Pikachu-Bot ⚡';
-global.wm = 'Pikachu-MD';
-global.dev = '© Desarrollado por Deylin';
-global.textbot = 'Pikachu-Bot • Potenciado por Deylin';
-global.etiqueta = 'Team Pikachu ⚡';
+global.packname = '☁️ VEGETA-BOT-MB;
+global.botname = '☁️ VEGETA-BOT-MB ☁️';
+global.wm = 'VEGETA-MB;
+global.dev = '© Desarrollado por BrayanOFC;
+global.textbot = 'VEGETA-BOT-MB• Potenciado por Deylin';
+global.etiqueta = 'Team BrayanOFC☁️';
 
-// 💰 MONEDA Y AVATARES
-global.moneda = 'pikas';
+global.moneda = 'Coins';
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
@@ -70,14 +50,14 @@ global.photoSity = [catalogo]
 
 global.gp1 = 'https://chat.whatsapp.com/F8KwM3rVqkS9HhR5msoRqQ'
 global.channel2 = 'https://whatsapp.com/channel/0029VayQwPsFnSzESZJ9Us3z'
-global.md = 'https://github.com/Deylin-Eliac/Pikachu-bot'
+global.md = 'https://github.com/BrayanOFC/VEGETA-BOT-MB'
 global.correo = 'deylibaquedano801@gmail.com'
 global.cn ='https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m';
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
 global.catalogo = fs.readFileSync('./src/catalogo.jpg');
-global.estilo = { key: {  fromMe: false, participant: `0@s.whatsapp.net`, ...(false ? { remoteJid: "5219992095479-1625305606@g.us" } : {}) }, message: { orderMessage: { itemCount : -999999, status: 1, surface : 1, message: packname, orderTitle: 'Bang', thumbnail: catalogo, sellerJid: '0@s.whatsapp.net'}}}
+global.estilo = { key: {  fromMe: false, participant: `0@s.whatsapp.net`, ...(false ? { remoteJid: "5216641784469-1625305606@g.us" } : {}) }, message: { orderMessage: { itemCount : -999999, status: 1, surface : 1, message: packname, orderTitle: 'Bang', thumbnail: catalogo, sellerJid: '0@s.whatsapp.net'}}}
 global.ch = {
 ch1: '120363365444927738@newsletter',
 }
