@@ -54,14 +54,13 @@ let handler = async (m, { conn, text }) => {
           ? `𝗥𝗲𝘀𝘂𝗹𝘁𝗮𝗱𝗼𝘀 𝗱𝗲: ${text}\n𝗖𝗮𝗻𝘁𝗶𝗱𝗮𝗱 𝗱𝗲 𝗿𝗲𝘀𝘂𝗹𝘁𝗮𝗱𝗼𝘀: ${maxImages}` 
           : null,
         contextInfo: {
-          forwardedNewsletterMessageInfo: {
-            newsletterJid: "120363403593951965@newsletter",
-            newsletterName: "ＮＡＲＵＴＯ ＢＯＴ ᴍᴅ 𒆙",
-            serverMessageId: ""
-          }
+                  forwardedNewsletterMessageInfo: {
+          newsletterJid: '120363394965381607@newsletter',
+          newsletterName: '𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱*:·',
+          serverMessageId: 100
         }
-      }, { quoted: fkontak })
-
+      }
+    }, { quoted: m })
       await new Promise(resolve => setTimeout(resolve, 800)) // delay entre fotos
     }
 
