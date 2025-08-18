@@ -161,7 +161,6 @@ if (m?.chat) {
 txtQR = await conn.sendMessage(m.chat, {
     image: await qrcode.toBuffer(qr, { scale: 8 }),
     caption: rtx.trim(),
-    ...global.fake,
 }, { quoted: m })
 } else {
 return 
@@ -178,10 +177,9 @@ secret = secret.match(/.{1,4}/g)?.join("-")
 txtCode = await conn.sendMessage(m.chat, {
     image: { url: imagenUrl },
     caption: rtx2,
-    ...global.fake,
     quoted: m,
 });
-codeBot = await conn.reply(m.chat, `${secret}`, fkontak, fake);
+codeBot = await conn.reply(m.chat, `${secret}`, m);
 //} else {
 //txtCode = await conn.sendButton(m.chat, rtx2.trim(), wm, null, [], secret, null, m) 
 //}
