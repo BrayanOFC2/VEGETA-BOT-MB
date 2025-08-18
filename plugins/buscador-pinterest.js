@@ -80,10 +80,10 @@ const pins = async (judul) => {
 };
 
 let handler = async (m, { conn, text }) => {
-  if (!text) return conn.sendMessage(m.chat, { text: `Ingresa un texto. Ejemplo: .pinterest vegeta-bot` }, { 
+  if (!text) return conn.sendMessage(m.chat, { text: `Ingresa un texto. Ejemplo: .pin gatos` }, { 
     quoted: m,
     forwardedNewsletterMessageInfo: {
-      newsletterJid: '120363394965381607@newsletter',
+      newsletterJid: '120363403593951965@newsletter',
       newsletterName: '𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱*:·',
       serverMessageId: 100
     }
@@ -93,12 +93,13 @@ let handler = async (m, { conn, text }) => {
     const res2 = await fetch('https://files.catbox.moe/875ido.png');
     const thumb2 = Buffer.from(await res2.arrayBuffer());
 
+    // Mensaje que simula el canal arriba
     const fkontak = {
-      key: {
-        participants: "0@s.whatsapp.net",
-        remoteJid: "status@broadcast",
-        fromMe: false,
-        id: "Halo"
+      key: { 
+        participants: "0@s.whatsapp.net", 
+        remoteJid: "status@broadcast", 
+        fromMe: false, 
+        id: "Halo" 
       },
       message: {
         locationMessage: {
@@ -114,7 +115,7 @@ let handler = async (m, { conn, text }) => {
     if (!results || results.length === 0) return conn.sendMessage(m.chat, { text: `No se encontraron resultados para "${text}".` }, { 
       quoted: m,
       forwardedNewsletterMessageInfo: {
-        newsletterJid: '120363394965381607@newsletter',
+        newsletterJid: '120363403593951965@newsletter',
         newsletterName: '𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱*:·',
         serverMessageId: 100
       }
@@ -130,8 +131,9 @@ let handler = async (m, { conn, text }) => {
       });
     }
 
+    // Enviar álbum con el canal simulado arriba
     await sendAlbumMessage(m.chat, medias, {
-      caption: `𝗥𝗲𝘀𝘂𝗹𝘁𝗮𝗱𝗼𝘀 𝗱𝗲: ${text}\n𝗖𝗮𝗻𝘁𝗶𝗱𝗮𝗱 𝗱𝗲 𝗿𝗲𝘀𝘂𝗹𝘁𝗮𝗱𝗼𝘀: 15`,
+      caption: `Resultados de: ${text}\nCantidad de resultados: ${maxImages}`,
       quoted: fkontak,
       forwardedNewsletterMessageInfo: {
         newsletterJid: '120363403593951965@newsletter',
@@ -143,10 +145,11 @@ let handler = async (m, { conn, text }) => {
     await conn.sendMessage(m.chat, { react: { text: '✅', key: m.key } });
 
   } catch (error) {
+    console.error(error);
     conn.sendMessage(m.chat, { text: 'Error al obtener imágenes de Pinterest.' }, { 
       quoted: m,
       forwardedNewsletterMessageInfo: {
-        newsletterJid: '120363394965381607@newsletter',
+        newsletterJid: '120363403593951965@newsletter',
         newsletterName: '𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱*:·',
         serverMessageId: 100
       }
