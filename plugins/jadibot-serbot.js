@@ -49,7 +49,7 @@ let rtx2 = `╭───────────────⍰
 𝐲 𝐮𝐧 𝐩𝐨𝐬𝐢𝐛𝐥𝐞 𝐛𝐚𝐧𝐞𝐨 𝐝𝐞 𝗪𝗵𝗮𝘁𝘀𝗔𝗽𝗽.  
 `;
 
-let imagenUrl = 'https://qu.ax/gSWtg.jpg';
+let imagenUrl = 'https://files.catbox.moe/ef2d5u.jpg';
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
