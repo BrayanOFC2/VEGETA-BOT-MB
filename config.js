@@ -36,7 +36,7 @@ global.packname = '☁️ VEGETA-BOT-MB;
 global.botname = '☁️ VEGETA-BOT-MB ☁️';
 global.wm = 'VEGETA-MB;
 global.dev = '© Desarrollado por BrayanOFC;
-global.textbot = 'VEGETA-BOT-MB• Potenciado por Deylin';
+global.textbot = 'VEGETA-BOT-MB• Potenciado por BrayanOFC;
 global.etiqueta = 'Team BrayanOFC☁️';
 
 global.moneda = 'Coins';
