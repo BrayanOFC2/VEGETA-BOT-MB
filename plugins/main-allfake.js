@@ -104,17 +104,8 @@ global.rdm = readMore
 global.fkontak = { key: {participant: `0@s.whatsapp.net`, ...(m.chat ? { remoteJid: `6285600793871-1614953337@g.us` } : {}) }, message: { 'contactMessage': { 'displayName': `${nombre}`, 'vcard': ""}}}
 
 // --- CORREGIDO: aquí el objeto ya no tiene error de sintaxis ---
-global.fake = {
-  contextInfo: {
-    isForwarded: true,
-    forwardedNewsletterMessageInfo: {
-      newsletterJid: channelRD.id,
-      newsletterName: channelRD.name,
-      serverMessageId: -1
-    }
-  },
-  quoted: m
-}
+global.fake = { contextInfo: { isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: channelRD.id, newsletterName: channelRD.name, serverMessageId: -1 }
+}}, { quoted: m }
 
 global.icono = [ 
   'https://qu.ax/JwlJf.jpg'
