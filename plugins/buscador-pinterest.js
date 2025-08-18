@@ -32,17 +32,6 @@ async function sendAlbumMessage(jid, medias, options = {}) {
       albumMessage: {
         expectedImageCount: medias.filter(media => media.type === "image").length,
         expectedVideoCount: medias.filter(media => media.type === "video").length,
-        ...(options.quoted
-          ? {
-              contextInfo: {
-                remoteJid: options.quoted.key.remoteJid,
-                fromMe: options.quoted.key.fromMe,
-                stanzaId: options.quoted.key.id,
-                participant: options.quoted.key.participant || options.quoted.key.remoteJid,
-                quotedMessage: options.quoted.message,
-              },
-            }
-          : {}),
       },
     },
     {}
@@ -57,8 +46,8 @@ async function sendAlbumMessage(jid, medias, options = {}) {
       { [type]: data, ...(i === 0 ? { caption } : {}) },
       { upload: conn.waUploadToServer }
     );
-    img.message.messageContextInfo = {
-      messageAssociation: { associationType: 1, parentMessageKey: album.key },
+    img.message[type].caption = i === 0 ? caption : undefined;
+    img.message.contextInfo = {
       forwardedNewsletterMessageInfo: {
         newsletterJid: "120363403593951965@newsletter",
         newsletterName: "ＮＡＲＵＴＯ ＢＯＴ ᴍᴅ 𒆙",
