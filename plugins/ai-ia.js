@@ -4,28 +4,36 @@
 
 import fetch from 'node-fetch';
 
-let handler = async(m, { conn, usedPrefix, command, text }) => {
+let handler = async (m, { conn, usedPrefix, command, text }) => {
+    if (!text) return m.reply('☁️ Ingresa un texto');
 
-if (!text) return m.reply('☁️Ingresa Un Texto');
+    await m.react('☁️');
 
-await m.react('☁️')
-try {
-const username = `${conn.getName(m.sender)}`
+    try {
+        const username = `${conn.getName(m.sender)}`;
 
-const basePrompt = `Tu nombre es VEGETA-BOT parece haber sido creado por BrayanOFC. Tú usas el idioma Español. Llamarás a las personas por su nombre ${username}, te gusta ser divertido, te encanta aprender y sobre todo las explociones. Lo más importante es que debes ser amigable con la persona con la que estás hablando. ${username}`
+        const basePrompt = `Tu nombre es VEGETA-BOT parece haber sido creado por BrayanOFC. Tú usas el idioma Español. Llamarás a las personas por su nombre ${username}, te gusta ser divertido, te encanta aprender y sobre todo las explosiones. Lo más importante es que debes ser amigable con la persona con la que estás hablando. ${username}`;
 
-const api = await (await fetch(`https://delirius-apiofc.vercel.app/ia/gptprompt?text=${text}&prompt=${basePrompt}`)).json();
+        const res = await fetch(`https://delirius-apiofc.vercel.app/ia/gptprompt?text=${encodeURIComponent(text)}&prompt=${encodeURIComponent(basePrompt)}`);
+        const textRes = await res.text();
 
-let respuesta = api.data;
+        let api;
+        try {
+            api = JSON.parse(textRes);
+        } catch {
+            return m.reply(`⚠️ Error: la API no devolvió JSON válido.\n\nRespuesta recibida:\n${textRes}`);
+        }
 
-await conn.sendMessage(m.chat, { text: respuesta }, { quoted: m });
-m.react(done);
+        const respuesta = api.data || '⚠️ La API no devolvió una respuesta válida.';
+        await conn.sendMessage(m.chat, { text: respuesta }, { quoted: m });
+        await m.react('✅');
 
-} catch (e) {
-m.reply(`Error: ${e.message}`);
-m.react('✖️');
-}}
+    } catch (e) {
+        m.reply(`❌ Error interno: ${e.message}`);
+        await m.react('✖️');
+    }
+};
 
 handler.command = ['ia', 'chatgpt'];
 
-export default handler
+export default handler;
