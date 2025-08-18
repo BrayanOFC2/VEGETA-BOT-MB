@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+/*import fetch from "node-fetch";
 import yts from 'yt-search';
 import axios from "axios";
 
@@ -146,4 +146,4 @@ function formatViews(views) {
   } else {
     return views.toString();
   }
-}
+}*/
