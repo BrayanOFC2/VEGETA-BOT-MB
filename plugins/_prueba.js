@@ -4,7 +4,7 @@ const handler = async (m, { conn }) => {
   contextInfo: {
     externalAdReply: {
       showAdAttribution: true, 
-      title: ${botname},
+      title: botname,
       body: dev,
       mediaType: 2,         
       thumbnailUrl: global.icono,
@@ -16,6 +16,6 @@ const handler = async (m, { conn }) => {
     await conn.reply(m.chat, "Prueba", m, rcanal);
 };
 
-handler.command = ['1'];
+handler.command = ['m'];
 
 export default handler;
