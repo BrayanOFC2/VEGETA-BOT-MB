@@ -251,8 +251,9 @@ if (!fs.existsSync(`./${sessions}/creds.json`)) {
         setTimeout(async () => {
                   let codeBot = await conn.requestPairingCode(addNumber)
         codeBot = codeBot?.match(/.{1,4}/g)?.join("-") || codeBot
-        console.log(chalk.bold.white(chalk.bgMagenta(`☁️ CÓDIGO DE VINCULACIÓN SAIYAJIN 👑 `)), chalk.bold.white(codeBot))
-        } 3000)
+        console.log(chalk.bold.white(chalk.bgMagenta(`☁️ CÓDIGO DE VINCULACIÓN SAIYAJIN 👑 `)), chalk.bold.white(codeBot)),
+          }
+        }, 3000)
       }
     }
   }
