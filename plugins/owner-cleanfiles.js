@@ -13,7 +13,7 @@ const _0xcleanTempFiles = async () => {
     const _0xallTempFiles = [..._0xtempImages, ..._0xtempPDFs];
 
     if (_0xallTempFiles.length === 0) {
-        return '🍭 No se encontraron archivos temporales para eliminar.';
+        return '☁️No se encontraron archivos temporales para eliminar.';
     }
 
     await Promise.all(_0xallTempFiles.map(async _0xfile => {
@@ -21,11 +21,11 @@ const _0xcleanTempFiles = async () => {
         await _0xfs.unlink(_0xfilePath);
     }));
 
-    return `✅ Se eliminaron ${_0xallTempFiles.length} archivos temporales correctamente.`;
+    return `👑 Se eliminaron ${_0xallTempFiles.length} archivos temporales correctamente.`;
 };
 
 let _0xhandler = async (m, { conn, isOwner }) => {
-    if (!isOwner) return conn.reply(m.chat, '🍬 Solo el propietario puede usar este comando.', m);
+    if (!isOwner) return conn.reply(m.chat, '🐉 Solo el propietario puede usar este comando.', m);
 
     try {
         const _0xresult = await _0xcleanTempFiles();
