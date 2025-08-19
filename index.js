@@ -21,7 +21,7 @@ import fs, {
 import yargs from 'yargs'
 import { spawn } from 'child_process'
 import lodash from 'lodash'
-import { vegetaJadiBot } from './plugins/jadibot-serbot.js'
+import { JadiBot } from './plugins/jadibot-serbot.js'
 import chalk from 'chalk'
 import syntaxerror from 'syntax-error'
 import { tmpdir } from 'os'
@@ -173,13 +173,13 @@ if (!methodCodeQR && !methodCode && !fs.existsSync(`./${sessions}/creds.json`)) 
   do {
     opcion = await question(
       colores('✎﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏\n Escoge tu camino, guerrero Saiyajin:\n') +
-        opcionQR('1. Escanear código QR para conectar\n') +
-        opcionTexto('2. Ingresar código de texto de 8 dígitos\n--> '),
+        opcionQR('1. 🐉Escanear código QR para conectar☁️\n') +
+        opcionTexto('2. 🐉Ingresar código de texto de 8 dígitos👑\n--> '),
     )
     if (!/^[1-2]$/.test(opcion)) {
       console.log(
         chalk.bold.redBright(
-          `✰ཽ Solo puedes elegir la opción 1 o 2, ¡no te rindas!`,
+          `✰ཽ 🐉Solo puedes elegir la opción 1 o 2, ¡no te rindas👑!`,
         ),
       )
     }
@@ -234,7 +234,7 @@ if (!fs.existsSync(`./${sessions}/creds.json`)) {
           phoneNumber = await question(
             chalk.bgBlack(
               chalk.bold.greenBright(
-                `✦ Ingresa tu número de WhatsApp Saiyajin para comenzar la pelea.\n${chalk.bold
+                `✦ Ingresa tu número de WhatsApp Saiyajin para comenzar la pelea☁️.\n${chalk.bold
                   .yellowBright(`✏  Ejemplo: 57321×××××××`)}\n${chalk.bold.magentaBright(
                   '---> ',
                 )}`,
@@ -253,7 +253,7 @@ if (!fs.existsSync(`./${sessions}/creds.json`)) {
           codeBot = codeBot?.match(/.{1,4}/g)?.join('-') || codeBot
           console.log(
             chalk.bold.white(
-              chalk.bgMagenta(`✧ CÓDIGO DE VINCULACIÓN SAIYAJIN ✧`),
+              chalk.bgMagenta(`✧ CÓDIGO DE VINCULACIÓN SAIYAJIN 🐉✧`),
             ),
             chalk.bold.white(chalk.white(codeBot)),
           )
@@ -305,7 +305,7 @@ async function connectionUpdate(update) {
       case DisconnectReason.badSession:
         console.log(
           chalk.bold.cyanBright(
-            `\n⚠︎ Sesión inválida, elimina la carpeta ${global.sessions} y vuelve a escanear el QR.`,
+            `\n⚠︎ Sesión inválida, elimina la carpeta ${global.sessions} y vuelve a escanear el QR SAIYAJIN🐉.`,
           ),
         )
         break
@@ -320,7 +320,7 @@ async function connectionUpdate(update) {
       case DisconnectReason.connectionLost:
         console.log(
           chalk.bold.blueBright(
-            `\n⚠︎ Conexión perdida, intentado reconectar... ¡No te rindas!`,
+            `\n⚠︎ Conexión perdida, SAIYAJIN intentado reconectar... ¡No te rindas!🐉`,
           ),
         )
         await global.reloadHandler(true).catch(console.error)
@@ -328,21 +328,21 @@ async function connectionUpdate(update) {
       case DisconnectReason.connectionReplaced:
         console.log(
           chalk.bold.yellowBright(
-            `\n⚠︎ Sesión reemplazada, cierra la sesión actual primero.`,
+            `\n⚠︎ Sesión reemplazada, cierra la sesión actual primero SAIYAJIN🐉☁️.`,
           ),
         )
         break
       case DisconnectReason.loggedOut:
         console.log(
           chalk.bold.redBright(
-            `\n⚠︎ Sesión cerrada, elimina la carpeta ${global.sessions} y escanea el QR para volver.`,
+            `\n⚠︎ Sesión cerrada, elimina la carpeta ${global.sessions} y escanea el QR para volver SAIYAJIN🐉☁️.`,
           ),
         )
         await global.reloadHandler(true).catch(console.error)
         break
       case DisconnectReason.restartRequired:
         console.log(
-          chalk.bold.cyanBright(`\nReconectando al campo de batalla...`),
+          chalk.bold.cyanBright(`\nReconectando al campo de batalla🐉☁️...`),
         )
         await global.reloadHandler(true).catch(console.error)
         break
@@ -355,7 +355,7 @@ async function connectionUpdate(update) {
       default:
         console.log(
           chalk.bold.redBright(
-            `\nRazón desconocida de desconexión: ${reason || 'No encontrado'}`,
+            `\nRazón desconocida de desconexión SAIYAJIN🐉: ${reason || 'No encontrado☁️'}`,
           ),
         )
     }
