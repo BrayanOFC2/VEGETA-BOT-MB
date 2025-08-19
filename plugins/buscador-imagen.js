@@ -1,8 +1,8 @@
 const handler = async (m, { conn, text, usedPrefix, command }) => {
-  if (!text) return conn.reply(m.chat, '🍬 Por favor, ingresa un término de búsqueda.', m, rcanal)
+  if (!text) return conn.reply(m.chat, '☁️ Por favor, ingresa un término de búsqueda.', m, rcanal)
   await m.react(rwait)
 
-  conn.reply(m.chat, '🍭 Buscando imagen, espere un momento...', m, {
+  conn.reply(m.chat, '👑 Buscando imagen, espere un momento...', m, {
     contextInfo: {
       externalAdReply: {
         mediaUrl: null,
@@ -29,7 +29,7 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
       [[]], [[]], [[]], [[]]
     ])
 
-    await conn.sendCarousel(m.chat, `🍬 Resultado de ${text}`, '⪛✰ Imagen - Búsqueda ✰⪜', null, messages, m)
+    await conn.sendCarousel(m.chat, `🐉 Resultado de ${text}`, '⪛✰ Imagen - Búsqueda ✰⪜', null, messages, m)
   } catch (e) {
     console.error(e)
     m.reply('⚠️ Hubo un error al buscar la imagen.')
