@@ -16,6 +16,6 @@ const handler = async (m, { conn }) => {
     await conn.reply(m.chat, "Prueba", m, rcanal);
 };
 
-handler.command = ['m'];
+handler.command = ['1'];
 
 export default handler;
