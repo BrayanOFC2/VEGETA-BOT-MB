@@ -190,7 +190,7 @@ rl.close()
 addNumber = phoneNumber.replace(/\D/g, '')
 setTimeout(async () => {
 let codeBot = await conn.requestPairingCode(addNumber)
-codeBot = codeBot?.match(/.{1,4}/g)?.join("-") || codeBot
+codeBot = codeBot?.match(/.{1,4}/g)?.join("-") || codeBotc
 console.log(chalk.bold.white(chalk.bgMagenta(`☁️ CÓDIGO DE VINCULACIÓN SAIYAJIN 👑 `)), chalk.bold.white(chalk.white(codeBot)))
 }, 3000)
 }}}
