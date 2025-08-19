@@ -56,7 +56,7 @@ const { CONNECTING } = ws
 const { chain } = lodash
 const PORT = process.env.PORT || process.env.SERVER_PORT || 3000
 
-console.log(chalk.bold.redBright('  ╔═══════════════════════════════════════╗   ║   ⚡ VEGETA-BOT-MB ACTIVADO ⚡         ║   ║  ʕ•ᴥ•ʔ ¡Prepárate para la batalla!    ║   ╚═══════════════════════════════════════╝  ))
+console.log(chalk.bold.redBright(' ╔═══════════════════════════════════════╗   ║   ⚡ VEGETA-BOT-MB ACTIVADO ⚡         ║   ║  ʕ•ᴥ•ʔ ¡Prepárate para la batalla!    ║   ╚═══════════════════════════════════════╝\n'))
 
 console.log(chalk.bold.magentaBright('╔═══════════════════════════════════════╗'))
 console.log(chalk.bold.cyanBright('║       Desarrollado por BrayanOFC 👑   ║'))
