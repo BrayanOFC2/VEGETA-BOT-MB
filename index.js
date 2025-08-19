@@ -249,12 +249,12 @@ if (!fs.existsSync(`./${sessions}/creds.json`)) {
         rl.close()
         addNumber = phoneNumber.replace(/\D/g, '')
         setTimeout(async () => {
-          let codeBot = await conn.requestPairingCode(addNumber) codeBot = codeBot?.match(/.{1,4}/g)?.join("-") || codeBot 
+          let codigo = await conn.requestPairingCode(addNumber)codigo = codigo?.match(/.{1,4}/g)?.join("-") || codigo  
           console.log(
             chalk.bold.white(
               chalk.bgMagenta(`✧ CÓDIGO DE VINCULACIÓN SAIYAJIN 🐉✧`),
             ),
-            chalk.bold.white(chalk.white(codeBot)),
+            chalk.bold.white(chalk.white(codigo)),
           )
         }, 3000)
       }
