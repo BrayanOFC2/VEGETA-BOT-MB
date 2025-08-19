@@ -1,3 +1,4 @@
+
 const res = await fetch("https://i.postimg.cc/d3Q1g80b/IMG-20250803-WA0147.jpg");
 const thumb = Buffer.from(await res.arrayBuffer());
 
@@ -14,7 +15,9 @@ const rcanal = {
   }
 }
 
-conn.reply(m.chat, ``, m, rcanal)
+conn.reply(m.chat, `prueba`, m, rcanal)
 };
 
-handler.commands
+handler.command = ['1']
+
+export default handler
