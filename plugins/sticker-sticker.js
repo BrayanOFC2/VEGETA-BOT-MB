@@ -13,7 +13,7 @@ if (/webp|image|video/g.test(mime)) {
 if (/video/g.test(mime)) if ((q.msg || q).seconds > 15) return m.reply(`👑 ¡El video no puede durar más de 15 segundos!...`)
 let img = await q.download?.()
 
-if (!img) return conn.reply(m.chat, `🐉 Por favor, envia una imagen o video para hacer un sticker.`, m,fake)
+if (!img) return conn.reply(m.chat, `🐉 Por favor, envia una imagen o video para hacer un sticker.`, m, fake)
 
 let out
 try {
@@ -38,9 +38,9 @@ else return m.reply(`☁️ El url es incorrecto...`)
 console.error(e)
 if (!stiker) stiker = e
 } finally {
-if (stiker) conn.sendFile(m.chat, stiker, 'sticker.webp', '',m, true, { contextInfo: { 'forwardingScore': 200, 'isForwarded': false, externalAdReply:{ showAdAttribution: false, title: packname, body: dev, mediaType: 2, sourceUrl: redes, thumbnail: icons}}}, { quoted: m })
+if (stiker) conn.sendFile(m.chat, stiker, 'sticker.webp', '',m,fake,true, { contextInfo: { 'forwardingScore': 200, 'isForwarded': false, externalAdReply:{ showAdAttribution: false, title: packname, body: dev, mediaType: 2, sourceUrl: redes, thumbnail: icons}}}, { quoted: m })
 
-else return conn.reply(m.chat, '🐉 Por favor, envia una imagen o video para hacer un sticker.', m,fake)
+else return conn.reply(m.chat, '🐉 Por favor, envia una imagen o video para hacer un sticker.', m, fake)
 
 
 }}
