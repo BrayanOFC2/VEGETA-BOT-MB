@@ -17,14 +17,14 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     let pp2 = 'https://qu.ax/zdEhG.jpg'
 
     if (!text && !m.quoted) {
-        return m.reply(`*🍬 Por favor, escribe tu solicitud.*\n\n> *🍭 Elige una categoría:*\n\na). Sugerencia 💡\nb). Propuesta 📝\nc). Publicidad 📢\nd). Opinión 💬\ne). Pregunta 🚀\nf). Eventos 🎉\ng). Frases ✨\nh). Confesión anónima 🕵\n\n> 🌹 Ejemplo: ${usedPrefix + command} c Texto`);
+        return m.reply(`*🐉 Por favor, escribe tu solicitud.*\n\n> *☁️ Elige una categoría:*\n\na). Sugerencia 💡\nb). Propuesta 📝\nc). Publicidad 📢\nd). Opinión 💬\ne). Pregunta 🚀\nf). Eventos 🎉\ng). Frases ✨\nh). Confesión anónima 🕵\n\n> 🌹 Ejemplo: ${usedPrefix + command} c Texto`);
     }
 
     let [categoryChoice, ...rest] = text.split(' ');
     let suggestionText = rest.join(' ');
 
     if (!suggestionText) {
-        return m.reply(`🍬 Debes agregar un texto después de seleccionar la categoría.\nEjemplo: ${usedPrefix + command} a Mi solicitud es...`);
+        return m.reply(`👑 Debes agregar un texto después de seleccionar la categoría.\nEjemplo: ${usedPrefix + command} a Mi solicitud es...`);
     }
 
     let categories = {
@@ -40,10 +40,10 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
 
     let category = categories[categoryChoice];
     if (!category) {
-        return m.reply('🍭 Opción inválida. Elige una categoría correcta: a, b, c o d.');
+        return m.reply('☁️ Opción inválida. Elige una categoría correcta: a, b, c o d.');
     }
 
-    m.reply(`🍬 Tu Publicación ha sido enviada a los administradores para su revisión.`);
+    m.reply(`🐉 Tu Publicación ha sido enviada a los administradores para su revisión.`);
 
     let groupMetadata = await conn.groupMetadata(idgroup);
     let groupAdmins = groupMetadata.participants.filter(p => p.admin);
@@ -89,13 +89,13 @@ handler.before = async (response) => {
 
 if (action === 'si') {
 await conn.sendMessage(idgroup, { react: { text: "✅", key: response.key } });
-let approvedText = `${suggestionText || '🍬 Desconocido'}`;
+let approvedText = `${suggestionText || '👑 Desconocido'}`;
 let title, body, foto;
 
 switch (category) {
 case 'sugerencia': 
 title = `【 🔔 𝗡𝗨𝗘𝗩𝗔 𝗦𝗨𝗚𝗘𝗥𝗘𝗡𝗖𝗜𝗔 🔔 】`;
-body = `🍬 Nueva sugerencia`;
+body = `🐉 Nueva sugerencia`;
 foto = `${pp}`;
 break;
 case 'eventos':
@@ -105,7 +105,7 @@ foto = `${pp}`;
 break;
 case 'opinión':
 title = `【 😃 𝗡𝗨𝗘𝗩𝗔 𝗢𝗣𝗜𝗡𝗜𝗢𝗡 😃 】`;
-body = `🍭 Nueva opinion`;
+body = `☁️ Nueva opinion`;
 foto = `${pp}`;
 break;
 case 'propuesta':
@@ -146,7 +146,7 @@ renderLargerThumbnail: false
 
 await conn.sendMessage(idchannel, { text: approvedText, contextInfo: options.contextInfo }, { quoted: null });
 
-await conn.reply(sender, `🍬 Solicitud aceptada, Grupo:\n${gp4}`);
+await conn.reply(sender, `👑 Solicitud aceptada, Grupo:\n${gp4}`);
 delete suggestionQueue[suggestionId];
 }};
 handler.command = ['sugerencia', 'enviarmensaje', 'solicitud', 'enviarsolicitud'];
