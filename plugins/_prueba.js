@@ -21,7 +21,7 @@ let fkontak = {
     }
 };
 
-    await conn.reply(m.chat, `Hola me puedes ver?`, fkontak);
+    await conn.reply(m.chat, `Yo no juego con los códigos.`, fkontak);
 };
 
 handler.command = /^1$/i;
