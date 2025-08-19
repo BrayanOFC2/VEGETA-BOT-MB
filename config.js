@@ -33,7 +33,7 @@ global.prems = []
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
 global.libreria = 'Baileys'
-global.baileys = 'V 6.7.9' 
+global.baileys = 'V 6.7.17'  
 global.languaje = 'Español'
 global.vs = '2.1.5'
 global.vsJB = '5.0'
