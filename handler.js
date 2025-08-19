@@ -240,6 +240,63 @@ if (opts['swonly'] && m.chat !== 'status@broadcast')  return
 if (typeof m.text !== 'string')
 m.text = ''
 
+try {
+global._conversations = global._conversations || {}
+const conv = global._conversations[m.sender] || null
+const trimmedText = (m.text || '').toString().trim()
+
+if (trimmedText) {
+  if (trimmedText.toLowerCase() === 'vincular') {
+    global._conversations[m.sender] = { step: 'option' }
+    await this.sendMessage(m.chat, { text:
+      '☁️ Seleccione una opción Saiyajin\n\n1. Con código QR\n2. Con código de texto de 8 dígitos'
+    }, { quoted: m })
+    return
+  }
+
+  if (conv && conv.step === 'option') {
+    if (trimmedText === '1') {
+      delete global._conversations[m.sender]
+      await this.sendMessage(m.chat, { text: '📲 Escanea el QR que aparecerá en pantalla...' }, { quoted: m })
+      return
+    } else if (trimmedText === '2') {
+      global._conversations[m.sender].step = 'number'
+      await this.sendMessage(m.chat, { text: '🔥 Ingresa tu número de WhatsApp (ej: 57321xxxxxxx)' }, { quoted: m })
+      return
+    } else {
+      await this.sendMessage(m.chat, { text: '⚠️ Opción inválida, elige 1 o 2' }, { quoted: m })
+      return
+    }
+  }
+
+  if (conv && conv.step === 'number') {
+    const num = trimmedText.replace(/\D/g, '')
+    if (!/^\d{6,15}$/.test(num)) {
+      await this.sendMessage(m.chat, { text: '⚠️ Número inválido, inténtalo de nuevo (ej: 57321xxxxxxx)' }, { quoted: m })
+      return
+    }
+    global._conversations[m.sender].number = num
+    global._conversations[m.sender].step = 'code'
+    await this.sendMessage(m.chat, { text: '✅ Número registrado. Ahora envía el código de 8 dígitos.' }, { quoted: m })
+    return
+  }
+
+  if (conv && conv.step === 'code') {
+    const code = trimmedText.replace(/\s+/g, '')
+    if (!/^\d{8}$/.test(code)) {
+      await this.sendMessage(m.chat, { text: '⚠️ Código inválido, debe tener 8 dígitos.' }, { quoted: m })
+      return
+    }
+    const number = conv.number || 'desconocido'
+    delete global._conversations[m.sender]
+    await this.sendMessage(m.chat, { text: `🎉 Vinculación completada con el número: ${number} y código: ${code}` }, { quoted: m })
+    return
+  }
+}
+} catch (err) {
+console.error(err)
+}
+
 if (opts['queque'] && m.text && !(isMods || isPrems)) {
 let queque = this.msgqueque, time = 1000 * 5
 const previousID = queque[queque.length - 1]
@@ -287,8 +344,7 @@ __dirname: ___dirname,
 __filename
 })
 } catch (e) {
-console.error(e)
-}}
+console.error(e)}}
 if (!opts['restrict'])
 if (plugin.tags && plugin.tags.includes('admin')) {
 continue
@@ -307,7 +363,7 @@ return [re.exec(m.text), re]
 typeof _prefix === 'string' ?
 [[new RegExp(str2Regex(_prefix)).exec(m.text), new RegExp(str2Regex(_prefix))]] :
 [[[], new RegExp]]
-).find(p => p[1])
+).find(p => p && p[1]) || [[], new RegExp()]
 if (typeof plugin.before === 'function') {
 if (await plugin.before.call(this, m, {
 match,
@@ -470,8 +526,7 @@ if (typeof plugin.after === 'function') {
 try {
 await plugin.after.call(this, m, extra)
 } catch (e) {
-console.error(e)
-}}
+console.error(e)}}
 if (m.coin)
 conn.reply(m.chat, `⚡ Usaste ${+m.coin} de tu Ki`, m)
 }
@@ -534,7 +589,7 @@ try {
 let settingsREAD = global.db.data.settings[this.user.jid] || {}  
 if (opts['autoread']) await this.readMessages([m.key])
 
-if (db.data.chats[m.chat].reaction && m.text.match(/(ción|dad|aje|oso|izar|mente|pero|tion|age|ous|ate|and|but|ify|ai|yuki|a|s)/gi)) {
+if (db.data.chats[m.chat].reaction && m.text.match(/(ción|dad|aje|oso|izar|mente|pero|tion|age|ous|ate|and|but|ify|ai|vegeta|a|s)/gi)) {
     let emot = pickRandom(["🍟", "😃", "😄", "😁", "😆", "🍓", "😅", "😂", "🤣", "🥲", "☺️", "😊", "😇", "🙂", "🙃", "😉", "😌", "😍", "🥰", "😘", "😗", "😙", "🌺", "🌸", "😚", "😋", "😛", "😝", "😜", "🤪", "🤨", "🌟", "🤓", "😎", "🥸", "🤩", "🥳", "😏", "💫", "😞", "😔", "😟", "😕", "🙁", "☹️", "😣", "😖", "😫", "😩", "🥺", "😢", "😭", "😤", "😠", "😡", "🤬", "🤯", "😳", "🥵", "🥶", "😶‍🌫️", "😱", "😨", "😰", "😥", "😓", "🤗", "🤔", "🫣", "🤭", "🤖", "🍭", "🤫", "🫠", "🤥", "😶", "📇", "😐", "💧", "😑", "🫨", "😬", "🙄", "😯", "😦", "😧", "😮", "😲", "🥱", "😴", "🤤", "😪", "😮‍💨", "😵", "😵‍💫", "🤐", "🥴", "🤢", "🤮", "🤧", "😷", "🤒", "🤕", "🤑", "🤠", "😈", "👿", "👺", "🧿", "🌩", "👻", "😺", "😸", "😹", "😻", "😼", "😽", "🙀", "😿", "😾", "🫶", "👍", "✌️", "🙏", "🫵", "🤏", "🤌", "☝️", "🖕", "🙏", "🫵", "🫂", "🐱", "🤹‍♀️", "🤹‍♂️", "🗿", "✨", "⚡", "🔥", "🌈", "🩷", "❤️", "🧡", "💛", "💚", "🩵", "💙", "💜", "🖤", "🩶", "🤍", "🤎", "💔", "❤️‍🔥", "❤️‍🩹", "❣️", "💕", "💞", "💓", "💗", "💖", "💘", "💝", "🚩", "👊", "⚡️", "💋", "🫰", "💅", "👑", "🐣", "🐤", "🐈"])
     if (!m.fromMe) return this.sendMessage(m.chat, { react: { text: emot, key: m.key }})
 }
@@ -575,3 +630,4 @@ watchFile(file, async () => {
         }
     }
 })
+
