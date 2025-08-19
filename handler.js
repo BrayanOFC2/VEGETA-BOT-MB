@@ -499,19 +499,79 @@ user.coin -= m.coin * 1
 
 let stat
 if (m.plugin) {
-let now = +new Date
-if (m.plugin in stats) {
-stat = stats[m.plugin]
-if (!isNumber(stat.total))
-stat.total = 1
-if (!isNumber(stat.success))
-stat.success = m.error != null ? 0 : 1
-if (!isNumber(stat.last))
-stat.last = now
-if (!isNumber(stat.lastSuccess))
-stat.lastSuccess = m.error != null ? 0 : now
-} else
-stat = stats[m.plugin] = {
-total: 1,
-success: m.error != null ? 0 : 1,
-last: now,
+    let now = +new Date
+    if (m.plugin in stats) {
+        stat = stats[m.plugin]
+        if (!isNumber(stat.total))
+            stat.total = 1
+        if (!isNumber(stat.success))
+            stat.success = m.error != null ? 0 : 1
+        if (!isNumber(stat.last))
+            stat.last = now
+        if (!isNumber(stat.lastSuccess))
+            stat.lastSuccess = m.error != null ? 0 : now
+    } else
+        stat = stats[m.plugin] = {
+            total: 1,
+            success: m.error != null ? 0 : 1,
+            last: now,
+            lastSuccess: m.error != null ? 0 : now
+        }
+    stat.total += 1
+    stat.last = now
+    if (m.error == null) {
+        stat.success += 1
+        stat.lastSuccess = now
+    }
+}
+
+try {
+    if (!opts['noprint']) await (await import(`./lib/print.js`)).default(m, this)
+} catch (e) { 
+    console.log(m, m.quoted, e)
+}
+
+let settingsREAD = global.db.data.settings[this.user.jid] || {}  
+if (opts['autoread']) await this.readMessages([m.key])
+
+if (db.data.chats[m.chat].reaction && m.text.match(/(ción|dad|aje|oso|izar|mente|pero|tion|age|ous|ate|and|but|ify|ai|yuki|a|s)/gi)) {
+    let emot = pickRandom(["🍟", "😃", "😄", "😁", "😆", "🍓", "😅", "😂", "🤣", "🥲", "☺️", "😊", "😇", "🙂", "🙃", "😉", "😌", "😍", "🥰", "😘", "😗", "😙", "🌺", "🌸", "😚", "😋", "😛", "😝", "😜", "🤪", "🤨", "🌟", "🤓", "😎", "🥸", "🤩", "🥳", "😏", "💫", "😞", "😔", "😟", "😕", "🙁", "☹️", "😣", "😖", "😫", "😩", "🥺", "😢", "😭", "😤", "😠", "😡", "🤬", "🤯", "😳", "🥵", "🥶", "😶‍🌫️", "😱", "😨", "😰", "😥", "😓", "🤗", "🤔", "🫣", "🤭", "🤖", "🍭", "🤫", "🫠", "🤥", "😶", "📇", "😐", "💧", "😑", "🫨", "😬", "🙄", "😯", "😦", "😧", "😮", "😲", "🥱", "😴", "🤤", "😪", "😮‍💨", "😵", "😵‍💫", "🤐", "🥴", "🤢", "🤮", "🤧", "😷", "🤒", "🤕", "🤑", "🤠", "😈", "👿", "👺", "🧿", "🌩", "👻", "😺", "😸", "😹", "😻", "😼", "😽", "🙀", "😿", "😾", "🫶", "👍", "✌️", "🙏", "🫵", "🤏", "🤌", "☝️", "🖕", "🙏", "🫵", "🫂", "🐱", "🤹‍♀️", "🤹‍♂️", "🗿", "✨", "⚡", "🔥", "🌈", "🩷", "❤️", "🧡", "💛", "💚", "🩵", "💙", "💜", "🖤", "🩶", "🤍", "🤎", "💔", "❤️‍🔥", "❤️‍🩹", "❣️", "💕", "💞", "💓", "💗", "💖", "💘", "💝", "🚩", "👊", "⚡️", "💋", "🫰", "💅", "👑", "🐣", "🐤", "🐈"])
+    if (!m.fromMe) return this.sendMessage(m.chat, { react: { text: emot, key: m.key }})
+}
+
+function pickRandom(list) { return list[Math.floor(Math.random() * list.length)]}
+
+global.dfail = (type, m, usedPrefix, command, conn) => {
+
+    let edadaleatoria = ['10', '28', '20', '40', '18', '21', '15', '11', '9', '17', '25'].getRandom()
+    let user2 = m.pushName || 'Anónimo'
+    let verifyaleatorio = ['registrar', 'reg', 'verificar', 'verify', 'register'].getRandom()
+
+    const msg = {
+        rowner: `『⚡』El comando *${comando}* solo está disponible para los creadores del bot.`, 
+        owner: `『⚡』El comando *${comando}* solo puede ser usado por los desarrolladores del bot.`, 
+        mods: `『⚡』El comando *${comando}* solo puede ser utilizado por los moderadores del bot.`, 
+        premium: `『⚡』El comando *${comando}* solo está disponible para usuarios premium.`, 
+        group: `『⚡』El comando *${comando}* solo puede ejecutarse dentro de un grupo.`, 
+        private: `『⚡』El comando *${comando}* solo puede ejecutarse en un chat privado con el bot.`, 
+        admin: `『⚡』Solo los administradores del grupo pueden usar el comando *${comando}*.`, 
+        botAdmin: `『⚡』Para ejecutar *${comando}*, necesito ser administrador del grupo.`, 
+        unreg: `『⚡』Debes registrarte para usar *${comando}*. Hazlo con:\n> » #${verifyaleatorio} ${user2}.${edadaleatoria}`, 
+        restrict: `『⚡』Esta función está actualmente desactivada.`
+    }[type];
+
+    if (msg) return m.reply(msg).then(_ => m.react('✖️'))
+}
+
+let file = global.__filename(import.meta.url, true)
+watchFile(file, async () => {
+    unwatchFile(file)
+    console.log(chalk.magenta("Se actualizó 'handler.js'"))
+
+    if (global.conns && global.conns.length > 0) {
+        const users = [...new Set([...global.conns.filter((conn) => conn.user && conn.ws.socket && conn.ws.socket.readyState !== ws.CLOSED).map((conn) => conn)])]
+        for (const userr of users) {
+            userr.subreloadHandler(false)
+        }
+    }
+})
