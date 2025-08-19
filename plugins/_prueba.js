@@ -4,7 +4,7 @@ const handler = async (m, { conn }) => {
   contextInfo: {
     externalAdReply: {
       showAdAttribution: true, 
-      title: botname,
+      title: ${botname},
       body: dev,
       mediaType: 2,         
       thumbnailUrl: global.icono,
