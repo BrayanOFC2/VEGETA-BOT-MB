@@ -5,7 +5,8 @@ const handler = async (m, { conn }) => {
             externalAdReply: {
                 title: botname,
                 body: dev,
-                thumbnailUrl: icono
+                thumbnailUrl: icono,
+                sourceUrl: redes 
             }
         }
     };
