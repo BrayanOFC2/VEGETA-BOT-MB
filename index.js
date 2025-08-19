@@ -551,4 +551,3 @@ return phoneUtil.isValidNumber(parsedNumber)
 } catch (error) {
 return false
 }}
-
