@@ -88,7 +88,7 @@ global.db = new Low(/https?:///.test(opts['db'] || '') ? new cloudDBAdapter(opts
 global.DATABASE = global.db
 global.loadDatabase = async function loadDatabase() {
 if (global.db.READ) {
-return new Promise((resolve) => setInterval(async function() }
+return new Promise((resolve) => setInterval(async function() {
 if (!global.db.READ) {
 clearInterval(this)
 resolve(global.db.data == null ? global.loadDatabase() : global.db.data);
