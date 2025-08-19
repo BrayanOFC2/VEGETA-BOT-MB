@@ -173,8 +173,8 @@ if (!methodCodeQR && !methodCode && !fs.existsSync(`./${sessions}/creds.json`)) 
   do {
     opcion = await question(
       colores('✎﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏\n Escoge tu camino, guerrero Saiyajin🐉:\n') +
-        opcionQR('1. 🐉Escanear código QR para conectar☁️\n') +
-        opcionTexto('2. 🐉Ingresar código de texto de 8 dígitos☁️\n--> '),
+        opcionQR('1. Escanear código QR para conectar\n') +
+        opcionTexto('2. Ingresar código de texto de 8 dígitos\n--> '),
     )
     if (!/^[1-2]$/.test(opcion)) {
       console.log(
