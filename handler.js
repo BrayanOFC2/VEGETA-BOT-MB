@@ -96,7 +96,7 @@ user.afk = -1
 if (!('afkReason' in user))
 user.afkReason = ''
 if (!('role' in user))
-user.role = 'Guerrero Z'
+user.role = 'Nuv'
 if (!('banned' in user))
 user.banned = false
 if (!('useDocument' in user))
@@ -139,7 +139,7 @@ banned: false,
 useDocument: false,
 bank: 0,
 level: 0,
-role: 'Guerrero Z',
+role: 'Nuv',
 premium: false,
 premiumTime: 0,                 
 }
@@ -265,7 +265,7 @@ const senderJid = m.sender
 const botJid = conn.user.jid
 const groupMetadata = m.isGroup ? ((conn.chats[m.chat] || {}).metadata || await this.groupMetadata(m.chat).catch(_ => null)) : {}
 const participants = m.isGroup ? (groupMetadata.participants || []) : []
-const user = participants.find(p => p.id === senderLid || p.id === senderJid) || {}
+const user = participants.find(p => p.id === senderLid || p.jid === senderJid) || {}
 const bot = participants.find(p => p.id === botLid || p.id === botJid) || {}
 const isRAdmin = user?.admin === "superadmin"
 const isAdmin = isRAdmin || user?.admin === "admin"
@@ -362,7 +362,7 @@ let user = global.db.data.users[m.sender]
 if (!['grupo-unbanchat.js'].includes(name) && chat && chat.isBanned && !isROwner) return
 if (name != 'grupo-unbanchat.js' && name != 'owner-exec.js' && name != 'owner-exec2.js' && name != 'grupo-delete.js' && chat?.isBanned && !isROwner) return
 if (m.text && user.banned && !isROwner) {
-m.reply(`⚡ Estas fuera de combate, no puedes usar técnicas en este bot!\n\n${user.bannedReason ? `✰ *Motivo:* ${user.bannedReason}` : '✰ *Motivo:* Sin especificar'}\n\n> 💥 Si crees que esto es un error, pide ayuda a un moderador Supremo.`)
+m.reply(`《🐉》Estas baneado/a, no puedes usar comandos en este bot!\n\n${user.bannedReason ? `✰ *Motivo:* ${user.bannedReason}` : '☁️ *Motivo:* Sin Especificar'}\n\n> 🐉☁️ Si este Bot es cuenta oficial y tiene evidencia que respalde que este mensaje es un error, puedes exponer tu caso con un moderador.`)
 return
 }
 
@@ -422,11 +422,11 @@ m.isCommand = true
 let xp = 'exp' in plugin ? parseInt(plugin.exp) : 10
 m.exp += xp
 if (!isPrems && plugin.coin && global.db.data.users[m.sender].coin < plugin.coin * 1) {
-conn.reply(m.chat, `⚡ No tienes suficiente Ki para ejecutar esta técnica`, m)
+conn.reply(m.chat, `❮🐉❯ Se agotaron tus ${moneda}`, m)
 continue
 }
 if (plugin.level > _user.level) {
-conn.reply(m.chat, `⚡ Se requiere el nivel: *${plugin.level}*\n\n• Tu nivel actual es: *${_user.level}*\n\n• Usa este comando para entrenar:\n*${usedPrefix}levelup*`, m)
+conn.reply(m.chat, `❮🐉❯ Se requiere el nivel: *${plugin.level}*\n\n• Tu nivel actual es: *${_user.level}*\n\n• Usa este comando para subir de nivel☁️:\n*${usedPrefix}levelup*`, m)
 continue
 }
 let extra = {
@@ -462,7 +462,7 @@ console.error(e)
 if (e) {
 let text = format(e)
 for (let key of Object.values(global.APIKeys))
-text = text.replace(new RegExp(key, 'g'), 'Administrador Supremo')
+text = text.replace(new RegExp(key, 'g'), 'Administrador')
 m.reply(text)
 }
 } finally {
@@ -473,7 +473,7 @@ await plugin.after.call(this, m, extra)
 console.error(e)
 }}
 if (m.coin)
-conn.reply(m.chat, `⚡ Usaste ${+m.coin} de tu Ki`, m)
+conn.reply(m.chat, `❮🐉❯ Utilizaste ${+m.coin} ${moneda}`, m)
 }
 break
 }}
@@ -499,79 +499,72 @@ user.coin -= m.coin * 1
 
 let stat
 if (m.plugin) {
-    let now = +new Date
-    if (m.plugin in stats) {
-        stat = stats[m.plugin]
-        if (!isNumber(stat.total))
-            stat.total = 1
-        if (!isNumber(stat.success))
-            stat.success = m.error != null ? 0 : 1
-        if (!isNumber(stat.last))
-            stat.last = now
-        if (!isNumber(stat.lastSuccess))
-            stat.lastSuccess = m.error != null ? 0 : now
-    } else
-        stat = stats[m.plugin] = {
-            total: 1,
-            success: m.error != null ? 0 : 1,
-            last: now,
-            lastSuccess: m.error != null ? 0 : now
-        }
-    stat.total += 1
-    stat.last = now
-    if (m.error == null) {
-        stat.success += 1
-        stat.lastSuccess = now
-    }
+let now = +new Date
+if (m.plugin in stats) {
+stat = stats[m.plugin]
+if (!isNumber(stat.total))
+stat.total = 1
+if (!isNumber(stat.success))
+stat.success = m.error != null ? 0 : 1
+if (!isNumber(stat.last))
+stat.last = now
+if (!isNumber(stat.lastSuccess))
+stat.lastSuccess = m.error != null ? 0 : now
+} else
+stat = stats[m.plugin] = {
+total: 1,
+success: m.error != null ? 0 : 1,
+last: now,
+lastSuccess: m.error != null ? 0 : now
 }
+stat.total += 1
+stat.last = now
+if (m.error == null) {
+stat.success += 1
+stat.lastSuccess = now
+}}}
 
 try {
-    if (!opts['noprint']) await (await import(`./lib/print.js`)).default(m, this)
+if (!opts['noprint']) await (await import(`./lib/print.js`)).default(m, this)
 } catch (e) { 
-    console.log(m, m.quoted, e)
-}
-
+console.log(m, m.quoted, e)}
 let settingsREAD = global.db.data.settings[this.user.jid] || {}  
 if (opts['autoread']) await this.readMessages([m.key])
 
-if (db.data.chats[m.chat].reaction && m.text.match(/(ción|dad|aje|oso|izar|mente|pero|tion|age|ous|ate|and|but|ify|ai|yuki|a|s)/gi)) {
-    let emot = pickRandom(["🍟", "😃", "😄", "😁", "😆", "🍓", "😅", "😂", "🤣", "🥲", "☺️", "😊", "😇", "🙂", "🙃", "😉", "😌", "😍", "🥰", "😘", "😗", "😙", "🌺", "🌸", "😚", "😋", "😛", "😝", "😜", "🤪", "🤨", "🌟", "🤓", "😎", "🥸", "🤩", "🥳", "😏", "💫", "😞", "😔", "😟", "😕", "🙁", "☹️", "😣", "😖", "😫", "😩", "🥺", "😢", "😭", "😤", "😠", "😡", "🤬", "🤯", "😳", "🥵", "🥶", "😶‍🌫️", "😱", "😨", "😰", "😥", "😓", "🤗", "🤔", "🫣", "🤭", "🤖", "🍭", "🤫", "🫠", "🤥", "😶", "📇", "😐", "💧", "😑", "🫨", "😬", "🙄", "😯", "😦", "😧", "😮", "😲", "🥱", "😴", "🤤", "😪", "😮‍💨", "😵", "😵‍💫", "🤐", "🥴", "🤢", "🤮", "🤧", "😷", "🤒", "🤕", "🤑", "🤠", "😈", "👿", "👺", "🧿", "🌩", "👻", "😺", "😸", "😹", "😻", "😼", "😽", "🙀", "😿", "😾", "🫶", "👍", "✌️", "🙏", "🫵", "🤏", "🤌", "☝️", "🖕", "🙏", "🫵", "🫂", "🐱", "🤹‍♀️", "🤹‍♂️", "🗿", "✨", "⚡", "🔥", "🌈", "🩷", "❤️", "🧡", "💛", "💚", "🩵", "💙", "💜", "🖤", "🩶", "🤍", "🤎", "💔", "❤️‍🔥", "❤️‍🩹", "❣️", "💕", "💞", "💓", "💗", "💖", "💘", "💝", "🚩", "👊", "⚡️", "💋", "🫰", "💅", "👑", "🐣", "🐤", "🐈"])
-    if (!m.fromMe) return this.sendMessage(m.chat, { react: { text: emot, key: m.key }})
+if (db.data.chats[m.chat].reaction && m.text.match(/(ción|dad|aje|oso|izar|mente|pero|tion|age|ous|ate|and|but|ify|ai|vegeta|a|s)/gi)) {
+let emot = pickRandom(["🍟", "😃", "😄", "😁", "😆", "🍓", "😅", "😂", "🤣", "🥲", "☺️", "😊", "😇", "🙂", "🙃", "😉", "😌", "😍", "🥰", "😘", "😗", "😙", "🌺", "🌸", "😚", "😋", "😛", "😝", "😜", "🤪", "🤨", "🌟", "🤓", "😎", "🥸", "🤩", "🥳", "😏", "💫", "😞", "😔", "😟", "😕", "🙁", "☹️", "😣", "😖", "😫", "😩", "🥺", "😢", "😭", "😤", "😠", "😡", "🤬", "🤯", "😳", "🥵", "🥶", "😶‍🌫️", "😱", "😨", "😰", "😥", "😓", "🤗", "🤔", "🫣", "🤭", "🤖", "🍭", "🤫", "🫠", "🤥", "😶", "📇", "😐", "💧", "😑", "🫨", "😬", "🙄", "😯", "😦", "😧", "😮", "😲", "🥱", "😴", "🤤", "😪", "😮‍💨", "😵", "😵‍💫", "🤐", "🥴", "🤢", "🤮", "🤧", "😷", "🤒", "🤕", "🤑", "🤠", "😈", "👿", "👺", "🧿", "🌩", "👻", "😺", "😸", "😹", "😻", "😼", "😽", "🙀", "😿", "😾", "🫶", "👍", "✌️", "🙏", "🫵", "🤏", "🤌", "☝️", "🖕", "🙏", "🫵", "🫂", "🐱", "🤹‍♀️", "🤹‍♂️", "🗿", "✨", "⚡", "🔥", "🌈", "🩷", "❤️", "🧡", "💛", "💚", "🩵", "💙", "💜", "🖤", "🩶", "🤍", "🤎", "💔", "❤️‍🔥", "❤️‍🩹", "❣️", "💕", "💞", "💓", "💗", "💖", "💘", "💝", "🚩", "👊", "⚡️", "💋", "🫰", "💅", "👑", "🐣", "🐤", "🐈"])
+if (!m.fromMe) return this.sendMessage(m.chat, { react: { text: emot, key: m.key }})
 }
-
 function pickRandom(list) { return list[Math.floor(Math.random() * list.length)]}
+}}
 
 global.dfail = (type, m, usedPrefix, command, conn) => {
 
-    let edadaleatoria = ['10', '28', '20', '40', '18', '21', '15', '11', '9', '17', '25'].getRandom()
-    let user2 = m.pushName || 'Anónimo'
-    let verifyaleatorio = ['registrar', 'reg', 'verificar', 'verify', 'register'].getRandom()
+let edadaleatoria = ['10', '28', '20', '40', '18', '21', '15', '11', '9', '17', '25'].getRandom()
+let user2 = m.pushName || 'Anónimo'
+let verifyaleatorio = ['registrar', 'reg', 'verificar', 'verify', 'register'].getRandom()
 
-    const msg = {
-        rowner: `『⚡』El comando *${comando}* solo está disponible para los creadores del bot.`, 
-        owner: `『⚡』El comando *${comando}* solo puede ser usado por los desarrolladores del bot.`, 
-        mods: `『⚡』El comando *${comando}* solo puede ser utilizado por los moderadores del bot.`, 
-        premium: `『⚡』El comando *${comando}* solo está disponible para usuarios premium.`, 
-        group: `『⚡』El comando *${comando}* solo puede ejecutarse dentro de un grupo.`, 
-        private: `『⚡』El comando *${comando}* solo puede ejecutarse en un chat privado con el bot.`, 
-        admin: `『⚡』Solo los administradores del grupo pueden usar el comando *${comando}*.`, 
-        botAdmin: `『⚡』Para ejecutar *${comando}*, necesito ser administrador del grupo.`, 
-        unreg: `『⚡』Debes registrarte para usar *${comando}*. Hazlo con:\n> » #${verifyaleatorio} ${user2}.${edadaleatoria}`, 
-        restrict: `『⚡』Esta función está actualmente desactivada.`
-    }[type];
-
-    if (msg) return m.reply(msg).then(_ => m.react('✖️'))
-}
+const msg = {
+rowner: `🐉El comando *${comando}* solo puede ser usado por los creadores del bot SAIYAJIN☁️.`, 
+owner: `🐉El comando *${comando}* solo puede ser usado por los desarrolladores del bot SAIYAJIN☁️.`, 
+mods: `🐉El comando *${comando}* solo puede ser usado por los moderadores del bot SAIYAJIN☁️.`, 
+premium: `🐉El comando *${comando}* solo puede ser usado por los usuarios premium SAIYAJIN☁️.`, 
+group: `🐉El comando *${comando}* solo puede ser usado en grupos SAIYAJIN☁️.`,
+private: `🐉El comando *${comando}* solo puede ser usado al chat privado del bot SAIYAJIN☁️.`,
+admin: `🐉El comando *${comando}* solo puede ser usado por los administradores del grupo SAIYAJIN☁️.`, 
+botAdmin: `🐉Para ejecutar el comando *${comando}* debo ser administrador del grupo SAIYAJIN☁️.`,
+unreg: `🐉El comando *${comando}* solo puede ser usado por los usuarios registrado, registrate usando SAIYAJIN☁️:\n> » #${verifyaleatorio} ${user2}.${edadaleatoria}`,
+restrict: `🐉Esta caracteristica está desactivada SAIYAJIN☁️.`
+}[type];
+if (msg) return m.reply(msg).then(_ => m.react('✖️'))}
 
 let file = global.__filename(import.meta.url, true)
 watchFile(file, async () => {
-    unwatchFile(file)
-    console.log(chalk.magenta("Se actualizó 'handler.js'"))
+unwatchFile(file)
+console.log(chalk.magenta("Se actualizo 'handler.js'"))
 
-    if (global.conns && global.conns.length > 0) {
-        const users = [...new Set([...global.conns.filter((conn) => conn.user && conn.ws.socket && conn.ws.socket.readyState !== ws.CLOSED).map((conn) => conn)])]
-        for (const userr of users) {
-            userr.subreloadHandler(false)
-        }
-    }
-})
+if (global.conns && global.conns.length > 0 ) {
+const users = [...new Set([...global.conns.filter((conn) => conn.user && conn.ws.socket && conn.ws.socket.readyState !== ws.CLOSED).map((conn) => conn)])]
+for (const userr of users) {
+userr.subreloadHandler(false)
+}}})
