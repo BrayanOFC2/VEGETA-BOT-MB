@@ -1,11 +1,11 @@
 const handler = async (m, {conn, text}) => {
 const [nomor, pesan, jumlah] = text.split('|');
 
-if (!nomor) return conn.reply(m.chat, '*Uso Correcto:*\n*🍬 #spamwa numero|texto|cantidad*', m, rcanal);
+if (!nomor) return conn.reply(m.chat, '*Uso Correcto:*\n*🐉 .spamwa numero|texto|cantidad*', m, rcanal);
 
-if (!pesan) return conn.reply(m.chat, '*Uso Correcto:*\n*🍬 #spamwa numero|texto|cantidad*', m, rcanal);
+if (!pesan) return conn.reply(m.chat, '*Uso Correcto:*\n*☁️ .spamwa numero|texto|cantidad*', m, rcanal);
 
-if (jumlah && isNaN(jumlah)) return conn.reply(m.chat, '*🍭 La cantidad deve ser un numero*', m, rcanal);
+if (jumlah && isNaN(jumlah)) return conn.reply(m.chat, '*👑 La cantidad deve ser un numero*', m, rcanal);
 
 const fixedNumber = nomor.replace(/[-+<>@]/g, '').replace(/ +/g, '').replace(/^[0]/g, '62') + '@s.whatsapp.net';
 const fixedJumlah = jumlah ? jumlah * 1 : 10;
