@@ -5,11 +5,10 @@ const thumb = Buffer.from(await res.arrayBuffer());
 const rcanal = {
   contextInfo: {
     externalAdReply: {
-      title: "Naruto Uzumaki",
-      body: "Contenido exclusivo 🔥",
+      title: botname,
+      body: dev,
       mediaType: 2,
-      jpegThumbnail: thumb,
-      sourceUrl: "https://naruto-bot.vercel.app/canal.html"
+      jpegThumbnail: thumb
     }
   }
 }
