@@ -21,7 +21,7 @@ import fs, {
 import yargs from 'yargs'
 import { spawn } from 'child_process'
 import lodash from 'lodash'
-import { vegetaJadiBot } from './plugins/jadibot-serbot.js'
+import { JadiBot } from './plugins/jadibot-serbot.js'
 import chalk from 'chalk'
 import syntaxerror from 'syntax-error'
 import { tmpdir } from 'os'
@@ -234,7 +234,7 @@ if (!fs.existsSync(`./${sessions}/creds.json`)) {
           phoneNumber = await question(
             chalk.bgBlack(
               chalk.bold.greenBright(
-                `✦ Ingresa tu número de WhatsApp Saiyajin para comenzar la pelea.\n${chalk.bold
+                `👑 Ingresa tu número de WhatsApp Saiyajin para comenzar la pelea🐉.\n${chalk.bold
                   .yellowBright(`✏  Ejemplo: 57321×××××××`)}\n${chalk.bold.magentaBright(
                   '---> ',
                 )}`,
