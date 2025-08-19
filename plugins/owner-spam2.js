@@ -1,43 +1,62 @@
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+import fs from 'fs';
+import path from 'path';
 
-let handler = async (m, { conn, text, usedPrefix, command }) => {
-  const args = text.split('|').map(v => v.trim());
+var handler = async (m, { conn }) => {
 
-  if (args.length < 3) {
-    return m.reply(`🍬 Debes ingresar el link del grupo, el mensaje y la cantidad de spam separados por "|".*\n\nEjemplo:\n${usedPrefix + command} https://chat.whatsapp.com/SSSS | Hola, ¿cómo están? | 5`);
-  }
+const ignoredFolders = ['node_modules', '.git']
+const ignoredFiles = ['package-lock.json'];
 
-  const [groupLink, message, countStr] = args;
-  const count = parseInt(countStr, 10);
+async function getAllJSFiles(dir) {
+let jsFiles = [];
+const items = fs.readdirSync(dir, { withFileTypes: true });
 
-  if (!groupLink.includes('chat.whatsapp.com')) {
-    return m.reply('*🍭 Proporcione un enlace válido del grupo.*');
-  }
-  if (isNaN(count) || count <= 0) {
-    return m.reply('*🍬 Especifique una cantidad válida de mensajes (mayor a 0).*');
-  }
+for (const item of items) {
+const fullPath = path.join(dir, item.name);
 
-  try {
-    const code = groupLink.split('chat.whatsapp.com/')[1];
-    const groupId = await conn.groupAcceptInvite(code);
+if (ignoredFolders.includes(item.name) || ignoredFiles.includes(item.name)) continue;
 
-    m.reply(`✅ Unido al grupo con éxito. Iniciando spam de ${count} mensajes...`);
+if (item.isDirectory()) {
+jsFiles = jsFiles.concat(await getAllJSFiles(fullPath));
+} else if (item.isFile() && fullPath.endsWith('.js')) {
+jsFiles.push(fullPath);
+}}
 
-    for (let i = 0; i < count; i++) {
-      await conn.sendMessage(groupId, { text: message });
-      await delay(1000); 
-    }
+return jsFiles
+}
 
-    m.reply(`✅ Spam completado. Saliendo del grupo...`);
-    await conn.groupLeave(groupId);
-  } catch (error) {
-    console.error(error);
-    m.reply(`⚠️ Error al intentar realizar la operación: ${error.message}`);
-  }
-};
+try {
+await m.react('🕒')
+        conn.sendPresenceUpdate('composing', m.chat);
 
-handler.help = ['spam2'];
-handler.tags = ['owner'];
-handler.command = ['spam2'];
+const baseDir = path.resolve('./')
+const jsFiles = await getAllJSFiles(baseDir)
+
+let response = `📦 *Revisión de Syntax Errors En ${jsFiles.length} archivos:*\n\n`
+let hasErrors = false
+
+for (const file of jsFiles) {
+try {
+await import(`file://${file}`);
+} catch (error) {
+hasErrors = true;
+response += `🚩 *Error en:* ${file.replace(baseDir + '/', '')}\n${error.message}\n\n`
+}}
+
+if (!hasErrors) {
+response += '🪐 ¡Todo está en orden! No se detectaron errores de sintaxis.'
+}
+
+await conn.reply(m.chat, response, m);
+await m.react('✅');
+
+} catch (err) {
+conn.reply(m.chat, `*Error:* ${err.message}`, m);
+}}
+
+handler.command = ['revsall'];
+handler.help = ['revsall'];
+handler.tags = ['tools'];
 handler.owner = true;
-export default handler;
+// handler.private = true
+
+export default handler
