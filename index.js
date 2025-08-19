@@ -168,22 +168,15 @@ const rl = readline.createInterface({ input: process.stdin, output: process.stdo
 const question = (texto) => new Promise((resolver) => rl.question(texto, resolver))
 
 let opcion
-if (methodCodeQR) opcion = '1'
+if (methodCodeQR) {
+opcion = '1'
+}
 if (!methodCodeQR && !methodCode && !fs.existsSync(`./${sessions}/creds.json`)) {
-  do {
-    opcion = await question(
-      colores('✎﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏\n Escoge tu camino, guerrero Saiyajin🐉:\n') +
-        opcionQR('1. Escanear código QR para conectar\n') +
-        opcionTexto('2. Ingresar código de texto de 8 dígitos\n--> '),
-    )
-    if (!/^[1-2]$/.test(opcion)) {
-      console.log(
-        chalk.bold.redBright(
-          `✰ཽ 🐉Solo puedes elegir la opción 1 o 2, ¡no te rindas SAIYAJIN☁️!`,
-        ),
-      )
-    }
-  } while ((opcion !== '1' && opcion !== '2') || fs.existsSync(`./${sessions}/creds.json`))
+do {
+opcion = await question(colors("👑Escoge tu destino SAIYAJIN🐉:\n") + qrOption("1. Con código QR\n") + textOption("2. Con código de texto de 8 dígitos\n--> "))
+if (!/^[1-2]$/.test(opcion)) {
+console.log(chalk.bold.redBright(`☁️No se permiten numeros que no sean 1 o 2, tampoco letras o símbolos especiales SAIYAJIN🐉.`))
+}} while (opcion !== '1' && opcion !== '2' || fs.existsSync(`./${sessions}/creds.json`))
 }
 
 console.info = () => {}
