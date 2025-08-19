@@ -249,12 +249,9 @@ if (!fs.existsSync(`./${sessions}/creds.json`)) {
         rl.close()
         addNumber = phoneNumber.replace(/\D/g, '')
         setTimeout(async () => {
-          let codigo = await conn.requestPairingCode(addNumber)codigo = codigo?.match(/.{1,4}/g)?.join("-") || codigo  
-          console.log(
-            chalk.bold.white(
-              chalk.bgMagenta(`✧ CÓDIGO DE VINCULACIÓN SAIYAJIN 🐉✧`),
-            ),
-            chalk.bold.white(chalk.white(codigo)),
+                  let codeBot = await conn.requestPairingCode(addNumber)
+        codeBot = codeBot?.match(/.{1,4}/g)?.join("-") || codeBot
+        console.log(chalk.bold.white(chalk.bgMagenta(`☁️ CÓDIGO DE VINCULACIÓN SAIYAJIN 👑 `)), chalk.bold.white(codeBot))
           )
         }, 3000)
       }
