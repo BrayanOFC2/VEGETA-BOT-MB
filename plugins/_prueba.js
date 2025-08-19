@@ -1,17 +1,18 @@
 const handler = async (m, { conn }) => {
-const rcanal = {
-  contextInfo: {
-    externalAdReply: {
-      title: botname,
-      body: dev,
-      thumbnailUrl: icono
-    }
-  }
-}
+    
+    const rcanal = {
+        contextInfo: {
+            externalAdReply: {
+                title: botname,
+                body: dev,
+                thumbnailUrl: icono
+            }
+        }
+    };
 
-conn.reply(m.chat, `prueba`, m, rcanal)
+    await conn.reply(m.chat, "Prueba", m, rcanal);
 };
 
-handler.command = ['1']
+handler.command = ['1'];
 
-export default handler
+export default handler;
