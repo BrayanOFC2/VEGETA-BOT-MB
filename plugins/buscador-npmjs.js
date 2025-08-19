@@ -7,12 +7,12 @@ import fetch from 'node-fetch'
 
 let handler = async (m, { text, usedPrefix, command }) => {
 
-if (!text) return conn.reply(m.chat, `🍬 Escribe el nonbre del scraper.\nEjemplo: ${usedPrefix + command} yt-search`, m, rcanal)
+if (!text) return conn.reply(m.chat, `🐉Escribe el nonbre del scraper.\nEjemplo: ${usedPrefix + command} yt-search`, m, rcanal)
 
 try {
 
 await m.react(rwait)
-conn.reply(m.chat, '🍭 Buscando el scraper....', m, {
+conn.reply(m.chat, '☁️ Buscando el scraper....', m, {
 contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, showAdAttribution: true,
 title: packname,
 body: dev,
@@ -25,7 +25,7 @@ let { objects } = await res.json()
 if (!objects.length) return conn.reply(m.chat, `『✦』 No se encontró resultado de: ${text}`, m, fake)
 
 let txt = objects.map(({ package: pkg }) => {
-return `《✧》 𝖲craper - 𝐘𝐮𝐤𝐢 𝐒𝐮𝐨𝐮 《✧》
+return `《✧》 𝖲craper - 𝐕𝐞𝐠𝐞𝐭𝐚_𝐌𝐁 《👑》
 
 ✦ 𝐍𝐨𝐦𝐛𝐫𝐞: ${pkg.name}
 ✦ 𝐕𝐞𝐫𝐬𝐢𝐨𝐧: V${pkg.version}
