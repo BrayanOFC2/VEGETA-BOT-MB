@@ -5,7 +5,6 @@ const thumb = Buffer.from(await res.arrayBuffer());
 const rcanal = {
   contextInfo: {
     externalAdReply: {
-      showAdAttribution: true,
       title: "Naruto Uzumaki",
       body: "Contenido exclusivo 🔥",
       mediaType: 2,
