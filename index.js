@@ -1,26 +1,17 @@
-//adaptado por BrayanOFC para VEGETA-BOT-MB 
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '1'
 import './config.js'
 import { setupMaster, fork } from 'cluster'
 import { watchFile, unwatchFile } from 'fs'
+import cfonts from 'cfonts'
 import { createRequire } from 'module'
 import { fileURLToPath, pathToFileURL } from 'url'
 import { platform } from 'process'
 import * as ws from 'ws'
-import fs, {
-  readdirSync,
-  statSync,
-  unlinkSync,
-  existsSync,
-  mkdirSync,
-  readFileSync,
-  rmSync,
-  watch
-} from 'fs'
+import fs, { readdirSync, statSync, unlinkSync, existsSync, mkdirSync, readFileSync, rmSync, watch } from 'fs'
 import yargs from 'yargs'
-import { spawn } from 'child_process'
+import { spawn, execSync } from 'child_process'
 import lodash from 'lodash'
-import { JadiBot } from './plugins/jadibot-serbot.js'
+import { vegetaJadiBot } from './plugins/jadibot-serbot.js'
 import chalk from 'chalk'
 import syntaxerror from 'syntax-error'
 import { tmpdir } from 'os'
@@ -35,23 +26,13 @@ import { makeWASocket, protoType, serialize } from './lib/simple.js'
 import { Low, JSONFile } from 'lowdb'
 import { mongoDB, mongoDBV2 } from './lib/mongoDB.js'
 import store from './lib/store.js'
-
 const { proto } = (await import('@whiskeysockets/baileys')).default
 import pkg from 'google-libphonenumber'
 const { PhoneNumberUtil } = pkg
 const phoneUtil = PhoneNumberUtil.getInstance()
-const {
-  DisconnectReason,
-  useMultiFileAuthState,
-  MessageRetryMap,
-  fetchLatestBaileysVersion,
-  makeCacheableSignalKeyStore,
-  jidNormalizedUser
-} = await import('@whiskeysockets/baileys')
-
+const { DisconnectReason, useMultiFileAuthState, MessageRetryMap, fetchLatestBaileysVersion, makeCacheableSignalKeyStore, jidNormalizedUser, Browsers } = await import('@whiskeysockets/baileys')
 import readline, { createInterface } from 'readline'
 import NodeCache from 'node-cache'
-
 const { CONNECTING } = ws
 const { chain } = lodash
 const PORT = process.env.PORT || process.env.SERVER_PORT || 3000
