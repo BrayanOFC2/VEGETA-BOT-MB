@@ -1,15 +1,17 @@
 const handler = async (m, { conn }) => {
     
     const rcanal = {
-        contextInfo: {
-            externalAdReply: {
-                title: botname,
-                body: dev,
-                thumbnailUrl: icono,
-                sourceUrl: redes 
-            }
-        }
-    };
+  contextInfo: {
+    externalAdReply: {
+      showAdAttribution: true, 
+      title: botname,
+      body: dev,
+      mediaType: 2,         
+      thumbnailUrl: global.icono,
+      sourceUrl: redes
+    }
+  }
+}
 
     await conn.reply(m.chat, "Prueba", m, rcanal);
 };
