@@ -1,4 +1,4 @@
-/* @type {import('@whiskeysockets/baileys')}
+// @type {import('@whiskeysockets/baileys')}
 const { proto, generateWAMessage, areJidsSameUser } = (await import('@whiskeysockets/baileys')).default
 
 const processed = new Set()
@@ -93,4 +93,4 @@ export async function all(m, chatUpdate) {
   } catch (e) {
     console.error('Error en botones:', e)
   }
-}*/
+}
