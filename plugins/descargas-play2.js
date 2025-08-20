@@ -65,7 +65,7 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
   await m.react('👑');
 
   if (!text.trim()) {
-    return conn.reply(m.chat, "*🐉\nDime el nombre de la canción que estás buscando", m, fake);
+    return conn.reply(m.chat, "*🐉\nDime el nombre de la canción que estás buscando*", m, fake);
   }
 
   try {
@@ -80,41 +80,41 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
     const thumb = (await conn.getFile(thumbnail))?.data;
 
     const infoMessage = `
-    ╔═════ ∘◦ 🎧 ◦∘ ═════╗
-        *YouTube Download*
-    ╚═════ ∘◦ 🎧 ◦∘ ═════╝
+╔═════ ∘◦ 🎧 ◦∘ ═════╗
+       *YouTube Download*
+╚═════ ∘◦ 🎧 ◦∘ ═════╝
 
-> 🎵 *Título:* *${title}*
-> 🎬 *Duración:* ${timestamp}
-> 🎤 *Canal:* ${(videoInfo.author?.name) || "Desconocido"}
-> 👀 *Vistas:* ${vistas}
-> 📅 *Publicado:* ${ago}
-> 🔗 *Enlace:* ${url}
-
-∘◦ Descargado...  ◦∘
+🎵 *Título:* ${title}
+🎬 *Duración:* ${timestamp}
+🎤 *Canal:* ${(videoInfo.author?.name) || "Desconocido"}
+👀 *Vistas:* ${vistas}
+📅 *Publicado:* ${ago}
+🔗 *Enlace:* ${url}
 `;
 
-
     await m.react('🎧');
-    await conn.sendMessage(m.chat, {
-  image: thumb,
-  caption: infoMessage
-}, { quoted: m });
 
     // Audio (play/yta/ytmp3)
     if (["play", "yta", "ytmp3"].includes(command)) {
       const api = await ddownr.download(url, "mp3");
 
-      const doc = {
-  audio: { url: api.downloadUrl },
-  mimetype: 'audio/mpeg',
-  fileName: `${title}.mp3`,
-};
-
-
-
-
-      return await conn.sendMessage(m.chat, doc, { quoted: m });
+      return await conn.sendMessage(m.chat, {
+        audio: { url: api.downloadUrl },
+        mimetype: 'audio/mpeg',
+        fileName: `${title}.mp3`,
+        caption: infoMessage,
+        contextInfo: {
+          externalAdReply: {
+            showAdAttribution: true,
+            title: "VEGETA-BOT-MB 👑",
+            body: "Descarga completada",
+            thumbnailUrl: thumbnail,
+            sourceUrl: url,
+            mediaType: 1,
+            renderLargerThumbnail: true
+          }
+        }
+      }, { quoted: m });
     }
 
     // Video (play2/ytv/ytmp4)
@@ -128,40 +128,37 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
 
       let success = false;
       for (let source of sources) {
-  try {
-    const res = await fetch(source);
-    const { data, result, downloads } = await res.json();
-    let downloadUrl = data?.dl || result?.download?.url || downloads?.url || data?.download?.url;
+        try {
+          const res = await fetch(source);
+          const { data, result, downloads } = await res.json();
+          let downloadUrl = data?.dl || result?.download?.url || downloads?.url || data?.download?.url;
 
-    if (downloadUrl) {
-      success = true;
-      await conn.sendMessage(m.chat, {
-        video: { url: downloadUrl },
-        fileName: `${title}.mp4`,
-        mimetype: "video/mp4",
-        // caption: "🎬 Aquí tienes tu video, descargado* ",
-        thumbnail: thumb,
-        contextInfo: {
-          externalAdReply: { 
-            showAdAttribution: true, 
-            title: packname, 
-            body: dev, 
-            mediaUrl: null, 
-            description: null, 
-            previewType: "PHOTO", 
-            thumbnailUrl: icono, 
-            sourceUrl: redes, 
-            mediaType: 1, 
-            renderLargerThumbnail: false 
+          if (downloadUrl) {
+            success = true;
+            await conn.sendMessage(m.chat, {
+              video: { url: downloadUrl },
+              fileName: `${title}.mp4`,
+              mimetype: "video/mp4",
+              caption: infoMessage,
+              thumbnail: thumb,
+              contextInfo: {
+                externalAdReply: {
+                  showAdAttribution: true,
+                  title: "VEGETA-BOT-MB 👑",
+                  body: "Descarga completada",
+                  thumbnailUrl: thumbnail,
+                  sourceUrl: url,
+                  mediaType: 1,
+                  renderLargerThumbnail: true
+                }
+              }
+            }, { quoted: m });
+            break;
           }
+        } catch (e) {
+          console.error(`⚠️ Error con la fuente ${source}:`, e.message);
         }
-      }, { quoted: m });
-      break;
-    }
-  } catch (e) {
-    console.error(`⚠️ Error con la fuente ${source}:`, e.message);
-  }
-}
+      }
 
       if (!success) {
         return m.reply("❌ Vegeta no pudo encontrar un enlace válido para descargar.");
@@ -174,9 +171,9 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
   }
 };
 
-handler.command = handler.help = ['ytmp3', 'yta', ' ytmp4', 'ytv']
+handler.command = handler.help = ['ytmp3', 'yta', 'play', 'ytmp4', 'ytv', 'play2'];
 handler.tags = ["downloader"];
-handler.register = true
+handler.register = true;
 
 export default handler;
 
