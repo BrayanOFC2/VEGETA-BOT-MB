@@ -87,6 +87,11 @@ export async function all(m, chatUpdate) {
       messages.key.participant = messages.participant = m.sender
     }
 
+    const msgId = messages.key.id
+    if (processed.has(msgId)) return
+    processed.add(msgId)
+    setTimeout(() => processed.delete(msgId), 10000)
+
     const msg = {
       ...chatUpdate,
       messages: [proto.WebMessageInfo.fromObject(messages)].map((v) => (v.conn = this, v)),
