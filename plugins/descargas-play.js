@@ -25,7 +25,7 @@ const handler = async (m, { conn, args, usedPrefix }) => {
         await conn.sendMessage(m.chat, {
             image: thumb,
             caption,
-            footer: 'VEGETA-BOT-MB',
+            footer: '© ⍴᥆ᥕᥱrᥱძ ᑲᥡ  ➳𝐁𝐫𝐚𝐲𝐚𝐧𝐎𝐅𝐂ღ',
             buttons: [
                 { buttonId: `${usedPrefix}ytmp3 ${video.url}`, buttonText: { displayText: '🎧 Audio' }, type: 1 },
                 { buttonId: `${usedPrefix}ytmp4 ${video.url}`, buttonText: { displayText: '📹 Video' }, type: 1 }
