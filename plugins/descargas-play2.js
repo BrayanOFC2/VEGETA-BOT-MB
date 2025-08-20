@@ -65,6 +65,6 @@ const handler = async (m, { conn, text, command }) => {
 }
 
 handler.command = ["ytmp3", "yta", "ytmp4", "ytv"]
-handler.tags = ["descargas"]
+handler.tags = ["downloader"]
 
 export default handler
