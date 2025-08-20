@@ -1,4 +1,4 @@
-// editado y reestructurado por 
+/* editado y reestructurado por 
 // https://github.com/deylin-eliac 
 
 import fetch from "node-fetch";
@@ -185,4 +185,4 @@ function formatViews(views) {
   return views >= 1000
     ? (views / 1000).toFixed(1) + "k (" + views.toLocaleString() + ")"
     : views.toString();
-}
+}*/
