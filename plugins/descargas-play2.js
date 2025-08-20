@@ -1,9 +1,9 @@
-// editado por ChatGPT
-import fetch from "node-fetch";
-import axios from "axios";
+// editado por BrayanOFC
 
-const formatAudio = ["mp3", "m4a", "webm", "acc", "flac", "opus", "ogg", "wav"];
-const formatVideo = ["360", "480", "720", "1080"];
+import axios from "axios"
+
+const formatAudio = ["mp3", "m4a", "webm", "acc", "flac", "opus", "ogg", "wav"]
+const formatVideo = ["360", "480", "720", "1080"]
 
 const ddownr = {
   download: async (url, format) => {
@@ -36,12 +36,13 @@ const ddownr = {
   }
 }
 
-const handler = async (m, { conn, text, command }) => {
-  if (!text) return conn.reply(m.chat, "⚠️ Falta el enlace de YouTube", m)
+const handler = async (m, { conn, text, args, command }) => {
+  let url = text || args[0]
+  if (!url) return conn.reply(m.chat, "⚠️ Falta el enlace de YouTube", m)
 
   try {
     if (["ytmp3", "yta"].includes(command)) {
-      const api = await ddownr.download(text, "mp3")
+      const api = await ddownr.download(url, "mp3")
       await conn.sendMessage(m.chat, {
         audio: { url: api.downloadUrl },
         mimetype: 'audio/mpeg',
@@ -50,7 +51,7 @@ const handler = async (m, { conn, text, command }) => {
     }
 
     if (["ytmp4", "ytv"].includes(command)) {
-      const api = await ddownr.download(text, "360") // default 360p
+      const api = await ddownr.download(url, "360")
       await conn.sendMessage(m.chat, {
         video: { url: api.downloadUrl },
         mimetype: 'video/mp4',
