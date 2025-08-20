@@ -1,7 +1,7 @@
 // @type {import('@whiskeysockets/baileys')}
+const { proto, generateWAMessage, areJidsSameUser } = (await import('@whiskeysockets/baileys')).default
 
-const { proto, generateWAMessage, areJidsSameUser, decryptPollVote } = (await import('@whiskeysockets/baileys')).default
-
+// ids ya procesados
 const processed = new Set()
 
 export async function all(m, chatUpdate) {
@@ -11,6 +11,7 @@ export async function all(m, chatUpdate) {
     if (!(m.message.buttonsResponseMessage || m.message.templateButtonReplyMessage || m.message.listResponseMessage || m.message.interactiveResponseMessage)) return
 
     const uniqueId = m.key?.id
+    if (!uniqueId) return
     if (processed.has(uniqueId)) return
     processed.add(uniqueId)
     setTimeout(() => processed.delete(uniqueId), 10000)
@@ -75,10 +76,11 @@ export async function all(m, chatUpdate) {
       }
     }
 
-    const messages = await generateWAMessage(m.chat, { text: isIdMessage ? id : text, mentions: m.mentionedJid }, {
-      userJid: this.user.id,
-      quoted: m.quoted && m.quoted.fakeObj,
-    })
+    const messages = await generateWAMessage(
+      m.chat,
+      { text: isIdMessage ? id : text, mentions: m.mentionedJid },
+      { userJid: this.user.id, quoted: m.quoted && m.quoted.fakeObj }
+    )
 
     messages.key.fromMe = areJidsSameUser(m.sender, this.user.id)
     messages.key.id = m.key.id
@@ -87,10 +89,9 @@ export async function all(m, chatUpdate) {
       messages.key.participant = messages.participant = m.sender
     }
 
-    const msgId = messages.key.id
-    if (processed.has(msgId)) return
-    processed.add(msgId)
-    setTimeout(() => processed.delete(msgId), 10000)
+    // ✅ chequeo para no reemitir lo que ya inyectamos
+    if (processed.has(messages.key.id)) return
+    processed.add(messages.key.id)
 
     const msg = {
       ...chatUpdate,
