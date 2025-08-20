@@ -1,13 +1,14 @@
 // @type {import('@whiskeysockets/baileys')}
 const { proto, generateWAMessage, areJidsSameUser } = (await import('@whiskeysockets/baileys')).default
 
-// ids ya procesados
 const processed = new Set()
 
 export async function all(m, chatUpdate) {
   try {
-    if (m.isBaileys) return
     if (!m.message) return
+    if (m.isBaileys) return
+    if (m.key && m.key.fromMe) return  // <-- Ignorar mensajes que envía el bot
+
     if (!(m.message.buttonsResponseMessage || m.message.templateButtonReplyMessage || m.message.listResponseMessage || m.message.interactiveResponseMessage)) return
 
     const uniqueId = m.key?.id
@@ -85,13 +86,7 @@ export async function all(m, chatUpdate) {
     messages.key.fromMe = areJidsSameUser(m.sender, this.user.id)
     messages.key.id = m.key.id
     messages.pushName = m.name
-    if (m.isGroup) {
-      messages.key.participant = messages.participant = m.sender
-    }
-
-    // ✅ chequeo para no reemitir lo que ya inyectamos
-    if (processed.has(messages.key.id)) return
-    processed.add(messages.key.id)
+    if (m.isGroup) messages.key.participant = messages.participant = m.sender
 
     const msg = {
       ...chatUpdate,
