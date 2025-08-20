@@ -1,4 +1,4 @@
-// play.js — Handler .play y botones YouTube (Baileys MB)
+/* play.js — Handler .play y botones YouTube (Baileys MB)
 // by BrayanOFC — diseñado para VEGETA-BOT-MB
 // Requiere: yt-search, ytdl-core, file-type
 
@@ -288,4 +288,4 @@ export const buttonsHandler = async (m, { conn }) => {
 // 2) Solo un tipo de mensaje por acción: en botón mp3/mp4 no mandamos también texto extra (salvo el aviso “Descargando…”).
 // 3) Límites: ajusta maxSizeMB y maxDurationSec si tu hosting permite más.
 // 4) Si tu fork usa "nativeFlowMessage" y quieres modernizar UI, se puede actualizar sendResultCard para ese formato.
-// 5) Si quieres *desactivar viewOnce* en medios, añade { viewOnce: false } donde corresponda en tu sendMessage.
+// 5) Si quieres *desactivar viewOnce* en medios, añade { viewOnce: false } donde corresponda en tu sendMessage.*/
