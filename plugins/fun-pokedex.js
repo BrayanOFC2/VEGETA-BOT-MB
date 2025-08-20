@@ -15,7 +15,7 @@ const json = await response.json();
 if (!response.ok) {
 await m.react(error)
 return conn.reply(m.chat, '⚠️ Ocurrio un error al buscar el Pokemon.', m, rcanal)}
-const aipokedex = '👑 *Pokedex - Información de ${json.name}*\n\n 
+const aipokedex = '👑 *Pokedex - Información de ${json.name}*\n\n ☁️
 *Nombre:* ${json.name}\n *ID:* ${json.id}\n💬 *Tipo:* ${json.type}\n💪 *Habilidades:* ${json.abilities}\n🎴 *Tamaño:* ${json.height}\n⚖️ *Peso:* ${json.weight}\n\n📖 *Descripción:*\n${json.description}\n\n🔍 ¡Encuentra más detalles sobre este Pokémon en la Pokedex!\n\n🔗 https://www.pokemon.com/es/pokedex/${json.name.toLowerCase()}`
 conn.reply(m.chat, aipokedex, m, rcanal)
 await m.react(done) }
