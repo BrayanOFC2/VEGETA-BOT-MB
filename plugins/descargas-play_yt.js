@@ -1,5 +1,5 @@
-// play.js — Handler .play y botones YouTube (Baileys MD)
-// by ChatGPT — diseñado para VEGETA-BOT-MB
+// play.js — Handler .play y botones YouTube (Baileys MB)
+// by BrayanOFC — diseñado para VEGETA-BOT-MB
 // Requiere: yt-search, ytdl-core, file-type
 
 import yts from 'yt-search'
