@@ -88,14 +88,14 @@ const handler = async (m, { conn, text, command }) => {
 🔗 *Enlace:* ${url}
 `;
 
-    // Enviar primero la info con la miniatura
+    // Enviar la info primero
     await conn.sendMessage(m.chat, {
       image: thumb,
       caption: infoMessage
     }, { quoted: m });
 
-    // --- Audio (play/yta/ytmp3)
-    if (["play", "yta", "ytmp3"].includes(command)) {
+    // --- Audio (play / yta / ytmp3)
+    if (/^(play|yta|ytmp3)$/i.test(command)) {
       const api = await ddownr.download(url, "mp3");
       return await conn.sendMessage(m.chat, {
         audio: { url: api.downloadUrl },
@@ -104,8 +104,8 @@ const handler = async (m, { conn, text, command }) => {
       }, { quoted: m });
     }
 
-    // --- Video (play2/ytv/ytmp4)
-    if (["play2", "ytv", "ytmp4"].includes(command)) {
+    // --- Video (play2 / ytv / ytmp4)
+    if (/^(play2|ytv|ytmp4)$/i.test(command)) {
       const sources = [
         `https://api.siputzx.my.id/api/d/ytmp4?url=${url}`,
         `https://api.zenkey.my.id/api/download/ytmp4?apikey=zenkey&url=${url}`,
@@ -145,7 +145,8 @@ const handler = async (m, { conn, text, command }) => {
   }
 };
 
-handler.command = handler.help = ['ytmp3', 'yta', 'play', 'ytmp4', 'ytv', 'play2'];
+handler.command = ['play', 'yta', 'ytmp3', 'play2', 'ytv', 'ytmp4'];
+handler.help = ['play', 'yta', 'ytmp3', 'play2', 'ytv', 'ytmp4'];
 handler.tags = ["downloader"];
 handler.register = true;
 
