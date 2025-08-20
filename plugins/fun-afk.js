@@ -1,11 +1,28 @@
-const handler = async (m, {text}) => {
-const user = global.db.data.users[m.sender];
-user.afk = + new Date;
-user.afkReason = text;
-conn.reply(m.chat, `☁️ *El Usuario ${conn.getName(m.sender)} Estará Inactivo*\n\n*Motivo: ${text ? ': ' + text : 'Sin Especificar!'}*
-`, m, rcanal);
+const initHandler = async (m, { conn, usedPrefix }) => {
+    const buttons = [
+        {
+            buttonId: `${usedPrefix}owner`,
+            buttonText: { displayText: "👑 Owner" },
+            type: 1,
+        },
+        {
+            buttonId: `${usedPrefix}ping`,
+            buttonText: { displayText: "🏓 Ping" },
+            type: 1,
+        },
+    ];
+
+    await conn.sendMessage(
+        m.chat,
+        {
+            text: "🔹 Selecciona una opción:",
+            buttons: buttons,
+            viewOnce: true,
+        },
+        { quoted: m }
+    );
 };
-handler.help = ['afk [alasan]'];
-handler.tags = ['main'];
-handler.command = ['afk'];
-export default handler;
+
+initHandler.command = /^init$/i;
+
+export default initHandler;
