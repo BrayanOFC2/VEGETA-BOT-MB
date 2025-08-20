@@ -7,8 +7,7 @@ export async function all(m, chatUpdate) {
   try {
     if (!m.message) return
     if (m.isBaileys) return
-    if (m.key && m.key.fromMe) return  // <-- Ignorar mensajes que envía el bot
-
+    if (m.key?.fromMe) return
     if (!(m.message.buttonsResponseMessage || m.message.templateButtonReplyMessage || m.message.listResponseMessage || m.message.interactiveResponseMessage)) return
 
     const uniqueId = m.key?.id
@@ -80,13 +79,17 @@ export async function all(m, chatUpdate) {
     const messages = await generateWAMessage(
       m.chat,
       { text: isIdMessage ? id : text, mentions: m.mentionedJid },
-      { userJid: this.user.id, quoted: m.quoted && m.quoted.fakeObj }
+      { userJid: this.user.id, quoted: m.quoted?.fakeObj }
     )
 
     messages.key.fromMe = areJidsSameUser(m.sender, this.user.id)
     messages.key.id = m.key.id
     messages.pushName = m.name
     if (m.isGroup) messages.key.participant = messages.participant = m.sender
+
+    const msgId = messages.key.id
+    if (processed.has(msgId)) return
+    processed.add(msgId)
 
     const msg = {
       ...chatUpdate,
