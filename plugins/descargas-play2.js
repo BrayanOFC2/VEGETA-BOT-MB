@@ -17,9 +17,7 @@ const ddownr = {
     const config = {
       method: "GET",
       url: `https://p.oceansaver.in/ajax/download.php?format=${format}&url=${encodeURIComponent(url)}&api=dfcb6d76f2f6a9894gjkege8a4ab232222`,
-      headers: {
-        "User-Agent": "Mozilla/5.0"
-      }
+      headers: { "User-Agent": "Mozilla/5.0" }
     };
 
     try {
@@ -41,9 +39,7 @@ const ddownr = {
     const config = {
       method: "GET",
       url: `https://p.oceansaver.in/ajax/progress.php?id=${id}`,
-      headers: {
-        "User-Agent": "Mozilla/5.0"
-      }
+      headers: { "User-Agent": "Mozilla/5.0" }
     };
 
     try {
@@ -61,17 +57,17 @@ const ddownr = {
   }
 };
 
-const handler = async (m, { conn, text, usedPrefix, command }) => {
+const handler = async (m, { conn, text, command }) => {
   await m.react('👑');
 
-  if (!text.trim()) {
-    return conn.reply(m.chat, "*🐉\nDime el nombre de la canción que estás buscando*", m, fake);
+  if (!text?.trim()) {
+    return conn.reply(m.chat, "*🐉 Dime el nombre de la canción que estás buscando*", m);
   }
 
   try {
     const search = await yts(text);
     if (!search.all.length) {
-      return m.reply("*☁️*\n No se encontró nada con ese nombre...");
+      return m.reply("☁️ No se encontró nada con ese nombre...");
     }
 
     const videoInfo = search.all[0];
@@ -92,32 +88,23 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
 🔗 *Enlace:* ${url}
 `;
 
-    await m.react('🎧');
+    // Enviar primero la info con la miniatura
+    await conn.sendMessage(m.chat, {
+      image: thumb,
+      caption: infoMessage
+    }, { quoted: m });
 
-    // Audio (play/yta/ytmp3)
+    // --- Audio (play/yta/ytmp3)
     if (["play", "yta", "ytmp3"].includes(command)) {
       const api = await ddownr.download(url, "mp3");
-
       return await conn.sendMessage(m.chat, {
         audio: { url: api.downloadUrl },
         mimetype: 'audio/mpeg',
-        fileName: `${title}.mp3`,
-        caption: infoMessage,
-        contextInfo: {
-          externalAdReply: {
-            showAdAttribution: true,
-            title: "VEGETA-BOT-MB 👑",
-            body: "Descarga completada",
-            thumbnailUrl: thumbnail,
-            sourceUrl: url,
-            mediaType: 1,
-            renderLargerThumbnail: true
-          }
-        }
+        fileName: `${title}.mp3`
       }, { quoted: m });
     }
 
-    // Video (play2/ytv/ytmp4)
+    // --- Video (play2/ytv/ytmp4)
     if (["play2", "ytv", "ytmp4"].includes(command)) {
       const sources = [
         `https://api.siputzx.my.id/api/d/ytmp4?url=${url}`,
@@ -138,20 +125,7 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
             await conn.sendMessage(m.chat, {
               video: { url: downloadUrl },
               fileName: `${title}.mp4`,
-              mimetype: "video/mp4",
-              caption: infoMessage,
-              thumbnail: thumb,
-              contextInfo: {
-                externalAdReply: {
-                  showAdAttribution: true,
-                  title: "VEGETA-BOT-MB 👑",
-                  body: "Descarga completada",
-                  thumbnailUrl: thumbnail,
-                  sourceUrl: url,
-                  mediaType: 1,
-                  renderLargerThumbnail: true
-                }
-              }
+              mimetype: "video/mp4"
             }, { quoted: m });
             break;
           }
