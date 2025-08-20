@@ -17,15 +17,10 @@ export async function all(m, chatUpdate) {
     setTimeout(() => processed.delete(uniqueId), 10000)
 
     let id
-    if (m.message.buttonsResponseMessage) {
-      id = m.message.buttonsResponseMessage.selectedButtonId
-    } else if (m.message.templateButtonReplyMessage) {
-      id = m.message.templateButtonReplyMessage.selectedId
-    } else if (m.message.listResponseMessage) {
-      id = m.message.listResponseMessage.singleSelectReply?.selectedRowId
-    } else if (m.message.interactiveResponseMessage) {
-      id = JSON.parse(m.message.interactiveResponseMessage.nativeFlowResponseMessage.paramsJson).id
-    }
+    if (m.message.buttonsResponseMessage) id = m.message.buttonsResponseMessage.selectedButtonId
+    else if (m.message.templateButtonReplyMessage) id = m.message.templateButtonReplyMessage.selectedId
+    else if (m.message.listResponseMessage) id = m.message.listResponseMessage.singleSelectReply?.selectedRowId
+    else if (m.message.interactiveResponseMessage) id = JSON.parse(m.message.interactiveResponseMessage.nativeFlowResponseMessage.paramsJson).id
 
     const text = m.message.buttonsResponseMessage?.selectedDisplayText ||
       m.message.templateButtonReplyMessage?.selectedDisplayText ||
@@ -87,17 +82,14 @@ export async function all(m, chatUpdate) {
     messages.pushName = m.name
     if (m.isGroup) messages.key.participant = messages.participant = m.sender
 
-    const msgId = messages.key.id
-    if (processed.has(msgId)) return
-    processed.add(msgId)
+    if (processed.has(messages.key.id)) return
+    processed.add(messages.key.id)
 
-    const msg = {
+    this.ev.emit('messages.upsert', {
       ...chatUpdate,
       messages: [proto.WebMessageInfo.fromObject(messages)].map((v) => (v.conn = this, v)),
       type: 'append',
-    }
-
-    this.ev.emit('messages.upsert', msg)
+    })
   } catch (e) {
     console.error('Error en botones:', e)
   }
