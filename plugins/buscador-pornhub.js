@@ -5,11 +5,11 @@ import axios from 'axios';
 
 let handler = async (m, { conn, args, command, usedPrefix }) => {
   if (!db.data.chats[m.chat].nsfw && m.isGroup) {
-    return conn.reply(m.chat, '🍬 El contenido *NSFW* está desactivado en este grupo.\n> Un administrador puede activarlo con el comando » *#nsfw*', m);
+    return conn.reply(m.chat, '🐉 El contenido *NSFW* está desactivado en este grupo.\n> Un administrador puede activarlo con el comando » *#nsfw*', m);
   } 
 
   if (!args[0]) {
-    return conn.reply(m.chat, `🍬 Por favor, ingresé la búsqueda que desea realizar en Pornhub.\nEjemplo: ${usedPrefix + command} con mi prima`, m);
+    return conn.reply(m.chat, `☁️ Por favor, ingresé la búsqueda que desea realizar en Pornhub.\nEjemplo: ${usedPrefix + command} con mi prima`, m);
   }
 
   try {
@@ -23,7 +23,7 @@ let handler = async (m, { conn, args, command, usedPrefix }) => {
 ---------------------------------------------------\n`).join('\n\n');
 
     if (searchResults.result.length === 0) {
-      teks = '🍭 No se encontraron resultados...';
+      teks = '👑 No se encontraron resultados...';
     }
 
     conn.reply(m.chat, teks, m);
