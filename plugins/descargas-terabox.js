@@ -12,7 +12,7 @@ await m.react('🕓')
 
     for (let i = 0; i < result.length; i++) {
       const { fileName, type, thumb, url } = result[i];
-      const caption = `☁️ *Nombre File:* ${fileName}\n🍬 *Formato:* ${type}`;
+      const caption = `☁️ *Nombre File:* ${fileName}\n🐉 *Formato:* ${type}`;
 
       await m.react('✅')      
       await conn.sendFile(m.chat, url, fileName, caption, m, false, {
