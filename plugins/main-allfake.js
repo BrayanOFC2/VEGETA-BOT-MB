@@ -34,7 +34,7 @@ global.namechannel = '·:*¨♱𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱♱
 global.namechannel2 = '·:*¨♱𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱♱ ¨*:·'
 global.namegrupo = '·:*¨♱𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱♱ ¨*:·'
 global.namecomu = '·:*¨♱𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱♱ ¨*:·'
-global.listo = '🍬 *Aquí tienes ฅ^•ﻌ•^ฅ*'
+global.listo = '🔮 *Aquí tienes 🐉*'
 global.fotoperfil = await conn.profilePictureUrl(m.sender, 'image').catch(_ => 'https://files.catbox.moe/xr2m6u.jpg')
 
 //IDs channel
@@ -58,10 +58,10 @@ global.done = '✅'
 global.error = '✖️'
 
 //Emojis determinado de Vegeta Bot
-global.emoji = '🍧'
-global.emoji2 = '🍬'
-global.emoji3 = '🍨'
-global.emoji4 = '🍭'
+global.emoji = '👑'
+global.emoji2 = '🐉'
+global.emoji3 = '👑'
+global.emoji4 = '☁️'
 global.emojis = [emoji, emoji2, emoji3, emoji4].getRandom()
 
 //mensaje en espera
