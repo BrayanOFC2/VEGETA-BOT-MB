@@ -20,7 +20,7 @@ let handler = async (m, { conn, isRowner }) => {
 
     global.catalogo = `${link}`;  
 
-    await conn.sendFile(m.chat, media, 'banner.jpg', '🍬 Catalogo actualizado.', m);
+    await conn.sendFile(m.chat, media, 'banner.jpg', '👑 Catalogo actualizado.', m);
 
   } catch (error) {
     console.error(error);
