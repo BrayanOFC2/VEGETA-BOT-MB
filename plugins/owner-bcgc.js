@@ -19,7 +19,7 @@ const handler = async (m, {conn, isROwner, text}) => {
           contextInfo: m,
         }}, {}).catch((_) => _);
   }
-  m.reply(`🍭 *𝖬𝖾𝗇𝗌𝖺𝗃𝖾 𝖤𝗇𝗏𝗂𝖺𝖽𝗈 𝖠:* ${anu.length} *Grupo/S*`);
+  m.reply(`☁️ *𝖬𝖾𝗇𝗌𝖺𝗃𝖾 𝖤𝗇𝗏𝗂𝖺𝖽𝗈 𝖠:* ${anu.length} *Grupo/S*`);
 };
 handler.help = ['broadcastgroup', 'bcgc'];
 handler.tags = ['owner'];
