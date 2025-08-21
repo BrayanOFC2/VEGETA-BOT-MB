@@ -33,7 +33,7 @@ let pp, ch, q, mime, buffer, media, inviteUrlch, imageBuffer
 switch (true) {     
 case isCommand1:
 let inviteCode
-if (!text) return await conn.reply(m.chat, `🍬 Ingrese el enlace de grupo/comunidad o canal.`, m, rcanal)
+if (!text) return await conn.reply(m.chat, `🐉 Ingrese el enlace de grupo/comunidad o canal.`, m, rcanal)
 const MetadataGroupInfo = async (res, isInviteInfo = false) => {
 let nameCommunity = "no pertenece a ninguna Comunidad"
 let groupPicture = "No se pudo obtener"
@@ -116,7 +116,7 @@ try {
 inviteInfo = await conn.groupGetInviteInfo(inviteUrl)
 info = await inviteGroupInfo(inviteInfo) // Para cualquier enlace de grupo/comunidad
 console.log(info)
-console.log('🍭 Método de enlace')    
+console.log('☁️ Método de enlace')    
 } catch (e) {
 m.reply('🍧 Grupo no encontrado')
 return
@@ -125,8 +125,8 @@ if (info) {
 await conn.sendMessage(m.chat, { text: info, contextInfo: {
 mentionedJid: conn.parseMention(info),
 externalAdReply: {
-title: "🍬 Inspector de Grupos",
-body: "🍭 ¡Super Inspectador!",
+title: "👑 Inspector de Grupos",
+body: "🔮 ¡Super Inspectador!",
 thumbnailUrl: pp ? pp : thumb,
 sourceUrl: args[0] ? args[0] : inviteCode ? `https://chat.whatsapp.com/${inviteCode}` : md,
 mediaType: 1,
@@ -151,8 +151,8 @@ if (channelUrl && newsletterInfo) {
 await conn.sendMessage(m.chat, { text: caption, contextInfo: {
 mentionedJid: conn.parseMention(caption),
 externalAdReply: {
-title: "🍬 Inspector de Canales",
-body: "🍭 ¡Super Inspectador!",
+title: "🐉 Inspector de Canales",
+body: "☁️ ¡Super Inspectador!",
 thumbnailUrl: pp,
 sourceUrl: args[0],
 mediaType: 1,
@@ -178,7 +178,7 @@ ch = await conn.newsletterMetadata("invite", channelUrl).then(data => data.id).c
 try {
 const chtitle = await conn.newsletterMetadata(text.includes("@newsletter") ? "jid" : "invite", text.includes("@newsletter") ? ch : channelUrl).then(data => data.name).catch(e => null)
 await conn.newsletterFollow(ch)
-await conn.reply(m.chat, `🍬 El bot ya ha empezado a seguir el canal *${chtitle}*.`, m, rcanal) 
+await conn.reply(m.chat, `🔮 El bot ya ha empezado a seguir el canal *${chtitle}*.`, m, rcanal) 
 } catch (e) {
 reportError(e)
 }
@@ -186,9 +186,9 @@ break
 
 // Dejar de seguir un canal de WhatsApp 
 case isCommand3:
-if (!isOwner || !isROwner) return await conn.reply(m.chat, `🍦 No tienes permiso para usar este comando.`, m, fake)
+if (!isOwner || !isROwner) return await conn.reply(m.chat, `👑 No tienes permiso para usar este comando.`, m, fake)
 ch
-if (!text) return await conn.reply(m.chat, `🍭 Ingrese el ID o enlace de un canal de WhatsApp que quiere que el bot deje de seguir.\n\nPuede obtener el ID usando el comando:\n${usedPrefix}superinspect enlace${txtBotAdminCh}`, m, rcanal)
+if (!text) return await conn.reply(m.chat, `🔮 Ingrese el ID o enlace de un canal de WhatsApp que quiere que el bot deje de seguir.\n\nPuede obtener el ID usando el comando:\n${usedPrefix}superinspect enlace${txtBotAdminCh}`, m, rcanal)
 if (text.includes("@newsletter")) {
 ch = text
 } else {
@@ -207,7 +207,7 @@ break
 case isCommand4:
 if (!isOwner || !isROwner) return await conn.reply(m.chat, `🍨 No tienes permiso para usar este comando.`, m, rcanal)
 ch
-if (!text) return await conn.reply(m.chat, `🍭 Ingrese el ID o enlace de un canal de WhatsApp que quiere que el bot silencie las actualizaciones.\n\nPuede obtener el ID usando el comando:\n*${usedPrefix}superinspect enlace${txtBotAdminCh}`, m, rcanal)
+if (!text) return await conn.reply(m.chat, `🐉 Ingrese el ID o enlace de un canal de WhatsApp que quiere que el bot silencie las actualizaciones.\n\nPuede obtener el ID usando el comando:\n*${usedPrefix}superinspect enlace${txtBotAdminCh}`, m, rcanal)
 if (text.includes("@newsletter")) {
 ch = text
 } else {
@@ -226,7 +226,7 @@ break
 case isCommand5:
 if (!isOwner || !isROwner) return await conn.reply(m.chat, `🍦 No tienes permiso para usar este comando.`, m, rcanal)
 ch
-if (!text) return await conn.reply(m.chat, `🍭 Ingrese el ID o enlace de un canal de WhatsApp que quiere que el bot active las actualizaciones.\n\nPuede obtener el ID usando el comando:\n*${usedPrefix}superinspect* enlace${txtBotAdminCh}`, m, rcanal)
+if (!text) return await conn.reply(m.chat, `☁️ Ingrese el ID o enlace de un canal de WhatsApp que quiere que el bot active las actualizaciones.\n\nPuede obtener el ID usando el comando:\n*${usedPrefix}superinspect* enlace${txtBotAdminCh}`, m, rcanal)
 if (text.includes("@newsletter")) {
 ch = text
 } else {
@@ -282,10 +282,10 @@ try {
 const chtitle = await conn.newsletterMetadata(text.includes("@newsletter") ? "jid" : "invite", text.includes("@newsletter") ? ch : channelUrl).then(data => data.name).catch(e => null)
 await conn.newsletterUpdatePicture(ch, media)
 // await conn.reply(m.chat, `🍨 El bot ha cambiando la imagen del canal *${chtitle}* con éxito.`, m, rcanal) 
-await conn.sendMessage(ch, { text: `🍬 ${botname} ha cambiando la imagen del canal *${chtitle}* con éxito.`, contextInfo: {
+await conn.sendMessage(ch, { text: `👑 ${botname} ha cambiando la imagen del canal *${chtitle}* con éxito.`, contextInfo: {
 externalAdReply: {
 title: "【 🔔 𝐍𝐎𝐓𝐈𝐅𝐈𝐂𝐀𝐂𝐈𝐎́𝐍 🔔 】",
-body: '🍬 𝙽𝚞𝚎𝚟𝚊 𝚏𝚘𝚝𝚘 𝚙𝚊𝚛𝚊 𝚙𝚎𝚛𝚏𝚒𝚕 𝚍𝚎𝚕 𝚌𝚊𝚗𝚊𝚕.',
+body: '☁️ 𝙽𝚞𝚎𝚟𝚊 𝚏𝚘𝚝𝚘 𝚙𝚊𝚛𝚊 𝚙𝚎𝚛𝚏𝚒𝚕 𝚍𝚎𝚕 𝚌𝚊𝚗𝚊𝚕.',
 thumbnailUrl: pp,
 sourceUrl: redes,
 mediaType: 1,
@@ -311,7 +311,7 @@ try {
 const chtitle = await conn.newsletterMetadata(text.includes("@newsletter") ? "jid" : "invite", text.includes("@newsletter") ? ch : channelUrl).then(data => data.name).catch(e => null)
 await conn.newsletterRemovePicture(ch)
 // await conn.reply(m.chat, `🍦 El bot ha eliminado la imagen del canal *${chtitle}* con éxito.`, m, rcanal) 
-await conn.sendMessage(ch, { text: `🍬 ${botname} ha eliminado la imagen del canal *${chtitle}* con éxito.`, contextInfo: {
+await conn.sendMessage(ch, { text: `🔮 ${botname} ha eliminado la imagen del canal *${chtitle}* con éxito.`, contextInfo: {
 externalAdReply: {
 title: "【 🔔 𝐍𝐎𝐓𝐈𝐅𝐈𝐂𝐀𝐂𝐈𝐎́𝐍 🔔 】",
 body: '🍦 𝙵𝚘𝚝𝚘 𝚍𝚎 𝚙𝚎𝚛𝚏𝚕 𝚍𝚎𝚕 𝚌𝚊𝚗𝚊𝚕 𝚎𝚕𝚒𝚖𝚒𝚗𝚊𝚍𝚊.',
@@ -330,7 +330,7 @@ break
 case isCommand8:
 if (!isOwner || !isROwner) return await conn.reply(m.chat, `🍦 No tienes permiso para usar este comando.`, m, rcanal)
 ch
-if (!text) return await conn.reply(m.chat, `🍭 Ingrese el ID o enlace de un canal de WhatsApp para que el bot reciba notificaciones en tiempo real.\n\nPuede obtener el ID usando el comando:\n*${usedPrefix}superinspect enlace${txtBotAdminCh}`, m, rcanal)
+if (!text) return await conn.reply(m.chat, `👑 Ingrese el ID o enlace de un canal de WhatsApp para que el bot reciba notificaciones en tiempo real.\n\nPuede obtener el ID usando el comando:\n*${usedPrefix}superinspect enlace${txtBotAdminCh}`, m, rcanal)
 if (text.includes("@newsletter")) {
 ch = text
 } else {
@@ -404,10 +404,10 @@ try {
 const chtitle = await conn.newsletterMetadata(ch.includes("@newsletter") ? "jid" : "invite", ch.includes("@newsletter") ? ch : channelUrl).then(data => data.name).catch(e => null)
 await conn.newsletterReactionMode(ch, mode)
 // await conn.reply(m.chat, `🍦 El bot ha establecido el modo de reacciones como \`"${mode}"\` para el canal *${chtitle}*`, m,  rcanal)
-await conn.sendMessage(ch, { text: `🍬 ${botname} ha establecido el modo de reacciones como \`"${mode}"\` para el canal *${chtitle}*`, contextInfo: {
+await conn.sendMessage(ch, { text: `👑 ${botname} ha establecido el modo de reacciones como \`"${mode}"\` para el canal *${chtitle}*`, contextInfo: {
 externalAdReply: {
 title: "【 🔔 𝐍𝐎𝐓𝐈𝐅𝐈𝐂𝐀𝐂𝐈𝐎́𝐍 🔔 】",
-body: '🍭 𝙰𝚓𝚞𝚜𝚝𝚎𝚜 𝚎𝚗 𝚛𝚎𝚊𝚌𝚌𝚒𝚘𝚗𝚎𝚜.',
+body: '☁️ 𝙰𝚓𝚞𝚜𝚝𝚎𝚜 𝚎𝚗 𝚛𝚎𝚊𝚌𝚌𝚒𝚘𝚗𝚎𝚜.',
 thumbnailUrl: pp,
 sourceUrl: redes,
 mediaType: 1,
@@ -422,7 +422,7 @@ break
 // Modificar nombre del canal
 case isCommand10:
 if (!isOwner || !isROwner) return await conn.reply(m.chat, `🍦 No tienes permiso para usar este comando.`, m, rcanal)
-if (!text) return await conn.reply(m.chat, `🍭 Ingrese el ID o enlace de un canal de WhatsApp para que el bot modifique el nombre del canal.*\n\n
+if (!text) return await conn.reply(m.chat, `🔮 Ingrese el ID o enlace de un canal de WhatsApp para que el bot modifique el nombre del canal.*\n\n
 *Parámetros de uso:
 *${usedPrefix + command}* \`id\` \`nombre\` 
 
@@ -440,7 +440,7 @@ try {
 const chtitle = await conn.newsletterMetadata(text.includes("@newsletter") ? "jid" : "invite", text.includes("@newsletter") ? ch : channelUrl).then(data => data.name).catch(e => null)
 await conn.newsletterUpdateName(ch, name)
 // await conn.reply(m.chat, `🍧 El bot ha cambiado el nombre del canal *${name}*\n\n*Anterior nombre:* ${chtitle}\n*Nuevo nombre:* ${name}`, m, rcanal) 
-await conn.sendMessage(ch, { text: `🍬 ${botname} ha cambiado el nombre del canal *${name}*\n\n*Anterior nombre:* ${chtitle}\n*Nuevo nombre:* ${name}`, contextInfo: {
+await conn.sendMessage(ch, { text: `🐉 ${botname} ha cambiado el nombre del canal *${name}*\n\n*Anterior nombre:* ${chtitle}\n*Nuevo nombre:* ${name}`, contextInfo: {
 externalAdReply: {
 title: "【 🔔 𝐍𝐎𝐓𝐈𝐅𝐈𝐂𝐀𝐂𝐈𝐎́𝐍 🔔 】",
 body: '🍧 𝚄𝚗 𝚗𝚞𝚎𝚟𝚘 𝚗𝚘𝚖𝚋𝚛𝚎 𝚙𝚊𝚛𝚊 𝚎𝚕 𝚌𝚊𝚗𝚊𝚕.',
@@ -475,7 +475,7 @@ try {
 const chtitle = await conn.newsletterMetadata(text.includes("@newsletter") ? "jid" : "invite", text.includes("@newsletter") ? ch : channelUrl).then(data => data.name).catch(e => null)
 await conn.newsletterUpdateDescription(ch, description)
 // await conn.reply(m.chat, `🍧 El bot ha modificado la descripción del canal *${chtitle}*`, m, rcanal) 
-await conn.sendMessage(ch, { text: `🍬 ${botname} ha modificado la descripción del canal *${chtitle}*`, contextInfo: {
+await conn.sendMessage(ch, { text: `🔮 ${botname} ha modificado la descripción del canal *${chtitle}*`, contextInfo: {
 externalAdReply: {
 title: "【 🔔 𝐍𝐎𝐓𝐈𝐅𝐈𝐂𝐀𝐂𝐈𝐎́𝐍 🔔 】",
 body: '🍨 𝚄𝚗𝚊 𝚗𝚞𝚎𝚟𝚊 𝚍𝚎𝚜𝚌𝚛𝚒𝚙𝚌𝚒𝚘́𝚗 𝚊𝚕 𝚌𝚊𝚗𝚊𝚕.',
