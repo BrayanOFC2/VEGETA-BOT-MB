@@ -11,7 +11,7 @@ who = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text;
   const dReason = 'Sin motivo';
   const msgtext = text || dReason 
   const sdms = msgtext.replace(/@\d+-?\d* /g, '');
-  const warntext = `*🍬 Etiquete a una persona o responda a un mensaje del grupo para advertir al usuario.`;
+  const warntext = `*🐉 Etiquete a una persona o responda a un mensaje del grupo para advertir al usuario.`;
   if (!who) {
 return m.reply(warntext, m.chat, { mentions: conn.parseMention(warntext) });
   }
