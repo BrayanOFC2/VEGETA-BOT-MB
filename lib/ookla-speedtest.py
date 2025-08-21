@@ -1944,7 +1944,7 @@ def shell():
 
     printer('\n📚 *ISP:* %(isp)s' % speedtest.config['client'],
             quiet)
-    printer('🍭 *Servidor:* %(sponsor)s\n🔮 *Ubicación:* %(name)s [%(d)0.2f km] '
+    printer('🐉 *Servidor:* %(sponsor)s\n🔮 *Ubicación:* %(name)s [%(d)0.2f km] '
             '\n✨️ *Latencia:* %(latency)s ms' % results.server, quiet)
 
     if args.download:
