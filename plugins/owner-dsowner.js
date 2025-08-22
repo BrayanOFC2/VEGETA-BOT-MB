@@ -14,7 +14,7 @@ var handler = async (m, { conn, usedPrefix }) => {
     let sessionPath = './seccion-activas';
     try {
         if (!existsSync(sessionPath)) {
-            return await conn.reply(m.chat, '${emoji} *La carpeta ya fue limpiada*', m);
+            return await conn.reply(m.chat, '☁️ *La carpeta ya fue limpiada*', m);
         }
 
         let files = await fs.readdir(sessionPath);
