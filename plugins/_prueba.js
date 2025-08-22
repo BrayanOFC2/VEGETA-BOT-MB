@@ -1,5 +1,5 @@
 let handler = async (m, { conn, usedPrefix }) => {
-    return conn.reply(m.chat, 'Soy la funcion "globa.rcanal" y sigo viva fake murió.', m);
+    return conn.reply(m.chat, '?', m);
 };
 
 handler.command = ['1'];
