@@ -6,7 +6,7 @@ var handler = async (m, { conn, usedPrefix }) => {
         return conn.reply(m.chat, '{emoji} *Utiliza este comando directamente en el número principal del Bot*', m);
     }
 
-    await conn.reply(m.chat, '{emoji2} *Iniciando proceso de eliminación de todos los archivos de sesión, excepto el archivo creds.json...*', m);
+    await conn.reply(m.chat, '${emoji2} *Iniciando proceso de eliminación de todos los archivos de sesión, excepto el archivo creds.json...*', m);
 
     const rwait = '🐉'; 
     m.react(rwait);
