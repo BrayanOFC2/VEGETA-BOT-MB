@@ -1,5 +1,5 @@
-const { useMultiFileAuthState, DisconnectReason, makeCacheableSignalKeyStore, fetchLatestBaileysVersion} = (await
 import { DisconnectReason, makeWASocket } from "whiskeysockets/baileys"
+const { useMultiFileAuthState, DisconnectReason, makeCacheableSignalKeyStore, fetchLatestBaileysVersion} = (await
 import qrcode from "qrcode"
 import NodeCache from "node-cache"
 import fs from "fs"
