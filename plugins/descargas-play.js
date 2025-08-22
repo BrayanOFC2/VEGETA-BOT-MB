@@ -154,7 +154,7 @@ const handler = async (m, { conn, text, command }) => {
               video: { url: downloadUrl },
               fileName: `${title}.mp4`,
               mimetype: "video/mp4",
-              caption: "📥 Aquí tienes tu video descargado por,
+              caption: "📥 Aquí tienes tu video descargado por",
               thumbnail: thumb
             }, { quoted: fkontak });
             break;
