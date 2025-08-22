@@ -22,6 +22,17 @@ this.pushMessage(chatUpdate.messages).catch(console.error)
 let m = chatUpdate.messages[chatUpdate.messages.length - 1]
 if (!m)
 return;
+this.processedMessages = this.processedMessages || new Map()
+const id = m.key.id
+const now = Date.now()
+const lifeTime = 5000
+for (let [msgId, time] of this.processedMessages) {
+    if (now - time > lifeTime) {
+        this.processedMessages.delete(msgId)
+    }
+}
+if (this.processedMessages.has(id)) return
+this.processedMessages.set(id, now)
 if (global.db.data == null)
 await global.loadDatabase()       
 try {
