@@ -1,4 +1,4 @@
-const { useMultiFileAuthState, DisconnectReason, makeCacheableSignalKeyStore, fetchLatestBaileysVersion} = (await import("@whiskeysockets/baileys"));
+const { useMultiFileAuthState, DisconnectReason, makeCacheableSignalKeyStore, fetchLatestBaileysVersion} = (await import { DisconnectReason, makeWASocket } from "@whiskeysockets/baileys"
 import qrcode from "qrcode"
 import NodeCache from "node-cache"
 import fs from "fs"
@@ -97,6 +97,45 @@ args[0] = args[0].replace(/^--code$|^code$/, "").trim()
 if (args[1]) args[1] = args[1].replace(/^--code$|^code$/, "").trim()
 if (args[0] == "") args[0] = undefined
 }
+//autoreconexion☁️🐉
+export async function autoReconnect(sock, connectionOptions, connectionUpdate, saveCreds) {
+    sock.ev.on('connection.update', async (update) => {
+        const { connection, lastDisconnect } = update
+        if (connection === 'close') {
+            const reason = lastDisconnect?.error?.output?.statusCode
+            if (reason !== DisconnectReason.loggedOut && reason !== 401 && reason !== 403) {
+                try {
+                    sock.ev.removeAllListeners()
+                    sock.ws.close?.()
+                } catch (e) { }
+
+                sock = makeWASocket(connectionOptions)
+                sock.handler = sock.handler?.bind(sock)
+                sock.connectionUpdate = connectionUpdate.bind(sock)
+                sock.credsUpdate = saveCreds.bind(sock, true)
+
+                sock.ev.on('messages.upsert', sock.handler)
+                sock.ev.on('connection.update', sock.connectionUpdate)
+                sock.ev.on('creds.update', sock.credsUpdate)
+            }
+        }
+    })
+
+    setInterval(async () => {
+        if (!sock.user) {
+            try { sock.ws.close?.() } catch (e) { }
+            sock.ev.removeAllListeners()
+            sock = makeWASocket(connectionOptions)
+            sock.handler = sock.handler?.bind(sock)
+            sock.connectionUpdate = connectionUpdate.bind(sock)
+            sock.credsUpdate = saveCreds.bind(sock, true)
+            sock.ev.on('messages.upsert', sock.handler)
+            sock.ev.on('connection.update', sock.connectionUpdate)
+            sock.ev.on('creds.update', sock.credsUpdate)
+        }
+    }, 60000)
+}
+
 const pathCreds = path.join(pathJadiBot, "creds.json")
 if (!fs.existsSync(pathJadiBot)){
 fs.mkdirSync(pathJadiBot, { recursive: true })}
