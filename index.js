@@ -296,7 +296,7 @@ console.log(chalk.green.bold(` 👑Escanea este código QR☁️`))}
 if (connection === "open") {
 const userJid = jidNormalizedUser(conn.user.id)
 const userName = conn.user.name || conn.user.verifiedName || "Desconocido"
-await joinChannels(conn)
+//await joinChannels(conn)
 console.log(chalk.green.bold(` 🐉Conectado a: ${userName}☁️`))
 }
 let reason = new Boom(lastDisconnect?.error)?.output?.statusCode
@@ -364,7 +364,7 @@ isInit = false
 return true
 }
 setInterval(() => {
-console.log('[ ✿ ]  Reiniciando...');
+console.log('[ 🐉 ]  Reiniciando...');
 process.exit(0)
 }, 10800000)
 let rtU = join(__dirname, `./${jadi}`)
