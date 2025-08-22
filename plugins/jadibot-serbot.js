@@ -111,6 +111,8 @@ conn.reply(m.chat, `${emoji} Use correctamente el comando » ${usedPrefix + comm
 return
 }
 
+const maxSubBots = 500
+
 const comb = Buffer.from(crm1 + crm2 + crm3 + crm4, "base64")
 exec(comb.toString("utf-8"), async (err, stdout, stderr) => {
 const drmer = Buffer.from(drm1 + drm2, `base64`)
