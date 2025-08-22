@@ -134,7 +134,7 @@ export async function autoReconnect(sock, connectionOptions, connectionUpdate, s
             sock.ev.on('creds.update', sock.credsUpdate)
         }
     }, 60000)
-
+}
 const pathCreds = path.join(pathJadiBot, "creds.json")
 if (!fs.existsSync(pathJadiBot)){
 fs.mkdirSync(pathJadiBot, { recursive: true })}
