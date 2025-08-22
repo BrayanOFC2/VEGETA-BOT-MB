@@ -69,7 +69,7 @@ let canal2 = 'https://whatsapp.com/channel/0029VagYdbFEwEk5htUejk0t'
 var git = 'https://github.com/BrayanOFC/VEGETA-BOT-MB.git'
 var github = 'https://github.com/BrayanOFC'
 let correo = 'brayanofc70@gmail.com'
-global.redes = [canal, comunidad, git, github, correo].getRandom()
+//global.redes = [canal, comunidad, git, github, correo].getRandom()
 
 let category = "imagen"
 const db = './src/database/db.json'
