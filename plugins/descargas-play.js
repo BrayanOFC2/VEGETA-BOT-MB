@@ -157,7 +157,7 @@ const handler = async (m, { conn, text, command }) => {
     const JT = {
       contextInfo: {
         externalAdReply: {
-          title: "Vegeta-Bot MB2.0 👑",
+          title: "ටᴘ┋ㅤʙʀᴀʏᴀɴᴏғᴄㅤ모 👑",
           body: "ᴇʟ ᴍᴇᴊᴏʀ ʙᴏᴛ ᴅᴇ ᴡʜᴀᴛsᴀᴘᴘ",
           mediaType: 1,
           previewType: 0,
