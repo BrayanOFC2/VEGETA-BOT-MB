@@ -10,11 +10,11 @@ let handler = async (m, { conn, args, usedPrefix }) => {
   }
 
   if (!args[0]) {
-    return conn.reply(m.chat, `${emoji} Por favor, ingresa un tag para realizar la búsqueda.\n\nEjemplo: *${usedPrefix}r34 naruto*`, m)
+    return conn.reply(m.chat, `${emoji} Por favor, ingresa un tag para realizar la búsqueda.\n\nEjemplo: *${usedPrefix}r34 anime*`, m)
   }
 
   const tag = args[0]
-  const url = `https://rule34.xxx/index.php?page=dapi&s=post&q=index&json=1&tags=${encodeURIComponent(tag)}`
+  const url = `https://rule34.xxx/index.php?page=post&s=list&tags=${encodeURIComponent(tag)}`
 
   try {
     const response = await fetch(url)
