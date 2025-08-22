@@ -24,7 +24,7 @@ await conn.sendMessage(m.chat, { text: `Vegeta-Bot: no hay sesión activa.\nUsa:
 return
 }
 if (global.conn.user.jid !== conn.user.jid) {
-  return conn.sendMessage(m.chat, {text: `Este comando solo funciona en el bot principal.\nLink: https://wa.me/${global.conn.user.jid.split`@`[0]}?text=${usedPrefix + command}`}, { quoted: m }) 
+  return conn.sendMessage(m.chat, {text: `Este comando solo funciona en el bot principal.`\nLink: https://wa.me/${global.conn.user.jid.split`@`[0]}?text=${usedPrefix + command}`}, { quoted: m }) 
 } else {
   await conn.sendMessage(m.chat, { text: `Vegeta-Bot: sub-bot desconectado.` }, { quoted: m })
 }
