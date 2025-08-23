@@ -17,7 +17,7 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
   
 Elige una de las opciones para descargar:
 🎧 *Audio* o 📽️ *Video*
-  `;
+  `
 
   await conn.sendMessage(
     m.chat,
