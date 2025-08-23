@@ -170,4 +170,4 @@ handler.help = ['ytmp4 <url>'];
 handler.tags = ['descargas'];
 handler.command = ['ytmp4'];
 
-export default handler;
+export { ytmp4handler }
