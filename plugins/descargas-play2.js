@@ -1,4 +1,4 @@
-/*import fetch from 'node-fetch';
+import fetch from 'node-fetch';
 
 let handler = async (m, { conn, usedPrefix, command, text }) => {
   if (!text) return m.reply(`✨ Ingresa un texto para buscar en YouTube.\n> *Ejemplo:* ${usedPrefix + command} Shakira`);
@@ -51,4 +51,4 @@ handler.command = ['play', 'playaudio'];
 handler.help = ['play <texto>', 'playaudio <texto>'];
 handler.tags = ['media'];
 
-export default handler;*/
+export default handler;
