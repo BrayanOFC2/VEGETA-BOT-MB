@@ -19,7 +19,7 @@ let handler = async (m, { conn, args }) => {
       if (!img) return conn.reply(m.chat, '🏵️ Envía una imagen o video para hacer un sticker.', m);
 
       let out;
-      const texto1 = 'VegetaBot-MD';
+      const texto1 = 'ৎ୭࠭͢𓆪͟͞ 𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱';
       const texto2 = await conn.getName(m.sender);
 
       try {
