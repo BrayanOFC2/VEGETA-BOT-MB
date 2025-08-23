@@ -42,7 +42,7 @@ async function getSize(url) {
 // 📥 Proceso de conversión y descarga
 async function ytdl(url) {
   const headers = {
-    accept: '*/*',
+    accept: '',
     'accept-language': 'en-US,en;q=0.9',
     'sec-ch-ua': '"Chromium";v="132", "Not A(Brand";v="8"',
     'sec-ch-ua-mobile': '?0',
