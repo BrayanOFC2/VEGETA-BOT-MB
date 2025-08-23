@@ -43,14 +43,14 @@ const handler = async (m, { conn, text, command }) => {
       );
     }
 
-    // Enviar como audio reproducible (no documento)
+    // 🔥 Enviar como audio de WhatsApp (no documento)
     await conn.sendMessage(
       m.chat,
       {
         audio: buffer,
-        mimetype: 'audio/mpeg',
-        fileName,
-        ptt: false, // true = lo manda como nota de voz
+        mimetype: 'audio/mp4', // este mimetype fuerza que sea reproducible
+        fileName: fileName,
+        ptt: false, // true = nota de voz, false = audio normal
       },
       { quoted: m }
     );
