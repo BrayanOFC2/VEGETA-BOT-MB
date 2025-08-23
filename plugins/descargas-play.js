@@ -26,8 +26,8 @@ Elige una de las opciones para descargar:
       caption: body,
       footer: `𝑽𝒆𝒈𝒆𝒕𝒂-𝑩𝒐𝒕-𝑴𝑩| ⚔️🐉`,
       buttons: [
-      { buttonId: `.ytmp3 ${videoInfo.url}`, buttonText: { displayText: '🎧 Audio' } },
-        { buttonId: `.ytmp4 ${videoInfo.url}`, buttonText: { displayText: '📽️ Video' } },
+      { buttonId: `.ytmp3 ${videoInfo.url}`, buttonText: { displayText: '🎧 audio' } },
+        { buttonId: `.ytmp4 ${videoInfo.url}`, buttonText: { displayText: '🎥 vídeo' } },
       ],
       viewOnce: true,
       headerType: 4,
