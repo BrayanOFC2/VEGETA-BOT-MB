@@ -19,7 +19,6 @@ const handler = async (m, { conn, text, command }) => {
     const videoInfo = search.all[0]
     const { title, url } = videoInfo
 
-    // API personalizada
     const api = `https://myapiadonix.vercel.app/api/ytmp3?url=${encodeURIComponent(url)}`
     const res = await fetch(api)
     if (!res.ok) throw new Error(`Error al obtener respuesta de la API (status ${res.status})`)
@@ -27,7 +26,6 @@ const handler = async (m, { conn, text, command }) => {
     const json = await res.json()
     if (!json.data || !json.data.download) throw new Error("La API no devolvió un enlace válido")
 
-    // Descargar audio real
     const audioRes = await fetch(json.data.download)
     if (!audioRes.ok) throw new Error(`Error al descargar el audio (status ${audioRes.status})`)
 
@@ -42,13 +40,13 @@ const handler = async (m, { conn, text, command }) => {
       )
     }
 
-    // ✅ Enviar como audio reproducible
+    // ✅ Enviar forzado como audio reproducible
     await conn.sendMessage(
       m.chat,
       {
         audio: buffer,
-        mimetype: 'audio/mpeg', // este hace que sea "reproducible" en WhatsApp
-        ptt: false // true = nota de voz, false = audio normal
+        mimetype: 'audio/mpeg',
+        ptt: false, // true = nota de voz
       },
       { quoted: m }
     )
