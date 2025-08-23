@@ -11,7 +11,6 @@ const handler = async (m, { conn, text, command }) => {
       );
     }
 
-
     const search = await yts(text);
     if (!search.all || search.all.length === 0) {
       return conn.reply(m.chat, '❌ No se encontraron resultados para tu búsqueda.', m);
@@ -20,7 +19,7 @@ const handler = async (m, { conn, text, command }) => {
     const videoInfo = search.all[0];
     const { title, url } = videoInfo;
 
-
+    // API personalizada
     const api = `https://myapiadonix.vercel.app/api/ytmp3?url=${encodeURIComponent(url)}`;
     const res = await fetch(api);
     if (!res.ok) throw new Error(`Error al obtener respuesta de la API (status ${res.status})`);
@@ -28,7 +27,7 @@ const handler = async (m, { conn, text, command }) => {
     const json = await res.json();
     if (!json.data || !json.data.download) throw new Error("La API no devolvió un enlace válido");
 
-
+    // Descargar audio real
     const audioRes = await fetch(json.data.download);
     if (!audioRes.ok) throw new Error(`Error al descargar el audio (status ${audioRes.status})`);
 
@@ -36,21 +35,27 @@ const handler = async (m, { conn, text, command }) => {
     const sizeMB = buffer.length / (1024 * 1024);
     const fileName = `${title.replace(/[^a-zA-Z0-9 ]/g, '').trim().replace(/ +/g, '_')}.mp3`;
 
-
     if (sizeMB > 64) {
-      return conn.reply(m.chat, `⚠️ El audio pesa *${sizeMB.toFixed(2)} MB*, supera el límite (64 MB).\nDescárgalo aquí:\n${json.data.download}`, m);
+      return conn.reply(
+        m.chat,
+        `⚠️ El audio pesa *${sizeMB.toFixed(2)} MB*, supera el límite (64 MB).\n\n📥 Descárgalo aquí:\n${json.data.download}`,
+        m
+      );
     }
 
-
+    // Enviar como audio reproducible (no documento)
     await conn.sendMessage(
       m.chat,
       {
-        document: buffer,
+        audio: buffer,
         mimetype: 'audio/mpeg',
-        fileName: fileName,
+        fileName,
+        ptt: false, // true = lo manda como nota de voz
       },
       { quoted: m }
     );
+
+    m.react('✅');
   } catch (error) {
     console.error(error);
     return conn.reply(
@@ -62,6 +67,6 @@ const handler = async (m, { conn, text, command }) => {
 };
 
 handler.command = handler.help = ['ytmp3'];
-handler.tags = ['descargas'];
+handler.tags = ['downloader'];
 
-export { ytmp3handler }
+export default handler;
