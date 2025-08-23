@@ -1,82 +1,118 @@
-import { readdirSync, statSync, unlinkSync, existsSync, readFileSync, watch, rmSync, promises as fsPromises } from "fs";
-const fs = { ...fsPromises, existsSync };
-import path, { join } from 'path' 
-import ws from 'ws';
+// código creado x The Carlos 👑
+async function handler(m, { conn: stars, usedPrefix }) {
+  const maxSubBots = 500;
+  const conns = Array.isArray(global.conns) ? global.conns : [];
 
-let handler = async (m, { conn: _envio, command, usedPrefix, args, text, isOwner}) => {
-const isCommand1 = /^(deletesesion|deletebot|deletesession|deletesesaion)$/i.test(command)  
-const isCommand2 = /^(stop|pausarai|pausarbot)$/i.test(command)  
-const isCommand3 = /^(bots|sockets|socket)$/i.test(command)   
+  const isConnOpen = (c) => {
+    try {
+      return c?.ws?.socket?.readyState === 1;
+    } catch {
+      return !!c?.user?.id;
+    }
+  };
 
-async function reportError(e) {
-await m.reply(`${msm} Ocurrió un error.`)
-console.log(e)
+  const unique = new Map();
+  for (const c of conns) {
+    if (!c || !c.user) continue;
+    if (!isConnOpen(c)) continue;
+
+    const jidRaw = c.user.jid || c.user.id || '';
+    if (!jidRaw) continue;
+
+    unique.set(jidRaw, c);
+  }
+
+  const users = [...unique.values()];
+  const totalUsers = users.length;
+  const availableSlots = Math.max(0, maxSubBots - totalUsers);
+
+  const packname = global.packname || '🤖 𝙱𝙾𝗧';
+  const title = `⭑『 𝗦𝗨𝗕𝗕𝗢𝗧𝗦 𝗖𝗢𝗡𝗘𝗖𝗧𝗔𝗗𝗢𝗦 』⭑`;
+  const barra = '━━━━━━━━━━━━━━━━';
+
+  let responseMessage = '';
+
+  if (totalUsers === 0) {
+    responseMessage = `╭═⬣ ${title}
+┃ 🔢 Total conectados: *0*
+┃ 🟢 Espacios disponibles: *${availableSlots}*
+╰═${barra}⬣
+
+No hay subbots conectados por ahora.`;
+  } else if (totalUsers <= 15) {
+    const listado = users
+      .map((v, i) => {
+        const num = v.user.jid.replace(/[^0-9]/g, '');
+        const nombre = v?.user?.name || v?.user?.pushName || '👤 𝚂𝚄𝙱-𝙱𝙾𝗧';
+        const waLink = `https://wa.me/${num}?text=${usedPrefix}code`;
+        return `╭╼⟪ ${packname} ⟫╾╮
+┃ #${i + 1} 👾 @${num}
+┃ 🌐 Link: ${waLink}
+┃ 🧠 Nombre: ${nombre}
+╰╼▣`;
+      })
+      .join('\n\n');
+
+    responseMessage = `╭═⬣ ${title}
+┃ 🔢 Total conectados: *${totalUsers}*
+┃ 🟢 Espacios disponibles: *${availableSlots}*
+╰═${barra}⬣
+
+${listado}`.trim();
+  } else {
+    responseMessage = `╭═⬣ ${title}
+┃ 🔢 Total conectados: *${totalUsers}*
+┃ 🟢 Espacios disponibles: *${availableSlots}*
+╰═${barra}⬣
+
+⚠️ Hay muchos subbots conectados, no se muestra la lista detallada.`;
+  }
+
+  responseMessage += `
+
+—
+Creador BrayanOFC 👑`;
+
+ /* const imageUrl = '';  Cambia si quieres*/
+
+  const fkontak = {
+    key: {
+      participants: "0@s.whatsapp.net",
+      remoteJid: "status@broadcast",
+      fromMe: false,
+      id: "Halo",
+    },
+    message: {
+      contactMessage: {
+        displayName: "Subbot",
+        vcard: "BEGIN:VCARD\nVERSION:3.0\nN:;Subbot;;;\nFN:Subbot\nEND:VCARD",
+      },
+    },
+  };
+
+  const mentions = typeof stars.parseMention === 'function'
+    ? stars.parseMention(responseMessage)
+    : [...new Set(
+        (responseMessage.match(/@(\d{5,16})/g) || []).map(v => v.replace('@', '') + '@s.whatsapp.net')
+      )];
+
+  try {
+    await stars.sendMessage(
+      m.chat,
+      { image: { url: imageUrl }, caption: responseMessage, mentions },
+      { quoted: fkontak }
+    );
+  } catch (e) {
+    console.error('❌ Error enviando listado de subbots:', e);
+    await stars.sendMessage(
+      m.chat,
+      { text: responseMessage, mentions },
+      { quoted: fkontak }
+    );
+  }
 }
 
-switch (true) {       
-case isCommand1:
-let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
-let uniqid = `${who.split`@`[0]}`
-const path = `./${jadi}/${uniqid}`
-
-if (!await fs.existsSync(path)) {
-await conn.sendMessage(m.chat, { text: `${emoji} Usted no tiene una sesión, puede crear una usando:\n${usedPrefix + command}\n\nSi tiene una *(ID)* puede usar para saltarse el paso anterior usando:\n*${usedPrefix + command}* \`\`\`(ID)\`\`\`` }, { quoted: m })
-return
-}
-if (global.conn.user.jid !== conn.user.jid) return conn.sendMessage(m.chat, {text: `${emoji2} Use este comando al *Bot* principal.\n\n*https://api.whatsapp.com/send/?phone=${global.conn.user.jid.split`@`[0]}&text=${usedPrefix + command}&type=phone_number&app_absent=0*`}, { quoted: m }) 
-else {
-await conn.sendMessage(m.chat, { text: `${emoji} Tu sesión como *Sub-Bot* se ha eliminado` }, { quoted: m })}
-try {
-fs.rmdir(`./${jadi}/` + uniqid, { recursive: true, force: true })
-await conn.sendMessage(m.chat, { text : `${emoji3} Ha cerrado sesión y borrado todo rastro.` } , { quoted: m })
-} catch (e) {
-reportError(e)
-}  
-break
-
-case isCommand2:
-if (global.conn.user.jid == conn.user.jid) conn.reply(m.chat, `${emoji} Si no es *Sub-Bot* comuníquese al numero principal del *Bot* para ser *Sub-Bot*.`, m)
-else {
-await conn.reply(m.chat, `${emoji} ${botname} desactivada.`, m)
-conn.ws.close()}  
-break
-
-case isCommand3:
-//if (global.db.data.settings[conn.user.jid].jadibotmd) return m.reply(`${emoji} Este comando está desactivado por mi creador.`)
-const users = [...new Set([...global.conns.filter((conn) => conn.user && conn.ws.socket && conn.ws.socket.readyState !== ws.CLOSED).map((conn) => conn)])];
-function convertirMsADiasHorasMinutosSegundos(ms) {
-var segundos = Math.floor(ms / 1000);
-var minutos = Math.floor(segundos / 60);
-var horas = Math.floor(minutos / 60);
-var días = Math.floor(horas / 24);
-segundos %= 60;
-minutos %= 60;
-horas %= 24;
-var resultado = "";
-if (días !== 0) {
-resultado += días + " días, ";
-}
-if (horas !== 0) {
-resultado += horas + " horas, ";
-}
-if (minutos !== 0) {
-resultado += minutos + " minutos, ";
-}
-if (segundos !== 0) {
-resultado += segundos + " segundos";
-}
-return resultado;
-}
-const message = users.map((v, index) => `• 「 ${index + 1} 」\n📎 Wa.me/${v.user.jid.replace(/[^0-9]/g, '')}?text=${usedPrefix}estado\n👤 Usuario: ${v.user.name || 'Sub-Bot'}\n🕑 Online: ${ v.uptime ? convertirMsADiasHorasMinutosSegundos(Date.now() - v.uptime) : 'Desconocido'}`).join('\n\n__________________________\n\n');
-const replyMessage = message.length === 0 ? `No hay Sub-Bots disponible por el momento, verifique mas tarde.` : message;
-const totalUsers = users.length;
-const responseMessage = `${emoji} LISTA DE *SUB-BOTS* ACTIVOS\n\n${emoji2} PUEDES PEDIR PERMISO PARA QUE TE DEJEN UNIR EL BOT A TÚ GRUPO\n\n\`\`\`CADA USUARIO SUB-BOT USA SUS FUNCIONES COMO QUIERA, EL NÚMERO PRINCIPAL NO SE HACE RESPONSABLE DEL USO DEL MAL USO DE ELLA \`\`\`\n\n*SUB-BOT CONECTADOS:* ${totalUsers || '0'}\n\n${replyMessage.trim()}`.trim();
-await _envio.sendMessage(m.chat, {text: responseMessage, mentions: _envio.parseMention(responseMessage)}, {quoted: m})
-break   
-}}
-
-handler.tags = ['serbot']
-handler.help = ['sockets', 'deletesesion', 'pausarai']
-handler.command = ['deletesesion', 'deletebot', 'deletesession', 'deletesession', 'stop', 'pausarai', 'pausarbot', 'bots', 'sockets', 'socket']
-
-export default handler
+handler.command = ['listjadibot', 'bots'];
+handler.help = ['bots'];
+handler.tags = ['jadibot'];
+export default handler;
