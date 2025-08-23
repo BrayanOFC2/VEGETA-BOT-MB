@@ -14,7 +14,7 @@ const handler = async (m, { conn, text, command }) => {
 
     const search = await yts(text);
     if (!search.all || search.all.length === 0) {
-      return conn.reply(m.chat, '❌ No se encontraron resultados para tu búsquhhheda.', m);
+      return conn.reply(m.chat, '❌ No se encontraron resultados para tu búsqueda.', m);
     }
 
     const videoInfo = search.all[0];
@@ -63,5 +63,6 @@ const handler = async (m, { conn, text, command }) => {
 
 handler.command = handler.help = ['ytmp3'];
 handler.tags = ['descargas'];
+handler.group = true:
 
 export default handler;
