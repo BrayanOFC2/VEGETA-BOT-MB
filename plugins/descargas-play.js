@@ -28,6 +28,8 @@ Elige una de las opciones para descargar:
       buttons: [
       { buttonId: `.ytmp3 ${videoInfo.url}`, buttonText: { displayText: '🎧 audio' } },
         { buttonId: `.ytmp4 ${videoInfo.url}`, buttonText: { displayText: '🎥 vídeo' } },
+{ buttonId: `.ytmp3doc ${videoInfo.url}`, buttonText: { displayText: '💿 audio doc' } },
+        { buttonId: `.ytmp4doc ${videoInfo.url}`, buttonText: { displayText: '🎥 vídeo doc' } },
       ],
       viewOnce: true,
       headerType: 4,
