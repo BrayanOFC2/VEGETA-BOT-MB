@@ -1,8 +1,8 @@
 let handler = async (m, { conn, text }) => {
-   if (!text) return conn.reply(m.chat, '🐉 Por favor, ingresa la nueva biografia que deseas ponerme.', m, rcanal)
+   if (!text) return conn.reply(m.chat, '🐉 Por favor, ingresa la nueva biografia que deseas ponerme.', m, fake)
      try {
                 await conn.updateProfileStatus(text).catch(_ => _)
-                conn.reply(m.chat, `☁️ Info Cambiada Con Exito...`, m)
+                conn.reply(m.chat, `☁️ Info Cambiada Con Exito...`, m, fake)
 } catch {
        throw 'Well, Error Sis...'
      }
