@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+/*import fetch from 'node-fetch';
 import yts from 'yt-search';
 
 const handler = async (m, { conn, text }) => {
@@ -64,4 +64,4 @@ const handler = async (m, { conn, text }) => {
 handler.command = handler.help = ['ytmp4doc'];
 handler.tags = ['descargas'];
 
-export default handler;
+export default handler;*/
