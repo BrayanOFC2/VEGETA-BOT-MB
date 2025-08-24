@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+/*import fetch from "node-fetch";
 import yts from 'yt-search';
 import axios from "axios";
 
@@ -85,4 +85,4 @@ const handler = async (m, { conn, text, command }) => {
 handler.command = handler.help = ['ytmp3doc', 'ytmp3doc'];
 handler.tags = ['ytmp3doc'];
 
-export default handler;
+export default handler;*/
