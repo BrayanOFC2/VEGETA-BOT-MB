@@ -135,12 +135,14 @@ playHandler.limit = 6;
 
 const ytmp4Handler = async (m, { conn, text, usedPrefix, command }) => {
   const react = emoji => m.react(emoji);
-
-  if (!text) {
+  let videoUrl = text;
+  if (m.text && m.text.startsWith('.' + command[1])) {
+    videoUrl = m.text.slice(command[1].length + 2).trim();
+  } else if (!videoUrl) {
     return conn.reply(m.chat, `🧩 Uso: ${usedPrefix}${command} <enlace de YouTube>`, m);
   }
 
-  if (!isValidYouTubeUrl(text)) {
+  if (!isValidYouTubeUrl(videoUrl)) {
     await react('🔴');
     return m.reply('🚫 Enlace de YouTube inválido');
   }
@@ -158,7 +160,7 @@ const ytmp4Handler = async (m, { conn, text, usedPrefix, command }) => {
   await react('⏳');
 
   try {
-    const { url, title } = await ytdl(text);
+    const { url, title } = await ytdl(videoUrl);
     const size = await getSize(url);
     if (!size) throw new Error('No se pudo determinar el tamaño del video');
 
@@ -177,7 +179,7 @@ const ytmp4Handler = async (m, { conn, text, usedPrefix, command }) => {
 ╭╌╌〔 *🕶️ DESCARGAS Vegeta - MP4* 〕╌╌╮
 ┃ 🧿 *Título:* ${title}
 ┃ 📦 *Tamaño:* ${formatSize(size)}
-┃ 🔗 *URL:* ${text}
+┃ 🔗 *URL:* ${videoUrl}
 ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯`.trim();
 
     const buffer = await fetch(url).then(res => res.buffer());
@@ -209,8 +211,16 @@ ytmp4Handler.command = ['ytmp4', 'ytmp42'];
 ytmp4Handler.black = true;
 
 const ytmp4docHandler = async (m, { conn, text }) => {
+  let videoUrl = text;
+  if (m.text) {
+    const parts = m.text.split(' ');
+    if (parts.length > 1 && parts[0].startsWith('.')) {
+      videoUrl = parts[1];
+    }
+  }
+
   try {
-    if (!text || !text.trim()) {
+    if (!videoUrl || !videoUrl.trim()) {
       return conn.reply(
         m.chat,
         `✳️ Ingresa el nombre o enlace del video de YouTube.\n\n*Ejemplo:* .ytmp4doc Never Gonna Give You Up`,
@@ -218,7 +228,7 @@ const ytmp4docHandler = async (m, { conn, text }) => {
       );
     }
 
-    const search = await yts(text);
+    const search = await yts(videoUrl);
     if (!search.all || search.all.length === 0) {
       return conn.reply(m.chat, '❌ No se encontraron resultados para tu búsqueda.', m);
     }
@@ -266,8 +276,16 @@ ytmp4docHandler.command = ytmp4docHandler.help = ['ytmp4doc', 'ytmp4doc2'];
 ytmp4docHandler.tags = ['descargas'];
 
 const ytmp3Handler = async (m, { conn, text, command }) => {
+  let videoUrl = text;
+  if (m.text) {
+    const parts = m.text.split(' ');
+    if (parts.length > 1 && parts[0].startsWith('.')) {
+      videoUrl = parts[1];
+    }
+  }
+
   try {
-    if (!text || !text.trim()) {
+    if (!videoUrl || !videoUrl.trim()) {
       return conn.reply(
         m.chat,
         `✳️ Ingresa el nombre o enlace del video de YouTube.\n\n*Ejemplo:* .${command} Never Gonna Give You Up`,
@@ -275,7 +293,7 @@ const ytmp3Handler = async (m, { conn, text, command }) => {
       );
     }
 
-    const search = await yts(text);
+    const search = await yts(videoUrl);
     if (!search.all || search.all.length === 0) {
       return conn.reply(m.chat, '❌ No se encontraron resultados para tu búsqueda.', m);
     }
@@ -322,10 +340,17 @@ const ytmp3Handler = async (m, { conn, text, command }) => {
 ytmp3Handler.command = ytmp3Handler.help = ['ytmp3', 'ytmp31'];
 ytmp3Handler.tags = ['descargas'];
 
-
 const ytmp3docHandler = async (m, { conn, text, command }) => {
+  let videoUrl = text;
+  if (m.text) {
+    const parts = m.text.split(' ');
+    if (parts.length > 1 && parts[0].startsWith('.')) {
+      videoUrl = parts[1];
+    }
+  }
+
   try {
-    if (!text || !text.trim()) {
+    if (!videoUrl || !videoUrl.trim()) {
       return conn.reply(
         m.chat,
         `✳️ Ingresa el nombre o enlace del video de YouTube.\n\n*Ejemplo:* .${command} Never Gonna Give You Up`,
@@ -333,7 +358,7 @@ const ytmp3docHandler = async (m, { conn, text, command }) => {
       );
     }
 
-    const search = await yts(text);
+    const search = await yts(videoUrl);
     if (!search.all || search.all.length === 0) {
       return conn.reply(m.chat, '❌ No se encontraron resultados para tu búsqueda.', m);
     }
