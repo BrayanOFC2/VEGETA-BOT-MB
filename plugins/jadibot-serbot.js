@@ -26,40 +26,37 @@ let crm4 = "IF9hdXRvcmVzcG9uZGVyLmpzIGluZm8tYm90Lmpz"
 let drm1 = ""
 let drm2 = ""
 
-let rtx =
-`✞ঔৣr̴ 𝘽𝙡𝙖𝙘𝙠 𝘾𝙡𝙤𝙫𝙚𝙧 - 𝙎𝙪𝙗 𝘽𝙤𝙩 𝙈𝙤𝙙𝙤 ঔৣ✞
-[⚙️] Conexión de Grimorio Sub-Bot: QR
-⚡ Invocación mágica inicializada... ☠️ Grimorio estableciendo vínculo espiritual...
-🜲 Escanea este código QR mágico desde otro 📱 o tu 🖥️ para convertirte en un ✧ Sub-Bot Temporal al servicio del Reino Mágico.
-📜 * Vinculación:
-1 » Toca los ⋮ tres puntos en la esquina superior derecha del WhatsApp
-2 » Selecciona Dispositivos Vinculados (Portal de Conexión)
-3 » Escanea el Grimorio QR para sincronizar tu alma con el bot
-⏳ ¡Alerta, Caballero Mágico! Este sello mágico se desvanece en ⚠️ 45 segundos...
-🧿 𝙎𝙄𝙎𝙏𝙀𝙈𝘼➤ [ QR ACTIVO ] 𝙀𝙎𝘾𝘼𝙉𝙀𝘼 𝙔𝘼 ⚔️`
+let rtx = `╭───────────────✎  
+│  ツ 𝚅𝙴𝙶𝙴𝚃𝙰 𝙱𝙾𝚃 𝙼𝙱 ➳  
+╰───────────────✎  
+> ★ 𝗖𝗼𝗻𝗲𝘅𝗶ó𝗻 𝗦𝘂𝗯-𝗕𝗼𝘁 (𝗠𝗼𝗱𝗼 𝗤𝗥) ✈  
 
-let rtx2 =
-`✞ঔৣr̴ 𝘽𝙡𝙖𝙘𝙠 𝙘𝙡𝙤𝙫𝙚𝙧 - 𝙎𝙪𝙗 𝘽𝙤𝙩 ঔৣ✞
+⟿ 𝐄𝐬𝐜𝐚𝐧𝐞𝐚 𝐞𝐬𝐭𝐞 𝐂𝐨́𝐝𝐢𝐠𝐨 𝐐𝐑 𝐜𝐨𝐧 𝐨𝐭𝐫𝐨 𝐜𝐞𝐥𝐮𝐥𝐚𝐫  
+𝐨 𝐝𝐞𝐬𝐝𝐞 𝐥𝐚 𝐏𝐂 𝐩𝐚𝐫𝐚 𝐜𝐨𝐧𝐯𝐞𝐫𝐭𝐢𝐫𝐭𝐞 𝐞𝐧 𝐮𝐧 *𝗦𝘂𝗯-𝗕𝗼𝘁 𝗧𝗲𝗺𝗽𝗼𝗿𝗮𝗹*.  
 
-⌁ Conexión de Grimorio: CÓDIGO ⌁
+➥ ❶ 𓂃 Toca los tres puntos en la esquina superior derecha.  
+➥ ❷ 𓂃 Ve a *"Dispositivos vinculados"*.  
+➥ ❸ 𓂃 Escanea este QR y conéctate al bot.  
 
-⚡ Canalizando energía arcana... ☠️ Grimorio despertando vínculo por código mágico...
+⚠ 𝐄𝐬𝐭𝐞 𝐜𝐨́𝐝𝐢𝐠𝐨 𝐐𝐑 𝐞𝐱𝐩𝐢𝐫𝐚 𝐞𝐧 ❺❹ 𝐬𝐞𝐠𝐮𝐧𝐝𝐨𝐬. 𝐍𝐨 𝐩𝐢𝐞𝐫𝐝𝐚𝐬 𝐭𝐢𝐞𝐦𝐩𝐨.  
+`;
 
-🜲 Usa este Código Espiritual para convertirte en un ✧ Sub-Bot Temporal bajo el contrato del Reino de las Sombras.
+let rtx2 = `╭───────────────⍰  
+│  ✭ 𝚅𝙴𝙶𝙴𝚃𝙰 𝙱𝙾𝚃 𝙼𝙱 ✰  
+╰───────────────⍰ 
+> ✰ 𝗖𝗼𝗻𝗲𝘅𝗶ó𝗻 𝗦𝘂𝗯-𝗕𝗼𝘁 (𝗠𝗼𝗱𝗼 𝗖𝗼́𝗱𝗶𝗴𝗼) 
 
-📜 Vinculación Manual:
+⟿ 𝐔𝐬𝐚 𝐞𝐬𝐭𝐞 𝐜𝐨́𝐝𝐢𝐠𝐨 𝐩𝐚𝐫𝐚 𝐜𝐨𝐧𝐯𝐞𝐫𝐭𝐢𝐫𝐭𝐞 𝐞𝐧 𝐮𝐧 *𝗦𝘂𝗯-𝗕𝗼𝘁 𝗧𝗲𝗺𝗽𝗼𝗿𝗮𝗹*.  
 
-1 » Pulsa los ⋮ tres puntos mágicos en la esquina superior derecha de WhatsApp
+➥ ❶ 𓂃 Toca los tres puntos en la esquina superior derecha.  
+➥ ❷ 𓂃 Ve a *"Dispositivos vinculados"*.  
+➥ ❸ 𓂃 Selecciona *Vincular con el número de teléfono*.  
+➥ ❹ 𓂃 Ingresa el código y conéctate al bot.  
 
-2 » Selecciona Dispositivos Vinculados — Portal de Conexión
-
-3 » Elige Vincular con número de teléfono — Método del Grimorio Sellado
-
-4 » Introduce el Código Arcano otorgado por el núcleo mágico
-
-⏳ Atención, Guerrero de las Sombras: Este vínculo es delicado. ⚠️ No uses tu cuenta principal, emplea una réplica espiritual o una forma secundaria.
-
-🧿 𝙎𝙄𝙎𝙏𝙀𝙈𝘼 ➤ [ CÓDIGO LISTO ] — Activa el vínculo cuando estés preparado ⚔️`
+⚠ 𝐒𝐢 𝐲𝐚 𝐞𝐬𝐭á𝐬 𝐜𝐨𝐧𝐞𝐜𝐭𝐚𝐝𝐨 𝐚 𝐨𝐭𝐫𝐚 𝐬𝐞𝐬𝐢ó𝐧, 𝐬𝐞 𝐫𝐞𝐜𝐨𝐦𝐢𝐞𝐧𝐝𝐚  
+𝐪𝐮𝐞 𝐭𝐞 𝐝𝐞𝐬𝐜𝐨𝐧𝐞𝐜𝐭𝐞𝐬. 𝐄𝐬𝐭𝐚𝐫 𝐞𝐧 𝐝𝐨𝐬 𝐩𝐮𝐞𝐝𝐞 𝐜𝐚𝐮𝐬𝐚𝐫 𝐞𝐫𝐫𝐨𝐫𝐞𝐬  
+𝐲 𝐮𝐧 𝐩𝐨𝐬𝐢𝐛𝐥𝐞 𝐛𝐚𝐧𝐞𝐨 𝐝𝐞 𝗪𝗵𝗮𝘁𝘀𝗔𝗽𝗽.  
+`;
 
 const maxSubBots = 500
 
