@@ -59,7 +59,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
             externalAdReply: { 
               showAdAttribution: false, 
               title: global.packname, 
-              body: `𝚅𝙴𝙶𝙴𝚃𝙰 𝙱𝙾𝚃- Ai `, 
+              body: `𝚅𝙴𝙶𝙴𝚃𝙰 𝙱𝙾𝚃- 𝙼𝙱 `, 
               mediaType: 2, 
               sourceUrl: redes, // Usamos la variable definida
               thumbnail: icons // Asegúrate de que "icons" tenga un valor definido
