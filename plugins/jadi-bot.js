@@ -34,8 +34,8 @@ async function handler(m, { conn: stars, usedPrefix }) {
 
   if (totalUsers === 0) {
     responseMessage = `╭═⬣ ${title}
-┃ 🔢 Total conectados: *0*
-┃ 🟢 Espacios disponibles: *${availableSlots}*
+┃ 🐉 Total conectados: *0*
+┃ 🔮 Espacios disponibles: *${availableSlots}*
 ╰═${barra}⬣
 
 No hay subbots conectados por ahora.`;
@@ -43,26 +43,26 @@ No hay subbots conectados por ahora.`;
     const listado = users
       .map((v, i) => {
         const num = v.user.jid.replace(/[^0-9]/g, '');
-        const nombre = v?.user?.name || v?.user?.pushName || '👤 𝚂𝚄𝙱-𝙱𝙾𝗧';
+        const nombre = v?.user?.name || v?.user?.pushName || '👻 𝚂𝚄𝙱-𝙱𝙾𝗧';
         const waLink = `https://wa.me/${num}?text=${usedPrefix}code`;
         return `╭╼⟪ ${packname} ⟫╾╮
-┃ #${i + 1} 👾 @${num}
-┃ 🌐 Link: ${waLink}
-┃ 🧠 Nombre: ${nombre}
+┃ #${i + 1} 👑 @${num}
+┃ 🐉 Link: ${waLink}
+┃ ☁️ Nombre: ${nombre}
 ╰╼▣`;
       })
       .join('\n\n');
 
     responseMessage = `╭═⬣ ${title}
-┃ 🔢 Total conectados: *${totalUsers}*
-┃ 🟢 Espacios disponibles: *${availableSlots}*
+┃ 🐉 Total conectados: *${totalUsers}*
+┃ 👑 Espacios disponibles: *${availableSlots}*
 ╰═${barra}⬣
 
 ${listado}`.trim();
   } else {
     responseMessage = `╭═⬣ ${title}
-┃ 🔢 Total conectados: *${totalUsers}*
-┃ 🟢 Espacios disponibles: *${availableSlots}*
+┃ 🐉 Total conectados: *${totalUsers}*
+┃ 🔮 Espacios disponibles: *${availableSlots}*
 ╰═${barra}⬣
 
 ⚠️ Hay muchos subbots conectados, no se muestra la lista detallada.`;
@@ -71,9 +71,9 @@ ${listado}`.trim();
   responseMessage += `
 
 —
-Creador The Carlos 👑`;
+Creador BrayanOFC 👑`;
 
-  const imageUrl = 'https://files.catbox.moe/1jkle5.jpg'; // Cambia si quieres
+  const imageUrl = 'https://qu.ax/RRMde.jpg'; // Cambia si quieres
 
   const fkontak = {
     key: {
