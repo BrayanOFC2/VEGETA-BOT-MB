@@ -1,4 +1,4 @@
-  // 🚫 prohibido editar 🚫
+// 🚫 prohibido editar 🚫
 //Código creado x The Carlos 👑 
 //No olviden dejar créditos.
 import { useMultiFileAuthState, DisconnectReason, makeCacheableSignalKeyStore, fetchLatestBaileysVersion, Browsers } from "@whiskeysockets/baileys"
@@ -63,7 +63,7 @@ let rtx2 =
 
 const maxSubBots = 500
 
-let blackJBOptions = {}
+let vegetaJBOptions = {}
 
 if (!global.conns) global.conns = []
 
@@ -99,31 +99,25 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
 
   const availableSlots = maxSubBots - subBotsCount
 
-  // Línea eliminada 
-  // await m.reply(`🤖 *Sub-Bots conectados:* ${subBotsCount} / ${maxSubBots}\n🟢 *Espacios disponibles:* ${availableSlots}`)
-
   let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
   let id = `${who.split('@')[0]}`
-  let pathblackJadiBot = path.join(`./blackJadiBot/`, id)
+  let pathvegetaJadiBot = path.join(`./vegetaJadiBot/`, id)
 
-  if (!fs.existsSync(pathblackJadiBot)) {
-    fs.mkdirSync(pathblackJadiBot, { recursive: true })
+  if (!fs.existsSync(pathvegetaJadiBot)) {
+    fs.mkdirSync(pathvegetaJadiBot, { recursive: true })
   }
 
-  blackJBOptions.pathblackJadiBot = pathblackJadiBot
-  blackJBOptions.m = m
-  blackJBOptions.conn = conn
-  blackJBOptions.args = args
-  blackJBOptions.usedPrefix = usedPrefix
-  blackJBOptions.command = command
-  blackJBOptions.fromCommand = true
+  vegetaJBOptions.pathvegetaJadiBot = pathvegetaJadiBot
+  vegetaJBOptions.m = m
+  vegetaJBOptions.conn = conn
+  vegetaJBOptions.args = args
+  vegetaJBOptions.usedPrefix = usedPrefix
+  vegetaJBOptions.command = command
+  vegetaJBOptions.fromCommand = true
 
-  await blackJadiBot(blackJBOptions)
+  await vegetaJadiBot(vegetaJBOptions)
 
   global.db.data.users[m.sender].Subs = new Date() * 1
-
-  // Línea eliminada 
-  // await m.reply(`🥷🏻 Gracias por ser parte de la familia Black Clover ⚔️`)
 }
 
 handler.help = ['qr', 'code']
@@ -132,8 +126,8 @@ handler.command = ['qr', 'code']
 
 export default handler
 
-export async function blackJadiBot(options) {
-  let { pathblackJadiBot, m, conn, args, usedPrefix, command } = options
+export async function vegetaJadiBot(options) {
+  let { pathvegetaJadiBot, m, conn, args, usedPrefix, command } = options
   if (command === 'code') {
     command = 'qr'
     args.unshift('code')
@@ -149,9 +143,9 @@ export async function blackJadiBot(options) {
     if (args[1]) args[1] = args[1].replace(/^--code$|^code$/, "").trim()
     if (args[0] == "") args[0] = undefined
   }
-  const pathCreds = path.join(pathblackJadiBot, "creds.json")
-  if (!fs.existsSync(pathblackJadiBot)) {
-    fs.mkdirSync(pathblackJadiBot, { recursive: true })
+  const pathCreds = path.join(pathvegetaJadiBot, "creds.json")
+  if (!fs.existsSync(pathvegetaJadiBot)) {
+    fs.mkdirSync(pathvegetaJadiBot, { recursive: true })
   }
   try {
     if (args[0] && args[0] != undefined) {
@@ -167,7 +161,7 @@ export async function blackJadiBot(options) {
     const { version } = await fetchLatestBaileysVersion()
     const msgRetry = () => { }
     const msgRetryCache = new NodeCache()
-    const { state, saveState, saveCreds } = await useMultiFileAuthState(pathblackJadiBot)
+    const { state, saveState, saveCreds } = await useMultiFileAuthState(pathvegetaJadiBot)
 
     const connectionOptions = {
       logger: pino({ level: "fatal" }),
@@ -227,46 +221,46 @@ export async function blackJadiBot(options) {
       const reason = lastDisconnect?.error?.output?.statusCode || lastDisconnect?.error?.output?.payload?.statusCode
       if (connection === 'close') {
         if (reason === 428 || reason === 408) {
-          console.log(chalk.bold.magentaBright(`\n╭─────────────────────────\n│ La conexión (+${path.basename(pathblackJadiBot)}) fue cerrada inesperadamente o expiró. Intentando reconectar...\n╰─────────────────────────`))
+          console.log(chalk.bold.magentaBright(`\n╭─────────────────────────\n│ La conexión (+${path.basename(pathvegetaJadiBot)}) fue cerrada inesperadamente o expiró. Intentando reconectar...\n╰─────────────────────────`))
           await creloadHandler(true).catch(console.error)
         }
         if (reason === 440) {
-          console.log(chalk.bold.magentaBright(`\n╭─────────────────────────\n│ La conexión (+${path.basename(pathblackJadiBot)}) fue reemplazada por otra sesión activa.\n╰─────────────────────────`))
+          console.log(chalk.bold.magentaBright(`\n╭─────────────────────────\n│ La conexión (+${path.basename(pathvegetaJadiBot)}) fue reemplazada por otra sesión activa.\n╰─────────────────────────`))
           try {
-            if (options.fromCommand) m?.chat ? await conn.sendMessage(`${path.basename(pathblackJadiBot)}@s.whatsapp.net`, { text: 'HEMOS DETECTADO UNA NUEVA SESIÓN, BORRE LA NUEVA SESIÓN PARA CONTINUAR\n\n> SI HAY ALGÚN PROBLEMA VUELVA A CONECTARSE' }, { quoted: m || null }) : ""
+            if (options.fromCommand) m?.chat ? await conn.sendMessage(`${path.basename(pathvegetaJadiBot)}@s.whatsapp.net`, { text: 'HEMOS DETECTADO UNA NUEVA SESIÓN, BORRE LA NUEVA SESIÓN PARA CONTINUAR\n\n> SI HAY ALGÚN PROBLEMA VUELVA A CONECTARSE' }, { quoted: m || null }) : ""
           } catch (error) {
-            console.error(chalk.bold.yellow(`Error 440 no se pudo enviar mensaje a: +${path.basename(pathblackJadiBot)}`))
+            console.error(chalk.bold.yellow(`Error 440 no se pudo enviar mensaje a: +${path.basename(pathvegetaJadiBot)}`))
           }
         }
         if (reason == 405 || reason == 401) {
-          console.log(chalk.bold.magentaBright(`\n╭─────────────────────────\n│ La sesión (+${path.basename(pathblackJadiBot)}) fue cerrada. Credenciales no válidas o dispositivo desconectado manualmente.\n╰─────────────────────────`))
+          console.log(chalk.bold.magentaBright(`\n╭─────────────────────────\n│ La sesión (+${path.basename(pathvegetaJadiBot)}) fue cerrada. Credenciales no válidas o dispositivo desconectado manualmente.\n╰─────────────────────────`))
           try {
-            if (options.fromCommand) m?.chat ? await conn.sendMessage(`${path.basename(pathblackJadiBot)}@s.whatsapp.net`, { text: 'SESIÓN PENDIENTE\n\n> INTENTÉ NUEVAMENTE VOLVER A SER SUB-BOT' }, { quoted: m || null }) : ""
+            if (options.fromCommand) m?.chat ? await conn.sendMessage(`${path.basename(pathvegetaJadiBot)}@s.whatsapp.net`, { text: 'SESIÓN PENDIENTE\n\n> INTENTÉ NUEVAMENTE VOLVER A SER SUB-BOT' }, { quoted: m || null }) : ""
           } catch (error) {
-            console.error(chalk.bold.yellow(`Error 405 no se pudo enviar mensaje a: +${path.basename(pathblackJadiBot)}`))
+            console.error(chalk.bold.yellow(`Error 405 no se pudo enviar mensaje a: +${path.basename(pathvegetaJadiBot)}`))
           }
-          fs.rmdirSync(pathblackJadiBot, { recursive: true })
+          fs.rmdirSync(pathvegetaJadiBot, { recursive: true })
         }
         if (reason === 500) {
-          console.log(chalk.bold.magentaBright(`\n╭─────────────────────────\n│ Conexión perdida en la sesión (+${path.basename(pathblackJadiBot)}). Borrando datos...\n╰─────────────────────────`))
-          if (options.fromCommand) m?.chat ? await conn.sendMessage(`${path.basename(pathblackJadiBot)}@s.whatsapp.net`, { text: 'CONEXIÓN PÉRDIDA\n\n> INTENTÉ MANUALMENTE VOLVER A SER SUB-BOT' }, { quoted: m || null }) : ""
+          console.log(chalk.bold.magentaBright(`\n╭─────────────────────────\n│ Conexión perdida en la sesión (+${path.basename(pathvegetaJadiBot)}). Borrando datos...\n╰─────────────────────────`))
+          if (options.fromCommand) m?.chat ? await conn.sendMessage(`${path.basename(pathvegetaJadiBot)}@s.whatsapp.net`, { text: 'CONEXIÓN PÉRDIDA\n\n> INTENTÉ MANUALMENTE VOLVER A SER SUB-BOT' }, { quoted: m || null }) : ""
           return creloadHandler(true).catch(console.error)
         }
         if (reason === 515) {
-          console.log(chalk.bold.magentaBright(`\n╭─────────────────────────\n│ Reinicio automático para la sesión (+${path.basename(pathblackJadiBot)}).\n╰─────────────────────────`))
+          console.log(chalk.bold.magentaBright(`\n╭─────────────────────────\n│ Reinicio automático para la sesión (+${path.basename(pathvegetaJadiBot)}).\n╰─────────────────────────`))
           await creloadHandler(true).catch(console.error)
         }
         if (reason === 403) {
-          console.log(chalk.bold.magentaBright(`\n╭─────────────────────────\n│ Sesión cerrada o cuenta en soporte para la sesión (+${path.basename(pathblackJadiBot)}).\n╰─────────────────────────`))
-          fs.rmdirSync(pathblackJadiBot, { recursive: true })
+          console.log(chalk.bold.magentaBright(`\n╭─────────────────────────\n│ Sesión cerrada o cuenta en soporte para la sesión (+${path.basename(pathvegetaJadiBot)}).\n╰─────────────────────────`))
+          fs.rmdirSync(pathvegetaJadiBot, { recursive: true })
         }
       }
       if (connection == 'open') {
         if (!global.db.data) loadDatabase()
         if (!global.db.data?.users) loadDatabase()
         let userName = sock.authState.creds.me.name || 'Anónimo'
-        let userJid = sock.authState.creds.me.jid || `${path.basename(pathblackJadiBot)}@s.whatsapp.net`
-        console.log(chalk.bold.cyanBright(`\n❒────────────【• SUB-BOT •】────────────❒\n│\n│ 🟢 ${userName} (+${path.basename(pathblackJadiBot)}) conectado exitosamente.\n│\n❒────────────【• CONECTADO •】────────────❒`))
+        let userJid = sock.authState.creds.me.jid || `${path.basename(pathvegetaJadiBot)}@s.whatsapp.net`
+        console.log(chalk.bold.cyanBright(`\n❒────────────【• SUB-BOT •】────────────❒\n│\n│ 🟢 ${userName} (+${path.basename(pathvegetaJadiBot)}) conectado exitosamente.\n│\n❒────────────【• CONECTADO •】────────────❒`))
         sock.isInit = true
         global.conns.push(sock)
 
