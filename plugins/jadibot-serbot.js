@@ -58,6 +58,8 @@ let rtx2 = `╭───────────────⍰
 𝐲 𝐮𝐧 𝐩𝐨𝐬𝐢𝐛𝐥𝐞 𝐛𝐚𝐧𝐞𝐨 𝐝𝐞 𝗪𝗵𝗮𝘁𝘀𝗔𝗽𝗽.  
 `;
 
+let imagenUrl = 'https://qu.ax/RRMde.jpg';
+
 const maxSubBots = 500
 
 let vegetaJBOptions = {}
