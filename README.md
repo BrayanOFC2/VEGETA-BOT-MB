@@ -56,6 +56,7 @@
 <a href="https://www.mediafire.com/file/llugt4zgj7g3n3u/com.termux_1020.apk/file"><img src="https://qu.ax/finc.jpg" height="125px"></a> 
 
 ---
+</details>
 
 [![Termux](https://img.shields.io/badge/Instalacion-En%20Termux-000000?style=for-the-badge&logo=android&logoColor=white)](https://f-droid.org/es/packages/com.termux/)
 
