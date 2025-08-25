@@ -1,16 +1,15 @@
-import os from 'os';
-
+// Código creado por BrayanOFC
 let handler = async (m, { conn }) => {
     try {
-        const start = Date.now();
-
         const info = `
 *↻ 🚀 Reiniciando bot... ↷*
         `.trim();
 
         await conn.reply(m.chat, info, m);
 
-        setTimeout(() => process.exit(0), 3000);
+        setTimeout(() => {
+            process.exit(0); 
+        }, 2000);
 
     } catch (error) {
         console.error('[ERROR][REINICIO]', error);
