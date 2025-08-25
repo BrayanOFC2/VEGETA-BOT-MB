@@ -83,16 +83,21 @@ yarn install
 ```bash
 npm install
 ```
+
 ---
 
 ✨️ Revivir el Ki de Vegeta si se detiene
 
+```bash
 cd VEGETA-BOT-MB
 npm start
+```
 
 ✨️ Convertirte en el Owner Saiyajin
 
+```bash
 cd VEGETA-BOT-MB && nano config.js
+```
 
 > 🗣️ Vegeta: "No cualquiera puede portar este poder… pero si logras configurarlo, serás un verdadero Saiyajin."
 
@@ -103,11 +108,6 @@ cd VEGETA-BOT-MB && nano config.js
 npm i -g pm2 && pm2 start index.js && pm2 save && pm2 logs
 
 > 🗣️ Vegeta: "Un Saiyajin nunca descansa, y tu bot tampoco debería hacerlo."
-
-
-
-</div>
----
 
 
 
