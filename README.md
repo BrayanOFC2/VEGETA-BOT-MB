@@ -91,35 +91,8 @@ npm update
 npm start
 ```
 
-> Si aparece (Y/I/N/O/D/Z) [default=N] ? use la letra "y" + "ENTER" para continuar con la instalación
-
-### **🜸 Activar en caso de detenerse en termux**
-
-> Si después de instalar el bot en Termux se detiene (pantalla en blanco, pérdida de conexión a Internet, reinicio del dispositivo), sigue estos pasos:
-
-❒ Abre Termux y navega al directorio del bot:
-
-   ```bash
-    cd VEGETA-BOT-MB 
-   ```
-
-❒ Inicia el bot nuevamente:
-
-   ```bash
-    npm start
-   ```
-
-### **✰ Volverte owner del Bot**
-
-> Si después de instalar el bot en Termux y iniciar la session del bot (deseas poner tu número es la lista de owner pon este comando:
-
-   ```bash
-    cd VEGETA-BOT-MB && nano config.js
-   ```
-
 </details>
-
-### **👻 Para activar 24/7 (termux)**
+---
 
 > comando para obtener la bot 24/7 en termux
 
