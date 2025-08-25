@@ -83,18 +83,7 @@ yarn install
 ```bash
 npm install
 ```
-
-```bash
-npm update
-```
-
-```bash
-npm start
-```
-
-```bash
-npm i -g pm2 && pm2 start index.js && pm2 save && pm2 logs
-```
+---
 
 ✨️ Revivir el Ki de Vegeta si se detiene
 
@@ -107,6 +96,7 @@ cd VEGETA-BOT-MB && nano config.js
 
 > 🗣️ Vegeta: "No cualquiera puede portar este poder… pero si logras configurarlo, serás un verdadero Saiyajin."
 
+---
 
 🎆 Modo Saiyajin 24/7 en Termux
 
