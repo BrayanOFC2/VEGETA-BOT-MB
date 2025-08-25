@@ -57,8 +57,7 @@
 
 ---
 
-### 👉 **Ritual de Instalación Saiyajin (Termux)**
-><img src="https://qu.ax/xxisk.jpg" height="200px"></a>
+[![Termux](https://img.shields.io/badge/Instalar%20Termux-000000?style=for-the-badge&logo=android&logoColor=white)](https://f-droid.org/es/packages/com.termux/)
 
 <details>
  <summary><b> 🪄 Click para ver el Entrenamiento</b></summary>
