@@ -91,10 +91,6 @@ npm update
 npm start
 ```
 
-</details>
----
-
-
 ```bash
 npm i -g pm2 && pm2 start index.js && pm2 save && pm2 logs
 ```
@@ -110,8 +106,10 @@ cd VEGETA-BOT-MB && nano config.js
 
 > 🗣️ Vegeta: "No cualquiera puede portar este poder… pero si logras configurarlo, serás un verdadero Saiyajin."
 
-</details>
+
 ---
+
+</details>
 
 👻 Modo Saiyajin 24/7 en Termux
 
@@ -121,6 +119,7 @@ npm i -g pm2 && pm2 start index.js && pm2 save && pm2 logs
 
 
 ---
+
 
 </details>
 
@@ -134,8 +133,6 @@ npm i -g pm2 && pm2 start index.js && pm2 save && pm2 logs
 > 🗣️ Vegeta: "Este poder es tan grande que ni los dioses de la nube podrán contenerlo."
 
 
-
-</details>
 ---
 
 </details>
@@ -153,7 +150,6 @@ WhatsApp	Grupo de Guerreros Z	¡Click aquí!
 
 
 
-</details>
 ---
 
 </details>
@@ -162,7 +158,7 @@ WhatsApp	Grupo de Guerreros Z	¡Click aquí!
 
 <a href="https://github.com/BrayanOFC"><img src="https://github.com/BrayanOFC.png" width="130" height="130" alt="BrayanOFC"/></a>
 
-</details>
+
 ---
 
 </details>
@@ -173,7 +169,6 @@ WhatsApp	Grupo de Guerreros Z	¡Click aquí!
 
 © Powered By Team BrayanOFC ⚡︎ – Orgullo Saiyajin
 
-</details>
 
 ---
 
