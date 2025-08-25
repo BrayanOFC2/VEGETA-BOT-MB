@@ -1,70 +1,202 @@
 <h1 align="center">💨 𝑽𝑬𝑮𝑬𝑻𝑨-𝑩𝑶𝑻-𝑴𝑩 💨</h1>
-<p align="center">🐉 El poder Saiyajin en la palma de tu mano</p>
+<p align="center">🐉 ¡El Orgullo Saiyajin convertido en Bot de WhatsApp!</p>
 
 ---
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=0033FF&center=true&vCenter=true&width=600&lines=Bienvenido+al+Repositorio;VEGETA-BOT-MB+🔥;Creado+desde+0+por+BrayanOFC;Saiyajin+Poder+Infinito+💥;¡Conquista+WhatsApp!)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=0033FF&center=true&vCenter=true&width=600&lines=Bienvenido+Guerrero+Z;VEGETA-BOT-MB+🔥;Creado+desde+0+por+BrayanOFC;El+Orgullo+Saiyajin+en+tu+mano;¡Supera+a+Kakaroto!)](https://git.io/typing-svg)
 
 ![VEGETA](https://i.ibb.co/3dC0V9r/vegeta.jpg)
 
 > ⚡ Versión: **2.13.2**  
-> 👑 Creador: **BrayanOFC**
+> 👑 Creador: **BrayanOFC – El Príncipe Saiyajin**
 
 ---
 
 <div align="center">
 
-[![Dueño](https://img.shields.io/badge/Dueño-0033FF?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/526633900512)
-[![Soporte](https://img.shields.io/badge/Soporte-0033FF?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/526633900512)
-[![YouTube](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/@Vegeta-bot)
+[![Dueño](https://img.shields.io/badge/Príncipe-0033FF?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/526633900512)
+[![Soporte](https://img.shields.io/badge/Escuadrón_Z-0033FF?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/526633900512)
+[![YouTube](https://img.shields.io/badge/Entrenamiento-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/@Vegeta-bot)
 
 </div>
 
 ---
 
-### ❕️ **Información importante**
+### ❕️ **Información Saiyajin**
 
 <details>
- <summary><b> 🔱 Info Bot</b></summary>
+ <summary><b> 🐉 Origen del Poder</b></summary>
 
-* Este proyecto **no está afiliado de ninguna manera** con `WhatsApp`, `Inc.`  
-* WhatsApp es una marca registrada de `WhatsApp LLC`.  
-* Este bot es un **desarrollo independiente** con temática **Dragon Ball**.  
+* Este bot **no está afiliado a WhatsApp Inc.**  
+* WhatsApp es marca registrada de `WhatsApp LLC`.  
+* **VEGETA-BOT-MB** fue forjado desde 0 como un arma de los Saiyajin para dominar WhatsApp ⚡  
+
+> 🗣️ Vegeta: *"¡Este bot no necesita a Kakaroto para ser el mejor!"*  
 
 </details>
 
 ---
 
-### 💭 **Contáctanos**
+### 🔮 **Contacto con el Reino Saiyajin**
 
-<a href="https://wa.me/526641804242?text=Hola+quiero+el+bot+VEGETA"><img src="https://i.ibb.co/3dC0V9r/vegeta.jpg" height="125px"></a>
+<a href="https://wa.me/526641784469?text=Quiero+el+poder+de+VEGETA"><img src="https://i.ibb.co/3dC0V9r/vegeta.jpg" height="125px"></a>
 
 <details>
-<summary><b> 💣 Contactos</b></summary>
+<summary><b> 🐉 Comunicación Saiyajin</b></summary>
 
-* WhatsApp: https://wa.me/526641804242
+* WhatsApp: https://wa.me/526641784469  
+
+> 🗣️ Vegeta: *"Si buscas poder… habla directamente con el príncipe de los Saiyajin."*  
 
 </details>
 
 ---
 
-### ✧ **Descargar Termux (Click en la imagen)** ✧
+### 🐉 **Descarga el Templo Saiyajin (Termux)** ☁️
 <a href="https://www.mediafire.com/file/llugt4zgj7g3n3u/com.termux_1020.apk/file"><img src="https://qu.ax/finc.jpg" height="125px"></a> 
 
 ---
 
-### ➮ **Instalación por Termux**
+### 👉 **Ritual de Instalación Saiyajin (Termux)**
 
 <details>
- <summary><b> ✎ Click para ver comandos</b></summary>
+ <summary><b> 🪄 Click para ver el Entrenamiento</b></summary>
 
-#### Instalación paso a paso
+#### Pasos del Guerrero Z
 ```bash
 termux-setup-storage
-apt update && apt upgrade -y
-pkg install -y git nodejs ffmpeg imagemagick yarn
-git clone https://github.com/BrayanOFC/VEGETA-BOT-MB && cd VEGETA-BOT-MB
+```
+
+```bash
+apt update && apt upgrade && pkg install -y git nodejs ffmpeg imagemagick yarn
+```
+
+```bash
+git clone https://github.com/BrayanOFC/VEGETA-BOT-MB && cd VEGETA-BOT-MB 
+```
+
+```bash
 yarn install
+```
+
+```bash
 npm install
+```
+
+```bash
 npm update
+```
+
+```bash
 npm start
+```
+
+> Si aparece (Y/I/N/O/D/Z) [default=N] ? use la letra "y" + "ENTER" para continuar con la instalación
+
+### **🜸 Activar en caso de detenerse en termux**
+
+> Si después de instalar el bot en Termux se detiene (pantalla en blanco, pérdida de conexión a Internet, reinicio del dispositivo), sigue estos pasos:
+
+❒ Abre Termux y navega al directorio del bot:
+
+   ```bash
+    cd VEGETA-BOT-MB 
+   ```
+
+❒ Inicia el bot nuevamente:
+
+   ```bash
+    npm start
+   ```
+
+### **✰ Volverte owner del Bot**
+
+> Si después de instalar el bot en Termux y iniciar la session del bot (deseas poner tu número es la lista de owner pon este comando:
+
+   ```bash
+    cd VEGETA-BOT-MB && nano config.js
+   ```
+
+</details>
+
+### **👻 Para activar 24/7 (termux)**
+
+> comando para obtener la bot 24/7 en termux
+
+```bash
+npm i -g pm2 && pm2 start index.js && pm2 save && pm2 logs
+```
+
+✨️ Revivir el Ki de Vegeta si se detiene
+
+cd VEGETA-BOT-MB
+npm start
+
+✨️ Convertirte en el Owner Saiyajin
+
+cd VEGETA-BOT-MB && nano config.js
+
+> 🗣️ Vegeta: "No cualquiera puede portar este poder… pero si logras configurarlo, serás un verdadero Saiyajin."
+
+</details>
+---
+
+👻 Modo Saiyajin 24/7 en Termux
+
+npm i -g pm2 && pm2 start index.js && pm2 save && pm2 logs
+
+> 🗣️ Vegeta: "Un Saiyajin nunca descansa, y tu bot tampoco debería hacerlo."
+
+
+
+</details>
+---
+
+☁️ Desplegar el Poder en la Nube
+
+
+
+
+
+
+> 🗣️ Vegeta: "Este poder es tan grande que ni los dioses de la nube podrán contenerlo."
+
+
+
+</details>
+---
+
+🔗 Enlaces del Orgullo Saiyajin
+
+APP	TIPO	ENLACE
+
+WhatsApp	Canal Oficial Saiyajin	¡Click aquí!
+WhatsApp	Team BrayanOFC	¡Click aquí!
+WhatsApp	Grupo de Guerreros Z	¡Click aquí!
+
+
+> 🗣️ Vegeta: "Únete al escuadrón Z y eleva tu ki más allá de lo imaginable."
+
+
+
+</details>
+---
+
+🚀 Propietario Saiyajin
+
+<a href="https://github.com/BrayanOFC"><img src="https://github.com/BrayanOFC.png" width="130" height="130" alt="BrayanOFC"/></a>
+
+</details>
+---
+
+💵 Créditos de Poder
+
+<a href="https://github.com/BrayanOFC"><img src="https://github.com/BrayanOFC.png" width="140" height="140" alt="BrayanOFC"/></a>
+
+© Powered By Team BrayanOFC ⚡︎ – Orgullo Saiyajin
+
+</details>
+---
+
+> 🐉 “El poder de un Saiyajin no tiene límites… y VEGETA-BOT-MB fue creado desde 0 para demostrarlo.”
+🗣️ Vegeta: "¡Este bot superará a Kakaroto, lo juro por el orgullo Saiyajin!"
