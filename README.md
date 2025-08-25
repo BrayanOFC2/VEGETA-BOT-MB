@@ -107,47 +107,11 @@ cd VEGETA-BOT-MB && nano config.js
 > 🗣️ Vegeta: "No cualquiera puede portar este poder… pero si logras configurarlo, serás un verdadero Saiyajin."
 
 
----
-
-</details>
-
-👻 Modo Saiyajin 24/7 en Termux
+🎆 Modo Saiyajin 24/7 en Termux
 
 npm i -g pm2 && pm2 start index.js && pm2 save && pm2 logs
 
 > 🗣️ Vegeta: "Un Saiyajin nunca descansa, y tu bot tampoco debería hacerlo."
-
-
----
-
-
-</details>
-
-☁️ Desplegar el Poder en la Nube
-
-
-
-
-
-
-> 🗣️ Vegeta: "Este poder es tan grande que ni los dioses de la nube podrán contenerlo."
-
-
----
-
-</details>
-
-🔗 Enlaces del Orgullo Saiyajin
-
-APP	TIPO	ENLACE
-
-WhatsApp	Canal Oficial Saiyajin	¡Click aquí!
-WhatsApp	Team BrayanOFC	¡Click aquí!
-WhatsApp	Grupo de Guerreros Z	¡Click aquí!
-
-
-> 🗣️ Vegeta: "Únete al escuadrón Z y eleva tu ki más allá de lo imaginable."
-
 
 
 ---
@@ -157,15 +121,6 @@ WhatsApp	Grupo de Guerreros Z	¡Click aquí!
 🚀 Propietario Saiyajin
 
 <a href="https://github.com/BrayanOFC"><img src="https://github.com/BrayanOFC.png" width="130" height="130" alt="BrayanOFC"/></a>
-
-
----
-
-</details>
-
-💵 Créditos de Poder
-
-<a href="https://github.com/BrayanOFC"><img src="https://github.com/BrayanOFC.png" width="140" height="140" alt="BrayanOFC"/></a>
 
 © Powered By Team BrayanOFC ⚡︎ – Orgullo Saiyajin
 
