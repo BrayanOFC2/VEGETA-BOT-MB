@@ -94,7 +94,6 @@ npm start
 </details>
 ---
 
-> comando para obtener la bot 24/7 en termux
 
 ```bash
 npm i -g pm2 && pm2 start index.js && pm2 save && pm2 logs
@@ -121,9 +120,9 @@ npm i -g pm2 && pm2 start index.js && pm2 save && pm2 logs
 > 🗣️ Vegeta: "Un Saiyajin nunca descansa, y tu bot tampoco debería hacerlo."
 
 
+---
 
 </details>
----
 
 ☁️ Desplegar el Poder en la Nube
 
@@ -138,6 +137,8 @@ npm i -g pm2 && pm2 start index.js && pm2 save && pm2 logs
 
 </details>
 ---
+
+</details>
 
 🔗 Enlaces del Orgullo Saiyajin
 
@@ -155,12 +156,16 @@ WhatsApp	Grupo de Guerreros Z	¡Click aquí!
 </details>
 ---
 
+</details>
+
 🚀 Propietario Saiyajin
 
 <a href="https://github.com/BrayanOFC"><img src="https://github.com/BrayanOFC.png" width="130" height="130" alt="BrayanOFC"/></a>
 
 </details>
 ---
+
+</details>
 
 💵 Créditos de Poder
 
@@ -169,7 +174,10 @@ WhatsApp	Grupo de Guerreros Z	¡Click aquí!
 © Powered By Team BrayanOFC ⚡︎ – Orgullo Saiyajin
 
 </details>
+
 ---
+
+</details>
 
 > 🐉 “El poder de un Saiyajin no tiene límites… y VEGETA-BOT-MB fue creado desde 0 para demostrarlo.”
 🗣️ Vegeta: "¡Este bot superará a Kakaroto, lo juro por el orgullo Saiyajin!"
