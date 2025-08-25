@@ -39,7 +39,7 @@
 
 ### 🔮 **Contacto con el Reino Saiyajin**
 
-<a href="https://wa.me/526641784469?text=Quiero+el+poder+de+VEGETA"><img src="https://qu.ax/finc.jpg" height="125px"></a>
+<a href="https://wa.me/526641784469?text=Quiero+el+poder+de+VEGETA"><img src="https://qu.ax/ugHh.jpg" height="115px"></a>
 
 <details>
 <summary><b> 🐉 Comunicación Saiyajin</b></summary>
