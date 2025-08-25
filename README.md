@@ -105,7 +105,9 @@ cd VEGETA-BOT-MB && nano config.js
 
 🎆 Modo Saiyajin 24/7 en Termux
 
+```bash
 npm i -g pm2 && pm2 start index.js && pm2 save && pm2 logs
+```
 
 > 🗣️ Vegeta: "Un Saiyajin nunca descansa, y tu bot tampoco debería hacerlo."
 
