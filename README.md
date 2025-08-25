@@ -58,7 +58,7 @@
 ---
 
 ### 👉 **Ritual de Instalación Saiyajin (Termux)**
-><img src="https://qu.ax/xxisk.jpg" height="150px"></a>
+><img src="https://qu.ax/xxisk.jpg" height="200px"></a>
 
 <details>
  <summary><b> 🪄 Click para ver el Entrenamiento</b></summary>
