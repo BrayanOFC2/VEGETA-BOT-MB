@@ -57,7 +57,7 @@
 
 ---
 
-[![Termux](https://img.shields.io/badge/Instalacion%20En-Termux-000000?style=for-the-badge&logo=android&logoColor=white)](https://f-droid.org/es/packages/com.termux/)
+[![Termux](https://img.shields.io/badge/Instalacion-En%20Termux-000000?style=for-the-badge&logo=android&logoColor=white)](https://f-droid.org/es/packages/com.termux/)
 
 <details>
  <summary><b> 🪄 Click para ver el Entrenamiento</b></summary>
