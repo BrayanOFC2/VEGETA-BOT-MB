@@ -4,6 +4,7 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
   if (!text) return m.reply(`✨ Ingresa un texto para buscar en YouTube.\n> *Ejemplo:* ${usedPrefix + command} Shakira`);
 
   try {
+    // Buscar video
     const searchApi = `https://delirius-apiofc.vercel.app/search/ytsearch?q=${text}`;
     const searchResponse = await fetch(searchApi);
     const searchData = await searchResponse.json();
@@ -27,29 +28,31 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
       caption: videoDetails.trim()
     }, { quoted: m });
 
-    const downloadApi = `https://api.vevioz.com/@api/button/videos/${video.url}`;
-    const downloadResponse = await fetch(downloadApi);
-    const downloadData = await downloadResponse.json();
+    // Descargar video usando VeVioz API
+    const videoApi = `https://api.vevioz.com/@api/button/videos/${video.url}`;
+    const videoResp = await fetch(videoApi);
+    const videoData = await videoResp.json();
 
-    if (!downloadData?.url) return m.reply("❌ No se pudo obtener el video.");
+    if (videoData?.mp4?.length) {
+      await conn.sendMessage(m.chat, {
+        video: { url: videoData.mp4[0].url },
+        caption: `🎬 Aquí tienes tu video: ${video.title}`,
+        fileName: `${video.title}.mp4`
+      }, { quoted: m });
+    }
 
-    await conn.sendMessage(m.chat, {
-      video: { url: downloadData.url },
-      caption: `🎬 Aquí tienes tu video: ${video.title}`,
-      fileName: `${video.title}.mp4`
-    }, { quoted: m });
-
+    // Descargar audio usando VeVioz API
     const audioApi = `https://api.vevioz.com/@api/button/audio/${video.url}`;
-    const audioResponse = await fetch(audioApi);
-    const audioData = await audioResponse.json();
+    const audioResp = await fetch(audioApi);
+    const audioData = await audioResp.json();
 
-    if (!audioData?.url) return m.reply("❌ No se pudo obtener el audio.");
-
-    await conn.sendMessage(m.chat, {
-      audio: { url: audioData.url },
-      mimetype: 'audio/mpeg',
-      fileName: `${video.title}.mp3`
-    }, { quoted: m });
+    if (audioData?.mp3?.length) {
+      await conn.sendMessage(m.chat, {
+        audio: { url: audioData.mp3[0].url },
+        mimetype: 'audio/mpeg',
+        fileName: `${video.title}.mp3`
+      }, { quoted: m });
+    }
 
     await m.react("✅");
   } catch (error) {
