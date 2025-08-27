@@ -21,22 +21,13 @@ const handler = async (m, { conn, command, text }) => {
     image: { url: video.thumbnail },
     caption,
     footer: "📥 Elige una opción para descargar",
-    
-            buttons: [
-                {
-                    buttonId: `${usedPrefix}ytmp3 ${video.url}`,
-                    buttonText: { displayText: 'Audio' },
-                    type: 1,
-                },
-                {
-                    buttonId: `${usedPrefix}ytmp4 ${video.url}`,
-                    buttonText: { displayText: 'Vídeo' },
-                    type: 1,
-                }
-            ],
-            headerType: 1,
-            viewOnce: true
-        }, { quoted: m });
+    buttons: [
+      { buttonId: `${usedPrefix} ytmp3 ${video.url}`, buttonText: { displayText: "🎧 Descargar MP3" }, type: 1 },
+      { buttonId: `${usedPrefix} ytmp4 ${video.url}`, buttonText: { displayText: "🎬 Descargar MP4" }, type: 1 }
+    ],
+    headerType: 4
+  }, { quoted: m })
+}
 
 handler.command = ["play", "play2"]
 handler.tags = ["descargas"]
