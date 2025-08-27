@@ -29,40 +29,17 @@ const handler = async (m, { conn, text }) => {
       { quoted: m }
     );
 
-    // ---------------- Intentar con Neoxr ----------------
-    let downloadUrl = null;
-    try {
-      const apiUrl = `https://api.neoxr.eu/api/youtube?url=${encodeURIComponent(video.url)}&type=video&quality=480p&apikey=TU_APIKEY_AQUI`;
-      const response = await fetch(apiUrl);
-      const data = await response.json();
+    // Descargar video con API de Zenkey
+    const apiUrl = `https://api.zenkey.my.id/api/download/ytmp4?apikey=zenkey&url=${encodeURIComponent(video.url)}`;
+    const res = await fetch(apiUrl);
+    const data = await res.json();
 
-      if (data?.status && data?.data?.url) {
-        downloadUrl = data.data.url;
-      } else {
-        console.warn("Neoxr error:", data?.msg || data);
-      }
-    } catch (e) {
-      console.error("Error Neoxr:", e.message);
+    if (!data?.result?.url) {
+      console.error("Respuesta Zenkey:", data);
+      return m.reply("❌ No se pudo generar el enlace del video (Zenkey).");
     }
 
-    // ---------------- Fallback con Delirius ----------------
-    if (!downloadUrl) {
-      try {
-        const backupApi = `https://delirius-apiofc.vercel.app/download/ytmp4?url=${encodeURIComponent(video.url)}`;
-        const backupResp = await fetch(backupApi);
-        const backupData = await backupResp.json();
-        downloadUrl = backupData?.result?.url || null;
-      } catch (e) {
-        console.error("Error Delirius:", e.message);
-      }
-    }
-
-    if (!downloadUrl) {
-      return m.reply("❌ Ninguna API pudo generar el enlace del video. Revisa tu apikey de Neoxr.");
-    }
-
-    // Enviar video
-    await conn.sendFile(m.chat, downloadUrl, `${video.title}.mp4`, video.title, m);
+    await conn.sendFile(m.chat, data.result.url, `${video.title}.mp4`, video.title, m);
     await m.react('✅');
 
   } catch (error) {
