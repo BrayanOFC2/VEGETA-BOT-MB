@@ -449,7 +449,7 @@ const PlayText = await conn.sendMessage(m.chat, { text: `${yt_play[0].title}
 *👉🏻Aguarde un momento en lo que envío su ${tipoDescarga}*`,  
 contextInfo:{  
 forwardedNewsletterMessageInfo: { 
-newsletterJid: '120363305025805187@newsletter', 
+newsletterJid: '120363394965381607@newsletter', 
 serverMessageId: '', 
 newsletterName: 'VEGETA-BOT-MB🐉' },
 forwardingScore: 9999999,  
@@ -459,7 +459,7 @@ externalAdReply: {
 showAdAttribution: false,  
 renderLargerThumbnail: false,  
 title: yt_play[0].title,   
-body: "LoliBot",
+body: "Vegeta",
 containsAutoReply: true,  
 mediaType: 1,   
 thumbnailUrl: yt_play[0].thumbnail, 
@@ -535,7 +535,7 @@ if (command === 'play2' || command === 'video') {
 const { mediaData, isDirect } = await download(videoApis);
 if (mediaData) {
 const fileSize = await getFileSize(mediaData);
-const messageOptions = { fileName: `${yt_play[0].title}.mp4`, caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}`, mimetype: 'video/mp4' };
+const messageOptions = { fileName: `${yt_play[0].title}.mp4`, caption: `🐉 Aquí está tu video \n🔥 Título: ${yt_play[0].title}`, mimetype: 'video/mp4' };
 if (fileSize > LimitVid) {
 await conn.sendMessage(m.chat, { document: isDirect ? mediaData : { url: mediaData }, ...messageOptions }, { quoted: m });
 } else {
@@ -555,7 +555,7 @@ await m.react('❌');
 if (command === 'play4' || command === 'playdoc2') {
 const { mediaData, isDirect } = await download(videoApis);
 if (mediaData) {
-await conn.sendMessage(m.chat, { document: isDirect ? mediaData : { url: mediaData }, fileName: `${yt_play[0].title}.mp4`, caption: `🔰Título: ${yt_play[0].title}`, thumbnail: yt_play[0].thumbnail, mimetype: 'video/mp4'}, { quoted: m })
+await conn.sendMessage(m.chat, { document: isDirect ? mediaData : { url: mediaData }, fileName: `${yt_play[0].title}.mp4`, caption: `☁️Título: ${yt_play[0].title}`, thumbnail: yt_play[0].thumbnail, mimetype: 'video/mp4'}, { quoted: m })
 } else {
 //await m.react('❌');
 }}
