@@ -1,4 +1,4 @@
-/*const MAX_FILE_SIZE = 280 * 1024 * 1024;
+const MAX_FILE_SIZE = 280 * 1024 * 1024;
 const VIDEO_THRESHOLD = 70 * 1024 * 1024;
 const HEAVY_FILE_THRESHOLD = 100 * 1024 * 1024;
 const REQUEST_LIMIT = 3;
@@ -172,4 +172,4 @@ handler.tags = ['descargas'];
 handler.command = ['ytmp4'];
 handler.black = true; // 🔒 Reemplazo elegante de "diamond = true"
 
-export default handler;*/
+export default handler;
