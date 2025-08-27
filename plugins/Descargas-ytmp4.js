@@ -1,58 +1,66 @@
-/*import fetch from "node-fetch";
-import yts from "yt-search";
+import fetch from "node-fetch";
+import yts from 'yt-search';
 import axios from "axios";
 
-const formatAudio = ["mp3", "m4a", "webm", "acc", "flac", "opus", "ogg", "wav"];
-const formatVideo = ["360", "480", "720", "1080", "1440", "4k"];
+const formatAudio = ['mp3', 'm4a', 'webm', 'acc', 'flac', 'opus', 'ogg', 'wav'];
+const formatVideo = ['360', '480', '720', '1080', '1440', '4k'];
 
 const ddownr = {
   download: async (url, format) => {
     if (!formatAudio.includes(format) && !formatVideo.includes(format)) {
-      throw new Error("⚠ Formato no soportado, elige uno de la lista disponible.");
+      throw new Error('Formato no soportado, verifica la lista de formatos disponibles.');
     }
 
     const config = {
-      method: "GET",
+      method: 'GET',
       url: `https://p.oceansaver.in/ajax/download.php?format=${format}&url=${encodeURIComponent(url)}&api=dfcb6d76f2f6a9894gjkege8a4ab232222`,
       headers: {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, como Gecko) Chrome/91.0.4472.124 Safari/537.36"
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, como Gecko) Chrome/91.0.4472.124 Safari/537.36'
       }
     };
 
     try {
       const response = await axios.request(config);
-      if (response.data?.success) {
+
+      if (response.data && response.data.success) {
         const { id, title, info } = response.data;
+        const { image } = info;
         const downloadUrl = await ddownr.cekProgress(id);
-        return { id, title, image: info.image, downloadUrl };
+
+        return {
+          id: id,
+          image: image,
+          title: title,
+          downloadUrl: downloadUrl
+        };
       } else {
-        throw new Error("⛔ No se pudo obtener los detalles del video.");
+        throw new Error('Fallo al obtener los detalles del video.');
       }
     } catch (error) {
-      console.error("❌ Error:", error);
+      console.error('Error:', error);
       throw error;
     }
   },
-
   cekProgress: async (id) => {
     const config = {
-      method: "GET",
+      method: 'GET',
       url: `https://p.oceansaver.in/ajax/progress.php?id=${id}`,
       headers: {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, como Gecko) Chrome/91.0.4472.124 Safari/537.36"
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, como Gecko) Chrome/91.0.4472.124 Safari/537.36'
       }
     };
 
     try {
       while (true) {
         const response = await axios.request(config);
-        if (response.data?.success && response.data.progress === 1000) {
+
+        if (response.data && response.data.success && response.data.progress === 1000) {
           return response.data.download_url;
         }
         await new Promise(resolve => setTimeout(resolve, 5000));
       }
     } catch (error) {
-      console.error("❌ Error:", error);
+      console.error('Error:', error);
       throw error;
     }
   }
@@ -61,44 +69,50 @@ const ddownr = {
 const handler = async (m, { conn, text, usedPrefix, command }) => {
   try {
     if (!text.trim()) {
-      return conn.reply(m.chat, "⚔️ *VEGETA-BOT2.0* | Ingresa el nombre de la canción que deseas buscar.", m, rcanal);
+      return conn.reply(m.chat, `✎ ingresa el nombre de la música a descargar.`, m);
     }
 
     const search = await yts(text);
-    if (!search.all.length) {
-      return m.reply("⚠ No se encontraron resultados para tu búsqueda.");
+    if (!search.all || search.all.length === 0) {
+      return m.reply('No se encontraron resultados para tu búsqueda.');
     }
 
     const videoInfo = search.all[0];
     const { title, thumbnail, timestamp, views, ago, url } = videoInfo;
     const vistas = formatViews(views);
-    const thumb = (await conn.getFile(thumbnail))?.data;
+    const infoMessage = `•••] ✞ ◜YouTube Play◞ ✞ [•••
 
-    const infoMessage = ` 🫆 \`VEGETA-BOT - Descargas\`\n\n*✦ Título:* ${title}\n> ━━━━━━━━━━━━━━━━━━━━━\n*✰ Duración:* ${timestamp}\n> ━━━━━━━━━━━━━━━━━━━━━\n*✰ Vistas:* ${vistas}\n> ━━━━━━━━━━━━━━━━━━━━━\n*✰ Canal:* ${videoInfo.author.name || "Desconocido"}\n> ━━━━━━━━━━━━━━━━━━━━━\n*✰ Publicado:* ${ago}\n> ━━━━━━━━━━━━━━━━━━━━━\n*∞ Enlace:* ${url}`;
+   ✦ *🐥  Título : » ${videoInfo.title}
+   ✿ *💯 Vistas: » ${videoInfo.views}
+   😍 *⏳ Duración : » ${videoInfo.timestamp}
+   ☘🐽 *😏 Publicado : » ${videoInfo.ago}
+   🔗 *✦ URL : » ${videoInfo.url}`;
+    const thumb = (await conn.getFile(thumbnail))?.data;
 
     const JT = {
       contextInfo: {
         externalAdReply: {
-          title: "Vegeta-Bot MB👑",
-          body: "(1) Delos mejores Bots de WhatsApp",
+          title: packname,
+          body: dev,
           mediaType: 1,
           previewType: 0,
           mediaUrl: url,
           sourceUrl: url,
           thumbnail: thumb,
-          renderLargerThumbnail: true
-        }
-      }
+          renderLargerThumbnail: true,
+        },
+      },
     };
 
-    await conn.reply(m.chat, infoMessage, fkontak, JT);
+    //await conn.reply(m.chat, infoMessage, m, JT);
 
-    if (["play", "yta", "ytmp3"].includes(command)) {
-      const api = await ddownr.download(url, "mp3");
-      await conn.sendMessage(m.chat, { audio: { url: api.downloadUrl }, mimetype: "audio/mpeg" }, { quoted: fkontak });
+    if (command === 'play' || command === 'yta' || command === 'ytmp3') {
+        const api = await ddownr.download(url, 'mp3');
+        const result = api.downloadUrl;
+        await conn.sendMessage(m.chat, { audio: { url: result }, mimetype: "audio/mpeg" }, { quoted: m });
 
-    } else if (["play2", "ytv", "ytmp4"].includes(command)) {
-      const sources = [
+    } else if (command === 'play2' || command === 'ytv' || command === 'ytmp4') {
+      let sources = [
         `https://api.siputzx.my.id/api/d/ytmp4?url=${url}`,
         `https://api.zenkey.my.id/api/download/ytmp4?apikey=zenkey&url=${url}`,
         `https://axeel.my.id/api/download/video?url=${encodeURIComponent(url)}`,
@@ -117,37 +131,37 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
             await conn.sendMessage(m.chat, {
               video: { url: downloadUrl },
               fileName: `${title}.mp4`,
-              mimetype: "video/mp4",
-              caption: "⚔ Aquí tienes tu video descargado por *Vegeta-Bot MB2.0* ⚔",
+              mimetype: 'video/mp4',
+              caption: `✎﹏Aqui tienes tu video`,
               thumbnail: thumb
-            }, { quoted: fkontak });
+            }, { quoted: m });
             break;
           }
         } catch (e) {
-          console.error(`⚠ Error con la fuente ${source}:`, e.message);
+          console.error(`Error con la fuente ${source}:`, e.message);
         }
       }
 
       if (!success) {
-        return m.reply("⛔ *Error:* No se encontró un enlace de descarga válido.");
+        return m.reply(` ✱ *No se pudo descargar el video:* No se encontró un enlace de descarga válido.`);
       }
     } else {
-      throw "❌ Comando no reconocido.";
+      throw "Comando no reconocido.";
     }
   } catch (error) {
-    return m.reply(`⚠ Ocurrió un error: ${error.message}`);
+    return m.reply(`😤 *Error:* ${error.message}`);
   }
 };
 
-handler.command = handler.help = ["play", "play2", "ytmp3", "yta", "ytmp4", "ytv"];
-handler.tags = ["downloader"];
-handler.coin = 5;
+handler.command = handler.help = ['ytmp3', 'yta', 'ytmp4', 'ytv'];
+handler.tags = ['downloader'];
 
 export default handler;
 
 function formatViews(views) {
-  if (typeof views !== "number") return "Desconocido";
-  return views >= 1000
-    ? (views / 1000).toFixed(1) + "k (" + views.toLocaleString() + ")"
-    : views.toString();
-}*/
+  if (views >= 1000) {
+    return (views / 1000).toFixed(1) + 'k (' + views.toLocaleString() + ')';
+  } else {
+    return views.toString();
+  }
+}
