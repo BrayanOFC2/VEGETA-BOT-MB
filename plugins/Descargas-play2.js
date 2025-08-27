@@ -29,13 +29,14 @@ let handler = async (m, { conn, text }) => {
       caption: videoDetails.trim()
     }, { quoted: m });
 
-    // Descargar y enviar video MP4 usando la API de Neoxr
+    // Obtener enlace de descarga del video en formato MP4
     const videoApi = `https://api.neoxr.eu/api/youtube?url=${video.url}&type=video&quality=480p&apikey=GataDios`;
     const response = await fetch(videoApi);
     const json = await response.json();
 
     if (!json.data?.url) return m.reply("❌ No se pudo generar el enlace del video.");
 
+    // Descargar y enviar el video MP4
     await conn.sendFile(m.chat, json.data.url, `${json.data.title}.mp4`, json.data.title, m);
 
     await m.react("✅");
