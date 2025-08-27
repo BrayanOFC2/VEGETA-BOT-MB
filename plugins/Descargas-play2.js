@@ -14,7 +14,7 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
       caption: `🎵 *${video.title}*`
     }, { quoted: m });
 
-    const convertApi = `https://api.yt5s.com/api/convert?url=${video.url}&format=mp4`;
+    const convertApi = `https://api.sylphy.xyz/api/convert?url=${video.url}&format=mp4`;
     const convertData = await (await fetch(convertApi)).json();
 
     if (!convertData.url) return m.reply("❌ No se pudo obtener el video.");
@@ -26,7 +26,7 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
     }, { quoted: m });
 
     // Convertir video a MP3
-    const convertAudioApi = `https://api.yt5s.com/api/convert?url=${video.url}&format=mp3`;
+    const convertAudioApi = `https://api.sylphy.xyz/api/convert?url=${video.url}&format=mp3`;
     const audioData = await (await fetch(convertAudioApi)).json();
 
     if (!audioData.url) return m.reply("❌ No se pudo obtener el audio.");
