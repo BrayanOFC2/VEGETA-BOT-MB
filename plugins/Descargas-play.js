@@ -88,7 +88,7 @@ const handler = async (m, { conn, args, usedPrefix }) => {
             },
             buttons: [
                 {
-                    buttonId: `${usedPrefix}ytmp3 ${video.url}`,
+                    buttonId: `${usedPrefix}yta ${video.url}`,
                     buttonText: { displayText: 'Audio' },
                     type: 1,
                 },
