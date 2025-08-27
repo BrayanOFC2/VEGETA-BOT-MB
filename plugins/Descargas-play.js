@@ -12,7 +12,7 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
       return m.reply(`⚠️ No se encontraron resultados para "${text}".`);
     }
 
-    const video = searchData.data[0]; // Tomar el primer resultado
+    const video = searchData.data[0];
     const videoDetails = `
 🎵 *Título:* ${video.title}
 📺 *Canal:* ${video.author.name}
