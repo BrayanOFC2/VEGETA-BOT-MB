@@ -1,52 +1,34 @@
 import fetch from 'node-fetch';
+import https from 'https';
+
+const httpsAgent = new https.Agent({ rejectUnauthorized: false });
 
 let handler = async (m, { conn, usedPrefix, command, text }) => {
-  if (!text) return m.reply(`✨ Ingresa un texto para buscar en YouTube.\n> *Ejemplo:* ${usedPrefix + command} Shakira`);
+  if (!text) return m.reply(`✨ Ingresa un texto para buscar en YouTube.`);
 
   try {
-    // Buscar video
     const searchApi = `https://delirius-apiofc.vercel.app/search/ytsearch?q=${text}`;
-    const searchResponse = await fetch(searchApi);
-    const searchData = await searchResponse.json();
-
-    if (!searchData?.data || searchData.data.length === 0) {
-      return m.reply(`⚠️ No se encontraron resultados para "${text}".`);
-    }
-
+    const searchData = await (await fetch(searchApi)).json();
     const video = searchData.data[0];
-    const videoDetails = `
-🎵 *Título:* ${video.title}
-📺 *Canal:* ${video.author.name}
-⏱️ *Duración:* ${video.duration}
-👀 *Vistas:* ${video.views}
-📅 *Publicado:* ${video.publishedAt}
-🌐 *Enlace:* ${video.url}
-`;
 
     await conn.sendMessage(m.chat, {
       image: { url: video.image },
-      caption: videoDetails.trim()
+      caption: `🎵 *${video.title}*`
     }, { quoted: m });
 
-    // Descargar video usando YTDownload API
+    // Video
     const videoApi = `https://api.yt-download.org/api/button/mp4/${video.url}`;
-    const videoResp = await fetch(videoApi);
-    const videoData = await videoResp.json();
-
-    if (!videoData?.url) return m.reply("❌ No se pudo obtener el video.");
+    const videoData = await (await fetch(videoApi, { agent: httpsAgent })).json();
 
     await conn.sendMessage(m.chat, {
       video: { url: videoData.url },
-      caption: `🎬 Aquí tienes tu video: ${video.title}`,
+      caption: `🎬 ${video.title}`,
       fileName: `${video.title}.mp4`
     }, { quoted: m });
 
-    // Descargar audio
+    // Audio
     const audioApi = `https://api.yt-download.org/api/button/mp3/${video.url}`;
-    const audioResp = await fetch(audioApi);
-    const audioData = await audioResp.json();
-
-    if (!audioData?.url) return m.reply("❌ No se pudo obtener el audio.");
+    const audioData = await (await fetch(audioApi, { agent: httpsAgent })).json();
 
     await conn.sendMessage(m.chat, {
       audio: { url: audioData.url },
@@ -55,9 +37,9 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
     }, { quoted: m });
 
     await m.react("✅");
-  } catch (error) {
-    console.error(error);
-    m.reply(`❌ Error al procesar la solicitud:\n${error.message}`);
+  } catch (err) {
+    console.error(err);
+    m.reply(`❌ Error al procesar la solicitud:\n${err.message}`);
   }
 };
 
