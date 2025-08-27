@@ -1,12 +1,10 @@
 import fetch from 'node-fetch';
-import https from 'https';
-
-const httpsAgent = new https.Agent({ rejectUnauthorized: false });
 
 let handler = async (m, { conn, usedPrefix, command, text }) => {
   if (!text) return m.reply(`✨ Ingresa un texto para buscar en YouTube.`);
 
   try {
+    // Buscar video
     const searchApi = `https://delirius-apiofc.vercel.app/search/ytsearch?q=${text}`;
     const searchData = await (await fetch(searchApi)).json();
     const video = searchData.data[0];
@@ -16,19 +14,23 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
       caption: `🎵 *${video.title}*`
     }, { quoted: m });
 
-    // Video
-    const videoApi = `https://api.yt-download.org/api/button/mp4/${video.url}`;
-    const videoData = await (await fetch(videoApi, { agent: httpsAgent })).json();
+    // Convertir video a y2mate/yt5s para MP4
+    const convertApi = `https://api.yt5s.com/api/convert?url=${video.url}&format=mp4`;
+    const convertData = await (await fetch(convertApi)).json();
+
+    if (!convertData.url) return m.reply("❌ No se pudo obtener el video.");
 
     await conn.sendMessage(m.chat, {
-      video: { url: videoData.url },
+      video: { url: convertData.url },
       caption: `🎬 ${video.title}`,
       fileName: `${video.title}.mp4`
     }, { quoted: m });
 
-    // Audio
-    const audioApi = `https://api.yt-download.org/api/button/mp3/${video.url}`;
-    const audioData = await (await fetch(audioApi, { agent: httpsAgent })).json();
+    // Convertir video a MP3
+    const convertAudioApi = `https://api.yt5s.com/api/convert?url=${video.url}&format=mp3`;
+    const audioData = await (await fetch(convertAudioApi)).json();
+
+    if (!audioData.url) return m.reply("❌ No se pudo obtener el audio.");
 
     await conn.sendMessage(m.chat, {
       audio: { url: audioData.url },
@@ -37,6 +39,7 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
     }, { quoted: m });
 
     await m.react("✅");
+
   } catch (err) {
     console.error(err);
     m.reply(`❌ Error al procesar la solicitud:\n${err.message}`);
