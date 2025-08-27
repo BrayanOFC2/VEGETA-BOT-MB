@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-let handler = async (m, { conn, usedPrefix, command, text }) => {
+let handler = async (m, { conn, text }) => {
   if (!text) return m.reply(`✨ Ingresa un texto para buscar en YouTube.`);
 
   try {
@@ -29,31 +29,14 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
       caption: videoDetails.trim()
     }, { quoted: m });
 
-    // Obtener información del video
-    const infoResp = await fetch(`https://youtube-download-api.matheusishiyama.repl.co/info/?url=${video.url}`);
-    const infoData = await infoResp.json();
+    // Descargar y enviar video MP4 usando la API de Neoxr
+    const videoApi = `https://api.neoxr.eu/api/youtube?url=${video.url}&type=video&quality=480p&apikey=GataDios`;
+    const response = await fetch(videoApi);
+    const json = await response.json();
 
-    if (!infoData.title) return m.reply("❌ No se pudo obtener la información del video.");
+    if (!json.data?.url) return m.reply("❌ No se pudo generar el enlace del video.");
 
-    // Descargar y enviar video MP4
-    const mp4Resp = await fetch(`https://youtube-download-api.matheusishiyama.repl.co/mp4/?url=${video.url}`);
-    const mp4Buffer = await mp4Resp.buffer();
-
-    await conn.sendMessage(m.chat, {
-      video: mp4Buffer,
-      caption: `🎬 ${infoData.title}`,
-      fileName: `${infoData.title}.mp4`
-    }, { quoted: m });
-
-    // Descargar y enviar audio MP3
-    const mp3Resp = await fetch(`https://youtube-download-api.matheusishiyama.repl.co/mp3/?url=${video.url}`);
-    const mp3Buffer = await mp3Resp.buffer();
-
-    await conn.sendMessage(m.chat, {
-      audio: mp3Buffer,
-      mimetype: 'audio/mpeg',
-      fileName: `${infoData.title}.mp3`
-    }, { quoted: m });
+    await conn.sendFile(m.chat, json.data.url, `${json.data.title}.mp4`, json.data.title, m);
 
     await m.react("✅");
 
