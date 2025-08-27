@@ -26,7 +26,7 @@ const handler = async (m, { conn, text }) => {
     }, { quoted: m });
 
     // API de Y2mate para obtener enlace de video MP4
-    const y2mateApi = `https://api.y2mate.com/youtube?url=${video.url}&format=mp4`;
+            const api = await (await fetch(`https://api.vreden.my.id/api/ytmp3?url=${url}`)).json();
     const response = await fetch(y2mateApi);
     const data = await response.json();
 
