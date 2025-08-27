@@ -5,7 +5,6 @@ import { generateWAMessageFromContent, proto, prepareWAMessageMedia } from '@whi
 const handler = async (m, { conn, args, usedPrefix, command }) => {
     if (!args[0]) return conn.reply(m.chat, `🐉 Ingresa un texto para buscar en YouTube.\n> *Ejemplo:* ${usedPrefix + command} Shakira`, m);
 
-    await m.react('🕓'); // Reacción de búsqueda
     try {
         let searchResults = await searchVideos(args.join(" "));
         if (!searchResults.length) throw new Error('No se encontraron resultados.');
@@ -40,10 +39,8 @@ const handler = async (m, { conn, args, usedPrefix, command }) => {
         );
 
         await conn.relayMessage(m.chat, template.message, { messageId: template.key.id });
-        await m.react('✅'); // Reacción de éxito
     } catch (e) {
         console.error(e);
-        await m.react('✖️'); // Reacción de error
         conn.reply(m.chat, '*`Error al buscar el video.`*', m);
     }
 };
