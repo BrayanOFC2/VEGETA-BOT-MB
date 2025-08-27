@@ -5,7 +5,7 @@ const handler = async (m, { conn, text }) => {
   if (!text) return m.reply('✨ Ingresa un texto para buscar en YouTube.');
 
   try {
-    // Buscar video
+    // Buscar video en YouTube
     const search = await yts(text);
     const video = search.videos[0];
     if (!video) return m.reply(`⚠️ No se encontraron resultados para "${text}".`);
@@ -19,23 +19,16 @@ const handler = async (m, { conn, text }) => {
 📅 *Publicado:* ${video.ago}
 🌐 *Enlace:* ${video.url}
     `;
+    await conn.sendMessage(m.chat, { image: { url: video.thumbnail }, caption: videoDetails.trim() }, { quoted: m });
 
-    await conn.sendMessage(m.chat, {
-      image: { url: video.thumbnail },
-      caption: videoDetails.trim()
-    }, { quoted: m });
+    // ---------------- Video MP4 con API de Sylphy ----------------
+    const apiUrl = `https://api.sylphy.xyz/download/ytmp4?url=${video.url}&apikey=Sylphiette's`;
+    const apiResp = await fetch(apiUrl);
+    const apiData = await apiResp.json();
 
-    // API de Y2mate para obtener enlace de video MP4
-            const api = await (await fetch(`https://api.vreden.my.id/api/ytmp3?url=${url}`)).json();
-    const response = await fetch(y2mateApi);
-    const data = await response.json();
+    if (!apiData?.result?.url) return m.reply('❌ No se pudo generar el enlace del video.');
 
-    if (!data || !data.links || !data.links.length) return m.reply('❌ No se pudo generar el enlace del video.');
-
-    const mp4Link = data.links.find(link => link.quality === '480p')?.url || data.links[0].url;
-
-    // Enviar video MP4
-    await conn.sendFile(m.chat, mp4Link, `${video.title}.mp4`, video.title, m);
+    await conn.sendFile(m.chat, apiData.result.url, `${video.title}.mp4`, video.title, m);
 
     await m.react('✅');
 
