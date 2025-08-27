@@ -20,6 +20,7 @@ const handler = async (m, { conn, args, usedPrefix, command }) => {
         messageText += `*🖇️ Url:* ${video.url}\n`;
 
         const media = await prepareWAMessageMedia({ image: thumbnail }, { upload: conn.waUploadToServer });
+
         const template = generateWAMessageFromContent(
             m.chat,
             proto.Message.fromObject({
