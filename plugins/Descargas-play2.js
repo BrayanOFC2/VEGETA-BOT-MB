@@ -1,45 +1,43 @@
 import fetch from 'node-fetch';
+import yts from 'yt-search';
 
-let handler = async (m, { conn, text }) => {
-  if (!text) return m.reply(`✨ Ingresa un texto para buscar en YouTube.`);
+const handler = async (m, { conn, text }) => {
+  if (!text) return m.reply('✨ Ingresa un texto para buscar en YouTube.');
 
   try {
     // Buscar video
-    const searchApi = `https://delirius-apiofc.vercel.app/search/ytsearch?q=${text}`;
-    const searchResp = await fetch(searchApi);
-    const searchData = await searchResp.json();
+    const search = await yts(text);
+    const video = search.videos[0];
+    if (!video) return m.reply(`⚠️ No se encontraron resultados para "${text}".`);
 
-    if (!searchData?.data || searchData.data.length === 0)
-      return m.reply(`⚠️ No se encontraron resultados para "${text}".`);
-
-    const video = searchData.data[0];
-
-    // Enviar información del video
+    // Enviar info del video
     const videoDetails = `
 🎵 *Título:* ${video.title}
 📺 *Canal:* ${video.author.name}
-⏱️ *Duración:* ${video.duration}
+⏱️ *Duración:* ${video.timestamp}
 👀 *Vistas:* ${video.views}
-📅 *Publicado:* ${video.publishedAt}
+📅 *Publicado:* ${video.ago}
 🌐 *Enlace:* ${video.url}
     `;
 
     await conn.sendMessage(m.chat, {
-      image: { url: video.image },
+      image: { url: video.thumbnail },
       caption: videoDetails.trim()
     }, { quoted: m });
 
-    // Obtener enlace de descarga del video en formato MP4
-    const videoApi = `https://api.neoxr.eu/api/youtube?url=${video.url}&type=video&quality=480p&apikey=GataDios`;
-    const response = await fetch(videoApi);
-    const json = await response.json();
+    // API de Y2mate para obtener enlace de video MP4
+    const y2mateApi = `https://api.y2mate.com/youtube?url=${video.url}&format=mp4`;
+    const response = await fetch(y2mateApi);
+    const data = await response.json();
 
-    if (!json.data?.url) return m.reply("❌ No se pudo generar el enlace del video.");
+    if (!data || !data.links || !data.links.length) return m.reply('❌ No se pudo generar el enlace del video.');
 
-    // Descargar y enviar el video MP4
-    await conn.sendFile(m.chat, json.data.url, `${json.data.title}.mp4`, json.data.title, m);
+    const mp4Link = data.links.find(link => link.quality === '480p')?.url || data.links[0].url;
 
-    await m.react("✅");
+    // Enviar video MP4
+    await conn.sendFile(m.chat, mp4Link, `${video.title}.mp4`, video.title, m);
+
+    await m.react('✅');
 
   } catch (error) {
     console.error(error);
