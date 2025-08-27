@@ -22,8 +22,8 @@ const handler = async (m, { conn, command, text }) => {
     caption,
     footer: "📥 Elige una opción para descargar",
     buttons: [
-      { buttonId: `.dl ${mp3}`, buttonText: { displayText: "🎧 Descargar MP3" }, type: 1 },
-      { buttonId: `.dl ${mp4}`, buttonText: { displayText: "🎬 Descargar MP4" }, type: 1 }
+      { buttonId: `ytmp3`, buttonText: { displayText: "🎧 Descargar MP3" }, type: 1 },
+      { buttonId: `ytmp4`, buttonText: { displayText: "🎬 Descargar MP4" }, type: 1 }
     ],
     headerType: 4
   }, { quoted: m })
