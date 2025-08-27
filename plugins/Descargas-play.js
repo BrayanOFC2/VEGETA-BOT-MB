@@ -56,14 +56,13 @@ export default handler;*/
 
 import yts from 'yt-search';
 import fetch from 'node-fetch';
-import { convertTimeToSpanish } from './utils.js'; 
+import { generateWAMessageFromContent, proto, prepareWAMessageMedia } from '@whiskeysockets/baileys';
 
 const handler = async (m, { conn, args, usedPrefix, command }) => {
     if (!args[0]) return conn.reply(m.chat, `🐉 Ingresa un texto para buscar en YouTube.\n> *Ejemplo:* ${usedPrefix + command} Shakira`, m);
 
     await m.react('🕓');
     try {
-       
         let searchResults = await searchVideos(args.join(" "));
         if (!searchResults.length) throw new Error('No se encontraron resultados.');
 
@@ -77,17 +76,27 @@ const handler = async (m, { conn, args, usedPrefix, command }) => {
         messageText += `*📆 Publicado:* ${convertTimeToSpanish(video.publicado)}\n`;
         messageText += `*🖇️ Url:* ${video.url}\n`;
 
-        await conn.sendMessage(m.chat, {
-            image: thumbnail,
-            caption: messageText,
-            footer: '𝖯𑄜𝗐𝖾𝗋𝖾𝖽 𝖻𝗒 𝖲𝗁⍺𝖽ᦅ𝗐′𝗌 𝖢𝗅𝗎𝖻',
-            buttons: [
-                { buttonId: `${usedPrefix}ytmp3 ${video.url}`, buttonText: { displayText: '🎵 Audio' }, type: 1 },
-                { buttonId: `${usedPrefix}ytmp4 ${video.url}`, buttonText: { displayText: '🎬 Video' }, type: 1 }
-            ],
-            headerType: 4 // Imagen + botones
-        }, { quoted: m });
+        const media = await prepareWAMessageMedia({ image: thumbnail }, { upload: conn.waUploadToServer });
+        const template = generateWAMessageFromContent(
+            m.chat,
+            proto.Message.fromObject({
+                templateMessage: {
+                    hydratedTemplate: {
+                        imageMessage: media.imageMessage,
+                        hydratedContentText: messageText,
+                        hydratedFooterText: '𝖯𑄜𝗐𝖾𝗋𝖾𝖽 𝖻𝗒 𝖲𝗁⍺𝖽ᦅ𝗐′𝗌 𝖢𝗅𝗎𝖻',
+                        hydratedButtons: [
+                            { quickReplyButton: { displayText: '🎵 Audio', id: `${usedPrefix}ytmp3 ${video.url}` } },
+                            { quickReplyButton: { displayText: '🎬 Video', id: `${usedPrefix}ytmp4 ${video.url}` } },
+                            { urlButton: { displayText: '🌐 Ver Video', url: video.url } }
+                        ]
+                    }
+                }
+            }),
+            { userJid: m.sender, quoted: m }
+        );
 
+        await conn.relayMessage(m.chat, template.message, { messageId: template.key.id });
         await m.react('✅');
     } catch (e) {
         console.error(e);
@@ -101,7 +110,7 @@ handler.tags = ['descargas'];
 handler.command = ['play'];
 export default handler;
 
-function searchVideos(query) {
+async function searchVideos(query) {
     try {
         const res = await yts(query);
         return res.videos.slice(0, 10).map(video => ({
@@ -119,7 +128,6 @@ function searchVideos(query) {
     }
 }
 
-// Función para convertir tiempo a español
 function convertTimeToSpanish(timeText) {
     return timeText
         .replace(/year/g, 'año').replace(/years/g, 'años')
