@@ -56,15 +56,15 @@ export default handler;*/
 
 import yts from 'yt-search';
 import fetch from 'node-fetch';
-import { prepareWAMessageMedia, generateWAMessageFromContent } from '@whiskeysockets/baileys';
+import { convertTimeToSpanish } from './utils.js'; 
 
-const handler = async (m, { conn, args, usedPrefix }) => {
+const handler = async (m, { conn, args, usedPrefix, command }) => {
     if (!args[0]) return conn.reply(m.chat, `🐉 Ingresa un texto para buscar en YouTube.\n> *Ejemplo:* ${usedPrefix + command} Shakira`, m);
 
     await m.react('🕓');
     try {
+       
         let searchResults = await searchVideos(args.join(" "));
-
         if (!searchResults.length) throw new Error('No se encontraron resultados.');
 
         let video = searchResults[0];
@@ -80,26 +80,12 @@ const handler = async (m, { conn, args, usedPrefix }) => {
         await conn.sendMessage(m.chat, {
             image: thumbnail,
             caption: messageText,
-            footer: `𝖯𑄜𝗐𝖾𝗋𝖾𝖽 𝖻𝗒 𝖲𝗁⍺𝖽ᦅ𝗐′𝗌 𝖢𝗅𝗎𝖻`,
-            contextInfo: {
-                mentionedJid: [m.sender],
-                forwardingScore: 999,
-                isForwarded: true
-            },
+            footer: '𝖯𑄜𝗐𝖾𝗋𝖾𝖽 𝖻𝗒 𝖲𝗁⍺𝖽ᦅ𝗐′𝗌 𝖢𝗅𝗎𝖻',
             buttons: [
-                {
-                    buttonId: `${usedPrefix}ytmp3 ${video.url}`,
-                    buttonText: { displayText: 'Audio' },
-                    type: 1,
-                },
-                {
-                    buttonId: `${usedPrefix}ytmp4 ${video.url}`,
-                    buttonText: { displayText: 'Vídeo' },
-                    type: 1,
-                }
+                { buttonId: `${usedPrefix}ytmp3 ${video.url}`, buttonText: { displayText: '🎵 Audio' }, type: 1 },
+                { buttonId: `${usedPrefix}ytmp4 ${video.url}`, buttonText: { displayText: '🎬 Video' }, type: 1 }
             ],
-            headerType: 1,
-            viewOnce: true
+            headerType: 4 // Imagen + botones
         }, { quoted: m });
 
         await m.react('✅');
@@ -115,7 +101,7 @@ handler.tags = ['descargas'];
 handler.command = ['play'];
 export default handler;
 
-async function searchVideos(query) {
+function searchVideos(query) {
     try {
         const res = await yts(query);
         return res.videos.slice(0, 10).map(video => ({
@@ -133,11 +119,12 @@ async function searchVideos(query) {
     }
 }
 
+// Función para convertir tiempo a español
 function convertTimeToSpanish(timeText) {
     return timeText
-        .replace(/year/, 'año').replace(/years/, 'años')
-        .replace(/month/, 'mes').replace(/months/, 'meses')
-        .replace(/day/, 'día').replace(/days/, 'días')
-        .replace(/hour/, 'hora').replace(/hours/, 'horas')
-        .replace(/minute/, 'minuto').replace(/minutes/, 'minutos');
+        .replace(/year/g, 'año').replace(/years/g, 'años')
+        .replace(/month/g, 'mes').replace(/months/g, 'meses')
+        .replace(/day/g, 'día').replace(/days/g, 'días')
+        .replace(/hour/g, 'hora').replace(/hours/g, 'horas')
+        .replace(/minute/g, 'minuto').replace(/minutes/g, 'minutos');
 }
