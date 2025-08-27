@@ -14,7 +14,6 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
       caption: `🎵 *${video.title}*`
     }, { quoted: m });
 
-    // Convertir video a y2mate/yt5s para MP4
     const convertApi = `https://api.yt5s.com/api/convert?url=${video.url}&format=mp4`;
     const convertData = await (await fetch(convertApi)).json();
 
