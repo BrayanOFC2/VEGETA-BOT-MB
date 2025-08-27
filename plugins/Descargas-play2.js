@@ -29,15 +29,32 @@ const handler = async (m, { conn, text }) => {
       { quoted: m }
     );
 
-    // ---------------- Video MP4 con API de Sylphy ----------------
-    const apiUrl = `https://api.sylphy.xyz/download/ytmp4?url=${video.url}&apikey=sylphy`;
-    const apiResp = await fetch(apiUrl);
-    const apiData = await apiResp.json();
+    // ---------------- Intentar con API de Sylphy ----------------
+    let downloadUrl = null;
+    try {
+      const apiUrl = `https://api.sylphy.xyz/download/ytmp4?url=${video.url}&apikey=sylphy`;
+      const apiResp = await fetch(apiUrl);
+      const apiData = await apiResp.json();
+      downloadUrl = apiData?.result?.download_url || null;
+    } catch (e) {
+      console.error("Error en Sylphy:", e.message);
+    }
 
-    if (!apiData?.result?.download_url)
-      return m.reply('❌ No se pudo generar el enlace del video.');
+    // ---------------- Si falla Sylphy, usar Delirius ----------------
+    if (!downloadUrl) {
+      try {
+        const backupApi = `https://delirius-apiofc.vercel.app/download/ytmp4?url=${encodeURIComponent(video.url)}`;
+        const backupResp = await fetch(backupApi);
+        const backupData = await backupResp.json();
+        downloadUrl = backupData?.result?.url || null;
+      } catch (e) {
+        console.error("Error en Delirius:", e.message);
+      }
+    }
 
-    await conn.sendFile(m.chat, apiData.result.download_url, `${video.title}.mp4`, video.title, m);
+    if (!downloadUrl) return m.reply('❌ Ninguna API pudo generar el enlace del video.');
+
+    await conn.sendFile(m.chat, downloadUrl, `${video.title}.mp4`, video.title, m);
 
     await m.react('✅');
 
