@@ -12,7 +12,7 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
       return m.reply(`⚠️ No se encontraron resultados para "${text}".`);
     }
 
-    const video = searchData.data[0];
+    const video = searchData.data[0]; // Tomar el primer resultado
     const videoDetails = `
 🎵 *Título:* ${video.title}
 📺 *Canal:* ${video.author.name}
@@ -27,7 +27,7 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
       caption: videoDetails.trim()
     }, { quoted: m });
 
-    const downloadApi = `https://vreden.my.id/api/ytmp3?url=${video.url}`;
+    const downloadApi = `https://api.vreden.my.id/api/ytmp3?url=${video.url}`;
     const downloadResponse = await fetch(downloadApi);
     const downloadData = await downloadResponse.json();
 
@@ -49,6 +49,6 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
 
 handler.command = ['play', 'playaudio'];
 handler.help = ['play <texto>', 'playaudio <texto>'];
-handler.tags = ['descargas'];
+handler.tags = ['media'];
 
 export default handler;
