@@ -1,5 +1,6 @@
 import yts from 'yt-search';
 import fetch from 'node-fetch';
+import { generateWAMessageFromContent, proto, prepareWAMessageMedia } from '@whiskeysockets/baileys';
 
 const handler = async (m, { conn, args, usedPrefix, command }) => {
     if (!args[0]) return conn.reply(m.chat, `🐉 Ingresa un texto para buscar en YouTube.\n> *Ejemplo:* ${usedPrefix + command} Shakira`, m);
@@ -19,12 +20,26 @@ const handler = async (m, { conn, args, usedPrefix, command }) => {
         messageText += `*📆 Publicado:* ${convertTimeToSpanish(video.publicado)}\n`;
         messageText += `*🖇️ Url:* ${video.url}\n`;
 
-        await conn.sendMessage(m.chat, { 
-            image: thumbnail, 
-            caption: messageText, 
-            footer: '𝖯𑄜𝗐𝖾𝗋𝖾𝖽 𝖻𝗒 𝖲𝗁⍺𝖽ᦅ𝗐′𝗌 𝖢𝗅𝗎𝖻' 
-        }, { quoted: m });
+        const media = await prepareWAMessageMedia({ image: thumbnail }, { upload: conn.waUploadToServer });
+        const template = generateWAMessageFromContent(
+            m.chat,
+            proto.Message.fromObject({
+                templateMessage: {
+                    hydratedTemplate: {
+                        imageMessage: media.imageMessage,
+                        hydratedContentText: messageText,
+                        hydratedFooterText: '𝖯𑄜𝗐𝖾𝗋𝖾𝖽 𝖻𝗒 𝖲𝗁⍺𝖽ᦅ𝗐′𝗌 𝖢𝗅𝗎𝖻',
+                        hydratedButtons: [
+                            { quickReplyButton: { displayText: '🎵 Audio', id: `${usedPrefix}ytmp3 ${video.url}` } },
+                            { quickReplyButton: { displayText: '🎬 Video', id: `${usedPrefix}ytmp4 ${video.url}` } }
+                        ]
+                    }
+                }
+            }),
+            { userJid: m.sender, quoted: m }
+        );
 
+        await conn.relayMessage(m.chat, template.message, { messageId: template.key.id });
         await m.react('✅');
     } catch (e) {
         console.error(e);
