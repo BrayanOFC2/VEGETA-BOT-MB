@@ -23,16 +23,21 @@ const handler = async (m, { conn, text }) => {
 📅 *Publicado:* ${video.publishedAt}
 🌐 *Enlace:* ${video.url}
     `;
-    await conn.sendMessage(m.chat, { image: { url: video.image }, caption: videoDetails.trim() }, { quoted: m });
+    await conn.sendMessage(
+      m.chat,
+      { image: { url: video.image }, caption: videoDetails.trim() },
+      { quoted: m }
+    );
 
     // ---------------- Video MP4 con API de Sylphy ----------------
     const apiUrl = `https://api.sylphy.xyz/download/ytmp4?url=${video.url}&apikey=sylphy`;
     const apiResp = await fetch(apiUrl);
     const apiData = await apiResp.json();
 
-    if (!apiData?.result?.url) return m.reply('❌ No se pudo generar el enlace del video.');
+    if (!apiData?.result?.download_url)
+      return m.reply('❌ No se pudo generar el enlace del video.');
 
-    await conn.sendFile(m.chat, apiData.result.url, `${video.title}.mp4`, video.title, m);
+    await conn.sendFile(m.chat, apiData.result.download_url, `${video.title}.mp4`, video.title, m);
 
     await m.react('✅');
 
