@@ -28,31 +28,31 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
       caption: videoDetails.trim()
     }, { quoted: m });
 
-    // Descargar video usando VeVioz API
-    const videoApi = `https://api.vevioz.com/@api/button/videos/${video.url}`;
+    // Descargar video usando YTDownload API
+    const videoApi = `https://api.yt-download.org/api/button/mp4/${video.url}`;
     const videoResp = await fetch(videoApi);
     const videoData = await videoResp.json();
 
-    if (videoData?.mp4?.length) {
-      await conn.sendMessage(m.chat, {
-        video: { url: videoData.mp4[0].url },
-        caption: `🎬 Aquí tienes tu video: ${video.title}`,
-        fileName: `${video.title}.mp4`
-      }, { quoted: m });
-    }
+    if (!videoData?.url) return m.reply("❌ No se pudo obtener el video.");
 
-    // Descargar audio usando VeVioz API
-    const audioApi = `https://api.vevioz.com/@api/button/audio/${video.url}`;
+    await conn.sendMessage(m.chat, {
+      video: { url: videoData.url },
+      caption: `🎬 Aquí tienes tu video: ${video.title}`,
+      fileName: `${video.title}.mp4`
+    }, { quoted: m });
+
+    // Descargar audio
+    const audioApi = `https://api.yt-download.org/api/button/mp3/${video.url}`;
     const audioResp = await fetch(audioApi);
     const audioData = await audioResp.json();
 
-    if (audioData?.mp3?.length) {
-      await conn.sendMessage(m.chat, {
-        audio: { url: audioData.mp3[0].url },
-        mimetype: 'audio/mpeg',
-        fileName: `${video.title}.mp3`
-      }, { quoted: m });
-    }
+    if (!audioData?.url) return m.reply("❌ No se pudo obtener el audio.");
+
+    await conn.sendMessage(m.chat, {
+      audio: { url: audioData.url },
+      mimetype: 'audio/mpeg',
+      fileName: `${video.title}.mp3`
+    }, { quoted: m });
 
     await m.react("✅");
   } catch (error) {
