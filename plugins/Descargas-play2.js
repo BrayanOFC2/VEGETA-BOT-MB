@@ -26,7 +26,7 @@ const handler = async (m, { conn, text }) => {
     await conn.sendMessage(m.chat, { image: { url: video.image }, caption: videoDetails.trim() }, { quoted: m });
 
     // ---------------- Video MP4 con API de Sylphy ----------------
-    const apiUrl = `https://api.sylphy.xyz/download/ytmp4?url=${video.url}&apikey=Sylphiette's`;
+    const apiUrl = `https://api.sylphy.xyz/download/ytmp4?url=${video.url}&apikey=sylphy`;
     const apiResp = await fetch(apiUrl);
     const apiData = await apiResp.json();
 
