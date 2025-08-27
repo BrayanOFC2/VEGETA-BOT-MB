@@ -27,29 +27,33 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
       caption: videoDetails.trim()
     }, { quoted: m });
 
-    const downloadVideoApi = `https://youtube-download-api.matheusishiyama.repl.co/mp4/?url=${video.url}`;
-    const downloadVideoResponse = await fetch(downloadVideoApi);
-    const downloadVideoData = await downloadVideoResponse.json();
+    try {
+      const downloadVideoApi = `https://api.vevioz.com/@api/button/videos/${video.url}`;
+      const downloadVideoResponse = await fetch(downloadVideoApi);
+      const downloadVideoData = await downloadVideoResponse.json();
 
-    if (!downloadVideoData?.url) return m.reply("❌ No se pudo obtener el video.");
+      if (downloadVideoData?.mp4?.length) {
+        await conn.sendMessage(m.chat, {
+          video: { url: downloadVideoData.mp4[0].url },
+          caption: `🎬 Aquí tienes tu video: ${video.title}`,
+          fileName: `${video.title}.mp4`
+        }, { quoted: m });
+      }
+    } catch {}
 
-    await conn.sendMessage(m.chat, {
-      video: { url: downloadVideoData.url },
-      caption: `🎬 Aquí tienes tu video: ${video.title}`,
-      fileName: `${video.title}.mp4`
-    }, { quoted: m });
+    try {
+      const downloadAudioApi = `https://api.vevioz.com/@api/button/audio/${video.url}`;
+      const downloadAudioResponse = await fetch(downloadAudioApi);
+      const downloadAudioData = await downloadAudioResponse.json();
 
-    const downloadAudioApi = `https://youtube-download-api.matheusishiyama.repl.co/mp3/?url=${video.url}`;
-    const downloadAudioResponse = await fetch(downloadAudioApi);
-    const downloadAudioData = await downloadAudioResponse.json();
-
-    if (!downloadAudioData?.url) return m.reply("❌ No se pudo obtener el audio.");
-
-    await conn.sendMessage(m.chat, {
-      audio: { url: downloadAudioData.url },
-      mimetype: 'audio/mpeg',
-      fileName: `${video.title}.mp3`
-    }, { quoted: m });
+      if (downloadAudioData?.mp3?.length) {
+        await conn.sendMessage(m.chat, {
+          audio: { url: downloadAudioData.mp3[0].url },
+          mimetype: 'audio/mpeg',
+          fileName: `${video.title}.mp3`
+        }, { quoted: m });
+      }
+    } catch {}
 
     await m.react("✅");
   } catch (error) {
@@ -60,7 +64,6 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
 
 handler.command = ['play2'];
 handler.help = ['play2 <texto>'];
-handler.tags = ['descargas];
+handler.tags = ['media'];
 
 export default handler;
-
