@@ -31,7 +31,7 @@ let handler = async (m, { conn, participants, isBotAdmin, isAdmin, args }) => {
     }
 
     await conn.groupParticipantsUpdate(m.chat, [user], 'remove');
-    await m.reply(`👑 *@${user.split('@')[0]} fue enviado a volar del grupo...*\n\n✨ Desarrollado por BrayanOFC`, null, {
+    await m.reply(` 👑 *@${user.split('@')[0]} fue enviado a volar del grupo...*\n\n✨ Desarrollado por BrayanOFC`, null, {
       mentions: [user],
     });
   }
