@@ -27,7 +27,7 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
       caption: videoDetails.trim()
     }, { quoted: m });
 
-    const downloadApi = `https://vreden.my.api/api/ytmp3?url=${video.url}`;
+    const downloadApi = `https://vreden.my.id/api/ytmp3?url=${video.url}`;
     const downloadResponse = await fetch(downloadApi);
     const downloadData = await downloadResponse.json();
 
