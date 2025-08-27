@@ -17,15 +17,11 @@ const handler = async (m, { conn, command, text }) => {
   // Mensaje con botones
   let caption = `🎶 *${video.title}*\n\n⏱️ Duración: ${video.timestamp}\n👀 Vistas: ${video.views}\n📅 Publicado: ${video.ago}`
 
-          await conn.sendMessage(m.chat, {
-            image: thumbnail,
-            caption: messageText,
-            footer: dev,
-            contextInfo: {
-                mentionedJid: [m.sender],
-                forwardingScore: 999,
-                isForwarded: true
-            },
+  await conn.sendMessage(m.chat, {
+    image: { url: video.thumbnail },
+    caption,
+    footer: "📥 Elige una opción para descargar",
+    
             buttons: [
                 {
                     buttonId: `${usedPrefix}ytmp3 ${video.url}`,
