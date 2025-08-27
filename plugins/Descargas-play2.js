@@ -14,27 +14,32 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
       caption: `🎵 *${video.title}*`
     }, { quoted: m });
 
-    const convertApi = `https://api.sylphy.xyz/api/convert?url=${video.url}&format=mp4`;
-    const convertData = await (await fetch(convertApi)).json();
+    // Obtener información del video
+    const infoApi = `https://youtube-download-api.matheusishiyama.repl.co/info/?url=${video.url}`;
+    const infoData = await (await fetch(infoApi)).json();
 
-    if (!convertData.url) return m.reply("❌ No se pudo obtener el video.");
+    if (!infoData.title || !infoData.thumbnail) {
+      return m.reply("❌ No se pudo obtener la información del video.");
+    }
+
+    // Descargar video en MP4
+    const mp4Api = `https://youtube-download-api.matheusishiyama.repl.co/mp4/?url=${video.url}`;
+    const mp4Data = await (await fetch(mp4Api)).buffer();
 
     await conn.sendMessage(m.chat, {
-      video: { url: convertData.url },
-      caption: `🎬 ${video.title}`,
-      fileName: `${video.title}.mp4`
+      video: mp4Data,
+      caption: `🎬 ${infoData.title}`,
+      fileName: `${infoData.title}.mp4`
     }, { quoted: m });
 
-    // Convertir video a MP3
-    const convertAudioApi = `https://api.sylphy.xyz/api/convert?url=${video.url}&format=mp3`;
-    const audioData = await (await fetch(convertAudioApi)).json();
-
-    if (!audioData.url) return m.reply("❌ No se pudo obtener el audio.");
+    // Descargar audio en MP3
+    const mp3Api = `https://youtube-download-api.matheusishiyama.repl.co/mp3/?url=${video.url}`;
+    const mp3Data = await (await fetch(mp3Api)).buffer();
 
     await conn.sendMessage(m.chat, {
-      audio: { url: audioData.url },
+      audio: mp3Data,
       mimetype: 'audio/mpeg',
-      fileName: `${video.title}.mp3`
+      fileName: `${infoData.title}.mp3`
     }, { quoted: m });
 
     await m.react("✅");
