@@ -76,12 +76,27 @@ async function ytdl(url) {
   }
 }
 
-// 📥 Fallback con API de Sylphy
+// 📥 Fallback con API de Sylphy (con validaciones seguras)
 async function ytdlSylphy(url) {
   try {
     const api = await (await fetch(`https://api.sylphy.xyz/download/ytmp4?url=${url}&apikey=Sylphiette's`)).json();
-    if (!api?.result?.downloadUrl) throw new Error('No se pudo obtener la URL de Sylphy');
-    return { url: api.result.downloadUrl, title: api.result.title || 'Video sin título' };
+    if (!api) throw new Error('Respuesta vacía de Sylphy');
+
+    const result = api.result || api;
+    if (!result) throw new Error('No se encontró result en Sylphy');
+
+    const download =
+      result.downloadUrl ||
+      result.downloadURL ||
+      result.url ||
+      null;
+
+    if (!download) throw new Error('Sylphy no entregó URL válida');
+
+    return {
+      url: download,
+      title: result.title || result.videoTitle || 'Video sin título'
+    };
   } catch (e) {
     throw new Error(`Sylphy error: ${e.message}`);
   }
@@ -131,11 +146,9 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
   try {
     let data;
     try {
-      // Primero ymcdn
-      data = await ytdl(text);
+      data = await ytdl(text); // primero ymcdn
     } catch {
-      // Si falla, Sylphy
-      data = await ytdlSylphy(text);
+      data = await ytdlSylphy(text); // fallback sylphy
     }
 
     const { url, title } = data;
@@ -158,7 +171,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
 ┃ 🧿 *Título:* ${title}
 ┃ 📦 *Tamaño:* ${formatSize(size)}
 ┃ 🔗 *URL:* ${text}
-╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯`.trim();
+╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯`.trim();
 
     const buffer = await fetch(url).then(res => res.buffer());
     await conn.sendFile(
