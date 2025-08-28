@@ -1,17 +1,24 @@
-const MAX_FILE_SIZE = 280 * 1024 * 1024;
-const VIDEO_THRESHOLD = 70 * 1024 * 1024;
-const HEAVY_FILE_THRESHOLD = 100 * 1024 * 1024;
-const REQUEST_LIMIT = 3;
-const REQUEST_WINDOW_MS = 10000;
-const COOLDOWN_MS = 120000;
+import fetch from "node-fetch";
+import axios from 'axios';
 
+// Constantes
+const MAX_FILE_SIZE = 280 * 1024 * 1024; // 280 MB
+const VIDEO_THRESHOLD = 70 * 1024 * 1024; // 70 MB
+const HEAVY_FILE_THRESHOLD = 100 * 1024 * 1024; // 100 MB
+const REQUEST_LIMIT = 3; // Máximo 3 solicitudes
+const REQUEST_WINDOW_MS = 10000; // Ventana de 10 segundos
+const COOLDOWN_MS = 120000; // 2 minutos
+
+// Estado para control de solicitudes
 const requestTimestamps = [];
 let isCooldown = false;
 let isProcessingHeavy = false;
 
-const isValidYouTubeUrl = url =>
+// Validación de URL de YouTube
+const isValidYouTubeUrl = (url) =>
   /^(?:https?:\/\/)?(?:www\.|m\.|music\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?/.test(url);
 
+// Formateo de tamaño
 function formatSize(bytes) {
   if (!bytes || isNaN(bytes)) return 'Desconocido';
   const units = ['B', 'KB', 'MB', 'GB', 'TB'];
@@ -24,18 +31,19 @@ function formatSize(bytes) {
   return `${bytes.toFixed(2)} ${units[i]}`;
 }
 
+// Obtener tamaño del archivo
 async function getSize(url) {
   try {
-    const res = await axios.head(url, { timeout: 10000 });
-    const size = parseInt(res.headers['content-length'], 10);
+    const response = await axios.head(url, { timeout: 10000 });
+    const size = parseInt(response.headers['content-length'], 10);
     if (!size) throw new Error('Tamaño no disponible');
     return size;
-  } catch {
+  } catch (e) {
     throw new Error('No se pudo obtener el tamaño del archivo');
   }
 }
 
-// 📥 YTDL via ymcdn
+// Descarga de video
 async function ytdl(url) {
   const headers = {
     accept: '*/*',
@@ -50,59 +58,36 @@ async function ytdl(url) {
     'referrer-policy': 'strict-origin-when-cross-origin'
   };
 
-  const videoId = url.match(/(?:youtu\.be\/|youtube\.com\/(?:.*v=|.*\/|.*embed\/))([^&?/]+)/)?.[1];
-  if (!videoId) throw new Error('ID de video no encontrado');
-
   try {
-    const init = await (await fetch(`https://d.ymcdn.org/api/v1/init?p=y&23=1llum1n471&_=${Date.now()}`, { headers })).json();
-    const convert = await (await fetch(`${init.convertURL}&v=${videoId}&f=mp4&_=${Date.now()}`, { headers })).json();
+    const initRes = await fetch(`https://d.ymcdn.org/api/v1/init?p=y&23=1llum1n471&_=${Date.now()}`, { headers });
+    if (!initRes.ok) throw new Error('Fallo al inicializar la solicitud');
+    const init = await initRes.json();
+
+    const videoId = url.match(/(?:youtu\.be\/|youtube\.com\/(?:.*v=|.*\/|.*embed\/))([^&?/]+)/)?.[1];
+    if (!videoId) throw new Error('ID de video no encontrado');
+
+    const convertRes = await fetch(`${init.convertURL}&v=${videoId}&f=mp4&_=${Date.now()}`, { headers });
+    if (!convertRes.ok) throw new Error('Fallo al convertir el video');
+    const convert = await convertRes.json();
 
     let info;
     for (let i = 0; i < 3; i++) {
-      const res = await fetch(convert.progressURL, { headers });
-      info = await res.json();
+      const progressRes = await fetch(convert.progressURL, { headers });
+      if (!progressRes.ok) throw new Error('Fallo al obtener el progreso');
+      info = await progressRes.json();
       if (info.progress === 3) break;
-      await new Promise(res => setTimeout(res, 1000));
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Espera 1s entre intentos
     }
 
-    if (!info) throw new Error('No se pudo obtener información del video');
-
-    const download = convert?.downloadURL || convert?.downloadUrl;
-    if (!download) throw new Error('No se pudo obtener la URL de descarga');
-
-    return { url: download, title: info.title || 'Video sin título' };
+    if (!info || !convert.downloadURL) throw new Error('No se pudo obtener la URL de descarga');
+    return { url: convert.downloadURL, title: info.title || 'Video sin título' };
   } catch (e) {
-    throw new Error(`YTDL error: ${e.message}`);
+    throw new Error(`Error en la descarga: ${e.message}`);
   }
 }
 
-// 📥 Fallback con API de Sylphy (con validaciones seguras)
-async function ytdlSylphy(url) {
-  try {
-    const api = await (await fetch(`https://api.sylphy.xyz/download/ytmp4?url=${url}&apikey=Sylphiette's`)).json();
-    if (!api) throw new Error('Respuesta vacía de Sylphy');
-
-    const result = api.result || api;
-    if (!result) throw new Error('No se encontró result en Sylphy');
-
-    const download =
-      result.downloadUrl ||
-      result.downloadURL ||
-      result.url ||
-      null;
-
-    if (!download) throw new Error('Sylphy no entregó URL válida');
-
-    return {
-      url: download,
-      title: result.title || result.videoTitle || 'Video sin título'
-    };
-  } catch (e) {
-    throw new Error(`Sylphy error: ${e.message}`);
-  }
-}
-
-function checkRequestLimit() {
+// Verificar límite de solicitudes
+const checkRequestLimit = () => {
   const now = Date.now();
   requestTimestamps.push(now);
   while (requestTimestamps.length > 0 && now - requestTimestamps[0] > REQUEST_WINDOW_MS) {
@@ -117,63 +102,54 @@ function checkRequestLimit() {
     return false;
   }
   return true;
-}
+};
 
+// Handler principal
 let handler = async (m, { conn, text, usedPrefix, command }) => {
-  const react = emoji => m.react(emoji);
-
   if (!text) {
-    return conn.reply(m.chat, `🧩 Uso: ${usedPrefix}${command} <enlace de YouTube>`, m);
+    return conn.reply(m.chat, `👉 Uso: ${usedPrefix}${command} https://youtube.com/watch?v=iQEVguV71sI`, m);
   }
 
   if (!isValidYouTubeUrl(text)) {
-    await react('🔴');
+    await m.react('🔴');
     return m.reply('🚫 Enlace de YouTube inválido');
   }
 
+  // Verificar límite de solicitudes y archivo pesado
   if (isCooldown || !checkRequestLimit()) {
-    await react('🔴');
-    return conn.reply(m.chat, '⏳ Muchas solicitudes. Espera 2 minutos.', m);
+    await m.react('🔴');
+    return conn.reply(m.chat, '⏳ Demasiadas solicitudes rápidas. Por favor, espera 2 minutos.', m);
   }
-
   if (isProcessingHeavy) {
-    await react('🔴');
-    return conn.reply(m.chat, '⚠️ Ya estoy procesando un archivo pesado. Espera un momento.', m);
+    await m.react('🔴');
+    return conn.reply(m.chat, '⏳ Espera, estoy procesando un archivo pesado.', m);
   }
 
-  await react('⏳');
-
+  await m.react('📀'); // Inicio
   try {
-    let data;
-    try {
-      data = await ytdl(text); // primero ymcdn
-    } catch {
-      data = await ytdlSylphy(text); // fallback sylphy
-    }
-
-    const { url, title } = data;
+    const { url, title } = await ytdl(text);
     const size = await getSize(url);
-    if (!size) throw new Error('No se pudo determinar el tamaño del video');
+
+    if (!size) {
+      await m.react('🔴');
+      throw new Error('No se pudo determinar el tamaño del video');
+    }
 
     if (size > MAX_FILE_SIZE) {
-      await react('🔴');
-      throw new Error('📦 El archivo supera el límite de 280 MB');
+      await m.react('🔴');
+      throw new Error('♡ No puedo procesar esta descarga porque traspasa el límite de descarga');
     }
 
-    const isHeavy = size > HEAVY_FILE_THRESHOLD;
-    if (isHeavy) {
+    if (size > HEAVY_FILE_THRESHOLD) {
       isProcessingHeavy = true;
-      await conn.reply(m.chat, '💾 Espera, estoy descargando un archivo grande...', m);
+      await conn.reply(m.chat, '🤨 Espera, estoy lidiando con un archivo pesado', m);
     }
 
-    const caption = `
-╭╌╌〔 *🕶️ DESCARGAS BLACK - MP4* 〕╌╌╮
-┃ 🧿 *Título:* ${title}
-┃ 📦 *Tamaño:* ${formatSize(size)}
-┃ 🔗 *URL:* ${text}
-╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯`.trim();
+    await m.react('✅️'); // Descarga iniciada
+    const caption = `*💌 ${title}*\n> ⚖️ Peso: ${formatSize(size)}\n> 🌎 URL: ${text}`;
+    const isSmallVideo = size < VIDEO_THRESHOLD;
 
-    const buffer = await fetch(url).then(res => res.buffer());
+    const buffer = await (await fetch(url)).buffer();
     await conn.sendFile(
       m.chat,
       buffer,
@@ -183,23 +159,23 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
       null,
       {
         mimetype: 'video/mp4',
-        asDocument: size >= VIDEO_THRESHOLD,
+        asDocument: !isSmallVideo,
         filename: `${title}.mp4`
       }
     );
 
-    await react('✅');
-    isProcessingHeavy = false;
+    await m.react('🟢'); // Completado
+    isProcessingHeavy = false; // Liberar estado
   } catch (e) {
-    await react('❌');
-    isProcessingHeavy = false;
-    return m.reply(`🧨 *ERROR:* ${e.message}`);
+    await m.react('🔴');
+    await m.reply(`❌ Error: ${e.message || 'No se pudo procesar la solicitud'}`);
+    isProcessingHeavy = false; // Liberar estado en caso de error
   }
 };
 
-handler.help = ['ytmp4 <url>'];
-handler.tags = ['descargas'];
+handler.help = ['ytmp4 <URL>'];
 handler.command = ['ytmp4'];
-handler.black = true;
+handler.tags = ['descargas'];
+handler.diamond = true;
 
 export default handler;
