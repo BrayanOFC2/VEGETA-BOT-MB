@@ -42,7 +42,7 @@ async function getSize(url) {
 // 📥 Proceso de conversión y descarga
 async function ytdl(url) {
   const headers = {
-    accept: '',
+    accept: '*/*',
     'accept-language': 'en-US,en;q=0.9',
     'sec-ch-ua': '"Chromium";v="132", "Not A(Brand";v="8"',
     'sec-ch-ua-mobile': '?0',
@@ -136,7 +136,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     }
 
     const caption = `
-╭╌╌〔 *🕶️ DESCARGAS VEGETA - MP4* 〕╌╌╮
+╭╌╌〔 *🕶️ DESCARGAS BLACK - MP4* 〕╌╌╮
 ┃ 🧿 *Título:* ${title}
 ┃ 📦 *Tamaño:* ${formatSize(size)}
 ┃ 🔗 *URL:* ${text}
@@ -169,5 +169,6 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
 handler.help = ['ytmp4 <url>'];
 handler.tags = ['descargas'];
 handler.command = ['ytmp4'];
+handler.black = true; // 🔒 Reemplazo elegante de "diamond = true"
 
-export { ytmp4handler }
+export default handler;
