@@ -489,16 +489,17 @@ if (opts['autoread']) await this.readMessages([m.key])
 
 
   global.dfail = (type, m, usedPrefix, command, conn) => {
-    const msg = {
-        rowner: `🛑 *ACCESO RESTRINGIDOΩ*\n\n> Solo el *Creador Supremo* puede ejecutar este protocolo.\n\n🧬 Usuario Autorizado: 👑 𝙏𝙃𝙀 𝘾𝘼𝙍𝙇𝙊𝙎\n🔗 Sistema: root@asTa-bot://omega/core`,
-        owner: `⚙️🔒 *MÓDULO DEV: ACCESO BLOQUEADO*\n\n> Esta función está anclada a permisos de *𝙳𝙴𝚂𝙰𝚁𝚁𝙾𝙻𝙻𝙰𝙳𝙾𝚁*.\n\n🧠 Consola de Seguridad: dev@asta.ai/core.sh`,
-        premium: `*REQUIERE CUENTA PREMIUM*\n\n> 🚫 Módulo exclusivo para usuarios *𝙑𝙄𝙋 - 𝙋𝙍𝙀𝙈𝙄𝙐𝙈*.\n\n📡 Actualiza tu plan con: */vip*\n⚙️ Estado: denegado`,
-        private: `🔒 *SOLO CHAT PRIVADO* 📲\n\n> Este comando no puede ejecutarse en grupos por razones de seguridad.\n\n🧬 Ejecuta este protocolo directamente en el chat privado.`,
-        admin: `🛡️ *FUNCIÓN RESTRINGIDA*\n\n> Solo los administradores del *Grupo* tienen acceso.\n\n⚠️ Intento no autorizado.`,
-        botAdmin: `🤖 *BOT SIN PERMISOS SUFICIENTES*\n\n> Debo tener permisos de *Administrador* para ejecutar esta acción.\n\n🔍 Ejecuta: *dar al bot admin*\n🔒 Estado actual: *no admin XD*`,
-        unreg: `🧾 *NO REGISTRADO EN EL SISTEMA*\n\n> 🚫 *Acceso denegado:* No puedes usar los comandos sin registrarte.\n\n🔐 Regístrate con: */reg nombre.edad*\n📍 Ejemplo: */reg Asta.20*\n\n> 🥷🏻 *Instagram oficial del creador del bot  :*\nhttps://www.instagram.com/_carlitos.zx\n\n📂 *Creador del bot:* The Carlos`,
-        restrict: `🚷 *FUNCIÓN GLOBALMENTE BLOQUEADA*\n\n> Este comando fue deshabilitado por el *Operador Global* por motivos de seguridad cibernética.\n\n🔧 Módulo: /xvideos`
-        }[type];
+const msg = {
+rowner: `🐉El comando *${comando}* solo puede ser usado por los creadores del bot SAIYAJIN☁️.`, 
+owner: `🐉El comando *${comando}* solo puede ser usado por los desarrolladores del bot SAIYAJIN☁️.`, 
+mods: `🐉El comando *${comando}* solo puede ser usado por los moderadores del bot SAIYAJIN☁️.`, 
+premium: `🐉El comando *${comando}* solo puede ser usado por los usuarios premium SAIYAJIN☁️.`, 
+group: `🐉El comando *${comando}* solo puede ser usado en grupos SAIYAJIN☁️.`,
+private: `🐉El comando *${comando}* solo puede ser usado al chat privado del bot SAIYAJIN☁️.`,
+admin: `🐉El comando *${comando}* solo puede ser usado por los administradores del grupo SAIYAJIN☁️.`, 
+botAdmin: `🐉Para ejecutar el comando *${comando}* debo ser administrador del grupo SAIYAJIN☁️.`,
+//unreg: `🐉pene de BrayanOFC☁️`,
+restrict: `🐉Esta caracteristica está desactivada SAIYAJIN☁️.`        }[type];
 if (msg) return m.reply(msg).then(_ => m.react('✖️'))}
 
 let file = global.__filename(import.meta.url, true)
