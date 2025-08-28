@@ -129,11 +129,9 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     }
 
     const caption = `
-╭╌╌〔 *🕶️ DESCARGAS VEGETA - MP4* 〕╌╌╮
-┃ 🐉 *Título:* ${title}
-┃ ☁️ *Tamaño:* ${formatSize(size)}
-┃ 🔮 *URL:* ${text}
-╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯`.trim();
+╭───────────────◆
+│   🐉 *DESCARGA VEGETA* 🐉
+╰───────────────◆`.trim();
 
     const buffer = await fetch(url).then(res => res.buffer());
     await conn.sendFile(
@@ -162,6 +160,5 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
 handler.help = ['ytmp4 <url>'];
 handler.tags = ['descargas'];
 handler.command = ['ytmp4'];
-handler.black = true; // 🔒 Reemplazo elegante de "diamond = true"
 
 export default handler;
