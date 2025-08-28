@@ -5,16 +5,13 @@ const REQUEST_LIMIT = 3;
 const REQUEST_WINDOW_MS = 10000;
 const COOLDOWN_MS = 120000;
 
-// 🔐 Estado del sistema
 const requestTimestamps = [];
 let isCooldown = false;
 let isProcessingHeavy = false;
 
-// 🎯 Validador de enlaces YouTube
 const isValidYouTubeUrl = url =>
   /^(?:https?:\/\/)?(?:www\.|m\.|music\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?/.test(url);
 
-// 📏 Formatear tamaño
 function formatSize(bytes) {
   if (!bytes || isNaN(bytes)) return 'Desconocido';
   const units = ['B', 'KB', 'MB', 'GB', 'TB'];
@@ -27,7 +24,6 @@ function formatSize(bytes) {
   return `${bytes.toFixed(2)} ${units[i]}`;
 }
 
-// 📡 Obtener tamaño por HEAD
 async function getSize(url) {
   try {
     const res = await axios.head(url, { timeout: 10000 });
@@ -39,7 +35,6 @@ async function getSize(url) {
   }
 }
 
-// 📥 Proceso de conversión y descarga
 async function ytdl(url) {
   const headers = {
     accept: '*/*',
@@ -76,7 +71,6 @@ async function ytdl(url) {
   }
 }
 
-// 🔐 Verifica cuántas solicitudes hay activas
 function checkRequestLimit() {
   const now = Date.now();
   requestTimestamps.push(now);
@@ -94,7 +88,6 @@ function checkRequestLimit() {
   return true;
 }
 
-// 🧠 HANDLER PRINCIPAL
 let handler = async (m, { conn, text, usedPrefix, command }) => {
   const react = emoji => m.react(emoji);
 
@@ -117,7 +110,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     return conn.reply(m.chat, '⚠️ Ya estoy procesando un archivo pesado. Espera un momento.', m);
   }
 
-  await react('👑'); // Descarga en proceso...
+  await react('🔎'); // Descarga en proceso...
 
   try {
     const { url, title } = await ytdl(text);
