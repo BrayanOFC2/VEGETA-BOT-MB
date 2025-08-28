@@ -117,7 +117,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     return conn.reply(m.chat, '⚠️ Ya estoy procesando un archivo pesado. Espera un momento.', m);
   }
 
-  await react('⏳'); // Descarga en proceso...
+  await react('👑'); // Descarga en proceso...
 
   try {
     const { url, title } = await ytdl(text);
@@ -136,10 +136,10 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     }
 
     const caption = `
-╭╌╌〔 *🕶️ DESCARGAS BLACK - MP4* 〕╌╌╮
-┃ 🧿 *Título:* ${title}
-┃ 📦 *Tamaño:* ${formatSize(size)}
-┃ 🔗 *URL:* ${text}
+╭╌╌〔 *🕶️ DESCARGAS VEGETA - MP4* 〕╌╌╮
+┃ 🐉 *Título:* ${title}
+┃ ☁️ *Tamaño:* ${formatSize(size)}
+┃ 🔮 *URL:* ${text}
 ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯`.trim();
 
     const buffer = await fetch(url).then(res => res.buffer());
