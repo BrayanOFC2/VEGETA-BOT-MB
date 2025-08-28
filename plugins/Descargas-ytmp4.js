@@ -110,7 +110,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     return conn.reply(m.chat, '⚠️ Ya estoy procesando un archivo pesado. Espera un momento.', m);
   }
 
-  await react('🔎'); // Descarga en proceso...
+  await react('🔍');
 
   try {
     const { url, title } = await ytdl(text);
