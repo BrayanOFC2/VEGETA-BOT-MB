@@ -54,12 +54,14 @@ const ddownr = {
 const handler = async (m, { conn, text, command }) => {
   try {
     if (!text.trim()) {
-      return conn.reply(m.chat, `Ingresa el nombre del video a descargar.`, m);
+      return conn.reply(m.chat, `❌ Ingresa el nombre del video a descargar.`, m);
     }
+
+    await conn.sendMessage(m.chat, { react: { text: "🔎", key: m.key } });
 
     const search = await yts(text);
     if (!search.all || search.all.length === 0) {
-      return m.reply('No se encontraron resultados para tu búsqueda.');
+      return m.reply('⚠️ No se encontraron resultados para tu búsqueda.');
     }
 
     const videoInfo = search.all[0];
@@ -74,10 +76,13 @@ const handler = async (m, { conn, text, command }) => {
         mimetype: 'audio/mpeg',
         fileName: fileName
       }, { quoted: m });
+
+      await conn.sendMessage(m.chat, { react: { text: "✅", key: m.key } });
     } else {
-      return m.reply(`No se pudo descargar el audio.`);
+      return m.reply(`⚠️ No se pudo descargar el audio.`);
     }
   } catch (error) {
+    await conn.sendMessage(m.chat, { react: { text: "❌", key: m.key } });
     return m.reply(`Ocurrió un error: ${error.message}`);
   }
 };
