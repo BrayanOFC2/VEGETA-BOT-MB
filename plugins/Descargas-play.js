@@ -1,205 +1,87 @@
-const MAX_FILE_SIZE = 280 * 1024 * 1024;
-const VIDEO_THRESHOLD = 70 * 1024 * 1024;
-const HEAVY_FILE_THRESHOLD = 100 * 1024 * 1024;
-const REQUEST_LIMIT = 3;
-const REQUEST_WINDOW_MS = 10000;
-const COOLDOWN_MS = 120000;
+import yts from 'yt-search';
+import fetch from 'node-fetch';
+import { prepareWAMessageMedia, generateWAMessageFromContent } from '@whiskeysockets/baileys';
 
-const requestTimestamps = [];
-let isCooldown = false;
-let isProcessingHeavy = false;
+const handler = async (m, { conn, args, usedPrefix }) => {
+    if (!args[0]) return conn.reply(m.chat, `🐉 Ingresa un texto para buscar en YouTube.\n> *Ejemplo:* ${usedPrefix + command} Shakira`, m);
 
-const isValidYouTubeUrl = url =>
-  /^(?:https?:\/\/)?(?:www\.|m\.|music\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?/.test(url);
-
-function formatSize(bytes) {
-  if (!bytes || isNaN(bytes)) return 'Desconocido';
-  const units = ['B', 'KB', 'MB', 'GB', 'TB'];
-  let i = 0;
-  bytes = Number(bytes);
-  while (bytes >= 1024 && i < units.length - 1) {
-    bytes /= 1024;
-    i++;
-  }
-  return `${bytes.toFixed(2)} ${units[i]}`;
-}
-
-async function getSize(url) {
-  try {
-    const res = await axios.head(url, { timeout: 10000 });
-    const size = parseInt(res.headers['content-length'], 10);
-    if (!size) throw new Error('Tamaño no disponible');
-    return size;
-  } catch {
-    throw new Error('No se pudo obtener el tamaño del archivo');
-  }
-}
-
-// 📥 YTDL via ymcdn
-async function ytdl(url) {
-  const headers = {
-    accept: '*/*',
-    'accept-language': 'en-US,en;q=0.9',
-    'sec-ch-ua': '"Chromium";v="132", "Not A(Brand";v="8"',
-    'sec-ch-ua-mobile': '?0',
-    'sec-ch-ua-platform': '"Windows"',
-    'sec-fetch-dest': 'empty',
-    'sec-fetch-mode': 'cors',
-    'sec-fetch-site': 'cross-site',
-    referer: 'https://id.ytmp3.mobi/',
-    'referrer-policy': 'strict-origin-when-cross-origin'
-  };
-
-  const videoId = url.match(/(?:youtu\.be\/|youtube\.com\/(?:.*v=|.*\/|.*embed\/))([^&?/]+)/)?.[1];
-  if (!videoId) throw new Error('ID de video no encontrado');
-
-  try {
-    const init = await (await fetch(`https://d.ymcdn.org/api/v1/init?p=y&23=1llum1n471&_=${Date.now()}`, { headers })).json();
-    const convert = await (await fetch(`${init.convertURL}&v=${videoId}&f=mp4&_=${Date.now()}`, { headers })).json();
-
-    let info;
-    for (let i = 0; i < 3; i++) {
-      const res = await fetch(convert.progressURL, { headers });
-      info = await res.json();
-      if (info.progress === 3) break;
-      await new Promise(res => setTimeout(res, 1000));
-    }
-
-    if (!info) throw new Error('No se pudo obtener información del video');
-
-    const download = convert?.downloadURL || convert?.downloadUrl;
-    if (!download) throw new Error('No se pudo obtener la URL de descarga');
-
-    return { url: download, title: info.title || 'Video sin título' };
-  } catch (e) {
-    throw new Error(`YTDL error: ${e.message}`);
-  }
-}
-
-// 📥 Fallback con API de Sylphy (con validaciones seguras)
-async function ytdlSylphy(url) {
-  try {
-    const api = await (await fetch(`https://api.sylphy.xyz/download/ytmp4?url=${url}&apikey=Sylphiette's`)).json();
-    if (!api) throw new Error('Respuesta vacía de Sylphy');
-
-    const result = api.result || api;
-    if (!result) throw new Error('No se encontró result en Sylphy');
-
-    const download =
-      result.downloadUrl ||
-      result.downloadURL ||
-      result.url ||
-      null;
-
-    if (!download) throw new Error('Sylphy no entregó URL válida');
-
-    return {
-      url: download,
-      title: result.title || result.videoTitle || 'Video sin título'
-    };
-  } catch (e) {
-    throw new Error(`Sylphy error: ${e.message}`);
-  }
-}
-
-function checkRequestLimit() {
-  const now = Date.now();
-  requestTimestamps.push(now);
-  while (requestTimestamps.length > 0 && now - requestTimestamps[0] > REQUEST_WINDOW_MS) {
-    requestTimestamps.shift();
-  }
-  if (requestTimestamps.length >= REQUEST_LIMIT) {
-    isCooldown = true;
-    setTimeout(() => {
-      isCooldown = false;
-      requestTimestamps.length = 0;
-    }, COOLDOWN_MS);
-    return false;
-  }
-  return true;
-}
-
-let handler = async (m, { conn, text, usedPrefix, command }) => {
-  const react = emoji => m.react(emoji);
-
-  if (!text) {
-    return conn.reply(m.chat, `🧩 Uso: ${usedPrefix}${command} <enlace de YouTube>`, m);
-  }
-
-  if (!isValidYouTubeUrl(text)) {
-    await react('🔴');
-    return m.reply('🚫 Enlace de YouTube inválido');
-  }
-
-  if (isCooldown || !checkRequestLimit()) {
-    await react('🔴');
-    return conn.reply(m.chat, '⏳ Muchas solicitudes. Espera 2 minutos.', m);
-  }
-
-  if (isProcessingHeavy) {
-    await react('🔴');
-    return conn.reply(m.chat, '⚠️ Ya estoy procesando un archivo pesado. Espera un momento.', m);
-  }
-
-  await react('⏳');
-
-  try {
-    let data;
+    await m.react('🕓');
     try {
-      data = await ytdl(text); // primero ymcdn
-    } catch {
-      data = await ytdlSylphy(text); // fallback sylphy
+        let searchResults = await searchVideos(args.join(" "));
+
+        if (!searchResults.length) throw new Error('No se encontraron resultados.');
+
+        let video = searchResults[0];
+        let thumbnail = await (await fetch(video.miniatura)).buffer();
+
+        let messageText = `*Youtube - Download*\n\n`;
+        messageText += `${video.titulo}\n\n`;
+        messageText += `*⌛ Duración:* ${video.duracion || 'No disponible'}\n`;
+        messageText += `*👤 Autor:* ${video.canal || 'Desconocido'}\n`;
+        messageText += `*📆 Publicado:* ${convertTimeToSpanish(video.publicado)}\n`;
+        messageText += `*🖇️ Url:* ${video.url}\n`;
+
+        await conn.sendMessage(m.chat, {
+            image: thumbnail,
+            caption: messageText,
+            footer: `𝖯𑄜𝗐𝖾𝗋𝖾𝖽 𝖻𝗒 BrayanOFC☁️`,
+            contextInfo: {
+                mentionedJid: [m.sender],
+                forwardingScore: 999,
+                isForwarded: true
+            },
+            buttons: [
+                {
+                    buttonId: `${usedPrefix}ytmp3 ${video.url}`,
+                    buttonText: { displayText: 'Audio' },
+                    type: 1,
+                },
+                {
+                    buttonId: `${usedPrefix}ytmp4 ${video.url}`,
+                    buttonText: { displayText: 'Vídeo' },
+                    type: 1,
+                }
+            ],
+            headerType: 1,
+            viewOnce: true
+        }, { quoted: m });
+
+        await m.react('✅');
+    } catch (e) {
+        console.error(e);
+        await m.react('✖️');
+        conn.reply(m.chat, '*`Error al buscar el video.`*', m);
     }
-
-    const { url, title } = data;
-    const size = await getSize(url);
-    if (!size) throw new Error('No se pudo determinar el tamaño del video');
-
-    if (size > MAX_FILE_SIZE) {
-      await react('🔴');
-      throw new Error('📦 El archivo supera el límite de 280 MB');
-    }
-
-    const isHeavy = size > HEAVY_FILE_THRESHOLD;
-    if (isHeavy) {
-      isProcessingHeavy = true;
-      await conn.reply(m.chat, '💾 Espera, estoy descargando un archivo grande...', m);
-    }
-
-    const caption = `
-╭╌╌〔 *🕶️ DESCARGAS BLACK - MP4* 〕╌╌╮
-┃ 🧿 *Título:* ${title}
-┃ 📦 *Tamaño:* ${formatSize(size)}
-┃ 🔗 *URL:* ${text}
-╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯`.trim();
-
-    const buffer = await fetch(url).then(res => res.buffer());
-    await conn.sendFile(
-      m.chat,
-      buffer,
-      `${title}.mp4`,
-      caption,
-      m,
-      null,
-      {
-        mimetype: 'video/mp4',
-        asDocument: size >= VIDEO_THRESHOLD,
-        filename: `${title}.mp4`
-      }
-    );
-
-    await react('✅');
-    isProcessingHeavy = false;
-  } catch (e) {
-    await react('❌');
-    isProcessingHeavy = false;
-    return m.reply(`🧨 *ERROR:* ${e.message}`);
-  }
 };
 
-handler.help = ['ytmp4 <url>'];
+handler.help = ['play'];
 handler.tags = ['descargas'];
-handler.command = ['ytmp4'];
-handler.black = true;
-
+handler.command = ['play'];
 export default handler;
+
+async function searchVideos(query) {
+    try {
+        const res = await yts(query);
+        return res.videos.slice(0, 10).map(video => ({
+            titulo: video.title,
+            url: video.url,
+            miniatura: video.thumbnail,
+            canal: video.author.name,
+            publicado: video.timestamp || 'No disponible',
+            vistas: video.views || 'No disponible',
+            duracion: video.duration.timestamp || 'No disponible'
+        }));
+    } catch (error) {
+        console.error('Error en yt-search:', error.message);
+        return [];
+    }
+}
+
+function convertTimeToSpanish(timeText) {
+    return timeText
+        .replace(/year/, 'año').replace(/years/, 'años')
+        .replace(/month/, 'mes').replace(/months/, 'meses')
+        .replace(/day/, 'día').replace(/days/, 'días')
+        .replace(/hour/, 'hora').replace(/hours/, 'horas')
+        .replace(/minute/, 'minuto').replace(/minutes/, 'minutos');
+}
