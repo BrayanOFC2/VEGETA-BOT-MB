@@ -5,16 +5,13 @@ const REQUEST_LIMIT = 3;
 const REQUEST_WINDOW_MS = 10000;
 const COOLDOWN_MS = 120000;
 
-// 🔐 Estado del sistema
 const requestTimestamps = [];
 let isCooldown = false;
 let isProcessingHeavy = false;
 
-// 🎯 Validador de enlaces YouTube
 const isValidYouTubeUrl = url =>
   /^(?:https?:\/\/)?(?:www\.|m\.|music\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?/.test(url);
 
-// 📏 Formatear tamaño
 function formatSize(bytes) {
   if (!bytes || isNaN(bytes)) return 'Desconocido';
   const units = ['B', 'KB', 'MB', 'GB', 'TB'];
@@ -27,7 +24,6 @@ function formatSize(bytes) {
   return `${bytes.toFixed(2)} ${units[i]}`;
 }
 
-// 📡 Obtener tamaño por HEAD
 async function getSize(url) {
   try {
     const res = await axios.head(url, { timeout: 10000 });
@@ -39,7 +35,7 @@ async function getSize(url) {
   }
 }
 
-// 📥 Proceso de conversión y descarga
+// 📥 YTDL via ymcdn
 async function ytdl(url) {
   const headers = {
     accept: '*/*',
@@ -69,14 +65,28 @@ async function ytdl(url) {
       await new Promise(res => setTimeout(res, 1000));
     }
 
-    if (!info || !convert.downloadURL) throw new Error('No se pudo obtener la URL de descarga');
-    return { url: convert.downloadURL, title: info.title || 'Video sin título' };
+    if (!info) throw new Error('No se pudo obtener información del video');
+
+    const download = convert?.downloadURL || convert?.downloadUrl;
+    if (!download) throw new Error('No se pudo obtener la URL de descarga');
+
+    return { url: download, title: info.title || 'Video sin título' };
   } catch (e) {
-    throw new Error(`Error en la descarga: ${e.message}`);
+    throw new Error(`YTDL error: ${e.message}`);
   }
 }
 
-// 🔐 Verifica cuántas solicitudes hay activas
+// 📥 Fallback con API de Sylphy
+async function ytdlSylphy(url) {
+  try {
+    const api = await (await fetch(`https://api.sylphy.xyz/download/ytmp4?url=${url}&apikey=Sylphiette's`)).json();
+    if (!api?.result?.downloadUrl) throw new Error('No se pudo obtener la URL de Sylphy');
+    return { url: api.result.downloadUrl, title: api.result.title || 'Video sin título' };
+  } catch (e) {
+    throw new Error(`Sylphy error: ${e.message}`);
+  }
+}
+
 function checkRequestLimit() {
   const now = Date.now();
   requestTimestamps.push(now);
@@ -94,7 +104,6 @@ function checkRequestLimit() {
   return true;
 }
 
-// 🧠 HANDLER PRINCIPAL
 let handler = async (m, { conn, text, usedPrefix, command }) => {
   const react = emoji => m.react(emoji);
 
@@ -117,10 +126,19 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     return conn.reply(m.chat, '⚠️ Ya estoy procesando un archivo pesado. Espera un momento.', m);
   }
 
-  await react('⏳'); // Descarga en proceso...
+  await react('⏳');
 
   try {
-    const { url, title } = await ytdl(text);
+    let data;
+    try {
+      // Primero ymcdn
+      data = await ytdl(text);
+    } catch {
+      // Si falla, Sylphy
+      data = await ytdlSylphy(text);
+    }
+
+    const { url, title } = data;
     const size = await getSize(url);
     if (!size) throw new Error('No se pudo determinar el tamaño del video');
 
@@ -140,7 +158,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
 ┃ 🧿 *Título:* ${title}
 ┃ 📦 *Tamaño:* ${formatSize(size)}
 ┃ 🔗 *URL:* ${text}
-╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯`.trim();
+╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯`.trim();
 
     const buffer = await fetch(url).then(res => res.buffer());
     await conn.sendFile(
@@ -169,6 +187,6 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
 handler.help = ['ytmp4 <url>'];
 handler.tags = ['descargas'];
 handler.command = ['ytmp4'];
-handler.black = true; // 🔒 Reemplazo elegante de "diamond = true"
+handler.black = true;
 
 export default handler;
