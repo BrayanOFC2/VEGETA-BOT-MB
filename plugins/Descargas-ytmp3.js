@@ -70,7 +70,7 @@ const handler = async (m, { conn, text, command }) => {
     if (downloadUrl) {
       const fileName = `${title.replace(/[^a-zA-Z0-9 ]/g, '').trim().replace(/ +/g, '_')}.${format}`;
       await conn.sendMessage(m.chat, {
-        document: { url: downloadUrl },
+        audio: { url: downloadUrl },
         mimetype: 'audio/mpeg',
         fileName: fileName
       }, { quoted: m });
