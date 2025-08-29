@@ -121,7 +121,7 @@ ${commandsForTag.map(menu => menu.help.map(help =>
   }
 }
 
-handler.help = ['menu', 'allmenu']
+handler.help = ['menu']
 handler.tags = ['main']
 handler.command = ['menu', 'allmenu', 'menú']
 handler.register = true
