@@ -39,7 +39,7 @@ let handler = async (m, { conn, participants, isBotAdmin, isAdmin, args }) => {
   m.react('✅');
 };
 
-handler.help = ['kick', 'ban'];
+handler.help = ['kick'];
 handler.tags = ['group'];
 handler.command = /^(kick|ban|echar|sacar)$/i;
 handler.group = true;
