@@ -30,7 +30,7 @@ async function run({ msg, sock }) {
     const text = (msg.message.conversation || msg.message.extendedTextMessage?.text || '').toLowerCase();
 
     // Ignorar si no empieza con banchat
-    if (!text.startsWith('banchat ')) return;
+    if (!text.startsWith('prueba' )) return;
 
     // Obtener subcomando
     const subcomando = text.slice(8).trim(); // quitar "banchat "
