@@ -213,7 +213,6 @@ const groupMetadata = m.isGroup
 
 const participants = m.isGroup && groupMetadata ? (groupMetadata.participants || []) : []
 
-// Normalizamos ID porque en algunas versiones es .id y en otras .jid
 const user = participants.find(
   p => (p?.id === senderLid || p?.id === senderJid || p?.jid === senderLid || p?.jid === senderJid)
 ) || {}
@@ -377,11 +376,11 @@ m.isCommand = true
 let xp = 'exp' in plugin ? parseInt(plugin.exp) : 10
 m.exp += xp
 if (!isPrems && plugin.monedas && global.db.data.users[m.sender].monedas < plugin.monedas * 1) {
-conn.reply(m.chat, `❮✦❯ Se agotaron tus ${monedas}`, m)
+conn.reply(m.chat, `❮🐉❯ Se agotaron tus ${monedas}`, m)
 continue
 }
 if (plugin.level > _user.level) {
-conn.reply(m.chat, `❮✦❯ Se requiere el nivel: *${plugin.level}*\n\n• Tu nivel actual es: *${_user.level}*\n\n• Usa este comando para subir de nivel:\n*${usedPrefix}levelup*`, m)
+conn.reply(m.chat, `❮🐉❯ Se requiere el nivel: *${plugin.level}*\n\n• Tu nivel actual es: *${_user.level}*\n\n• Usa este comando para subir de nivel:\n*${usedPrefix}levelup*`, m)
 continue
 }
 let extra = {
