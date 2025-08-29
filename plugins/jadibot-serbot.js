@@ -61,7 +61,7 @@ let rtx2 = `╭───────────────⍰
 
 let imagenUrl = 'https://qu.ax/RRMde.jpg';
 
-const maxSubBots = 324
+const maxSubBots = 5000
 
 let vegetaJBOptions = {}
 
