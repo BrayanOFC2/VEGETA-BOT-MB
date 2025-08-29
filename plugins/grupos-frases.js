@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Ruta del archivo de usuarios
-const usuariosPath = path.join(__dirname, '../database/usuarios.json');
+const usuariosPath = path.join(__dirname, '../src/database/usuarios.json');
 
 // Cargar usuarios
 let usuarios = {};
