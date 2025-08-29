@@ -25,7 +25,7 @@ var handler = async (m, { conn, participants, usedPrefix, command, args }) => {
     }
 
     if (!usersToKick.length) {
-        return conn.reply(m.chat, `${pikachu} ¡Pika Pika! Debes mencionar a alguien, responder un mensaje o usar un prefijo numérico para expulsar.`, m);
+        return conn.reply(m.chat, `${vegeta} ¡vergueta! Debes mencionar a alguien, responder un mensaje o usar un prefijo numérico para expulsar.`, m);
     }
 
     let kicked = [];
