@@ -20,7 +20,7 @@ module.exports = {
     alias: [],
     desc: 'Mini-RPG de Dragon Ball',
     tags: ['juegos'],         // Tag del comando
-    command: ['vegeta'],      // Comando principal
+    command: ['vegeta','prueba'],      // Comando principal
 
     async run({ msg, sock, args }) {
 
