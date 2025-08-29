@@ -1,13 +1,28 @@
-let fs = require('fs');
+const fs = require('fs');
+const path = require('path');
+
+// Ruta del archivo de usuarios
+const usuariosPath = path.join(__dirname, '../database/usuarios.json');
+
+// Cargar usuarios
+let usuarios = {};
+if (fs.existsSync(usuariosPath)) {
+    usuarios = JSON.parse(fs.readFileSync(usuariosPath));
+}
+
+// Función para guardar usuarios
+function guardarUsuarios() {
+    fs.writeFileSync(usuariosPath, JSON.stringify(usuarios, null, 2));
+}
 
 module.exports = {
     name: 'Vegeta',
     alias: [],
     desc: 'Mini-RPG de Dragon Ball',
-    tags: ['juegos'], // Aquí va el tag
-    command: ['vegeta'], // Aquí va el comando principal
+    tags: ['juegos'],         // Tag del comando
+    command: ['vegeta'],      // Comando principal
 
-    async run({ msg, sock, args, usuarios }) {
+    async run({ msg, sock, args }) {
 
         const userId = msg.key.participant || msg.key.remoteJid;
 
@@ -27,6 +42,7 @@ module.exports = {
         const subcomando = args[0] ? args[0].toLowerCase() : null;
 
         switch(subcomando) {
+
             case '!powerlevel':
                 await sock.sendMessage(msg.key.remoteJid, { text: `💪 Tu nivel de poder es: ${usuarios[userId].power}` });
                 break;
@@ -44,6 +60,7 @@ module.exports = {
                 usuarios[userId].power -= daño;
                 if (usuarios[userId].power < 0) usuarios[userId].power = 0;
                 const fraseVegeta = vegetaFrases[Math.floor(Math.random() * vegetaFrases.length)];
+
                 await sock.sendMessage(msg.key.remoteJid, { 
                     text: `¡Has usado ${ataque}!\nVegeta contraataca y te quita ${daño} de poder 😤\n${fraseVegeta}\n💪 Tu poder actual: ${usuarios[userId].power}` 
                 });
@@ -52,14 +69,18 @@ module.exports = {
             case '!train':
                 const ganancia = Math.floor(Math.random() * 300 + 100);
                 usuarios[userId].power += ganancia;
-                await sock.sendMessage(msg.key.remoteJid, { text: `🏋️‍♂️ Has entrenado y ganado ${ganancia} de poder\n💪 Tu poder actual: ${usuarios[userId].power}` });
+                await sock.sendMessage(msg.key.remoteJid, { 
+                    text: `🏋️‍♂️ Has entrenado y ganado ${ganancia} de poder\n💪 Tu poder actual: ${usuarios[userId].power}` 
+                });
                 break;
 
             default:
-                await sock.sendMessage(msg.key.remoteJid, { text: `❌ Comando desconocido dentro del tag juegos.\nUsa:\nVegeta !powerlevel\nVegeta !attack\nVegeta !train` });
+                await sock.sendMessage(msg.key.remoteJid, { 
+                    text: `❌ Comando desconocido dentro del tag juegos.\nUsa:\nVegeta !powerlevel\nVegeta !attack\nVegeta !train` 
+                });
         }
 
-        // Guardar cambios en JSON
-        fs.writeFileSync('./usuarios.json', JSON.stringify(usuarios, null, 2));
+        // Guardar cambios
+        guardarUsuarios();
     }
 }
