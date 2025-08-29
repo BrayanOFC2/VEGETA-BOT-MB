@@ -1,76 +1,19 @@
-var handler = async (m, { conn, participants, usedPrefix, command, args }) => {
-    const vegeta = '( -д-)🐉';
-    const vegeta = ':-)🐉';
+let handler = async (m, { conn, usedPrefix, command }) => {
 
-    const groupInfo = await conn.groupMetadata(m.chat);
-    const ownerGroup = groupInfo.owner || m.chat.split`-`[0] + '@s.whatsapp.net';
-    const ownerBot = global.owner[0][0] + '@s.whatsapp.net';
+if (!m.mentionedJid[0] && !m.quoted) return m.reply(`🐉 Ingresa el tag de un usuario. Ejemplo :\n\n*${usedPrefix + command}* @tag`) 
+let user = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted.sender
+if (conn.user.jid.includes(user)) return m.reply(`☁️ No puedo hacer un auto kick`)
 
-    let usersToKick = m.mentionedJid || [];
+await conn.groupParticipantsUpdate(m.chat, [user], 'remove')
+m.reply(`🔮 Usuario eliminado con éxito`) 
 
-    // Agrega citado si no está incluido
-    if (m.quoted && !usersToKick.includes(m.quoted.sender)) {
-        usersToKick.push(m.quoted.sender);
-    }
+}
 
+handler.help = ['kick @user']
+handler.tags = ['group']
+handler.command = ['kick', 'expulsar'] 
+handler.admin = true
+handler.group = true
+handler.botAdmin = true
 
-    const prefix = args[0]?.startsWith('+') ? args[0].replace(/\D/g, '') : null;
-    if (prefix) {
-        for (let user of participants) {
-            const number = user.id.split('@')[0];
-            if (number.startsWith(prefix) && !usersToKick.includes(user.id)) {
-                usersToKick.push(user.id);
-            }
-        }
-    }
-
-    if (!usersToKick.length) {
-        return conn.reply(m.chat, `${vegeta} ¡vergueta! Debes mencionar a alguien, responder un mensaje o usar un prefijo numérico para expulsar.`, m);
-    }
-
-    let kicked = [];
-    let notAllowed = [];
-
-    for (let user of usersToKick) {
-        if (user === conn.user.jid) {
-            notAllowed.push('🤖 El bot no puede eliminarse a sí mismo.');
-            continue;
-        }
-        if (user === ownerGroup) {
-            notAllowed.push('👑 No se puede expulsar al dueño del grupo.');
-            continue;
-        }
-        if (user === ownerBot) {
-            notAllowed.push('🧑‍💻 No se puede expulsar al creador del bot.');
-            continue;
-        }
-
-        try {
-            await conn.groupParticipantsUpdate(m.chat, [user], 'remove');
-            kicked.push(user);
-        } catch (e) {
-            notAllowed.push(`⚠️ No se pudo expulsar a @${user.split('@')[0]}`);
-        }
-    }
-
-    let text = `${vegeta} ¡vergueta! Expulsión completada.\n\n`;
-
-    if (kicked.length) {
-        text += `🧨 Expulsados:\n` + kicked.map(u => `@${u.split('@')[0]}`).join('\n') + '\n\n';
-    }
-    if (notAllowed.length) {
-        text += `❌ No expulsados:\n` + notAllowed.join('\n');
-    }
-
-    conn.reply(m.chat, text, m, { mentions: usersToKick });
-};
-
-handler.help = ['kick'];
-handler.tags = ['grupo'];
-handler.command = ['kick','echar','hechar','sacar','ban'];
-handler.admin = true;
-handler.group = true;
-handler.register = true;
-handler.botAdmin = true;
-
-export default handler;
+export default handler
