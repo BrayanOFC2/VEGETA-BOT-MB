@@ -53,7 +53,7 @@ var handler = async (m, { conn, participants, usedPrefix, command, args }) => {
         }
     }
 
-    let text = `${pikachu} ¡Pika Pika! Expulsión completada.\n\n`;
+    let text = `${vegeta} ¡vergueta! Expulsión completada.\n\n`;
 
     if (kicked.length) {
         text += `🧨 Expulsados:\n` + kicked.map(u => `@${u.split('@')[0]}`).join('\n') + '\n\n';
