@@ -3000,3 +3000,1505 @@
       "votes": 0
    }
 ]
+[
+   {
+      "id": "201",
+      "name": "Killua Zoldyck",
+      "gender": "Hombre",
+      "value": "7201",
+      "source": "Hunter x Hunter",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/killua_zoldyck1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/killua_zoldyck2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "202",
+      "name": "Gon Freecss",
+      "gender": "Hombre",
+      "value": "7202",
+      "source": "Hunter x Hunter",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/gon_freecss1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/gon_freecss2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "203",
+      "name": "Kurapika",
+      "gender": "Hombre",
+      "value": "7203",
+      "source": "Hunter x Hunter",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/kurapika1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/kurapika2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "204",
+      "name": "Hisoka Morow",
+      "gender": "Hombre",
+      "value": "7204",
+      "source": "Hunter x Hunter",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/hisoka_morow1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/hisoka_morow2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "205",
+      "name": "Sailor Moon",
+      "gender": "Mujer",
+      "value": "7205",
+      "source": "Sailor Moon",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/sailor_moon1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/sailor_moon2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "206",
+      "name": "Chibiusa",
+      "gender": "Mujer",
+      "value": "7206",
+      "source": "Sailor Moon",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/chibiusa1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/chibiusa2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "207",
+      "name": "Usui Takumi",
+      "gender": "Hombre",
+      "value": "7207",
+      "source": "Kaichou wa Maid-sama!",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/usui_takumi1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/usui_takumi2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "208",
+      "name": "Misaki Ayuzawa",
+      "gender": "Mujer",
+      "value": "7208",
+      "source": "Kaichou wa Maid-sama!",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/misaki_ayuzawa1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/misaki_ayuzawa2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "209",
+      "name": "Holo",
+      "gender": "Mujer",
+      "value": "7209",
+      "source": "Spice and Wolf",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/holo1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/holo2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "210",
+      "name": "Lawliet L",
+      "gender": "Hombre",
+      "value": "7210",
+      "source": "Death Note",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/lawliet_l1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/lawliet_l2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   }
+   ,
+   {
+      "id": "211",
+      "name": "Shoyo Hinata",
+      "gender": "Hombre",
+      "value": "7211",
+      "source": "Haikyuu!!",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/shoyo_hinata1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/shoyo_hinata2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "212",
+      "name": "Tobio Kageyama",
+      "gender": "Hombre",
+      "value": "7212",
+      "source": "Haikyuu!!",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/tobio_kageyama1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/tobio_kageyama2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "213",
+      "name": "Kenma Kozume",
+      "gender": "Hombre",
+      "value": "7213",
+      "source": "Haikyuu!!",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/kenma_kozume1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/kenma_kozume2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "214",
+      "name": "Toru Oikawa",
+      "gender": "Hombre",
+      "value": "7214",
+      "source": "Haikyuu!!",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/toru_oikawa1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/toru_oikawa2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "215",
+      "name": "Nishinoya Yuu",
+      "gender": "Hombre",
+      "value": "7215",
+      "source": "Haikyuu!!",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/nishinoya_yuu1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/nishinoya_yuu2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "216",
+      "name": "Shoto Todoroki",
+      "gender": "Hombre",
+      "value": "7216",
+      "source": "Boku no Hero Academia",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/shoto_todoroki1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/shoto_todoroki2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "217",
+      "name": "Izuku Midoriya",
+      "gender": "Hombre",
+      "value": "7217",
+      "source": "Boku no Hero Academia",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/izuku_midoriya1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/izuku_midoriya2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "218",
+      "name": "Katsuki Bakugo",
+      "gender": "Hombre",
+      "value": "7218",
+      "source": "Boku no Hero Academia",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/katsuki_bakugo1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/katsuki_bakugo2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "219",
+      "name": "Ochaco Uraraka",
+      "gender": "Mujer",
+      "value": "7219",
+      "source": "Boku no Hero Academia",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/ochaco_uraraka1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/ochaco_uraraka2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "220",
+      "name": "All Might",
+      "gender": "Hombre",
+      "value": "7220",
+      "source": "Boku no Hero Academia",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/all_might1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/all_might2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   }
+   {
+      "id": "221",
+      "name": "Sakura Kinomoto",
+      "gender": "Mujer",
+      "value": "7221",
+      "source": "Cardcaptor Sakura",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/sakura_kinomoto1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/sakura_kinomoto2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "222",
+      "name": "Syaoran Li",
+      "gender": "Hombre",
+      "value": "7222",
+      "source": "Cardcaptor Sakura",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/syaoran_li1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/syaoran_li2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "223",
+      "name": "Tomoyo Daidouji",
+      "gender": "Mujer",
+      "value": "7223",
+      "source": "Cardcaptor Sakura",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/tomoyo_daidouji1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/tomoyo_daidouji2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "224",
+      "name": "Eriol Hiiragizawa",
+      "gender": "Hombre",
+      "value": "7224",
+      "source": "Cardcaptor Sakura",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/eriol_hiiragizawa1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/eriol_hiiragizawa2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "225",
+      "name": "Eren Yeager",
+      "gender": "Hombre",
+      "value": "7225",
+      "source": "Shingeki no Kyojin",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/eren_yeager1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/eren_yeager2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "226",
+      "name": "Mikasa Ackerman",
+      "gender": "Mujer",
+      "value": "7226",
+      "source": "Shingeki no Kyojin",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/mikasa_ackerman1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/mikasa_ackerman2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "227",
+      "name": "Armin Arlert",
+      "gender": "Hombre",
+      "value": "7227",
+      "source": "Shingeki no Kyojin",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/armin_arlert1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/armin_arlert2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "228",
+      "name": "Levi Ackerman",
+      "gender": "Hombre",
+      "value": "7228",
+      "source": "Shingeki no Kyojin",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/levi_ackerman1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/levi_ackerman2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "229",
+      "name": "Historia Reiss",
+      "gender": "Mujer",
+      "value": "7229",
+      "source": "Shingeki no Kyojin",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/historia_reiss1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/historia_reiss2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "230",
+      "name": "Reiner Braun",
+      "gender": "Hombre",
+      "value": "7230",
+      "source": "Shingeki no Kyojin",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/reiner_braun1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/reiner_braun2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "231",
+      "name": "Naruto Uzumaki",
+      "gender": "Hombre",
+      "value": "7231",
+      "source": "Naruto",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/naruto_uzumaki1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/naruto_uzumaki2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "232",
+      "name": "Sasuke Uchiha",
+      "gender": "Hombre",
+      "value": "7232",
+      "source": "Naruto",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/sasuke_uchiha1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/sasuke_uchiha2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "233",
+      "name": "Sakura Haruno",
+      "gender": "Mujer",
+      "value": "7233",
+      "source": "Naruto",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/sakura_haruno1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/sakura_haruno2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "234",
+      "name": "Kakashi Hatake",
+      "gender": "Hombre",
+      "value": "7234",
+      "source": "Naruto",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/kakashi_hatake1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/kakashi_hatake2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "235",
+      "name": "Gaara",
+      "gender": "Hombre",
+      "value": "7235",
+      "source": "Naruto",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/gaara1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/gaara2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "236",
+      "name": "Itachi Uchiha",
+      "gender": "Hombre",
+      "value": "7236",
+      "source": "Naruto",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/itachi_uchiha1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/itachi_uchiha2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "237",
+      "name": "Hinata Hyuga",
+      "gender": "Mujer",
+      "value": "7237",
+      "source": "Naruto",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/hinata_hyuga1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/hinata_hyuga2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "238",
+      "name": "Shikamaru Nara",
+      "gender": "Hombre",
+      "value": "7238",
+      "source": "Naruto",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/shikamaru_nara1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/shikamaru_nara2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "239",
+      "name": "Rock Lee",
+      "gender": "Hombre",
+      "value": "7239",
+      "source": "Naruto",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/rock_lee1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/rock_lee2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "240",
+      "name": "Tsunade Senju",
+      "gender": "Mujer",
+      "value": "7240",
+      "source": "Naruto",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/tsunade_senju1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/tsunade_senju2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   }
+   {
+      "id": "41",
+      "name": "Alphonse Elric",
+      "gender": "Hombre",
+      "value": "7041",
+      "source": "Fullmetal Alchemist",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/alphonse_elric1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/alphonse_elric2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "42",
+      "name": "Roy Mustang",
+      "gender": "Hombre",
+      "value": "7042",
+      "source": "Fullmetal Alchemist",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/roy_mustang1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/roy_mustang2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "43",
+      "name": "Riza Hawkeye",
+      "gender": "Mujer",
+      "value": "7043",
+      "source": "Fullmetal Alchemist",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/riza_hawkeye1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/riza_hawkeye2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "44",
+      "name": "Meliodas",
+      "gender": "Hombre",
+      "value": "7044",
+      "source": "Nanatsu no Taizai",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/meliodas1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/meliodas2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "45",
+      "name": "Elizabeth Liones",
+      "gender": "Mujer",
+      "value": "7045",
+      "source": "Nanatsu no Taizai",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/elizabeth_liones1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/elizabeth_liones2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "46",
+      "name": "Ban",
+      "gender": "Hombre",
+      "value": "7046",
+      "source": "Nanatsu no Taizai",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/ban1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/ban2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "47",
+      "name": "Diane",
+      "gender": "Mujer",
+      "value": "7047",
+      "source": "Nanatsu no Taizai",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/diane1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/diane2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "48",
+      "name": "Escanor",
+      "gender": "Hombre",
+      "value": "7048",
+      "source": "Nanatsu no Taizai",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/escanor1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/escanor2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "49",
+      "name": "Gowther",
+      "gender": "Hombre",
+      "value": "7049",
+      "source": "Nanatsu no Taizai",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/gowther1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/gowther2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "50",
+      "name": "King",
+      "gender": "Hombre",
+      "value": "7050",
+      "source": "Nanatsu no Taizai",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/king1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/king2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   }
+   {
+      "id": "251",
+      "name": "Ichigo Kurosaki",
+      "gender": "Hombre",
+      "value": "7251",
+      "source": "Bleach",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/ichigo_kurosaki1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/ichigo_kurosaki2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "252",
+      "name": "Rukia Kuchiki",
+      "gender": "Mujer",
+      "value": "7252",
+      "source": "Bleach",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/rukia_kuchiki1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/rukia_kuchiki2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "253",
+      "name": "Renji Abarai",
+      "gender": "Hombre",
+      "value": "7253",
+      "source": "Bleach",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/renji_abarai1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/renji_abarai2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "254",
+      "name": "Byakuya Kuchiki",
+      "gender": "Hombre",
+      "value": "7254",
+      "source": "Bleach",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/byakuya_kuchiki1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/byakuya_kuchiki2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "255",
+      "name": "Light Yagami",
+      "gender": "Hombre",
+      "value": "7255",
+      "source": "Death Note",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/light_yagami1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/light_yagami2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "256",
+      "name": "L Lawliet",
+      "gender": "Hombre",
+      "value": "7256",
+      "source": "Death Note",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/l_lawliet1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/l_lawliet2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "257",
+      "name": "Misa Amane",
+      "gender": "Mujer",
+      "value": "7257",
+      "source": "Death Note",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/misa_amane1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/misa_amane2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "258",
+      "name": "Eren Yeager",
+      "gender": "Hombre",
+      "value": "7258",
+      "source": "Shingeki no Kyojin",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/eren_yeager1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/eren_yeager2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "259",
+      "name": "Mikasa Ackerman",
+      "gender": "Mujer",
+      "value": "7259",
+      "source": "Shingeki no Kyojin",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/mikasa_ackerman1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/mikasa_ackerman2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "260",
+      "name": "Izuku Midoriya",
+      "gender": "Hombre",
+      "value": "7260",
+      "source": "Boku no Hero Academia",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/izuku_midoriya1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/izuku_midoriya2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   }
+   {
+      "id": "261",
+      "name": "Kugisaki Nobara",
+      "gender": "Mujer",
+      "value": "7261",
+      "source": "Jujutsu Kaisen",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/nobara_kugisaki1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/nobara_kugisaki2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "262",
+      "name": "Megumi Fushiguro",
+      "gender": "Hombre",
+      "value": "7262",
+      "source": "Jujutsu Kaisen",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/megumi_fushiguro1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/megumi_fushiguro2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "263",
+      "name": "Suguru Geto",
+      "gender": "Hombre",
+      "value": "7263",
+      "source": "Jujutsu Kaisen",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/suguru_geto1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/suguru_geto2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "264",
+      "name": "Tanjiro Kamado",
+      "gender": "Hombre",
+      "value": "7264",
+      "source": "Demon Slayer",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/tanjiro_kamado1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/tanjiro_kamado2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "265",
+      "name": "Nezuko Kamado",
+      "gender": "Mujer",
+      "value": "7265",
+      "source": "Demon Slayer",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/nezuko_kamado1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/nezuko_kamado2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "266",
+      "name": "Zenitsu Agatsuma",
+      "gender": "Hombre",
+      "value": "7266",
+      "source": "Demon Slayer",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/zenitsu_agatsuma1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/zenitsu_agatsuma2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "267",
+      "name": "Inosuke Hashibira",
+      "gender": "Hombre",
+      "value": "7267",
+      "source": "Demon Slayer",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/inosuke_hashibira1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/inosuke_hashibira2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "268",
+      "name": "Asta",
+      "gender": "Hombre",
+      "value": "7268",
+      "source": "Black Clover",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/asta1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/asta2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "269",
+      "name": "Yuno",
+      "gender": "Hombre",
+      "value": "7269",
+      "source": "Black Clover",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/yuno1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/yuno2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "270",
+      "name": "Noelle Silva",
+      "gender": "Mujer",
+      "value": "7270",
+      "source": "Black Clover",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/noelle_silva1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/noelle_silva2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   }
+   {
+      "id": "271",
+      "name": "Izuku Midoriya",
+      "gender": "Hombre",
+      "value": "7271",
+      "source": "My Hero Academia",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/izuku_midoriya1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/izuku_midoriya2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "272",
+      "name": "Katsuki Bakugo",
+      "gender": "Hombre",
+      "value": "7272",
+      "source": "My Hero Academia",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/katsuki_bakugo1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/katsuki_bakugo2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "273",
+      "name": "Shoto Todoroki",
+      "gender": "Hombre",
+      "value": "7273",
+      "source": "My Hero Academia",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/shoto_todoroki1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/shoto_todoroki2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "274",
+      "name": "Eren Yeager",
+      "gender": "Hombre",
+      "value": "7274",
+      "source": "Attack on Titan",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/eren_yeager1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/eren_yeager2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "275",
+      "name": "Mikasa Ackerman",
+      "gender": "Mujer",
+      "value": "7275",
+      "source": "Attack on Titan",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/mikasa_ackerman1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/mikasa_ackerman2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "276",
+      "name": "Levi Ackerman",
+      "gender": "Hombre",
+      "value": "7276",
+      "source": "Attack on Titan",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/levi_ackerman1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/levi_ackerman2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "277",
+      "name": "Denji",
+      "gender": "Hombre",
+      "value": "7277",
+      "source": "Chainsaw Man",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/denji1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/denji2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "278",
+      "name": "Power",
+      "gender": "Mujer",
+      "value": "7278",
+      "source": "Chainsaw Man",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/power1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/power2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "279",
+      "name": "Makima",
+      "gender": "Mujer",
+      "value": "7279",
+      "source": "Chainsaw Man",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/makima1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/makima2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "280",
+      "name": "Ayanokoji Kiyotaka",
+      "gender": "Hombre",
+      "value": "7280",
+      "source": "Classroom of the Elite",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/ayanokoji_kiyotaka1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/ayanokoji_kiyotaka2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   }
+   {
+      "id": "281",
+      "name": "Takemichi Hanagaki",
+      "gender": "Hombre",
+      "value": "7281",
+      "source": "Tokyo Revengers",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/takemichi_hanagaki1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/takemichi_hanagaki2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "282",
+      "name": "Manjiro Sano (Mikey)",
+      "gender": "Hombre",
+      "value": "7282",
+      "source": "Tokyo Revengers",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/manjiro_sano1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/manjiro_sano2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "283",
+      "name": "Ken Ryuguji (Draken)",
+      "gender": "Hombre",
+      "value": "7283",
+      "source": "Tokyo Revengers",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/ken_ryuguji1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/ken_ryuguji2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "284",
+      "name": "Yoichi Isagi",
+      "gender": "Hombre",
+      "value": "7284",
+      "source": "Blue Lock",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/yoichi_isagi1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/yoichi_isagi2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "285",
+      "name": "Renshiro Nagi",
+      "gender": "Hombre",
+      "value": "7285",
+      "source": "Blue Lock",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/renshiro1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/renshiro2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "286",
+      "name": "Asta",
+      "gender": "Hombre",
+      "value": "7286",
+      "source": "Black Clover",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/asta1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/asta2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "287",
+      "name": "Yuno",
+      "gender": "Hombre",
+      "value": "7287",
+      "source": "Black Clover",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/yuno1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/yuno2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "288",
+      "name": "Noelle Silva",
+      "gender": "Mujer",
+      "value": "7288",
+      "source": "Black Clover",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/noelle_silva1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/noelle_silva2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "289",
+      "name": "Luck Voltia",
+      "gender": "Hombre",
+      "value": "7289",
+      "source": "Black Clover",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/luck_voltia1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/luck_voltia2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "290",
+      "name": "Nozaki Tsutomu",
+      "gender": "Hombre",
+      "value": "7290",
+      "source": "Blue Lock",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/nozaki_tsutomu1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/nozaki_tsutomu2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   }
+   {
+      "id": "291",
+      "name": "Shinra Kusakabe",
+      "gender": "Hombre",
+      "value": "7291",
+      "source": "Fire Force",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/shinra_kusakabe1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/shinra_kusakabe2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "292",
+      "name": "Arthur Boyle",
+      "gender": "Hombre",
+      "value": "7292",
+      "source": "Fire Force",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/arthur_boyle1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/arthur_boyle2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "293",
+      "name": "Akitaru Obi",
+      "gender": "Hombre",
+      "value": "7293",
+      "source": "Fire Force",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/akitaru_obi1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/akitaru_obi2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "294",
+      "name": "Rimuru Tempest",
+      "gender": "Hombre",
+      "value": "7294",
+      "source": "That Time I Got Reincarnated as a Slime",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/rimuru_tempest1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/rimuru_tempest2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "295",
+      "name": "Benimaru",
+      "gender": "Hombre",
+      "value": "7295",
+      "source": "That Time I Got Reincarnated as a Slime",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/benimaru1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/benimaru2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "296",
+      "name": "Shuna",
+      "gender": "Mujer",
+      "value": "7296",
+      "source": "That Time I Got Reincarnated as a Slime",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/shuna1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/shuna2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "297",
+      "name": "Naofumi Iwatani",
+      "gender": "Hombre",
+      "value": "7297",
+      "source": "The Rising of the Shield Hero",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/naofumi_iwatani1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/naofumi_iwatani2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "298",
+      "name": "Raphtalia",
+      "gender": "Mujer",
+      "value": "7298",
+      "source": "The Rising of the Shield Hero",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/raphtalia1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/raphtalia2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "299",
+      "name": "Filo",
+      "gender": "Mujer",
+      "value": "7299",
+      "source": "The Rising of the Shield Hero",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/filo1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/filo2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "300",
+      "name": "BrayanOFC",
+      "gender": "Hombre",
+      "value": "200000000",
+      "source": "Creador del Pack",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/brayanofc1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/brayanofc2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   }
