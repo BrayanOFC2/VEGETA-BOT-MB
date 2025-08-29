@@ -1,4 +1,4 @@
-<h1 align="center">VEGETA-BOT-V12 💨</h1>
+<h1 align="center">VEGETA-BOT-MB 💨</h1>
  <p align="center">🌟 déjanos tu super estrella</p>
 </p>
 
