@@ -2,6 +2,7 @@
 import { xpRange } from '../lib/levelling.js'
 import ws from 'ws'
 
+const botname = global.botname || '❍⏤͟͟͞͞𝙑𝙀𝙂𝙀𝙏𝘼-𝙊𝙁𝘾࿐'
 let tags = {
   'serbot': 'SUB BOTS',
   'main': 'ZENO INFO',
@@ -42,7 +43,7 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
     let userId = m.mentionedJid?.[0] || m.sender
     let user = global.db.data.users[userId]
     let name = await conn.getName(userId)
-    let mode = global.opts["self"] ? "Modo Privado 🔒" : "Modo Público 🌀"
+    let mode = global.opts?.self ? "Modo Privado 🔒" : "Modo Público 🔮"
     let totalCommands = Object.keys(global.plugins).length
     let totalreg = Object.keys(global.db.data.users).length
     let uptime = clockString(process.uptime() * 1000)
@@ -59,7 +60,7 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
     }
 
     let { exp, level } = user
-    let { min, xp, max } = xpRange(level, global.multiplier)
+    let { min, xp, max } = xpRange(level, global.multiplier || 1)
     let help = Object.values(global.plugins).filter(plugin => !plugin.disabled).map(plugin => ({
       help: Array.isArray(plugin.help) ? plugin.help : (plugin.help ? [plugin.help] : []),
       tags: Array.isArray(plugin.tags) ? plugin.tags : (plugin.tags ? [plugin.tags] : []),
@@ -67,10 +68,12 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
       premium: plugin.premium,
     }))
 
+    let rango = conn?.user?.jid === userId ? 'DIOS BrayanOFC 🅥' : 'SUB-BOT KAIO 🅑'
+
     let menuText = `
 ╭━━━『🐉 ${botname.toUpperCase()} | DRAGON MENU』━━━╮
 ┃ ⚡ Usuario Saiyajin: ${name}
-┃ 👑 Rango          : ${(conn.user.jid == global.conn.user.jid ? 'DIOS BrayanOFC 🅥' : 'SUB-BOT KAIO 🅑')}
+┃ 👑 Rango          : ${rango}
 ┃ 🌌 Universo       : ${mode}
 ┃ 📊 Registro Z     : ${totalreg}
 ┃ ⏱️ Tiempo Activo  : ${uptime}
@@ -94,7 +97,7 @@ ${commandsForTag.map(menu => menu.help.map(help =>
 🔥 *By BrayanOFC* 🔥
 `.trim()
 
-    await m.react('🐉', '🌌')
+    await m.react('🐉') 
 
     await conn.sendMessage(m.chat, {
       video: { url: 'https://qu.ax/YcKnl.mp4' },
