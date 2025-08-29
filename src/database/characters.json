@@ -3603,14 +3603,14 @@
       "votes": 0
    }
    {
-      "id": "41",
-      "name": "Alphonse Elric",
+      "id": "241",
+      "name": "Gojou Satoru",
       "gender": "Hombre",
-      "value": "7041",
-      "source": "Fullmetal Alchemist",
+      "value": "7241",
+      "source": "Jujutsu Kaisen",
       "img": [
-         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/alphonse_elric1.jpeg",
-         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/alphonse_elric2.jpeg"
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/satoru_gojo1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/satoru_gojo2.jpeg"
       ],
       "vid": [],
       "user": null,
@@ -3618,14 +3618,14 @@
       "votes": 0
    },
    {
-      "id": "42",
-      "name": "Roy Mustang",
+      "id": "242",
+      "name": "Megumi Fushiguro",
       "gender": "Hombre",
-      "value": "7042",
-      "source": "Fullmetal Alchemist",
+      "value": "7242",
+      "source": "Jujutsu Kaisen",
       "img": [
-         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/roy_mustang1.jpeg",
-         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/roy_mustang2.jpeg"
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/megumi_fushiguro1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/megumi_fushiguro2.jpeg"
       ],
       "vid": [],
       "user": null,
@@ -3633,14 +3633,14 @@
       "votes": 0
    },
    {
-      "id": "43",
-      "name": "Riza Hawkeye",
+      "id": "243",
+      "name": "Nobara Kugisaki",
       "gender": "Mujer",
-      "value": "7043",
-      "source": "Fullmetal Alchemist",
+      "value": "7243",
+      "source": "Jujutsu Kaisen",
       "img": [
-         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/riza_hawkeye1.jpeg",
-         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/riza_hawkeye2.jpeg"
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/nobara_kugisaki1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/nobara_kugisaki2.jpeg"
       ],
       "vid": [],
       "user": null,
@@ -3648,14 +3648,14 @@
       "votes": 0
    },
    {
-      "id": "44",
-      "name": "Meliodas",
+      "id": "244",
+      "name": "Yuji Itadori",
       "gender": "Hombre",
-      "value": "7044",
-      "source": "Nanatsu no Taizai",
+      "value": "7244",
+      "source": "Jujutsu Kaisen",
       "img": [
-         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/meliodas1.jpeg",
-         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/meliodas2.jpeg"
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/yuji_itadori1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/yuji_itadori2.jpeg"
       ],
       "vid": [],
       "user": null,
@@ -3663,14 +3663,29 @@
       "votes": 0
    },
    {
-      "id": "45",
-      "name": "Elizabeth Liones",
+      "id": "245",
+      "name": "Tanjiro Kamado",
+      "gender": "Hombre",
+      "value": "7245",
+      "source": "Demon Slayer",
+      "img": [
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/tanjiro_kamado1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/tanjiro_kamado2.jpeg"
+      ],
+      "vid": [],
+      "user": null,
+      "status": "Libre",
+      "votes": 0
+   },
+   {
+      "id": "246",
+      "name": "Nezuko Kamado",
       "gender": "Mujer",
-      "value": "7045",
-      "source": "Nanatsu no Taizai",
+      "value": "7246",
+      "source": "Demon Slayer",
       "img": [
-         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/elizabeth_liones1.jpeg",
-         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/elizabeth_liones2.jpeg"
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/nezuko_kamado1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/nezuko_kamado2.jpeg"
       ],
       "vid": [],
       "user": null,
@@ -3678,14 +3693,14 @@
       "votes": 0
    },
    {
-      "id": "46",
-      "name": "Ban",
+      "id": "247",
+      "name": "Zenitsu Agatsuma",
       "gender": "Hombre",
-      "value": "7046",
-      "source": "Nanatsu no Taizai",
+      "value": "7247",
+      "source": "Demon Slayer",
       "img": [
-         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/ban1.jpeg",
-         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/ban2.jpeg"
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/zenitsu_agatsuma1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/zenitsu_agatsuma2.jpeg"
       ],
       "vid": [],
       "user": null,
@@ -3693,29 +3708,14 @@
       "votes": 0
    },
    {
-      "id": "47",
-      "name": "Diane",
-      "gender": "Mujer",
-      "value": "7047",
-      "source": "Nanatsu no Taizai",
-      "img": [
-         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/diane1.jpeg",
-         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/diane2.jpeg"
-      ],
-      "vid": [],
-      "user": null,
-      "status": "Libre",
-      "votes": 0
-   },
-   {
-      "id": "48",
-      "name": "Escanor",
+      "id": "248",
+      "name": "Inosuke Hashibira",
       "gender": "Hombre",
-      "value": "7048",
-      "source": "Nanatsu no Taizai",
+      "value": "7248",
+      "source": "Demon Slayer",
       "img": [
-         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/escanor1.jpeg",
-         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/escanor2.jpeg"
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/inosuke_hashibira1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/inosuke_hashibira2.jpeg"
       ],
       "vid": [],
       "user": null,
@@ -3723,14 +3723,14 @@
       "votes": 0
    },
    {
-      "id": "49",
-      "name": "Gowther",
+      "id": "249",
+      "name": "Asta",
       "gender": "Hombre",
-      "value": "7049",
-      "source": "Nanatsu no Taizai",
+      "value": "7249",
+      "source": "Black Clover",
       "img": [
-         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/gowther1.jpeg",
-         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/gowther2.jpeg"
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/asta1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/asta2.jpeg"
       ],
       "vid": [],
       "user": null,
@@ -3738,20 +3738,20 @@
       "votes": 0
    },
    {
-      "id": "50",
-      "name": "King",
+      "id": "250",
+      "name": "Yuno",
       "gender": "Hombre",
-      "value": "7050",
-      "source": "Nanatsu no Taizai",
+      "value": "7250",
+      "source": "Black Clover",
       "img": [
-         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/king1.jpeg",
-         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/king2.jpeg"
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/yuno1.jpeg",
+         "https://raw.githubusercontent.com/BrayanOFC/Adiciones/main/Contenido/yuno2.jpeg"
       ],
       "vid": [],
       "user": null,
       "status": "Libre",
       "votes": 0
-   }
+   },
    {
       "id": "251",
       "name": "Ichigo Kurosaki",
