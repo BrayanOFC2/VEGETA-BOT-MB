@@ -1,6 +1,6 @@
 // código creado x The Carlos 👑
 async function handler(m, { conn: stars, usedPrefix }) {
-  const maxSubBots = 324;
+  const maxSubBots = 5000;
   const conns = Array.isArray(global.conns) ? global.conns : [];
 
   const isConnOpen = (c) => {
