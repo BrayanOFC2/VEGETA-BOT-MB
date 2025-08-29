@@ -1,39 +1,73 @@
-var handler = async (m, { conn }) => {
-  try {
-    if (!m.isGroup) return conn.reply(m.chat, '🐉 Este comando solo funciona en grupos.', m);
+var handler = async (m, { conn, participants, usedPrefix, command, args }) => {
+    const vegeta = '( -д-)🐉';
+    const vegeta = ':-)🐉';
 
+    const groupInfo = await conn.groupMetadata(m.chat);
+    const ownerGroup = groupInfo.owner || m.chat.split`-`[0] + '@s.whatsapp.net';
+    const ownerBot = global.owner[0][0] + '@s.whatsapp.net';
 
-    const target = m.mentionedJid?.[0] || m.quoted?.sender;
-    if (!target) return conn.reply(m.chat, '☁️ _Responde un mensaje o etiqueta a la persona que quieres expulsar._', m);
+    let usersToKick = m.mentionedJid || [];
 
-    const groupMeta = await conn.groupMetadata(m.chat);
-    const ownerGroup = groupMeta.owner || m.chat.split('-')[0] + '@s.whatsapp.net';
-    const botJid = conn.user.id.split(':')[0] + '@s.whatsapp.net';
-
-    try {
-      await conn.groupParticipantsUpdate(m.chat, [botJid], 'promote'); 
-    } catch {
-      return conn.reply(m.chat, '🔮 Necesito ser administrador real para poder expulsar usuarios.', m);
+    // Agrega citado si no está incluido
+    if (m.quoted && !usersToKick.includes(m.quoted.sender)) {
+        usersToKick.push(m.quoted.sender);
     }
 
 
-    if ([ownerGroup, botJid, ...global.owner.map(o => o[0] + '@s.whatsapp.net')].includes(target)) {
-      return conn.reply(m.chat, '🐉 No puedo expulsar al propietario o a un número autorizado.', m);
+    const prefix = args[0]?.startsWith('+') ? args[0].replace(/\D/g, '') : null;
+    if (prefix) {
+        for (let user of participants) {
+            const number = user.id.split('@')[0];
+            if (number.startsWith(prefix) && !usersToKick.includes(user.id)) {
+                usersToKick.push(user.id);
+            }
+        }
     }
 
+    if (!usersToKick.length) {
+        return conn.reply(m.chat, `${pikachu} ¡Pika Pika! Debes mencionar a alguien, responder un mensaje o usar un prefijo numérico para expulsar.`, m);
+    }
 
-    await conn.groupParticipantsUpdate(m.chat, [target], 'remove');
-    conn.reply(m.chat, `✅ Usuario @${target.split('@')[0]} expulsado.`, m, { mentions: [target] });
+    let kicked = [];
+    let notAllowed = [];
 
-  } catch (e) {
-    console.error(e);
-    conn.reply(m.chat, '❌ Ocurrió un error al intentar expulsar al usuario. Asegúrate que soy administrador.', m);
-  }
+    for (let user of usersToKick) {
+        if (user === conn.user.jid) {
+            notAllowed.push('🤖 El bot no puede eliminarse a sí mismo.');
+            continue;
+        }
+        if (user === ownerGroup) {
+            notAllowed.push('👑 No se puede expulsar al dueño del grupo.');
+            continue;
+        }
+        if (user === ownerBot) {
+            notAllowed.push('🧑‍💻 No se puede expulsar al creador del bot.');
+            continue;
+        }
+
+        try {
+            await conn.groupParticipantsUpdate(m.chat, [user], 'remove');
+            kicked.push(user);
+        } catch (e) {
+            notAllowed.push(`⚠️ No se pudo expulsar a @${user.split('@')[0]}`);
+        }
+    }
+
+    let text = `${pikachu} ¡Pika Pika! Expulsión completada.\n\n`;
+
+    if (kicked.length) {
+        text += `🧨 Expulsados:\n` + kicked.map(u => `@${u.split('@')[0]}`).join('\n') + '\n\n';
+    }
+    if (notAllowed.length) {
+        text += `❌ No expulsados:\n` + notAllowed.join('\n');
+    }
+
+    conn.reply(m.chat, text, m, { mentions: usersToKick });
 };
 
-handler.help = ['kick @usuario'];
+handler.help = ['kick'];
 handler.tags = ['grupo'];
-handler.command = ['kick', 'echar', 'sacar', 'ban'];
+handler.command = ['kick','echar','hechar','sacar','ban'];
 handler.admin = true;
 handler.group = true;
 handler.register = true;
