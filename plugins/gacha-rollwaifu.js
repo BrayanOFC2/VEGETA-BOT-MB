@@ -48,7 +48,7 @@ let handler = async (m, { conn }) => {
         const remainingTime = Math.ceil((cooldowns[userId] - now) / 1000)
         const minutes = Math.floor(remainingTime / 60)
         const seconds = remainingTime % 60
-        return conn.sendMessage(m.chat, { text: `《✧》Debes esperar *${minutes} minutos y ${seconds} segundos* para usar *#rw* de nuevo.` }, { quoted: m })
+        return conn.sendMessage(m.chat, { text: `《✧》Debes esperar ${seconds} segundos* para usar *#rw* de nuevo.` }, { quoted: m })
     }
 
     try {
