@@ -4,9 +4,9 @@ global.db.data.chats[m.chat].isBanned = true
 conn.reply(m.chat, `👑 *ᴇsᴛᴇ ᴄʜᴀᴛ ғᴜᴇ ʙᴀɴᴇᴀᴅᴏ ᴄᴏɴ ᴇxɪᴛᴏ*`, m, fake)
 
 }
-handler.help = ['banchat', 'offbot']
+handler.help = ['banchat']
 handler.tags = ['grupo']
-handler.command = ['banchat']
+handler.command = ['banchat','offbot']
 
 handler.botuser = true
 handler.admin = true 
