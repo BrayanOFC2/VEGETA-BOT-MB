@@ -1,5 +1,6 @@
 var handler = async (m, { conn, text, args, command }) => {
     try {
+        const emojis = '🚫'; 
         const senderJid = conn.user.jid;
         const bantMsg = `${emojis} *Etiqueta o responde al usuario que deseas banear.*`;
 
@@ -10,7 +11,7 @@ var handler = async (m, { conn, text, args, command }) => {
         } else if (m.mentionedJid && m.mentionedJid.length) {
             user = m.mentionedJid[0];
         } else {
-            return conn.reply(m.chat, bantMsg, m, rcanal, { mentions: [senderJid] });
+            return conn.reply(m.chat, bantMsg, m, { mentions: [senderJid] });
         }
 
         const number = user.split('@')[0];
@@ -20,7 +21,7 @@ var handler = async (m, { conn, text, args, command }) => {
         if (user === conn.user.jid)
             return conn.reply(m.chat, `*⚠️ No puedo banearme a mí mismo.*`, m);
 
-        for (const [ownerNumber] of global.owner) {
+        for (const ownerNumber of global.owner) {
             if (number === ownerNumber) {
                 return conn.reply(m.chat, `⚠️ *No puedo banear al propietario* *@${ownerNumber}*.`, m, {
                     mentions: [`${ownerNumber}@s.whatsapp.net`]
@@ -28,7 +29,7 @@ var handler = async (m, { conn, text, args, command }) => {
             }
         }
 
-        const users = global.db.data.users;
+        const users = global.db.data.users || (global.db.data.users = {});
         if (!users[user]) users[user] = {};
         if (users[user].banned) {
             return conn.reply(m.chat, `☁️ *El usuario @${number} ya está baneado.*`, m, { mentions: [user] });
@@ -44,7 +45,7 @@ var handler = async (m, { conn, text, args, command }) => {
 
     } catch (e) {
         console.error(e);
-        await conn.reply(m.chat, `✖️ *Ocurrió un error.*`, m);
+        await conn.reply(m.chat, `✖️ *Ocurrió un error:* ${e.message}`, m);
     }
 };
 
