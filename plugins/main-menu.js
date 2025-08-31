@@ -99,7 +99,7 @@ ${commandsForTag.map(menu => menu.help.map(help =>
 
     await m.react('🐉') 
 
-    try {
+   // try {
       await conn.sendMessage(m.chat, {
         video: { url: 'https://qu.ax/YcKnl.mp4' },
         caption: menuText,
