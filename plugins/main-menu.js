@@ -108,7 +108,7 @@ try {
   }, { quoted: m })
 } catch (e) {
   await conn.sendMessage(m.chat, {
-    image: { url: 'https://raw.githubusercontent.com/BrayanOFC-Media/Assets/main/logo.png' },
+    image: { url: 'https://files.catbox.moe/8r7jzw.jpg' },
     caption: menuText,
   }, { quoted: m })
 }
