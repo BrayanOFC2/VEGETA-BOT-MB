@@ -99,17 +99,26 @@ ${commandsForTag.map(menu => menu.help.map(help =>
 
     await m.react('🐉') 
 try {
+  try {
   await conn.sendMessage(m.chat, {
     video: { url: 'https://qu.ax/YcKnl.mp4' },
     caption: menuText,
     gifPlayback: true,
     mimetype: 'video/mp4',
     fileName: 'dragon-menu.mp4',
+    contextInfo: {
+      isForwarded: true,
+      forwardedNewsletterMessageInfo: {
+        newsletterJid: '120363394965381607@newsletter',
+        newsletterName: '𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱 • Update',
+        serverMessageId: 100
+      }
+    }
   }, { quoted: m })
 } catch (e) {
   await conn.sendMessage(m.chat, {
     image: { url: 'https://files.catbox.moe/8r7jzw.jpg' },
-    caption: menuText,
+    caption: menuText
   }, { quoted: m })
 }
 
