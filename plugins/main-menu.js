@@ -98,22 +98,20 @@ ${commandsForTag.map(menu => menu.help.map(help =>
 `.trim()
 
     await m.react('🐉') 
-
-    await conn.sendMessage(m.chat, {
-  video: { url: 'https://raw.githubusercontent.com/BrayanOFC-Media/Assets/main/dbz-menu.mp4' },
-  caption: menuText,
-  gifPlayback: true,
-  mimetype: 'video/mp4',
-  fileName: 'dragon-menu.mp4',
-  contextInfo: {
-    isForwarded: true,
-    forwardedNewsletterMessageInfo: {
-      newsletterJid: '120363394965381607@newsletter',
-      newsletterName: '𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱*:·',
-      serverMessageId: 100
-    }
-  }
-}, { quoted: m })
+try {
+  await conn.sendMessage(m.chat, {
+    video: { url: 'https://qu.ax/YcKnl.mp4' },
+    caption: menuText,
+    gifPlayback: true,
+    mimetype: 'video/mp4',
+    fileName: 'dragon-menu.mp4',
+  }, { quoted: m })
+} catch (e) {
+  await conn.sendMessage(m.chat, {
+    image: { url: 'https://raw.githubusercontent.com/BrayanOFC-Media/Assets/main/logo.png' },
+    caption: menuText,
+  }, { quoted: m })
+}
 
   } catch (e) {
     conn.reply(m.chat, `✖️ Menú en modo Dragon Ball falló.\n\n${e}`, m)
