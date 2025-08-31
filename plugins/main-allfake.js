@@ -35,7 +35,7 @@ handler.all = async function (m, { conn }) {
   global.fotoperfil = await conn.profilePictureUrl(m.sender, 'image').catch(_ => 
     'https://raw.githubusercontent.com/BrayanOFC-Media/Assets/main/logo.png')
 
-  global.canalIdM = ["120363401404146384@newsletter"]
+  global.canalIdM = ["120363394965381607@newsletter"]
   global.canalNombreM = ["𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱 • Update"]
   global.channelRD = await getRandomChannel()
 
