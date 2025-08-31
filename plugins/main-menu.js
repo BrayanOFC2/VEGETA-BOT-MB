@@ -101,7 +101,7 @@ ${commandsForTag.map(menu => menu.help.map(help =>
 
     try {
       await conn.sendMessage(m.chat, {
-        video: { url: 'https://files.catbox.moe/ug3swi.mp4' }, // nuevo link funcional
+        video: { url: 'https://files.catbox.moe/ug3swi.mp4' },
         caption: menuText,
         gifPlayback: true,
         mimetype: 'video/mp4',
