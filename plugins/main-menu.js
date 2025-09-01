@@ -105,20 +105,19 @@ ${commandsForTag.map(menu => menu.help.map(help =>
         caption: menuText,
         gifPlayback: true,
         mimetype: 'video/mp4',
-        fileName: 'dragon-menu.mp4'
-        contextInfo:{
-        isForwarded:true,
-        forwardedNewsletterMessageInfo:{
-         newsletterJid:
-'120363394965381607@newsletter',
-         newsletterName: '𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱 • Update',
-         serverMessageId: 100
+        fileName: 'dragon-menu.mp4',
+        contextInfo: {
+          isForwarded: true,
+          participant: global.rcanal
+        }
       }, { quoted: m })
     } catch {
-      
       await conn.sendMessage(m.chat, {
         image: { url: 'https://files.catbox.moe/8r7jzw.jpg' },
-        caption: menuText
+        caption: menuText,
+        contextInfo: {
+          isForwarded: true,
+          participant: global.rcanal
         }
       }, { quoted: m })
     }
