@@ -96,10 +96,8 @@ ${commandsForTag.map(menu => menu.help.map(h =>
 
 await m.react('🐉')
 
-const videoUrl = 'https://files.catbox.moe/g0nlvw.mp4'
-const imageUrl = 'https://files.catbox.moe/8r7jzw.jpg'
-
-let sent = false
+const videoUrl = 'https://sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4'
+const imageUrl = 'https://sample-videos.com/img/Sample-jpg-image-500kb.jpg'
 
 try {
     await conn.sendMessage(m.chat, {
@@ -108,18 +106,12 @@ try {
         mimetype: 'video/mp4',
         fileName: 'dragon-menu.mp4'
     }, { quoted: m })
-    sent = true
-} catch (err) {
-    console.log('No se pudo enviar el video:', err)
-}
-
-if (!sent) {
+} catch {
     await conn.sendMessage(m.chat, {
         image: { url: imageUrl },
         caption: menuText
     }, { quoted: m })
 }
-
   } catch (e) {
     conn.reply(m.chat, `✖️ Menú en modo Dragon Ball falló.\n\n${e}`, m)
   }
