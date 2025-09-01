@@ -100,7 +100,7 @@ ${commandsForTag.map(menu => menu.help.map(help =>
     await m.react('🐉') 
     try {
   await conn.sendMessage(m.chat, {
-    video: { url: 'https://files.catbox.moe/g0nlvw.mp4' }, // cambia a un link válido
+    video: { url: 'https://files.catbox.moe/g0nlvw.mp4' }, 
     caption: menuText,
     gifPlayback: true,
     mimetype: 'video/mp4',
