@@ -94,8 +94,6 @@ ${commandsForTag.map(menu => menu.help.map(h =>
 🔥 *By BrayanOFC* 🔥
 `.trim()
 
-    await m.react('🐉')
-
 await m.react('🐉')
 
 const videoUrl = 'https://files.catbox.moe/g0nlvw.mp4'
