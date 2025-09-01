@@ -96,8 +96,6 @@ ${commandsForTag.map(menu => menu.help.map(h =>
 
     await m.react('🐉')
 
-    await m.react('🐉')
-
 let sent = false
 
 try {
