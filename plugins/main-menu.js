@@ -99,8 +99,7 @@ ${commandsForTag.map(menu => menu.help.map(help =>
     await m.react('🐉') 
 
     try {
-      // Intentar enviar video con reenviado de canal
-      await conn.sendMessage(m.chat, {
+        await conn.sendMessage(m.chat, {
         video: { url: 'https://qu.ax/YcKnl.mp4' },
         caption: menuText,
         gifPlayback: true,
@@ -110,7 +109,7 @@ ${commandsForTag.map(menu => menu.help.map(help =>
           forwardingScore: 999,
           isForwarded: true,
           forwardedNewsletterMessageInfo: {
-            newsletterJid: global.rcanal,
+            newsletterJid: global.channel,
             newsletterName: botname,
             serverMessageId: -1
           }
