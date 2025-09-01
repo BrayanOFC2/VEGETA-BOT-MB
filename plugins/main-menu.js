@@ -109,9 +109,9 @@ ${commandsForTag.map(menu => menu.help.map(help =>
     //forwardingScore: 999,
     isForwarded: true,
     forwardedNewsletterMessageInfo: {
-      newsletterJid: "120363394965381607@newsletterr",
+      newsletterJid: "120363394965381607@newsletter",
       newsletterName: "𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱 • Update",
-      serverMessageId: 100
+      serverMessageId: -1
     }
   }
 }, { quoted: m })
@@ -126,7 +126,7 @@ ${commandsForTag.map(menu => menu.help.map(help =>
     forwardedNewsletterMessageInfo: {
       newsletterJid: "120363394965381607@newsletter",
       newsletterName: "𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱",
-      serverMessageId: 100
+      serverMessageId: -1
     }
   }
 }, { quoted: m })
