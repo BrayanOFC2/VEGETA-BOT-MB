@@ -10,7 +10,7 @@ const {
 let handler = async (message, { conn, text, usedPrefix, command }) => {
   // VARIABLES DEFINIDAS
   const avatar = 'https://qu.ax/XKFEL.jpg'; 
-  const dev = 'Black Clover MD'; 
+  const dev = 'VEGETA-BOT-MB; 
   const redes = 'https://tusitio.com'; 
 
   if (!text) {
