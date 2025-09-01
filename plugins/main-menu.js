@@ -106,12 +106,12 @@ ${commandsForTag.map(menu => menu.help.map(help =>
   mimetype: 'video/mp4',
   fileName: 'dragon-menu.mp4',
   contextInfo: {
-    //forwardingScore: 999,
+    forwardingScore: 999,
     isForwarded: true,
-    forwardedNewsletterMessageInfo: {
+   /* forwardedNewsletterMessageInfo: {
       newsletterJid: "120363394965381607@newsletter",
       newsletterName: "𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱 • Update",
-      serverMessageId: -1
+      serverMessageId: -1*/
     }
   }
 }, { quoted: m })
@@ -123,10 +123,10 @@ ${commandsForTag.map(menu => menu.help.map(help =>
   contextInfo: {
     //forwardingScore: 999,
     isForwarded: true,
-    forwardedNewsletterMessageInfo: {
+    /*forwardedNewsletterMessageInfo: {
       newsletterJid: "120363394965381607@newsletter",
       newsletterName: "𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱",
-      serverMessageId: -1
+      serverMessageId: -1*/
     }
   }
 }, { quoted: m })
