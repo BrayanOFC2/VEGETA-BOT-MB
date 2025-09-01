@@ -85,12 +85,13 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
 ${Object.keys(tags).map(tag => {
   const commandsForTag = help.filter(menu => menu.tags.includes(tag))
   if (commandsForTag.length === 0) return ''
-  return `
+  let section = `
 ╭───〔 ${tags[tag]} ${getRandomEmoji()} 〕───╮
 ${commandsForTag.map(menu => menu.help.map(help =>
   `┃ ☁️${_p}${help}${menu.limit ? ' 🟡' : ''}${menu.premium ? ' 🔒' : ''}`
 ).join('\n')).join('\n')}
 ╰━━━━━━━━━━━━━━━━━━━━╯`
+  return section
 }).filter(text => text !== '').join('\n')}
 
 🔥 *By BrayanOFC* 🔥
@@ -98,42 +99,22 @@ ${commandsForTag.map(menu => menu.help.map(help =>
 
     await m.react('🐉') 
 
-    try {
-        await conn.sendMessage(m.chat, {
-  video: { url: 'https://qu.ax/YcKnl.mp4' },
-  caption: menuText,
-  gifPlayback: true,
-  mimetype: 'video/mp4',
-  fileName: 'dragon-menu.mp4',
-  contextInfo: {
-   // forwardingScore: 999,
-    isForwarded: true,
-   /* forwardedNewsletterMessageInfo: {
-      newsletterJid: "120363394965381607@newsletter",
-      newsletterName: "𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱 • Update",
-      serverMessageId: -1*/
-    }
-  }
-}, { quoted: m })
-    } catch {
-     
-      await conn.sendMessage(m.chat, {
+    await conn.sendMessage(m.chat, {
+      video: { url: 'https://qu.ax/YcKnl.mp4' },
+      caption: menuText,
+      gifPlayback: true,
+      mimetype: 'video/mp4',
+      fileName: 'dragon-menu.mp4',
+      }
+    }, { quoted: m })
+await conn.sendMessage(m.chat, {
   image: { url: 'https://files.catbox.moe/8r7jzw.jpg' },
   caption: menuText,
-  contextInfo: {
-    //forwardingScore: 999,
-    isForwarded: true,
-    /*forwardedNewsletterMessageInfo: {
-      newsletterJid: "120363394965381607@newsletter",
-      newsletterName: "𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱",
-      serverMessageId: -1*/
-    }
   }
 }, { quoted: m })
-
   } catch (e) {
     conn.reply(m.chat, `✖️ Menú en modo Dragon Ball falló.\n\n${e}`, m)
-    console.log(e)
+    throw e
   }
 }
 
