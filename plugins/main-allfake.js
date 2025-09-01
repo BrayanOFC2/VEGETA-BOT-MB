@@ -1,4 +1,4 @@
-import pkg from '@whiskeysockets/baileys'
+/*import pkg from '@whiskeysockets/baileys'
 import fs from 'fs'
 import fetch from 'node-fetch'
 import axios from 'axios'
@@ -160,4 +160,4 @@ async function getRandomChannel() {
   let id = canalIdM[randomIndex]
   let name = canalNombreM[randomIndex]
   return { id, name }
-}
+}*/
