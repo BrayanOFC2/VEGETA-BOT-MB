@@ -30,7 +30,7 @@ let handler = async (m, { conn }) => {
         const remainingTime = Math.ceil((cooldowns[userId] - now) / 1000);
         const minutes = Math.floor(remainingTime / 60);
         const seconds = remainingTime % 60;
-        return await conn.reply(m.chat, `《✧》Debes esperar *${minutes} minutos y ${seconds} segundos* para usar *#c* de nuevo.`, m);
+        return await conn.reply(m.chat, `《✧》Debes esperar ${seconds} segundos* para usar *#c* de nuevo.`, m);
     }
 
     if (m.quoted && m.quoted.sender === conn.user.jid) {
@@ -62,7 +62,7 @@ let handler = async (m, { conn }) => {
             await saveCharacters(characters);
 
             await conn.reply(m.chat, `✦ Has reclamado a *${character.name}* con éxito.`, m);
-            cooldowns[userId] = now + 30 * 60 * 1000;
+            cooldowns[userId] = now + 15 * 1000;
 
         } catch (error) {
             await conn.reply(m.chat, `✘ Error al reclamar el personaje: ${error.message}`, m);
