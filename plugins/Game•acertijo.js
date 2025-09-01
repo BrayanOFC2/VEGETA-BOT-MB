@@ -1,13 +1,15 @@
-const timeout = 60000; // 60 segundos para responder
+const timeout = 60000; // 60 segundos
 const poin = 5000;     // Puntos por acertijo
+
+// Objeto para guardar acertijos activos por chat
+const acertijosActivos = {};
 
 // Handler para iniciar acertijo
 const handler = async (m, { conn }) => {
-    conn.tekateki = conn.tekateki || {};
     const id = m.chat;
 
-    if (id in conn.tekateki) {
-        await conn.reply(m.chat, '❌ Ya hay un acertijo en curso en este chat', conn.tekateki[id][0]);
+    if (acertijosActivos[id]) {
+        await conn.reply(m.chat, '❌ Ya hay un acertijo en curso en este chat');
         throw false;
     }
 
@@ -44,40 +46,39 @@ Pista: ${pista}
 🎁 Premio: +${poin} puntos
 `.trim();
 
-    // Guardar acertijo en memoria
-    conn.tekateki[id] = [
-        await conn.reply(m.chat, caption, m),
-        respuesta,
-        poin,
-        setTimeout(async () => {
-            if (conn.tekateki[id]) {
-                await conn.reply(m.chat, `⏰ Se acabó el tiempo!\nRespuesta: ${respuesta}`, conn.tekateki[id][0]);
-                delete conn.tekateki[id];
-            }
-        }, timeout)
-    ];
+    // Guardar acertijo activo
+    const timer = setTimeout(async () => {
+        if (acertijosActivos[id]) {
+            await conn.reply(m.chat, `⏰ Se acabó el tiempo!\nRespuesta: ${respuesta}`);
+            delete acertijosActivos[id];
+        }
+    }, timeout);
+
+    acertijosActivos[id] = { respuesta, poin, timer };
+
+    await conn.reply(m.chat, caption, m);
 };
 
 handler.help = ['acertijo'];
 handler.tags = ['game'];
-handler.command = ['acertijo', 'acert', 'adivinanza', 'tekateki'];
+handler.command = ['acertijo', 'acert', 'adivinanza'];
 
 export default handler;
 
-// Handler para capturar respuestas
-export const tekatekiHandler = async (m, { conn }) => {
+// Handler global para capturar respuestas
+export const responderAcertijo = async (m, { conn }) => {
     const id = m.chat;
-    if (!conn.tekateki?.[id]) return;
+    if (!acertijosActivos[id]) return;
     if (!m.text) return;
 
-    const respuestaCorrecta = conn.tekateki[id][1];
     const textoUsuario = m.text.trim();
+    const { respuesta, poin, timer } = acertijosActivos[id];
 
-    if (textoUsuario === respuestaCorrecta) {
-        await conn.reply(m.chat, `🎉 ¡Correcto! Has ganado +${conn.tekateki[id][2]} puntos`, conn.tekateki[id][0]);
-        clearTimeout(conn.tekateki[id][3]);
-        delete conn.tekateki[id];
+    if (textoUsuario === respuesta) {
+        clearTimeout(timer);
+        await conn.reply(m.chat, `🎉 ¡Correcto! Has ganado +${poin} puntos`);
+        delete acertijosActivos[id];
     }
 };
 
-tekatekiHandler.all = true;
+responderAcertijo.all = true;
