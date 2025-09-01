@@ -3,7 +3,7 @@ import { xpRange } from '../lib/levelling.js'
 import ws from 'ws'
 
 const botname = global.botname || '❍⏤͟͟͞͞𝙑𝙀𝙂𝙀𝙏𝘼-𝙊𝙁𝘾࿐'
-let tags = let tags = {
+let tags = {
   'serbot': 'SUB BOTS',
   'main': 'ZENO INFO',
   'owner': 'DIOS CREADOR',
@@ -59,6 +59,8 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
       user = global.db.data.users[userId]
     }
 
+    let { exp, level } = user
+    let { min, xp, max } = xpRange(level, global.multiplier || 1)
     let help = Object.values(global.plugins).filter(plugin => !plugin.disabled).map(plugin => ({
       help: Array.isArray(plugin.help) ? plugin.help : (plugin.help ? [plugin.help] : []),
       tags: Array.isArray(plugin.tags) ? plugin.tags : (plugin.tags ? [plugin.tags] : []),
@@ -83,37 +85,39 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
 ${Object.keys(tags).map(tag => {
   const commandsForTag = help.filter(menu => menu.tags.includes(tag))
   if (commandsForTag.length === 0) return ''
-  return `
+  let section = `
 ╭───〔 ${tags[tag]} ${getRandomEmoji()} 〕───╮
-${commandsForTag.map(menu => menu.help.map(h =>
-  `┃ ☁️${_p}${h}${menu.limit ? ' 🟡' : ''}${menu.premium ? ' 🔒' : ''}`
+${commandsForTag.map(menu => menu.help.map(help =>
+  `┃ ☁️${_p}${help}${menu.limit ? ' 🟡' : ''}${menu.premium ? ' 🔒' : ''}`
 ).join('\n')).join('\n')}
 ╰━━━━━━━━━━━━━━━━━━━━╯`
-}).filter(Boolean).join('\n')}
+  return section
+}).filter(text => text !== '').join('\n')}
 
 🔥 *By BrayanOFC* 🔥
 `.trim()
 
-await m.react('🐉')
+    await m.react('🐉') 
 
-const videoUrl = 'https://sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4'
-const imageUrl = 'https://sample-videos.com/img/Sample-jpg-image-500kb.jpg'
+    await conn.sendMessage(m.chat, {
+      video: { url: 'https://qu.ax/YcKnl.mp4' },
+      caption: menuText,
+      gifPlayback: true,
+      mimetype: 'video/mp4',
+      fileName: 'dragon-menu.mp4',
+      contextInfo: {
+        isForwarded: true,
+        forwardedNewsletterMessageInfo: {
+          newsletterJid: '120363394965381607@newsletter',
+          newsletterName: '𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱*:·',
+          serverMessageId: 100
+        }
+      }
+    }, { quoted: m })
 
-try {
-    await conn.sendMessage(m.chat, {
-        video: { url: videoUrl },
-        caption: menuText,
-        mimetype: 'video/mp4',
-        fileName: 'dragon-menu.mp4'
-    }, { quoted: m })
-} catch {
-    await conn.sendMessage(m.chat, {
-        image: { url: imageUrl },
-        caption: menuText
-    }, { quoted: m })
-}
   } catch (e) {
     conn.reply(m.chat, `✖️ Menú en modo Dragon Ball falló.\n\n${e}`, m)
+    throw e
   }
 }
 
