@@ -110,8 +110,7 @@ ${commandsForTag.map(menu => menu.help.map(help =>
     isForwarded: true,
     forwardedNewsletterMessageInfo: {
       newsletterJid: "120363394965381607@newsletterr",
-      newsletterName: 
-"𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱 • Update",
+      newsletterName: "𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱 • Update",
       serverMessageId: -1
     }
   }
