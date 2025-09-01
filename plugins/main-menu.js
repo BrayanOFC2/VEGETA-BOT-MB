@@ -98,20 +98,26 @@ ${commandsForTag.map(menu => menu.help.map(help =>
 `.trim()
 
     await m.react('🐉') 
+    try {
+  await conn.sendMessage(m.chat, {
+    video: { url: 'https://qu.ax/YcKnl.mp4' }, // cambia a un link válido
+    caption: menuText,
+    gifPlayback: true,
+    mimetype: 'video/mp4',
+    fileName: 'dragon-menu.mp4',
+  }, { quoted: m })
+} catch (e) {
+  
+}
 
-    await conn.sendMessage(m.chat, {
-      video: { url: 'https://qu.ax/YcKnl.mp4' },
-      caption: menuText,
-      gifPlayback: true,
-      mimetype: 'video/mp4',
-      fileName: 'dragon-menu.mp4',
-    }, { quoted: m })
-
-    await conn.sendMessage(m.chat, {
-      image: { url: 'https://files.catbox.moe/8r7jzw.jpg' },
-      caption: menuText,
-    }, { quoted: m })
-
+try {
+  await conn.sendMessage(m.chat, {
+    image: { url: 'https://files.catbox.moe/8r7jzw.jpg' },
+    caption: menuText,
+  }, { quoted: m })
+} catch (e) {
+ 
+}
   } catch (e) {
     conn.reply(m.chat, `✖️ Menú en modo Dragon Ball falló.\n\n${e}`, m)
     throw e
