@@ -105,13 +105,13 @@ ${commandsForTag.map(menu => menu.help.map(help =>
       gifPlayback: true,
       mimetype: 'video/mp4',
       fileName: 'dragon-menu.mp4',
-      }
     }, { quoted: m })
-await conn.sendMessage(m.chat, {
-  image: { url: 'https://files.catbox.moe/8r7jzw.jpg' },
-  caption: menuText,
-  }
-}, { quoted: m })
+
+    await conn.sendMessage(m.chat, {
+      image: { url: 'https://files.catbox.moe/8r7jzw.jpg' },
+      caption: menuText,
+    }, { quoted: m })
+
   } catch (e) {
     conn.reply(m.chat, `✖️ Menú en modo Dragon Ball falló.\n\n${e}`, m)
     throw e
