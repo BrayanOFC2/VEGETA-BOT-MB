@@ -1,64 +1,83 @@
-import fs from 'fs';
-
-const timeout = 60000;
-const poin = 10000;
+const timeout = 60000; // 60 segundos para responder
+const poin = 5000;     // Puntos por acertijo
 
 // Handler para iniciar acertijo
 const handler = async (m, { conn }) => {
-  conn.tekateki = conn.tekateki || {};
-  const id = m.chat;
+    conn.tekateki = conn.tekateki || {};
+    const id = m.chat;
 
-  if (id in conn.tekateki) {
-    conn.reply(m.chat, 'Todavía hay acertijos sin responder en este chat', conn.tekateki[id][0]);
-    throw false;
-  }
+    if (id in conn.tekateki) {
+        await conn.reply(m.chat, '❌ Ya hay un acertijo en curso en este chat', conn.tekateki[id][0]);
+        throw false;
+    }
 
-  const tekateki = JSON.parse(fs.readFileSync('./src/game/acertijo.json'));
-  const json = tekateki[Math.floor(Math.random() * tekateki.length)];
-  const clue = json.response.replace(/[A-Za-z]/g, '_');
+    // Generar pregunta aleatoria
+    const operaciones = ['+', '-', '*'];
+    const num1 = Math.floor(Math.random() * 20) + 1;
+    const num2 = Math.floor(Math.random() * 20) + 1;
+    const operacion = operaciones[Math.floor(Math.random() * operaciones.length)];
 
-  const caption = `
-ⷮ🚩 *ACERTIJOS*
-✨️ *${json.question}*
+    let pregunta, respuesta;
+    switch (operacion) {
+        case '+':
+            pregunta = `¿Cuánto es ${num1} + ${num2}?`;
+            respuesta = (num1 + num2).toString();
+            break;
+        case '-':
+            pregunta = `¿Cuánto es ${num1} - ${num2}?`;
+            respuesta = (num1 - num2).toString();
+            break;
+        case '*':
+            pregunta = `¿Cuánto es ${num1} × ${num2}?`;
+            respuesta = (num1 * num2).toString();
+            break;
+    }
 
-⏱️ *Tiempo:* ${(timeout / 1000).toFixed(0)} Segundos
-🎁 *Premio:* +${poin} monedas 🪙
+    const pista = respuesta.replace(/[0-9]/g, '_');
+
+    const caption = `
+🧩 *ACERTIJO*
+Pregunta: ${pregunta}
+Pista: ${pista}
+
+⏱️ Tiempo: ${(timeout / 1000)} segundos
+🎁 Premio: +${poin} puntos
 `.trim();
 
-  // Guardamos el acertijo en memoria
-  conn.tekateki[id] = [
-    await conn.reply(m.chat, caption, m),
-    json.response.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""), // respuesta sin acentos
-    poin,
-    setTimeout(async () => {
-      if (conn.tekateki[id]) {
-        await conn.reply(m.chat, `🚩 Se acabó el tiempo!\n*Respuesta:* ${json.response}`, conn.tekateki[id][0]);
-        delete conn.tekateki[id];
-      }
-    }, timeout)
-  ];
+    // Guardar acertijo en memoria
+    conn.tekateki[id] = [
+        await conn.reply(m.chat, caption, m),
+        respuesta,
+        poin,
+        setTimeout(async () => {
+            if (conn.tekateki[id]) {
+                await conn.reply(m.chat, `⏰ Se acabó el tiempo!\nRespuesta: ${respuesta}`, conn.tekateki[id][0]);
+                delete conn.tekateki[id];
+            }
+        }, timeout)
+    ];
 };
 
 handler.help = ['acertijo'];
-handler.tags = ['fun'];
+handler.tags = ['game'];
 handler.command = ['acertijo', 'acert', 'adivinanza', 'tekateki'];
 
 export default handler;
 
-// Handler global para respuestas
+// Handler para capturar respuestas
 export const tekatekiHandler = async (m, { conn }) => {
-  if (!m.text) return;
-  const id = m.chat;
-  if (!conn.tekateki?.[id]) return;
+    const id = m.chat;
+    if (!conn.tekateki?.[id]) return;
+    if (!m.text) return;
 
-  const respuestaCorrecta = conn.tekateki[id][1];
-  const textoUsuario = m.text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const respuestaCorrecta = conn.tekateki[id][1];
+    const textoUsuario = m.text.trim();
 
-  if (textoUsuario === respuestaCorrecta) {
-    await conn.reply(m.chat, `🎉 ¡Correcto! Has ganado +${conn.tekateki[id][2]} monedas 🪙`, conn.tekateki[id][0]);
-    clearTimeout(conn.tekateki[id][3]);
-    delete conn.tekateki[id];
-  }
+    if (textoUsuario === respuestaCorrecta) {
+        await conn.reply(m.chat, `🎉 ¡Correcto! Has ganado +${conn.tekateki[id][2]} puntos`, conn.tekateki[id][0]);
+        clearTimeout(conn.tekateki[id][3]);
+        delete conn.tekateki[id];
+    }
 };
 
 tekatekiHandler.all = true;
