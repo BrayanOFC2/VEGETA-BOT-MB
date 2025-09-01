@@ -3,7 +3,7 @@ import { xpRange } from '../lib/levelling.js'
 import ws from 'ws'
 
 const botname = global.botname || '❍⏤͟͟͞͞𝙑𝙀𝙂𝙀𝙏𝘼-𝙊𝙁𝘾࿐'
-let tags = {
+let tags = let tags = {
   'serbot': 'SUB BOTS',
   'main': 'ZENO INFO',
   'owner': 'DIOS CREADOR',
@@ -98,26 +98,22 @@ ${commandsForTag.map(menu => menu.help.map(help =>
 `.trim()
 
     await m.react('🐉') 
-    try {
-  await conn.sendMessage(m.chat, {
-    video: { url: 'https://files.catbox.moe/g0nlvw.mp4' }, 
-    caption: menuText,
-    gifPlayback: true,
-    mimetype: 'video/mp4',
-    fileName: 'dragon-menu.mp4',
-  }, { quoted: m })
-} catch (e) {
-  
-}
 
-try {
-  await conn.sendMessage(m.chat, {
-    image: { url: 'https://files.catbox.moe/8r7jzw.jpg' },
-    caption: menuText,
-  }, { quoted: m })
-} catch (e) {
- 
-}
+    try {
+      await conn.sendMessage(m.chat, {
+        video: { url: 'https://files.catbox.moe/g0nlvw.mp4' }, 
+        caption: menuText,
+        gifPlayback: true,
+        mimetype: 'video/mp4',
+        fileName: 'dragon-menu.mp4',
+      }, { quoted: m })
+    } catch {
+      await conn.sendMessage(m.chat, {
+        image: { url: 'https://files.catbox.moe/8r7jzw.jpg' },
+        caption: menuText,
+      }, { quoted: m })
+    }
+
   } catch (e) {
     conn.reply(m.chat, `✖️ Menú en modo Dragon Ball falló.\n\n${e}`, m)
     throw e
