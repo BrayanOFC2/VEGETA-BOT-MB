@@ -1,42 +1,49 @@
 import fs from 'fs';
 
+const timeout = 60000; // 60 segundos
+const poin = 10000;   // Recompensa
 
-const timeout = 60000;
-const poin = 500;
-const handler = async (m, {conn, usedPrefix}) => {
-  const datas = global
-  const idioma = datas.db.data.users[m.sender].language || global.defaultLenguaje
-  const _translate = JSON.parse(fs.readFileSync(`./src/languages/${idioma}.json`))
-  const tradutor = _translate.plugins.game_acertijo
-
-
-  conn.tekateki = conn.tekateki ? conn.tekateki : {};
+const handler = async (m, { conn }) => {
+  conn.tekateki = conn.tekateki || {};
   const id = m.chat;
+
   if (id in conn.tekateki) {
-    conn.reply(m.chat, tradutor.texto1, conn.tekateki[id][0]);
+    conn.reply(m.chat, 'Todavía hay acertijos sin responder en este chat', conn.tekateki[id][0]);
     throw false;
   }
-  const tekateki = tradutor.texto4;
-  /*Para agregar más preguntas vaya a la carpeta de language en el archivo json de su 
-  idioma preferido, busque "acertijo" justo después del texto4 puede agregar sus preguntas*/
 
+  // Cargar preguntas desde JSON
+  const tekateki = JSON.parse(fs.readFileSync('./src/game/acertijo.json'));
   const json = tekateki[Math.floor(Math.random() * tekateki.length)];
+
+  // Crear pista oculta con _
   const _clue = json.response;
   const clue = _clue.replace(/[A-Za-z]/g, '_');
+
   const caption = `
-ⷮ *${json.question}*
-${tradutor.texto2[0]} ${(timeout / 1000).toFixed(2)} segundos
-${tradutor.texto2[1]} +${poin} Exp
+ⷮ🚩 *ACERTIJOS*
+✨️ *${json.question}*
+
+⏱️ *Tiempo:* ${(timeout / 1000).toFixed(0)} Segundos
+🎁 *Premio:* +${poin} monedas 🪙
 `.trim();
+
+  // Guardar el acertijo en memoria
   conn.tekateki[id] = [
-    await conn.reply(m.chat, caption, m), json,
+    await conn.reply(m.chat, caption, m), 
+    json,
     poin,
     setTimeout(async () => {
-      if (conn.tekateki[id]) await conn.reply(m.chat, `${tradutor.texto3} ${json.response}`, conn.tekateki[id][0]);
-      delete conn.tekateki[id];
-    }, timeout)];
+      if (conn.tekateki[id]) {
+        await conn.reply(m.chat, `🚩 Se acabó el tiempo!\n*Respuesta:* ${json.response}`, conn.tekateki[id][0]);
+        delete conn.tekateki[id];
+      }
+    }, timeout)
+  ];
 };
+
 handler.help = ['acertijo'];
-handler.tags = ['game'];
-handler.command = /^(acertijo|acert|pregunta|adivinanza|tekateki)$/i;
+handler.tags = ['fun'];
+handler.command = ['acertijo', 'acert', 'adivinanza', 'tekateki'];
+
 export default handler;
