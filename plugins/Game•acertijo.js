@@ -1,8 +1,9 @@
 import fs from 'fs';
 
-const timeout = 60000; // 60 segundos
-const poin = 10000;   // Recompensa
+const timeout = 60000;
+const poin = 10000;
 
+// Handler para iniciar acertijo
 const handler = async (m, { conn }) => {
   conn.tekateki = conn.tekateki || {};
   const id = m.chat;
@@ -12,13 +13,9 @@ const handler = async (m, { conn }) => {
     throw false;
   }
 
-  // Cargar preguntas desde JSON
   const tekateki = JSON.parse(fs.readFileSync('./src/game/acertijo.json'));
   const json = tekateki[Math.floor(Math.random() * tekateki.length)];
-
-  // Crear pista oculta con _
-  const _clue = json.response;
-  const clue = _clue.replace(/[A-Za-z]/g, '_');
+  const clue = json.response.replace(/[A-Za-z]/g, '_');
 
   const caption = `
 ⷮ🚩 *ACERTIJOS*
@@ -28,10 +25,10 @@ const handler = async (m, { conn }) => {
 🎁 *Premio:* +${poin} monedas 🪙
 `.trim();
 
-  // Guardar el acertijo en memoria
+  // Guardamos el acertijo en memoria para este chat
   conn.tekateki[id] = [
-    await conn.reply(m.chat, caption, m), 
-    json,
+    await conn.reply(m.chat, caption, m), // mensaje enviado
+    json.response.toLowerCase(),          // respuesta correcta
     poin,
     setTimeout(async () => {
       if (conn.tekateki[id]) {
@@ -47,3 +44,18 @@ handler.tags = ['fun'];
 handler.command = ['acertijo', 'acert', 'adivinanza', 'tekateki'];
 
 export default handler;
+
+// Handler para capturar respuestas
+export const tekatekiHandler = async (m, { conn }) => {
+  const id = m.chat;
+  if (!conn.tekateki?.[id]) return;
+
+  const respuestaCorrecta = conn.tekateki[id][1];
+  if (m.text.toLowerCase().includes(respuestaCorrecta)) {
+    await conn.reply(m.chat, `🎉 ¡Correcto! Has ganado +${conn.tekateki[id][2]} monedas 🪙`, conn.tekateki[id][0]);
+    clearTimeout(conn.tekateki[id][3]);
+    delete conn.tekateki[id];
+  }
+};
+
+tekatekiHandler.all = true;
