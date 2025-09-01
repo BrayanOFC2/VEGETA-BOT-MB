@@ -85,13 +85,12 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
 ${Object.keys(tags).map(tag => {
   const commandsForTag = help.filter(menu => menu.tags.includes(tag))
   if (commandsForTag.length === 0) return ''
-  let section = `
+  return `
 ╭───〔 ${tags[tag]} ${getRandomEmoji()} 〕───╮
 ${commandsForTag.map(menu => menu.help.map(help =>
   `┃ ☁️${_p}${help}${menu.limit ? ' 🟡' : ''}${menu.premium ? ' 🔒' : ''}`
 ).join('\n')).join('\n')}
 ╰━━━━━━━━━━━━━━━━━━━━╯`
-  return section
 }).filter(text => text !== '').join('\n')}
 
 🔥 *By BrayanOFC* 🔥
@@ -108,7 +107,10 @@ ${commandsForTag.map(menu => menu.help.map(help =>
         fileName: 'dragon-menu.mp4',
         contextInfo: {
           isForwarded: true,
-          participant: global.rcanal
+          externalAdReply: {
+            showAdAttribution: true,
+            rJid: global.rcanal 
+          }
         }
       }, { quoted: m })
     } catch {
@@ -117,14 +119,17 @@ ${commandsForTag.map(menu => menu.help.map(help =>
         caption: menuText,
         contextInfo: {
           isForwarded: true,
-          participant: global.rcanal
+          externalAdReply: {
+            showAdAttribution: true,
+            rJid: global.rcanal
+          }
         }
       }, { quoted: m })
     }
 
   } catch (e) {
     conn.reply(m.chat, `✖️ Menú en modo Dragon Ball falló.\n\n${e}`, m)
-    throw e
+    console.log(e)
   }
 }
 
