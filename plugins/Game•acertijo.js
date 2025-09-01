@@ -71,10 +71,13 @@ export const responderAcertijo = async (m, { conn }) => {
     if (!acertijosActivos[id]) return;
     if (!m.text) return;
 
-    const textoUsuario = m.text.trim();
-    const { respuesta, poin, timer } = acertijosActivos[id];
+    const textoUsuario = m.text.trim().toLowerCase();
+    let { respuesta, poin, timer } = acertijosActivos[id];
 
-    if (textoUsuario === respuesta) {
+    // Normalizar respuesta para ignorar acentos
+    respuesta = respuesta.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+    if (textoUsuario.normalize("NFD").replace(/[\u0300-\u036f]/g, "") === respuesta) {
         clearTimeout(timer);
         await conn.reply(m.chat, `🎉 ¡Correcto! Has ganado +${poin} puntos`);
         delete acertijosActivos[id];
