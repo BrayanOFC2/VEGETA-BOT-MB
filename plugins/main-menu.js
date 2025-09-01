@@ -99,6 +99,7 @@ ${commandsForTag.map(menu => menu.help.map(help =>
     await m.react('🐉') 
 
     try {
+      // Intentar enviar video con reenviado de canal
       await conn.sendMessage(m.chat, {
         video: { url: 'https://qu.ax/YcKnl.mp4' },
         caption: menuText,
@@ -106,22 +107,27 @@ ${commandsForTag.map(menu => menu.help.map(help =>
         mimetype: 'video/mp4',
         fileName: 'dragon-menu.mp4',
         contextInfo: {
+          forwardingScore: 999,
           isForwarded: true,
-          externalAdReply: {
-            showAdAttribution: true,
-            rJid: global.rcanal 
+          forwardedNewsletterMessageInfo: {
+            newsletterJid: global.rcanal,
+            newsletterName: botname,
+            serverMessageId: -1
           }
         }
       }, { quoted: m })
     } catch {
+      // Fallback: enviar imagen si falla video
       await conn.sendMessage(m.chat, {
         image: { url: 'https://files.catbox.moe/8r7jzw.jpg' },
         caption: menuText,
         contextInfo: {
+          forwardingScore: 999,
           isForwarded: true,
-          externalAdReply: {
-            showAdAttribution: true,
-            rJid: global.rcanal
+          forwardedNewsletterMessageInfo: {
+            newsletterJid: global.rcanal,
+            newsletterName: botname,
+            serverMessageId: -1
           }
         }
       }, { quoted: m })
