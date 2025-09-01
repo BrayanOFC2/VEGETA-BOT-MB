@@ -1,7 +1,7 @@
 const timeout = 60000; // 60 segundos
 const poin = 5000;     // Puntos por acertijo
 
-// Objeto para guardar acertijos activos por chat
+// Guardar acertijos activos por chat
 const acertijosActivos = {};
 
 // Handler para iniciar acertijo
@@ -46,7 +46,7 @@ Pista: ${pista}
 🎁 Premio: +${poin} puntos
 `.trim();
 
-    // Guardar acertijo activo
+    // Guardar acertijo activo con timer
     const timer = setTimeout(async () => {
         if (acertijosActivos[id]) {
             await conn.reply(m.chat, `⏰ Se acabó el tiempo!\nRespuesta: ${respuesta}`);
@@ -75,9 +75,10 @@ export const responderAcertijo = async (m, { conn }) => {
     let { respuesta, poin, timer } = acertijosActivos[id];
 
     // Normalizar respuesta para ignorar acentos
-    respuesta = respuesta.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const respuestaNormalizada = respuesta.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const usuarioNormalizado = textoUsuario.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
-    if (textoUsuario.normalize("NFD").replace(/[\u0300-\u036f]/g, "") === respuesta) {
+    if (usuarioNormalizado === respuestaNormalizada) {
         clearTimeout(timer);
         await conn.reply(m.chat, `🎉 ¡Correcto! Has ganado +${poin} puntos`);
         delete acertijosActivos[id];
