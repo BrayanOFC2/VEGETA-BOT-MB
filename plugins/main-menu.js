@@ -59,8 +59,6 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
       user = global.db.data.users[userId]
     }
 
-    let { exp, level } = user
-    let { min, xp, max } = xpRange(level, global.multiplier || 1)
     let help = Object.values(global.plugins).filter(plugin => !plugin.disabled).map(plugin => ({
       help: Array.isArray(plugin.help) ? plugin.help : (plugin.help ? [plugin.help] : []),
       tags: Array.isArray(plugin.tags) ? plugin.tags : (plugin.tags ? [plugin.tags] : []),
@@ -85,39 +83,36 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
 ${Object.keys(tags).map(tag => {
   const commandsForTag = help.filter(menu => menu.tags.includes(tag))
   if (commandsForTag.length === 0) return ''
-  let section = `
+  return `
 ╭───〔 ${tags[tag]} ${getRandomEmoji()} 〕───╮
-${commandsForTag.map(menu => menu.help.map(help =>
-  `┃ ☁️${_p}${help}${menu.limit ? ' 🟡' : ''}${menu.premium ? ' 🔒' : ''}`
+${commandsForTag.map(menu => menu.help.map(h =>
+  `┃ ☁️${_p}${h}${menu.limit ? ' 🟡' : ''}${menu.premium ? ' 🔒' : ''}`
 ).join('\n')).join('\n')}
 ╰━━━━━━━━━━━━━━━━━━━━╯`
-  return section
-}).filter(text => text !== '').join('\n')}
+}).filter(Boolean).join('\n')}
 
 🔥 *By BrayanOFC* 🔥
 `.trim()
 
     await m.react('🐉')
 
-try {
-  await conn.sendMessage(m.chat, {
-    video: { url: 'https://files.catbox.moe/g0nlvw.mp4' },
-    caption: menuText,
-    gifPlayback: true,
-    mimetype: 'video/mp4',
-    fileName: 'dragon-menu.mp4',
-  }, { quoted: m })
-} catch (err) {
-  
-  await conn.sendMessage(m.chat, {
-    image: { url: 'https://files.catbox.moe/8r7jzw.jpg' },
-    caption: menuText,
-  }, { quoted: m })
-}
+    try {
+      await conn.sendMessage(m.chat, {
+        video: { url: 'https://files.catbox.moe/g0nlvw.mp4' },
+        caption: menuText,
+        gifPlayback: true,
+        mimetype: 'video/mp4',
+        fileName: 'dragon-menu.mp4',
+      }, { quoted: m })
+    } catch {
+      await conn.sendMessage(m.chat, {
+        image: { url: 'https://files.catbox.moe/8r7jzw.jpg' },
+        caption: menuText,
+      }, { quoted: m })
+    }
 
   } catch (e) {
     conn.reply(m.chat, `✖️ Menú en modo Dragon Ball falló.\n\n${e}`, m)
-    throw e
   }
 }
 
