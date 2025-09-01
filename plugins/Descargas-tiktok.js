@@ -2,7 +2,7 @@ import axios from 'axios';
 
 let handler = async (m, { conn, command }) => {
     try {
-        if (command !== 'descargas') return;
+        if (command !== 'tiktok1') return;
         let tag = 'descargas';
         let url = `https://www.tiktok.com/tag/${tag}`;
         let response = await axios.get(url, {
@@ -27,5 +27,5 @@ let handler = async (m, { conn, command }) => {
     }
 };
 
-handler.command = 'descargas';
+handler.command = 'tiktok1';
 export default handler;
