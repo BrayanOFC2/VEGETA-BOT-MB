@@ -100,37 +100,37 @@ ${commandsForTag.map(menu => menu.help.map(help =>
 
     try {
         await conn.sendMessage(m.chat, {
-        video: { url: 'https://qu.ax/YcKnl.mp4' },
-        caption: menuText,
-        gifPlayback: true,
-        mimetype: 'video/mp4',
-        fileName: 'dragon-menu.mp4',
-        contextInfo: {
-          forwardingScore: 999,
-          isForwarded: true,
-          forwardedNewsletterMessageInfo: {
-            newsletterJid: global.channel,
-            newsletterName: botname,
-            serverMessageId: -1
-          }
-        }
-      }, { quoted: m })
-    } catch {
-      // Fallback: enviar imagen si falla video
-      await conn.sendMessage(m.chat, {
-        image: { url: 'https://files.catbox.moe/8r7jzw.jpg' },
-        caption: menuText,
-        contextInfo: {
-          forwardingScore: 999,
-          isForwarded: true,
-          forwardedNewsletterMessageInfo: {
-            newsletterJid: global.rcanal,
-            newsletterName: botname,
-            serverMessageId: -1
-          }
-        }
-      }, { quoted: m })
+  video: { url: 'https://qu.ax/YcKnl.mp4' },
+  caption: menuText,
+  gifPlayback: true,
+  mimetype: 'video/mp4',
+  fileName: 'dragon-menu.mp4',
+  contextInfo: {
+    forwardingScore: 999,
+    isForwarded: true,
+    forwardedNewsletterMessageInfo: {
+      newsletterJid: "120363394965381607@newsletterr",
+      newsletterName: 
+"𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱 • Update",
+      serverMessageId: -1
     }
+  }
+}, { quoted: m })
+    } catch {
+     
+      await conn.sendMessage(m.chat, {
+  image: { url: 'https://files.catbox.moe/8r7jzw.jpg' },
+  caption: menuText,
+  contextInfo: {
+    forwardingScore: 999,
+    isForwarded: true,
+    forwardedNewsletterMessageInfo: {
+      newsletterJid: "120363394965381607@newsletter",
+      newsletterName: "𝚅𝙴𝙶𝙴𝚃𝙰-𝙱𝙾𝚃-𝙼𝙱",
+      serverMessageId: -1
+    }
+  }
+}, { quoted: m })
 
   } catch (e) {
     conn.reply(m.chat, `✖️ Menú en modo Dragon Ball falló.\n\n${e}`, m)
