@@ -25,10 +25,10 @@ const handler = async (m, { conn }) => {
 🎁 *Premio:* +${poin} monedas 🪙
 `.trim();
 
-  // Guardamos el acertijo en memoria para este chat
+  // Guardamos el acertijo en memoria
   conn.tekateki[id] = [
-    await conn.reply(m.chat, caption, m), // mensaje enviado
-    json.response.toLowerCase(),          // respuesta correcta
+    await conn.reply(m.chat, caption, m),
+    json.response.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""), // respuesta sin acentos
     poin,
     setTimeout(async () => {
       if (conn.tekateki[id]) {
@@ -45,13 +45,16 @@ handler.command = ['acertijo', 'acert', 'adivinanza', 'tekateki'];
 
 export default handler;
 
-// Handler para capturar respuestas
+// Handler global para respuestas
 export const tekatekiHandler = async (m, { conn }) => {
+  if (!m.text) return;
   const id = m.chat;
   if (!conn.tekateki?.[id]) return;
 
   const respuestaCorrecta = conn.tekateki[id][1];
-  if (m.text.toLowerCase().includes(respuestaCorrecta)) {
+  const textoUsuario = m.text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+  if (textoUsuario === respuestaCorrecta) {
     await conn.reply(m.chat, `🎉 ¡Correcto! Has ganado +${conn.tekateki[id][2]} monedas 🪙`, conn.tekateki[id][0]);
     clearTimeout(conn.tekateki[id][3]);
     delete conn.tekateki[id];
