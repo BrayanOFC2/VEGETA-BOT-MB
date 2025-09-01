@@ -96,24 +96,29 @@ ${commandsForTag.map(menu => menu.help.map(h =>
 
     await m.react('🐉')
 
+await m.react('🐉')
+
+const videoUrl = 'https://files.catbox.moe/g0nlvw.mp4'
+const imageUrl = 'https://files.catbox.moe/8r7jzw.jpg'
+
 let sent = false
 
 try {
     await conn.sendMessage(m.chat, {
-        video: { url: 'https://files.catbox.moe/g0nlvw.mp4' },
+        video: { url: videoUrl },
         caption: menuText,
         mimetype: 'video/mp4',
-        fileName: 'dragon-menu.mp4',
+        fileName: 'dragon-menu.mp4'
     }, { quoted: m })
     sent = true
 } catch (err) {
-    console.log('Video falló, enviando imagen...', err)
+    console.log('No se pudo enviar el video:', err)
 }
 
 if (!sent) {
     await conn.sendMessage(m.chat, {
-        image: { url: 'https://files.catbox.moe/8r7jzw.jpg' },
-        caption: menuText,
+        image: { url: imageUrl },
+        caption: menuText
     }, { quoted: m })
 }
 
