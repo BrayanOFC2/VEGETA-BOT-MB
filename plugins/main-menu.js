@@ -106,7 +106,7 @@ ${commandsForTag.map(menu => menu.help.map(help =>
   mimetype: 'video/mp4',
   fileName: 'dragon-menu.mp4',
   contextInfo: {
-    forwardingScore: 999,
+   // forwardingScore: 999,
     isForwarded: true,
    /* forwardedNewsletterMessageInfo: {
       newsletterJid: "120363394965381607@newsletter",
